@@ -1,16 +1,15 @@
 package com.example
 
+import com.example.data.models.UserIdPrincipal
+import com.example.routes.*
+import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import freemarker.cache.*
-import io.ktor.freemarker.*
 import io.ktor.auth.*
 import io.ktor.features.*
+import io.ktor.freemarker.*
+import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
-import kotlinx.serialization.Serializable
 import javax.naming.AuthenticationException
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -24,7 +23,10 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(FreeMarker) {
-        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
+        templateLoader = ClassTemplateLoader(
+            this::class.java.classLoader,
+            "templates"
+        )
     }
 
     install(Authentication) {
@@ -60,45 +62,13 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
-
-        get("/html-freemarker") {
-            call.respond(FreeMarkerContent("index.ftl", mapOf("data" to IndexData(listOf(1, 2, 3))), ""))
-        }
-
-        route("/login") {
-            authenticate("FORM_AUTH") {
-                post {
-                    val principal = call.principal<UserIdPrincipal>()!!
-                    call.sessions.set(principal)
-                    call.respond(HttpStatusCode.OK, "OK")
-                }
-            }
-        }
-
-        route("/user_info") {
-            authenticate("SESSION_AUTH") {
-                get {
-                    val principal = call.principal<UserIdPrincipal>()!!
-                    call.respond(HttpStatusCode.OK, principal)
-                }
-            }
-        }
-
-        install(StatusPages) {
-            exception<AuthenticationException> { cause ->
-                call.respond(HttpStatusCode.Unauthorized)
-            }
-        }
+        homeRoute()
+        authRoutes()
+        accountRoutes()
+        statusRoutes()
+        testRoute()
     }
 }
-
-data class IndexData(val items: List<Int>)
-
-@Serializable
-data class UserIdPrincipal(val name: String) : Principal
 
 object AuthProvider {
 
@@ -111,7 +81,6 @@ object AuthProvider {
         if (userName == TEST_USER_NAME && password == TEST_USER_PASSWORD) {
             return UserIdPrincipal(TEST_USER_NAME)
         }
-
         return null
     }
 }

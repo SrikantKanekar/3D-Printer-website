@@ -44,12 +44,19 @@ dependencies {
     // Sessions
     implementation "io.ktor:ktor-server-sessions:$ktor_version"
 
+    // Database
+    implementation 'org.litote.kmongo:kmongo:4.2.5'
+    implementation 'org.litote.kmongo:kmongo-coroutine:4.2.5'
+
     // Html
     implementation "io.ktor:ktor-freemarker:$ktor_version"
 
     // Serialization
     implementation "io.ktor:ktor-serialization:$ktor_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0"
+
+    // Security
+    implementation 'commons-codec:commons-codec:1.14'
 
     // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
