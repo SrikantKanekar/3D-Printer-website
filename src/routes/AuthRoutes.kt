@@ -5,7 +5,7 @@ import com.example.data.database.checkPasswordForEmail
 import com.example.data.database.registerUser
 import com.example.data.models.User
 import com.example.data.models.UserIdPrincipal
-import com.example.security.getHashWithSalt
+import com.example.data.database.getHashWithSalt
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -18,7 +18,7 @@ fun Route.authRoutes() {
 
     route("/login") {
         get {
-            call.respond(FreeMarkerContent("login.ftl", null))
+            call.respondTemplate("login.html")
         }
 
         post {
@@ -38,7 +38,7 @@ fun Route.authRoutes() {
 
     route("/register") {
         get {
-            call.respond(FreeMarkerContent("register.ftl", null))
+            call.respondTemplate("register.html")
         }
 
         post {

@@ -3,8 +3,6 @@ package com.example.data.database
 import com.example.data.database.Constants.TEST_USER_NAME
 import com.example.data.database.Constants.TEST_USER_PASSWORD
 import com.example.data.models.User
-import com.example.data.models.UserIdPrincipal
-import com.example.security.checkHashForPassword
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo

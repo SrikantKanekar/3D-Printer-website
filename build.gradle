@@ -64,6 +64,11 @@ dependencies {
     // Security
     implementation 'commons-codec:commons-codec:1.14'
 
+    // Dependency injection
+    implementation "io.insert-koin:koin-ktor:$koin_version"
+    implementation "io.insert-koin:koin-logger-slf4j:$koin_version"
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
     // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
