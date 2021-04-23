@@ -7,6 +7,7 @@ import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
+import io.ktor.http.content.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
@@ -38,17 +39,6 @@ fun Application.module(testing: Boolean = false) {
                 session
             }
         }
-
-        form("FORM_AUTH") {
-            userParamName = "Username"
-            passwordParamName = "Password"
-            challenge {
-                throw AuthenticationException()
-            }
-            validate { cred: UserPasswordCredential ->
-                AuthProvider.tryAuth(cred.name, cred.password)
-            }
-        }
     }
 
     install(Sessions) {
@@ -67,20 +57,9 @@ fun Application.module(testing: Boolean = false) {
         accountRoutes()
         statusRoutes()
         testRoute()
-    }
-}
 
-object AuthProvider {
-
-    const val TEST_USER_NAME = "test_user_name"
-    const val TEST_USER_PASSWORD = "test_user_password"
-
-    fun tryAuth(userName: String, password: String): UserIdPrincipal? {
-
-        //Here you can use DB or other ways to check user and create a Principal
-        if (userName == TEST_USER_NAME && password == TEST_USER_PASSWORD) {
-            return UserIdPrincipal(TEST_USER_NAME)
+        static("/static") {
+            resources("files")
         }
-        return null
     }
 }

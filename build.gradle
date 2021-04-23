@@ -30,6 +30,12 @@ repositories {
     maven { url 'https://kotlin.bintray.com/ktor' }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"

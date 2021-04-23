@@ -1,5 +1,7 @@
 package com.example
 
+import com.example.data.database.Constants.TEST_USER_NAME
+import com.example.data.database.Constants.TEST_USER_PASSWORD
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlin.test.Test
@@ -58,13 +60,13 @@ class ApplicationTest {
             addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
             setBody(
                 listOf(
-                    "Username" to AuthProvider.TEST_USER_NAME,
-                    "Password" to AuthProvider.TEST_USER_PASSWORD
+                    "Username" to TEST_USER_NAME,
+                    "Password" to TEST_USER_PASSWORD
                 ).formUrlEncode()
             )
         }.apply {
             assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals("OK", response.content)
+            assertEquals("Your are now logged in!", response.content)
         }
     }
 }
