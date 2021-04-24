@@ -1,4 +1,4 @@
-package com.example.data.database
+package com.example.util
 
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils

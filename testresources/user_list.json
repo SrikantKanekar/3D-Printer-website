@@ -1,0 +1,50 @@
+[
+  {
+    "email": "email1",
+    "password": "password1"
+  },
+  {
+    "email": "email2",
+    "password": "password2"
+  },
+  {
+    "email": "email3",
+    "password": "password3"
+  },
+  {
+    "email": "email4",
+    "password": "password4"
+  },
+  {
+    "email": "email5",
+    "password": "password5"
+  },
+  {
+    "email": "email6",
+    "password": "password6"
+  },
+  {
+    "email": "email7",
+    "password": "password7"
+  },
+  {
+    "email": "test_user_email",
+    "password": "011e60e8f6fed41ef1594488c618bffc64255404544a285332c5ae147c50cb2f:0d2e79e813c117f2ef170d5da38e30693ac6df2a3180a6523dfd4458abae82f8"
+  },
+  {
+    "email": "email9",
+    "password": "password9"
+  },
+  {
+    "email": "email10",
+    "password": "password10"
+  },
+  {
+    "email": "email11",
+    "password": "password11"
+  },
+  {
+    "email": "email12",
+    "password": "password12"
+  }
+]

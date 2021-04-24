@@ -1,8 +1,13 @@
 package com.example
 
-import com.example.data.models.UserIdPrincipal
-import com.example.di.helloAppModule
-import com.example.routes.*
+import com.example.di.authModule
+import com.example.feautures.account.presentation.accountRoutes
+import com.example.feautures.account.presentation.registerAccountRoutes
+import com.example.feautures.auth.domain.UserIdPrincipal
+import com.example.feautures.auth.presentation.registerAuthRoutes
+import com.example.feautures.home.presentation.registerHomeRoute
+import com.example.util.registerStatusRoutes
+import com.example.util.statusRoutes
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -12,6 +17,7 @@ import io.ktor.http.content.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
+import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
 import org.koin.logger.SLF4JLogger
 import javax.naming.AuthenticationException
@@ -20,11 +26,11 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused")
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+fun Application.module(testing: Boolean = false, koinModules: List<Module> = listOf(authModule)) {
 
     install(Koin) {
         SLF4JLogger()
-        modules(helloAppModule)
+        modules(koinModules)
     }
 
     install(ContentNegotiation) {
@@ -59,15 +65,13 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    registerTestRoutes()
+    registerHomeRoute()
+    registerAuthRoutes()
+    registerAccountRoutes()
+    registerStatusRoutes()
 
     routing {
-        homeRoute()
-        authRoutes()
-        accountRoutes()
-        statusRoutes()
-
-        static("/static") {
+        static {
             resources("files")
         }
     }

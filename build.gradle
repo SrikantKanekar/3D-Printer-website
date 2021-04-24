@@ -60,6 +60,7 @@ dependencies {
     // Serialization
     implementation "io.ktor:ktor-serialization:$ktor_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0"
+    implementation "io.ktor:ktor-gson:$ktor_version"
 
     // Security
     implementation 'commons-codec:commons-codec:1.14'
@@ -68,6 +69,7 @@ dependencies {
     implementation "io.insert-koin:koin-ktor:$koin_version"
     implementation "io.insert-koin:koin-logger-slf4j:$koin_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 
     // Testing
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
