@@ -71,8 +71,8 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     registerStatusRoutes()
 
     routing {
-        static {
-            resources("files")
+        static("static") {
+            resources("static")
         }
     }
 }

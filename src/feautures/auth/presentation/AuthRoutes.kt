@@ -28,7 +28,7 @@ fun Application.registerAuthRoutes() {
 fun Route.getLoginRoute() {
     route("/login") {
         get {
-            call.respondTemplate("login.html")
+            call.respond(FreeMarkerContent("auth_login.ftl", null))
         }
     }
 }
@@ -54,7 +54,7 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
 fun Route.getRegisterRoute() {
     route("/register") {
         get {
-            call.respondTemplate("register.html")
+            call.respond(FreeMarkerContent("auth_register.ftl", null))
         }
     }
 }

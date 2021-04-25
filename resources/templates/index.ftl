@@ -1,5 +1,5 @@
 <#import "template.ftl" as layout />
-<@layout.mainLayout>
+<@layout.main>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -22,4 +22,4 @@
             <a href="/auth/login" class="btn btn-secondary float-right" role="button">Login</a>
         </div>
     </div>
-</@layout.mainLayout>
+</@layout.main>
