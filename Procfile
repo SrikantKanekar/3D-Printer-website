@@ -1,0 +1,1 @@
+web: ./build/install/3DPrinter/bin/3DPrinter

@@ -1,5 +1,5 @@
 <#import "template.ftl" as layout />
-<@layout.main>
+<@layout.main title="Home" css="" js="">
     <table class="table">
         <thead class="thead-dark">
             <tr>
