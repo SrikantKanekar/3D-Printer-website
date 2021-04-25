@@ -9,6 +9,17 @@
 
 		<!--===============================================================================================-->
 		<link rel="icon" type="image/png" href="/static/images/icons/favicon.ico" />
+		<link rel="apple-touch-icon" type="image/png" href="/static/images/icons/favicon.ico">
+		<!--===============================================================================================-->
+  		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="/static/vendor/aos/aos.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap-icons/bootstrap-icons.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="/static/vendor/glightbox/css/glightbox.min.css">
+		<!--===============================================================================================-->
+		<link rel="stylesheet" type="text/css" href="/static/vendor/swiper/swiper-bundle.min.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
 		<!--===============================================================================================-->
@@ -34,6 +45,18 @@
 		
 		<#nested/>
 		
+		<!--===============================================================================================-->
+		<script src="/static/vendor/aos/aos.js"></script>
+		<!--===============================================================================================-->
+  		<script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+		<!--===============================================================================================-->
+  		<script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+		<!--===============================================================================================-->
+  		<script src="/static/vendor/php-email-form/validate.js"></script>
+		<!--===============================================================================================-->
+  		<script src="/static/vendor/purecounter/purecounter.js"></script>
+		<!--===============================================================================================-->
+  		<script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
 		<!--===============================================================================================-->
 		<script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
 		<!--===============================================================================================-->

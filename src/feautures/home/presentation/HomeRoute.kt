@@ -17,6 +17,6 @@ fun Application.registerHomeRoute() {
 
 fun Route.homeRoute(authRepository: AuthRepository) {
     get("/") {
-        call.respond(FreeMarkerContent("index.ftl", mapOf("users" to authRepository.getAllUsers())))
+        call.respond(FreeMarkerContent("home.ftl", null))
     }
 }
