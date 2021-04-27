@@ -1,6 +1,6 @@
 package com.example.feautures.auth.data
 
-import com.example.feautures.auth.domain.User
+import com.example.feautures.account.domain.User
 import com.example.util.checkHashForPassword
 
 class AuthRepository(
@@ -18,9 +18,5 @@ class AuthRepository(
     suspend fun login(email: String, passwordToCheck: String): Boolean {
         val hashedPassword = authDataSource.getPassword(email) ?: return false
         return checkHashForPassword(passwordToCheck, hashedPassword)
-    }
-
-    suspend fun getAllUsers(): List<User> {
-        return authDataSource.getAllUsers()
     }
 }

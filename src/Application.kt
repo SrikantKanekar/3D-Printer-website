@@ -1,13 +1,11 @@
 package com.example
 
 import com.example.di.authModule
-import com.example.feautures.account.presentation.accountRoutes
 import com.example.feautures.account.presentation.registerAccountRoutes
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.feautures.auth.presentation.registerAuthRoutes
 import com.example.feautures.home.presentation.registerHomeRoute
 import com.example.util.registerStatusRoutes
-import com.example.util.statusRoutes
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -60,7 +58,6 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
             name = "AUTH_COOKIE",
             storage = SessionStorageMemory()
         ) {
-            cookie.path = "/"
             cookie.extensions["SameSite"] = "lax"
         }
     }

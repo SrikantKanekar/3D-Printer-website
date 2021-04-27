@@ -1,7 +1,7 @@
 package com.example.feautures.auth.presentation
 
 import com.example.feautures.auth.data.AuthRepository
-import com.example.feautures.auth.domain.User
+import com.example.feautures.account.domain.User
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.util.getHashWithSalt
 import io.ktor.application.*
@@ -65,10 +65,11 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
             val params = call.receiveParameters()
             val email = params["Email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
             val password = params["Password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+            val username = params["username"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
             val userExists = authRepository.checkIfUserExists(email)
             if (!userExists) {
-                if (authRepository.register(User(email, getHashWithSalt(password)))) {
+                if (authRepository.register(User(email, getHashWithSalt(password), username))) {
                     call.sessions.set(UserIdPrincipal(email))
                     call.respond(HttpStatusCode.OK, "Successfully created account!")
                 } else {

@@ -1,6 +1,6 @@
-package com.example.data
+package data
 
-import com.example.feautures.auth.domain.User
+import com.example.feautures.account.domain.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

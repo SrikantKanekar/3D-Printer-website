@@ -10,6 +10,11 @@
 						</span>
 					</div>
 
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+                        <input class="input100" type="text" name="username" placeholder="Username">
+                        <span class="focus-input100"></span>
+                    </div>
+
                     <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email: ex@abc.xyz">
                         <input class="input100" type="text" name="Email" placeholder="Email">
                         <span class="focus-input100"></span>
