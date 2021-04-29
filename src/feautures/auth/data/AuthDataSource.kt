@@ -1,5 +1,6 @@
 package com.example.feautures.auth.data
 
+import com.example.feautures.account.domain.CartCookie
 import com.example.feautures.account.domain.User
 
 interface AuthDataSource {
@@ -9,4 +10,6 @@ interface AuthDataSource {
     suspend fun checkIfEmailExist(email: String): Boolean
 
     suspend fun getPassword(email: String): String?
+
+    suspend fun syncCart(email: String, cartCookie: CartCookie?): Boolean
 }

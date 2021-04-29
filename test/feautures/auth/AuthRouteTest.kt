@@ -1,6 +1,7 @@
 package feautures.auth
 
 import com.example.feautures.auth.data.AuthRepository
+import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.module
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
@@ -8,6 +9,7 @@ import data.Constants.TEST_USER_USERNAME
 import di.testAuthModule
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import io.ktor.sessions.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -18,6 +20,15 @@ import kotlin.test.assertTrue
 class AuthRouteTest: KoinTest {
 
     private val authRepository by inject<AuthRepository>()
+
+    @Test
+    fun `get login route test`() {
+        withTestApplication({ module(testing = true, koinModules = listOf(testAuthModule)) }) {
+            handleRequest(HttpMethod.Get, "/auth/login").apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+            }
+        }
+    }
 
     @Test
     fun `login success with valid credentials`() {
@@ -57,7 +68,7 @@ class AuthRouteTest: KoinTest {
                 )
             }.apply {
                 runBlocking {
-                    assertEquals(HttpStatusCode.OK, response.status())
+                    assertEquals(HttpStatusCode.Found, response.status())
                     assertTrue(authRepository.checkIfUserExists("NEW_EMAIL"))
                 }
             }
@@ -97,7 +108,9 @@ fun TestApplicationEngine.testUserLogin() {
             ).formUrlEncode()
         )
     }.apply {
-        assertEquals(HttpStatusCode.OK, response.status())
+        assertEquals(HttpStatusCode.Found, response.status())
+        val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
+        assertEquals(TEST_USER_EMAIL, userIdPrincipal?.email)
     }
 }
 

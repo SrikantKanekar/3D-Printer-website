@@ -2,61 +2,169 @@
   {
     "email": "email1",
     "password": "password1",
-    "username": "username1"
+    "username": "username1",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email2",
     "password": "password2",
-    "username": "username2"
+    "username": "username2",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email3",
     "password": "password3",
-    "username": "username3"
+    "username": "username3",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email4",
     "password": "password4",
-    "username": "username4"
+    "username": "username4",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email5",
     "password": "password5",
-    "username": "usernam5"
+    "username": "usernam5",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email6",
     "password": "password6",
-    "username": "username6"
+    "username": "username6",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email7",
     "password": "password7",
-    "username": "username7"
+    "username": "username7",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "test_user_email",
     "password": "011e60e8f6fed41ef1594488c618bffc64255404544a285332c5ae147c50cb2f:0d2e79e813c117f2ef170d5da38e30693ac6df2a3180a6523dfd4458abae82f8",
-    "username": "test_user_username"
+    "username": "test_user_username",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email9",
     "password": "password9",
-    "username": "username9"
+    "username": "username9",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email10",
     "password": "password10",
-    "username": "username10"
+    "username": "username10",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email11",
     "password": "password11",
-    "username": "username11"
+    "username": "username11",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   },
   {
     "email": "email12",
     "password": "password12",
-    "username": "username12"
+    "username": "username12",
+    "address": {
+      "city": null,
+      "state": null,
+      "country": null
+    },
+    "cartOrders": [],
+    "currentOrders": [],
+    "orderHistory": [],
+    "notification": []
   }
 ]

@@ -62,6 +62,7 @@ fun Route.postUpdateAccountRoute(accountRepository: AccountRepository) {
                 val updated = accountRepository.updateUser(user.copy(username = username))
                 if (updated) call.respond(HttpStatusCode.OK, "username updated")
             } catch (e: Exception) {
+                print(e.localizedMessage)
                 call.respond(HttpStatusCode.NotFound, "Account doesn't exist")
             }
         }

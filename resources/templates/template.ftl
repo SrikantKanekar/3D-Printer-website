@@ -21,8 +21,6 @@
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/vendor/swiper/swiper-bundle.min.css">
 		<!--===============================================================================================-->
-		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
-		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
@@ -40,6 +38,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/css/auth/util.css">
 		<link rel="stylesheet" type="text/css" href=${css}>
 		<!--===============================================================================================-->  
+		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+		<!--===============================================================================================-->
 	</head>
 	<body>
 		

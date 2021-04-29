@@ -1,10 +1,12 @@
 package com.example
 
 import com.example.di.authModule
+import com.example.feautures.account.domain.CartCookie
 import com.example.feautures.account.presentation.registerAccountRoutes
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.feautures.auth.presentation.registerAuthRoutes
 import com.example.feautures.home.presentation.registerHomeRoute
+import com.example.feautures.order.presentation.registerOrderRoutes
 import com.example.util.registerStatusRoutes
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
@@ -43,7 +45,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     }
 
     install(Authentication) {
-        session<UserIdPrincipal>("SESSION_AUTH"){
+        session<UserIdPrincipal>("SESSION_AUTH") {
             challenge {
                 throw AuthenticationException()
             }
@@ -60,11 +62,18 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
         ) {
             cookie.extensions["SameSite"] = "lax"
         }
+        cookie<CartCookie>(
+            name = "CART_COOKIE",
+            storage = SessionStorageMemory()
+        ) {
+            cookie.extensions["SameSite"] = "lax"
+        }
     }
 
     registerHomeRoute()
     registerAuthRoutes()
     registerAccountRoutes()
+    registerOrderRoutes()
     registerStatusRoutes()
 
     routing {

@@ -1,7 +1,8 @@
 package com.example.feautures.auth.presentation
 
-import com.example.feautures.auth.data.AuthRepository
+import com.example.feautures.account.domain.CartCookie
 import com.example.feautures.account.domain.User
+import com.example.feautures.auth.data.AuthRepository
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.util.getHashWithSalt
 import io.ktor.application.*
@@ -15,6 +16,7 @@ import org.koin.ktor.ext.inject
 
 fun Application.registerAuthRoutes() {
     val authRepository by inject<AuthRepository>()
+
     routing {
         route("/auth") {
             getLoginRoute()
@@ -43,7 +45,10 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
             val isPasswordCorrect = authRepository.login(email, password)
             if (isPasswordCorrect) {
                 call.sessions.set(UserIdPrincipal(email))
-                call.respond(HttpStatusCode.OK, "Your are now logged in")
+                val cartCookie = call.sessions.get<CartCookie>()
+                authRepository.syncCart(email, cartCookie)
+                call.sessions.clear<CartCookie>()
+                call.respondRedirect("/account")
             } else {
                 call.respond(HttpStatusCode.NotAcceptable, "The E-Mail or password is incorrect")
             }
@@ -71,7 +76,10 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
             if (!userExists) {
                 if (authRepository.register(User(email, getHashWithSalt(password), username))) {
                     call.sessions.set(UserIdPrincipal(email))
-                    call.respond(HttpStatusCode.OK, "Successfully created account!")
+                    val cartCookie = call.sessions.get<CartCookie>()
+                    authRepository.syncCart(email, cartCookie)
+                    call.sessions.clear<CartCookie>()
+                    call.respondRedirect("/account")
                 } else {
                     call.respond(HttpStatusCode.InternalServerError, "An unknown error occurred")
                 }

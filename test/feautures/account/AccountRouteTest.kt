@@ -3,10 +3,8 @@ package feautures.account
 import com.example.feautures.account.data.AccountRepository
 import com.example.module
 import com.example.util.checkHashForPassword
-import data.Constants
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
-import data.Constants.UPDATED_USERNAME
 import di.testAuthModule
 import feautures.auth.runWithTestUser
 import feautures.auth.testUserLogin
@@ -52,13 +50,13 @@ class AccountRouteTest: KoinTest {
                     addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
                     setBody(
                         listOf(
-                            "username" to UPDATED_USERNAME
+                            "username" to "UPDATED_USERNAME"
                         ).formUrlEncode()
                     )
                 }.apply {
+                    assertEquals(HttpStatusCode.OK, response.status())
                     runBlocking {
-                        assertEquals(HttpStatusCode.OK, response.status())
-                        assertEquals(UPDATED_USERNAME, accountRepository.getUser(TEST_USER_EMAIL)?.username)
+                        assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL)?.username)
                     }
                 }
             }
@@ -135,8 +133,8 @@ class AccountRouteTest: KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
+                    assertEquals(HttpStatusCode.OK, response.status())
                     runBlocking {
-                        assertEquals(HttpStatusCode.OK, response.status())
                         assertFalse(
                             checkHashForPassword(
                                 TEST_USER_PASSWORD,
