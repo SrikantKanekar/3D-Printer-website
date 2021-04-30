@@ -16,7 +16,7 @@ const val COLLECTION_CART = "CART"
 const val COLLECTION_PROCESSING = "PROCESSING"
 const val COLLECTION_HISTORY = "HISTORY"
 
-private const val connectionString = "mongodb+srv://admin:oziPlEVFkEeLuajk@3design.n5d76.mongodb.net/3Design-database?retryWrites=true&w=majority"
+private const val connectionString = "mongodb+srv://admin:oziPlEVFkEeLuajk@3design.n5d76.mongodb.net/$DATABASE_NAME?retryWrites=true&w=majority"
 private val client = KMongo.createClient(connectionString).coroutine
 private val database = client.getDatabase(DATABASE_NAME)
 
