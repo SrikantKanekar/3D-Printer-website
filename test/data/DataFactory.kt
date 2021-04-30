@@ -1,7 +1,7 @@
 package data
 
-import com.example.feautures.account.domain.User
-import com.example.feautures.order.domain.Order
+import com.example.features.account.domain.User
+import com.example.features.order.domain.Order
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -1,15 +1,15 @@
 package di
 
-import com.example.feautures.account.data.AccountDataSource
-import com.example.feautures.account.data.AccountRepository
-import com.example.feautures.auth.data.AuthDataSource
-import com.example.feautures.auth.data.AuthRepository
-import com.example.feautures.order.data.OrderDataSource
-import com.example.feautures.order.data.OrderRepository
+import com.example.features.account.data.AccountDataSource
+import com.example.features.account.data.AccountRepository
+import com.example.features.auth.data.AuthDataSource
+import com.example.features.auth.data.AuthRepository
+import com.example.features.order.data.OrderDataSource
+import com.example.features.order.data.OrderRepository
 import data.DataFactory
-import feautures.account.FakeAccountDataSourceImpl
-import feautures.auth.FakeAuthDataSourceImpl
-import feautures.order.FakeOrderDataSourceImpl
+import features.account.FakeAccountDataSourceImpl
+import features.auth.FakeAuthDataSourceImpl
+import features.order.FakeOrderDataSourceImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

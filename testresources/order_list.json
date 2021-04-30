@@ -70,7 +70,7 @@
     "dueDelivery": null
   },
   {
-    "id": "test_cart_order",
+    "id": "test_wishlist_order",
     "fileName": "note_db",
     "status": "CREATED",
     "basicSettings": {

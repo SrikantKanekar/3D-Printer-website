@@ -2,15 +2,15 @@ package com.example.di
 
 import com.example.database.currentOrders
 import com.example.database.users
-import com.example.feautures.account.data.AccountDataSource
-import com.example.feautures.account.data.AccountDataSourceImpl
-import com.example.feautures.account.data.AccountRepository
-import com.example.feautures.auth.data.AuthDataSource
-import com.example.feautures.auth.data.AuthDataSourceImpl
-import com.example.feautures.auth.data.AuthRepository
-import com.example.feautures.order.data.OrderDataSource
-import com.example.feautures.order.data.OrderDataSourceImpl
-import com.example.feautures.order.data.OrderRepository
+import com.example.features.account.data.AccountDataSource
+import com.example.features.account.data.AccountDataSourceImpl
+import com.example.features.account.data.AccountRepository
+import com.example.features.auth.data.AuthDataSource
+import com.example.features.auth.data.AuthDataSourceImpl
+import com.example.features.auth.data.AuthRepository
+import com.example.features.order.data.OrderDataSource
+import com.example.features.order.data.OrderDataSourceImpl
+import com.example.features.order.data.OrderRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
