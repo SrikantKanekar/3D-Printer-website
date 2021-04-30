@@ -1,6 +1,6 @@
 package com.example.feautures.order.presentation
 
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.feautures.order.data.OrderRepository
 import com.example.feautures.order.domain.AdvancedSettings
@@ -54,11 +54,11 @@ fun Route.createOrderRoute(orderRepository: OrderRepository) {
 
                     val principal = call.sessions.get<UserIdPrincipal>()
                     if (principal != null) {
-                        orderRepository.addOrderToUserCart(principal.email, order.id)
+                        orderRepository.addOrderToUserWishlist(principal.email, order.id)
                     } else {
-                        val cartCookie = call.sessions.get<CartCookie>() ?: CartCookie()
-                        cartCookie.orders.add(order.id)
-                        call.sessions.set(cartCookie)
+                        val cookie = call.sessions.get<WishlistCookie>() ?: WishlistCookie()
+                        cookie.orders.add(order.id)
+                        call.sessions.set(cookie)
                     }
 
                     val file = File("uploads/${order.id}")

@@ -1,10 +1,9 @@
 package feautures.order
 
 import com.example.feautures.account.data.AccountRepository
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.order.data.OrderRepository
 import com.example.module
-import data.Constants
 import data.Constants.TEST_CART_ORDER
 import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_USER_EMAIL
@@ -13,7 +12,6 @@ import feautures.auth.runWithTestUser
 import feautures.auth.testUserLogin
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
 import io.ktor.utils.io.streams.*
@@ -69,7 +67,7 @@ class OrderRouteTest : KoinTest {
                 setBody(boundary, listOf(uploadFile))
             }.apply {
                 runBlocking {
-                    val cartCookie = response.call.sessions.get<CartCookie>()
+                    val cartCookie = response.call.sessions.get<WishlistCookie>()
                     val orderId = cartCookie!!.orders[0]
                     val order = orderRepository.getOrder(orderId)!!
                     assertEquals(TEST_FILE_UPLOAD_NAME, order.fileName)
@@ -92,7 +90,7 @@ class OrderRouteTest : KoinTest {
                     setBody(boundary, listOf(uploadFile))
                 }.apply {
                     runBlocking {
-                        val testUserCart = accountRepository.getUser(TEST_USER_EMAIL)!!.cartOrders
+                        val testUserCart = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
                         val orderId = testUserCart[0]
                         val order = orderRepository.getOrder(orderId)!!
                         assertEquals(TEST_FILE_UPLOAD_NAME, order.fileName)
@@ -116,13 +114,13 @@ class OrderRouteTest : KoinTest {
                     setBody(boundary, listOf(uploadFile))
                 }.apply {
                     runBlocking {
-                        val cartCookie = response.call.sessions.get<CartCookie>()
+                        val cartCookie = response.call.sessions.get<WishlistCookie>()
                         val cookieOrderId = cartCookie!!.orders[0]
                         val cookieOrder = orderRepository.getOrder(cookieOrderId)!!
                         assertEquals(TEST_FILE_UPLOAD_NAME, cookieOrder.fileName)
 
                         testUserLogin()
-                        val testUserCart = accountRepository.getUser(TEST_USER_EMAIL)!!.cartOrders
+                        val testUserCart = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
                         val orderId = testUserCart[0]
                         val order = orderRepository.getOrder(orderId)!!
                         assertEquals(TEST_FILE_UPLOAD_NAME, order.fileName)

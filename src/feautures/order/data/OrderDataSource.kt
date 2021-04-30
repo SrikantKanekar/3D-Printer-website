@@ -8,7 +8,7 @@ interface OrderDataSource {
 
     suspend fun createOrder(order: Order): Boolean
 
-    suspend fun addOrderToUserCart(email: String, orderId: String): Boolean
+    suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean
 
     suspend fun getOrder(id: String): Order?
 

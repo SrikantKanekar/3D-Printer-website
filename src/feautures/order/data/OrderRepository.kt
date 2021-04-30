@@ -14,8 +14,8 @@ class OrderRepository(
         return if (wasAcknowledged) order else null
     }
 
-    suspend fun addOrderToUserCart(email: String, orderId: String): Boolean {
-        return orderDataSource.addOrderToUserCart(email, orderId)
+    suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean {
+        return orderDataSource.addOrderToUserWishlist(email, orderId)
     }
 
     suspend fun getOrder(id: String): Order?{

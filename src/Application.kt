@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.di.authModule
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.presentation.registerAccountRoutes
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.feautures.auth.presentation.registerAuthRoutes
@@ -62,8 +62,8 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
         ) {
             cookie.extensions["SameSite"] = "lax"
         }
-        cookie<CartCookie>(
-            name = "CART_COOKIE",
+        cookie<WishlistCookie>(
+            name = "WISHLIST_COOKIE",
             storage = SessionStorageMemory()
         ) {
             cookie.extensions["SameSite"] = "lax"

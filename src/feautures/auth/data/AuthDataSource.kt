@@ -1,6 +1,6 @@
 package com.example.feautures.auth.data
 
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.domain.User
 
 interface AuthDataSource {
@@ -11,5 +11,5 @@ interface AuthDataSource {
 
     suspend fun getPassword(email: String): String?
 
-    suspend fun syncCart(email: String, cartCookie: CartCookie?): Boolean
+    suspend fun syncOrders(email: String, wishlistCookie: WishlistCookie?): Boolean
 }

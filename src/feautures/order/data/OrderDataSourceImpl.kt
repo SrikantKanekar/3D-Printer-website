@@ -17,9 +17,9 @@ class OrderDataSourceImpl(
         return currentOrders.insertOne(order).wasAcknowledged()
     }
 
-    override suspend fun addOrderToUserCart(email: String, orderId: String): Boolean {
+    override suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean {
         val user = users.findOne(User::email eq email)!!
-        user.cartOrders.add(orderId)
+        user.wishlist.add(orderId)
         return users.updateOne(User::email eq user.email, user).wasAcknowledged()
     }
 

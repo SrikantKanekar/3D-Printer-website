@@ -1,6 +1,6 @@
 package feautures.auth
 
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.auth.data.AuthDataSource
 import com.example.feautures.account.domain.User
 
@@ -21,11 +21,11 @@ class FakeAuthDataSourceImpl(
         return userData[email]?.password
     }
 
-    override suspend fun syncCart(email: String, cartCookie: CartCookie?): Boolean {
-        cartCookie?.let {
+    override suspend fun syncOrders(email: String, wishlistCookie: WishlistCookie?): Boolean {
+        wishlistCookie?.let {
             val user = userData[email]!!
-            cartCookie.orders.forEach { order ->
-                if (!user.cartOrders.contains(order)) user.cartOrders.add(order)
+            wishlistCookie.orders.forEach { order ->
+                if (!user.wishlist.contains(order)) user.wishlist.add(order)
             }
             userData[email] = user
         }

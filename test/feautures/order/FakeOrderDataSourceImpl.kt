@@ -16,9 +16,9 @@ class FakeOrderDataSourceImpl(
         return true
     }
 
-    override suspend fun addOrderToUserCart(email: String, orderId: String): Boolean {
+    override suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean {
         val user = userData[email]!!
-        user.cartOrders.add(orderId)
+        user.wishlist.add(orderId)
         userData[email] = user
         return true
     }

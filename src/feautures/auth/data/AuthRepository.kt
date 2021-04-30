@@ -1,6 +1,6 @@
 package com.example.feautures.auth.data
 
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.domain.User
 import com.example.util.checkHashForPassword
 
@@ -21,7 +21,7 @@ class AuthRepository(
         return checkHashForPassword(passwordToCheck, hashedPassword)
     }
 
-    suspend fun syncCart(email: String, cartCookie: CartCookie?): Boolean {
-        return authDataSource.syncCart(email, cartCookie)
+    suspend fun syncOrders(email: String, wishlistCookie: WishlistCookie?): Boolean {
+        return authDataSource.syncOrders(email, wishlistCookie)
     }
 }

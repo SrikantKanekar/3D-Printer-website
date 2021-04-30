@@ -1,6 +1,6 @@
 package com.example.feautures.auth.presentation
 
-import com.example.feautures.account.domain.CartCookie
+import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.domain.User
 import com.example.feautures.auth.data.AuthRepository
 import com.example.feautures.auth.domain.UserIdPrincipal
@@ -45,9 +45,9 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
             val isPasswordCorrect = authRepository.login(email, password)
             if (isPasswordCorrect) {
                 call.sessions.set(UserIdPrincipal(email))
-                val cartCookie = call.sessions.get<CartCookie>()
-                authRepository.syncCart(email, cartCookie)
-                call.sessions.clear<CartCookie>()
+                val cookie = call.sessions.get<WishlistCookie>()
+                authRepository.syncOrders(email, cookie)
+                call.sessions.clear<WishlistCookie>()
                 call.respondRedirect("/account")
             } else {
                 call.respond(HttpStatusCode.NotAcceptable, "The E-Mail or password is incorrect")
@@ -76,9 +76,9 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
             if (!userExists) {
                 if (authRepository.register(User(email, getHashWithSalt(password), username))) {
                     call.sessions.set(UserIdPrincipal(email))
-                    val cartCookie = call.sessions.get<CartCookie>()
-                    authRepository.syncCart(email, cartCookie)
-                    call.sessions.clear<CartCookie>()
+                    val cookie = call.sessions.get<WishlistCookie>()
+                    authRepository.syncOrders(email, cookie)
+                    call.sessions.clear<WishlistCookie>()
                     call.respondRedirect("/account")
                 } else {
                     call.respond(HttpStatusCode.InternalServerError, "An unknown error occurred")
