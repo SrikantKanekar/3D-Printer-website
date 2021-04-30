@@ -5,9 +5,15 @@ import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.presentation.registerAccountRoutes
 import com.example.feautures.auth.domain.UserIdPrincipal
 import com.example.feautures.auth.presentation.registerAuthRoutes
-import com.example.feautures.home.presentation.registerHomeRoute
+import com.example.feautures.cart.presentation.registerCartRoutes
+import com.example.feautures.checkout.presentation.registerCheckoutRoutes
+import com.example.feautures.history.presentation.registerHistoryRoutes
+import com.example.feautures.util.presentation.registerHomeRoute
+import com.example.feautures.notification.presentation.registerNotificationRoutes
 import com.example.feautures.order.presentation.registerOrderRoutes
-import com.example.util.registerStatusRoutes
+import com.example.feautures.tracker.presentation.registerTrackerRoutes
+import com.example.feautures.wishlist.presentation.registerWishlistRoutes
+import com.example.feautures.util.presentation.registerStatusRoutes
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -70,15 +76,21 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
         }
     }
 
-    registerHomeRoute()
-    registerAuthRoutes()
-    registerAccountRoutes()
-    registerOrderRoutes()
-    registerStatusRoutes()
-
     routing {
         static("static") {
             resources("static")
         }
     }
+
+    registerAccountRoutes()
+    registerAuthRoutes()
+    registerCartRoutes()
+    registerCheckoutRoutes()
+    registerHistoryRoutes()
+    registerNotificationRoutes()
+    registerOrderRoutes()
+    registerTrackerRoutes()
+    registerWishlistRoutes()
+    registerHomeRoute()
+    registerStatusRoutes()
 }

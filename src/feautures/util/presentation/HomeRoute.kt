@@ -1,4 +1,4 @@
-package com.example.feautures.home.presentation
+package com.example.feautures.util.presentation
 
 import com.example.feautures.auth.data.AuthRepository
 import io.ktor.application.*

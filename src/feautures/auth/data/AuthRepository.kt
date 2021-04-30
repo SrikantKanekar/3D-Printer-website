@@ -2,7 +2,7 @@ package com.example.feautures.auth.data
 
 import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.domain.User
-import com.example.util.checkHashForPassword
+import com.example.feautures.auth.domain.checkHashForPassword
 
 class AuthRepository(
     private val authDataSource: AuthDataSource

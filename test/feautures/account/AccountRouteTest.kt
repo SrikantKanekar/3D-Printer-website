@@ -2,7 +2,7 @@ package feautures.account
 
 import com.example.feautures.account.data.AccountRepository
 import com.example.module
-import com.example.util.checkHashForPassword
+import com.example.feautures.auth.domain.checkHashForPassword
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
 import di.testAuthModule

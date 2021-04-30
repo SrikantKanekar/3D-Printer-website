@@ -2,8 +2,8 @@ package com.example.feautures.account.presentation
 
 import com.example.feautures.account.data.AccountRepository
 import com.example.feautures.auth.domain.UserIdPrincipal
-import com.example.util.checkHashForPassword
-import com.example.util.getHashWithSalt
+import com.example.feautures.auth.domain.checkHashForPassword
+import com.example.feautures.auth.domain.getHashWithSalt
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*

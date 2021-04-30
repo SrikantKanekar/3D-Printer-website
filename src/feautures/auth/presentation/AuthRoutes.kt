@@ -4,7 +4,7 @@ import com.example.feautures.wishlist.domain.WishlistCookie
 import com.example.feautures.account.domain.User
 import com.example.feautures.auth.data.AuthRepository
 import com.example.feautures.auth.domain.UserIdPrincipal
-import com.example.util.getHashWithSalt
+import com.example.feautures.auth.domain.getHashWithSalt
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
