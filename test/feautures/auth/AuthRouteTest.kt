@@ -55,6 +55,15 @@ class AuthRouteTest: KoinTest {
     }
 
     @Test
+    fun `get register route test`() {
+        withTestApplication({ module(testing = true, koinModules = listOf(testAuthModule)) }) {
+            handleRequest(HttpMethod.Get, "/auth/register").apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+            }
+        }
+    }
+
+    @Test
     fun `register success`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testAuthModule)) }) {
             handleRequest(HttpMethod.Post, "/auth/register") {
@@ -70,6 +79,8 @@ class AuthRouteTest: KoinTest {
                 runBlocking {
                     assertEquals(HttpStatusCode.Found, response.status())
                     assertTrue(authRepository.checkIfUserExists("NEW_EMAIL"))
+                    val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
+                    assertEquals("NEW_EMAIL", userIdPrincipal?.email)
                 }
             }
         }
