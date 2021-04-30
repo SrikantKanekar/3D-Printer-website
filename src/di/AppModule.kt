@@ -1,7 +1,6 @@
 package com.example.di
 
-import com.example.database.currentOrders
-import com.example.database.users
+import com.example.database.*
 import com.example.features.account.data.AccountDataSource
 import com.example.features.account.data.AccountDataSourceImpl
 import com.example.features.account.data.AccountRepository
@@ -16,19 +15,19 @@ import org.koin.dsl.module
 
 val authModule = module {
 
-    single(named("users")) { users }
-    single(named("currentOrders")) { currentOrders }
+    single(named(COLLECTION_USER)) { users }
+    single(named(COLLECTION_WISHLIST)) { wishlistOrders }
 
-    single<AuthDataSource> { AuthDataSourceImpl(get(named("users"))) }
+    single<AuthDataSource> { AuthDataSourceImpl(get(named(COLLECTION_USER))) }
     single { AuthRepository(get()) }
 
-    single<AccountDataSource> { AccountDataSourceImpl(get(named("users"))) }
+    single<AccountDataSource> { AccountDataSourceImpl(get(named(COLLECTION_USER))) }
     single { AccountRepository(get()) }
 
     single<OrderDataSource> {
         OrderDataSourceImpl(
-            currentOrders = get(named("currentOrders")),
-            users = get(named("users"))
+            wishlistOrders = get(named(COLLECTION_WISHLIST)),
+            users = get(named(COLLECTION_USER))
         )
     }
     single { OrderRepository(get()) }

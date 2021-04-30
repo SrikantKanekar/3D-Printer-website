@@ -1,5 +1,7 @@
 package di
 
+import com.example.database.COLLECTION_USER
+import com.example.database.COLLECTION_WISHLIST
 import com.example.features.account.data.AccountDataSource
 import com.example.features.account.data.AccountRepository
 import com.example.features.auth.data.AuthDataSource
@@ -14,19 +16,19 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val testAuthModule = module {
-    single(named("users")) { DataFactory().produceHashMapOfUsers() }
-    single(named("currentOrders")) { DataFactory().produceHashMapOfOrders() }
+    single(named(COLLECTION_USER)) { DataFactory().produceHashMapOfUsers() }
+    single(named(COLLECTION_WISHLIST)) { DataFactory().produceHashMapOfOrders() }
 
-    single<AuthDataSource> { FakeAuthDataSourceImpl(get(named("users"))) }
+    single<AuthDataSource> { FakeAuthDataSourceImpl(get(named(COLLECTION_USER))) }
     single { AuthRepository(get()) }
 
-    single<AccountDataSource> { FakeAccountDataSourceImpl(get(named("users"))) }
+    single<AccountDataSource> { FakeAccountDataSourceImpl(get(named(COLLECTION_USER))) }
     single { AccountRepository(get()) }
 
     single<OrderDataSource> {
         FakeOrderDataSourceImpl(
-            orderData = get(named("currentOrders")),
-            userData = get(named("users"))
+            wishlistOrders = get(named(COLLECTION_WISHLIST)),
+            userData = get(named(COLLECTION_USER))
         )
     }
     single { OrderRepository(get()) }
