@@ -9,12 +9,15 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.setValue
 
 class OrderDataSourceImpl(
+    private val users: CoroutineCollection<User>,
     private val wishlistOrders: CoroutineCollection<Order>,
-    private val users: CoroutineCollection<User>
+    private val cartOrders: CoroutineCollection<Order>
 ) : OrderDataSource {
 
-    override suspend fun createOrder(order: Order): Boolean {
-        return wishlistOrders.insertOne(order).wasAcknowledged()
+    override suspend fun createOrder(fileName: String): Order {
+        val order = Order(fileName = fileName)
+        wishlistOrders.insertOne(order)
+        return order
     }
 
     override suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean {
@@ -23,25 +26,35 @@ class OrderDataSourceImpl(
         return users.updateOne(User::email eq user.email, user).wasAcknowledged()
     }
 
+    private suspend fun getOrderCollection(orderId: String): CoroutineCollection<Order>? {
+        val wishlist = wishlistOrders.findOneById(orderId)
+        return if (wishlist == null) {
+            val cart = cartOrders.findOneById(orderId)
+            if (cart != null) {
+                cartOrders
+            } else null
+        } else wishlistOrders
+    }
+
     override suspend fun getOrder(id: String): Order? {
-        return wishlistOrders.findOne(Order::id eq id)
+        return getOrderCollection(id)?.findOne(Order::id eq id)
     }
 
     override suspend fun updateFileName(id: String, fileName: String): Boolean {
-        return wishlistOrders
-            .updateOne(Order::id eq id, setValue(Order::fileName, fileName))
-            .wasAcknowledged()
+        return getOrderCollection(id)
+            ?.updateOne(Order::id eq id, setValue(Order::fileName, fileName))
+            ?.wasAcknowledged() ?: false
     }
 
     override suspend fun updateBasicSetting(id: String, basicSettings: BasicSettings): Boolean {
-        return wishlistOrders
-            .updateOne(Order::id eq id, setValue(Order::basicSettings, basicSettings))
-            .wasAcknowledged()
+        return getOrderCollection(id)
+            ?.updateOne(Order::id eq id, setValue(Order::basicSettings, basicSettings))
+            ?.wasAcknowledged() ?: false
     }
 
     override suspend fun updateAdvancedSetting(id: String, advancedSettings: AdvancedSettings): Boolean {
-        return wishlistOrders
-            .updateOne(Order::id eq id, setValue(Order::advancedSettings, advancedSettings))
-            .wasAcknowledged()
+        return getOrderCollection(id)
+            ?.updateOne(Order::id eq id, setValue(Order::advancedSettings, advancedSettings))
+            ?.wasAcknowledged() ?: false
     }
 }

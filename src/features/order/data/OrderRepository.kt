@@ -8,17 +8,15 @@ class OrderRepository(
     private val orderDataSource: OrderDataSource
 ) {
 
-    suspend fun createOrder(fileName: String): Order? {
-        val order = Order(fileName = fileName)
-        val wasAcknowledged = orderDataSource.createOrder(order)
-        return if (wasAcknowledged) order else null
+    suspend fun createOrder(fileName: String): Order {
+        return orderDataSource.createOrder(fileName)
     }
 
     suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean {
         return orderDataSource.addOrderToUserWishlist(email, orderId)
     }
 
-    suspend fun getOrder(id: String): Order?{
+    suspend fun getOrder(id: String): Order? {
         return orderDataSource.getOrder(id)
     }
 

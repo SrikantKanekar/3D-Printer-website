@@ -1,7 +1,6 @@
 package features.notification
 
 import com.example.features.account.domain.User
-import com.example.features.cart.data.CartDataSource
 import com.example.features.notification.data.NotificationDataSource
 
 class FakeNotificationDataSourceImpl(

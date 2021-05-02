@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken
 
 class DataFactory {
 
-    fun produceHashMapOfUsers(): HashMap<String, User> {
+    fun users(): HashMap<String, User> {
         val userList = Gson().fromJson<List<User>>(
             readFile("user_list.json"),
             object : TypeToken<List<User>>() {}.type
@@ -19,9 +19,21 @@ class DataFactory {
         return map
     }
 
-    fun produceHashMapOfOrders(): HashMap<String, Order> {
+    fun wishlistOrders(): HashMap<String, Order> {
         val orderList = Gson().fromJson<List<Order>>(
-            readFile("order_list.json"),
+            readFile("wishlist_orders.json"),
+            object : TypeToken<List<Order>>() {}.type
+        )
+        val map = HashMap<String, Order>()
+        for (order in orderList) {
+            map[order.id] = order
+        }
+        return map
+    }
+
+    fun cartOrders(): HashMap<String, Order> {
+        val orderList = Gson().fromJson<List<Order>>(
+            readFile("cart_orders.json"),
             object : TypeToken<List<Order>>() {}.type
         )
         val map = HashMap<String, Order>()

@@ -17,7 +17,7 @@ import org.koin.test.inject
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class AuthRouteTest: KoinTest {
+class AuthRouteTest : KoinTest {
 
     private val authRepository by inject<AuthRepository>()
 
@@ -99,7 +99,7 @@ class AuthRouteTest: KoinTest {
                     ).formUrlEncode()
                 )
             }.apply {
-                runBlocking{
+                runBlocking {
                     assertTrue(authRepository.checkIfUserExists(TEST_USER_EMAIL))
                     assertEquals(HttpStatusCode.Conflict, response.status())
                 }
@@ -125,8 +125,9 @@ fun TestApplicationEngine.testUserLogin() {
     }
 }
 
-fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit) =
+fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit) {
     cookiesSession {
         testUserLogin()
         test()
     }
+}

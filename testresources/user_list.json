@@ -113,8 +113,8 @@
       "state": null,
       "country": null
     },
-    "wishlist": [],
-    "cartOrders": [],
+    "wishlist": ["test_wishlist_order"],
+    "cartOrders": ["test_cart_order"],
     "currentOrders": [],
     "orderHistory": [],
     "notification": []

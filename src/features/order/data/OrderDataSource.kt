@@ -6,7 +6,7 @@ import com.example.features.order.domain.Order
 
 interface OrderDataSource {
 
-    suspend fun createOrder(order: Order): Boolean
+    suspend fun createOrder(fileName: String): Order
 
     suspend fun addOrderToUserWishlist(email: String, orderId: String): Boolean
 
