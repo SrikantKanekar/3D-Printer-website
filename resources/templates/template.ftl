@@ -36,6 +36,8 @@
 		<link rel="stylesheet" type="text/css" href="/static/vendor/daterangepicker/daterangepicker.css">
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/css/auth/util.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/home/style.css">
+
 		<link rel="stylesheet" type="text/css" href=${css}>
 		<!--===============================================================================================-->  
 		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
@@ -72,6 +74,7 @@
 		<!--===============================================================================================-->
 		<script src="/static/vendor/countdowntime/countdowntime.js"></script>
 		<!--===============================================================================================-->
+		<script src="/static/js/home/main.js"></script>
 		<script src=${js}></script>
 	</body>
 </html>

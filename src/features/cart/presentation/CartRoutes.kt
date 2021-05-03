@@ -26,7 +26,7 @@ private fun Route.getCartRoute(cartRepository: CartRepository) {
     get("/cart") {
         val principal = call.principal<UserIdPrincipal>()!!
         val orders = cartRepository.getUserCartOrders(principal.email)
-        call.respond(FreeMarkerContent("cart.ftl", mapOf("orders" to orders)))
+        call.respond(FreeMarkerContent("cart.ftl", mapOf("orders" to orders, "user" to principal)))
     }
 }
 

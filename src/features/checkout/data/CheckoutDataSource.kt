@@ -7,6 +7,8 @@ interface CheckoutDataSource {
 
     suspend fun getUserCartOrders(email: String): ArrayList<Order>
 
+    suspend fun getUserAddress(email: String): Address
+
     suspend fun removeCartOrder(email: String, orderId: String): Boolean
 
     suspend fun updateUserAddress(email: String, address: Address): Boolean

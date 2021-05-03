@@ -20,6 +20,11 @@ class FakeCheckoutDataSourceImpl(
         )
     }
 
+    override suspend fun getUserAddress(email: String): Address {
+        val user = userData[email]!!
+        return user.address
+    }
+
     override suspend fun removeCartOrder(email: String, orderId: String): Boolean {
         val user = userData[email]!!
         val removed = user.cartOrders.remove(orderId)

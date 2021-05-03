@@ -21,6 +21,11 @@ class CheckoutDataSourceImpl(
         )
     }
 
+    override suspend fun getUserAddress(email: String): Address {
+        val user = users.findOne(User::email eq email)!!
+        return user.address
+    }
+
     override suspend fun removeCartOrder(email: String, orderId: String): Boolean {
         val user = users.findOne(User::email eq email)!!
         val removed = user.cartOrders.remove(orderId)

@@ -28,8 +28,13 @@ fun Application.registerCheckoutRoutes() {
 private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
     get("/checkout") {
         val principal = call.principal<UserIdPrincipal>()!!
+        val address = checkoutRepository.getUserAddress(principal.email)
         val orders = checkoutRepository.getUserCartOrders(principal.email)
-        call.respond(FreeMarkerContent("checkout.ftl", mapOf("orders" to orders)))
+        call.respond(FreeMarkerContent("checkout.ftl", mapOf(
+            "orders" to orders,
+            "user" to principal,
+            "address" to address
+        )))
     }
 }
 

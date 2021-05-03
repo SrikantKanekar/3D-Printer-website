@@ -1,7 +1,10 @@
 <#import "template.ftl" as layout />
+<#import "header.ftl" as header />
 <@layout.main title="Checkout" css="" js="">
     
-    <div class="m-5 container">
+    <@header.header user="${user}" />
+
+    <div class="container" style="padding-top: 110px">
         <h2>Checkout</h2>
         
         <#if orders?has_content>
@@ -21,15 +24,15 @@
             <form action="/checkout/pay" method="post" class="m-5">
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
-                    <input type="text" name="country" class="form-control" id="country">
+                    <input type="text" name="country" value="${address.country}" class="form-control" id="country">
                 </div>
                 <div class="mb-3">
                     <label for="state" class="form-label">State</label>
-                    <input type="text" name="state" class="form-control" id="state">
+                    <input type="text" name="state" value="${address.state}" class="form-control" id="state">
                 </div>
                 <div class="mb-3">
                     <label for="city" class="form-label">City</label>
-                    <input type="text" name="city" class="form-control" id="city">
+                    <input type="text" name="city" value="${address.city}" class="form-control" id="city">
                 </div>
                 <button type="submit" class="btn btn-primary">Proceed to pay</button>
             </form>

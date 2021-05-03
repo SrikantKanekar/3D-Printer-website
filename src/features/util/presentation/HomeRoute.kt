@@ -1,22 +1,22 @@
 package com.example.features.util.presentation
 
-import com.example.features.auth.data.AuthRepository
+import com.example.features.auth.domain.UserIdPrincipal
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import org.koin.ktor.ext.inject
+import io.ktor.sessions.*
 
 fun Application.registerHomeRoute() {
-    val authRepository by inject<AuthRepository>()
 
     routing {
-        homeRoute(authRepository)
+        homeRoute()
     }
 }
 
-fun Route.homeRoute(authRepository: AuthRepository) {
+fun Route.homeRoute() {
     get("/") {
-        call.respond(FreeMarkerContent("home.ftl", null))
+        val principal = call.sessions.get<UserIdPrincipal>()
+        call.respond(FreeMarkerContent("home.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
 }

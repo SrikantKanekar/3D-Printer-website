@@ -10,6 +10,10 @@ class CheckoutRepository(
         return checkoutDataSource.getUserCartOrders(email)
     }
 
+    suspend fun getUserAddress(email: String): Address{
+        return checkoutDataSource.getUserAddress(email)
+    }
+
     suspend fun removeCartOrder(email: String, orderId: String): Boolean{
         return checkoutDataSource.removeCartOrder(email, orderId)
     }

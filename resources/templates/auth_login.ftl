@@ -1,5 +1,9 @@
 <#import "template.ftl" as layout />
+<#import "header.ftl" as header />
 <@layout.main title="Login" css="/static/css/auth/main.css" js="/static/js/auth/main.js">
+
+    <@header.header user="" />
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-90 p-b-30">

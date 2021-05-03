@@ -1,6 +1,10 @@
 <#import "template.ftl" as layout />
+<#import "header.ftl" as header />
 <@layout.main title="Reset Password" css="" js="">
-    <div class="container">
+
+    <@header.header user="${user}" />
+
+    <div class="container" style="padding-top: 110px">
         <form action="/account/reset-password" method="post" class="m-5">
             <div class="mb-3">
                 <label for="old_password" class="form-label">Old Password</label>

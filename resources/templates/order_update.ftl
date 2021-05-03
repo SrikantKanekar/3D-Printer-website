@@ -1,6 +1,10 @@
 <#import "template.ftl" as layout />
+<#import "header.ftl" as header />
 <@layout.main title="Update" css="" js="">
-<div class="container">
+
+    <@header.header user="${user}" />
+
+<div class="container" style="padding-top: 110px">
     <div class="mt-5">
         <form action="/order/${order.id}/file" method="post" enctype="multipart/form-data">
             <label for="file" class="form-label">Update file : ${order.fileName}</label>

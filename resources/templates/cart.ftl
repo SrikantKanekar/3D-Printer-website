@@ -1,7 +1,10 @@
 <#import "template.ftl" as layout />
+<#import "header.ftl" as header />
 <@layout.main title="Cart" css="" js="">
+
+    <@header.header user="${user}" />
     
-    <div class="m-5 container">
+    <div class="container" style="padding-top: 110px">
         <h2>Cart</h2>
         
         <#if orders?has_content>

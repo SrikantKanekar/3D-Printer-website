@@ -32,7 +32,8 @@ fun Application.registerOrderRoutes() {
 
 fun Route.getOrderRoute() {
     get("/order") {
-        call.respond(FreeMarkerContent("order_create.ftl", null))
+        val principal = call.sessions.get<UserIdPrincipal>()
+        call.respond(FreeMarkerContent("order_create.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
 }
 
@@ -84,9 +85,17 @@ fun Route.getUpdateOrderRoute(orderRepository: OrderRepository) {
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
+        val principal = call.sessions.get<UserIdPrincipal>()
         val order = orderRepository.getOrder(id)
         if (order != null) {
-            call.respond(FreeMarkerContent("order_update.ftl", mapOf("order" to order)))
+            call.respond(
+                FreeMarkerContent(
+                    "order_update.ftl", mapOf(
+                        "order" to order,
+                        "user" to (principal?.email ?: "")
+                    )
+                )
+            )
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "Invalid order ID")
         }
@@ -144,7 +153,7 @@ fun Route.updateBasicSettingsRoute(orderRepository: OrderRepository) {
         if (wasAcknowledged) {
             call.respondRedirect("/order/$id")
         } else {
-            call.respond(HttpStatusCode.NotAcceptable,"invalid order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
         }
     }
 }
@@ -162,7 +171,7 @@ fun Route.updateAdvancedSettingsRoute(orderRepository: OrderRepository) {
         if (wasAcknowledged) {
             call.respondRedirect("/order/$id")
         } else {
-            call.respond(HttpStatusCode.NotAcceptable,"invalid order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
         }
     }
 }

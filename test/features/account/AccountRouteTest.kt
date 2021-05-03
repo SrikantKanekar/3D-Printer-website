@@ -54,7 +54,7 @@ class AccountRouteTest: KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
-                    assertEquals(HttpStatusCode.OK, response.status())
+                    assertEquals(HttpStatusCode.Found, response.status())
                     runBlocking {
                         assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL)?.username)
                     }
@@ -133,7 +133,7 @@ class AccountRouteTest: KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
-                    assertEquals(HttpStatusCode.OK, response.status())
+                    assertEquals(HttpStatusCode.Found, response.status())
                     runBlocking {
                         assertFalse(
                             checkHashForPassword(

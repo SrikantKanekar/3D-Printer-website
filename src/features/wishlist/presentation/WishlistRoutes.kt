@@ -35,7 +35,15 @@ fun Route.getWishlistRoute(wishlistRepository: WishlistRepository) {
             else -> wishlistRepository.getUserWishlist(principal.email)
         }
         val orders = wishlistRepository.getOrderList(ordersIds)
-        call.respond(FreeMarkerContent("wishlist.ftl", mapOf("orders" to orders)))
+        call.respond(
+            FreeMarkerContent(
+                "wishlist.ftl",
+                mapOf(
+                    "orders" to orders,
+                    "user" to (principal?.email ?: "")
+                )
+            )
+        )
     }
 }
 
