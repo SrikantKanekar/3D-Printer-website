@@ -15,7 +15,7 @@ class FakeWishlistDataSourceImpl(
         return userData[email]!!.wishlist
     }
 
-    override suspend fun getOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
         return ArrayList(
             orderIds.map {
                 wishlistOrders[it]!!
@@ -49,5 +49,9 @@ class FakeWishlistDataSourceImpl(
             return true
         }
         return false
+    }
+
+    override suspend fun getAllWishlistOrders(): ArrayList<Order> {
+        return ArrayList(wishlistOrders.values)
     }
 }

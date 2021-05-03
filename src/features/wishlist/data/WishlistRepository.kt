@@ -10,8 +10,8 @@ class WishlistRepository(
         return wishlistDataSource.getUserWishlist(email)
     }
 
-    suspend fun getOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
-        return wishlistDataSource.getOrderList(orderIds)
+    suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+        return wishlistDataSource.getWishlistOrderList(orderIds)
     }
 
     suspend fun deleteWishlist(orderId: String): Boolean {
@@ -24,5 +24,9 @@ class WishlistRepository(
 
     suspend fun addToCart(email: String, orderId: String): Boolean {
         return wishlistDataSource.addToCart(email, orderId)
+    }
+
+    suspend fun getAllWishlistOrders(): ArrayList<Order>{
+        return wishlistDataSource.getAllWishlistOrders()
     }
 }

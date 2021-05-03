@@ -35,4 +35,8 @@ class CartDataSourceImpl(
         }
         return false
     }
+
+    override suspend fun getAllCartOrders(): ArrayList<Order> {
+        return ArrayList(cartOrders.find().toList())
+    }
 }

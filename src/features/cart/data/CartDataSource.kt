@@ -7,4 +7,6 @@ interface CartDataSource {
     suspend fun getUserCartOrders(email: String): ArrayList<Order>
 
     suspend fun removeCartOrder(email: String, orderId: String): Boolean
+
+    suspend fun getAllCartOrders(): ArrayList<Order>
 }

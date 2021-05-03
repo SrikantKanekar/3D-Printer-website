@@ -17,7 +17,7 @@ class WishlistDataSourceImpl(
         return user.wishlist
     }
 
-    override suspend fun getOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
         return ArrayList(
             orderIds.map {
                 wishlistOrders.findOneById(it)!!
@@ -50,5 +50,9 @@ class WishlistDataSourceImpl(
             return userResult and orderResult
         }
         return false
+    }
+
+    override suspend fun getAllWishlistOrders(): ArrayList<Order> {
+        return ArrayList(wishlistOrders.find().toList())
     }
 }

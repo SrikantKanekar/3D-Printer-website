@@ -46,6 +46,12 @@
 	<body>
 		
 		<#nested/>
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
 		
 		<!--===============================================================================================-->
 		<script src="/static/vendor/aos/aos.js"></script>

@@ -124,7 +124,7 @@ fun Route.updateFileRoute(orderRepository: OrderRepository) {
                         part.streamProvider().use { its ->
                             file.outputStream().buffered().use {
                                 its.copyTo(it)
-                                call.respondRedirect("/order/$id")
+                                call.respondText("Successfully updated")
                             }
                         }
                     } else {
@@ -151,7 +151,7 @@ fun Route.updateBasicSettingsRoute(orderRepository: OrderRepository) {
         val basicSettings = BasicSettings(size = size)
         val wasAcknowledged = orderRepository.updateBasicSettings(id, basicSettings)
         if (wasAcknowledged) {
-            call.respondRedirect("/order/$id")
+            call.respond(basicSettings)
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
         }
@@ -169,7 +169,7 @@ fun Route.updateAdvancedSettingsRoute(orderRepository: OrderRepository) {
         val advancedSettings = AdvancedSettings(weight = weight)
         val wasAcknowledged = orderRepository.updateAdvancedSettings(id, advancedSettings)
         if (wasAcknowledged) {
-            call.respondRedirect("/order/$id")
+            call.respond(advancedSettings)
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
         }

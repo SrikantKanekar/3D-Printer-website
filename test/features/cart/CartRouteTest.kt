@@ -18,11 +18,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class CartRouteTest: KoinTest {
+class CartRouteTest : KoinTest {
 
-    private val accountRepository by  inject<AccountRepository>()
-    private val wishlistRepository by  inject<WishlistRepository>()
-    private val cartRepository by  inject<CartRepository>()
+    private val accountRepository by inject<AccountRepository>()
+    private val wishlistRepository by inject<WishlistRepository>()
+    private val cartRepository by inject<CartRepository>()
 
     @Test
     fun `access cart without login`() {
@@ -51,15 +51,11 @@ class CartRouteTest: KoinTest {
                 handleRequest(HttpMethod.Get, "/cart/$TEST_CART_ORDER/remove").apply {
                     runBlocking {
 
-                        // change this
-                        val wishlistOrders = wishlistRepository.getUserWishlist(TEST_USER_EMAIL)
+                        val wishlistOrders = wishlistRepository.getAllWishlistOrders().map { it.id }
                         assertTrue { wishlistOrders.contains(TEST_CART_ORDER) }
 
-                        // change this
-                        val cartOrders = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
-                        cartOrders.forEach {
-                            assertFalse { it.id == TEST_CART_ORDER }
-                        }
+                        val cartOrderIds = cartRepository.getAllCartOrders().map { it.id }
+                        assertFalse { cartOrderIds.contains(TEST_CART_ORDER) }
 
                         val user = accountRepository.getUser(TEST_USER_EMAIL)!!
                         assertTrue { user.wishlist.contains(TEST_CART_ORDER) }
@@ -79,12 +75,11 @@ class CartRouteTest: KoinTest {
                 handleRequest(HttpMethod.Get, "/cart/invalid-order-id/remove").apply {
                     runBlocking {
 
-                        // change this
-                        val wishlistOrders = wishlistRepository.getUserWishlist(TEST_USER_EMAIL)
+                        val wishlistOrders = wishlistRepository.getAllWishlistOrders().map { it.id }
                         assertFalse { wishlistOrders.contains(TEST_CART_ORDER) }
 
-                        // change this
-                        val cartOrders = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
+                        val cartOrderIds = cartRepository.getAllCartOrders().map { it.id }
+                        assertTrue { cartOrderIds.contains(TEST_CART_ORDER) }
 
                         val user = accountRepository.getUser(TEST_USER_EMAIL)!!
                         assertFalse { user.wishlist.contains(TEST_CART_ORDER) }

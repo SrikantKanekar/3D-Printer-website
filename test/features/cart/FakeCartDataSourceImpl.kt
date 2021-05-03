@@ -3,7 +3,6 @@ package features.cart
 import com.example.features.account.domain.User
 import com.example.features.cart.data.CartDataSource
 import com.example.features.order.domain.Order
-import org.litote.kmongo.eq
 
 class FakeCartDataSourceImpl(
     private val userData: HashMap<String, User>,
@@ -34,5 +33,9 @@ class FakeCartDataSourceImpl(
             return true
         }
         return false
+    }
+
+    override suspend fun getAllCartOrders(): ArrayList<Order> {
+        return ArrayList(cartOrders.values)
     }
 }

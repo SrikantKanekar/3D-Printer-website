@@ -26,7 +26,12 @@ private fun Route.getCartRoute(cartRepository: CartRepository) {
     get("/cart") {
         val principal = call.principal<UserIdPrincipal>()!!
         val orders = cartRepository.getUserCartOrders(principal.email)
-        call.respond(FreeMarkerContent("cart.ftl", mapOf("orders" to orders, "user" to principal)))
+        call.respond(
+            FreeMarkerContent(
+                "cart.ftl",
+                mapOf("orders" to orders, "user" to principal)
+            )
+        )
     }
 }
 
@@ -36,7 +41,6 @@ private fun Route.removeFromCart(cartRepository: CartRepository) {
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
-
         val principal = call.principal<UserIdPrincipal>()!!
         val result = cartRepository.removeCartOrder(principal.email, id)
 
