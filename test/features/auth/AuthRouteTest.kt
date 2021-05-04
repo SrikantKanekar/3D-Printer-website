@@ -1,6 +1,8 @@
 package features.auth
 
 import com.example.features.auth.data.AuthRepository
+import com.example.features.auth.domain.Constants
+import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.module
 import data.Constants.TEST_USER_EMAIL
@@ -15,6 +17,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class AuthRouteTest : KoinTest {
@@ -49,7 +52,7 @@ class AuthRouteTest : KoinTest {
                     ).formUrlEncode()
                 )
             }.apply {
-                assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
             }
         }
     }
@@ -77,7 +80,7 @@ class AuthRouteTest : KoinTest {
                 )
             }.apply {
                 runBlocking {
-                    assertEquals(HttpStatusCode.Found, response.status())
+                    assertEquals(HttpStatusCode.OK, response.status())
                     assertTrue(authRepository.checkIfUserExists("NEW_EMAIL"))
                     val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
                     assertEquals("NEW_EMAIL", userIdPrincipal?.email)
@@ -101,7 +104,7 @@ class AuthRouteTest : KoinTest {
             }.apply {
                 runBlocking {
                     assertTrue(authRepository.checkIfUserExists(TEST_USER_EMAIL))
-                    assertEquals(HttpStatusCode.Conflict, response.status())
+                    assertEquals(Constants.EMAIL_ALREADY_TAKEN, response.content)
                 }
             }
         }
@@ -119,7 +122,8 @@ fun TestApplicationEngine.testUserLogin() {
             ).formUrlEncode()
         )
     }.apply {
-        assertEquals(HttpStatusCode.Found, response.status())
+        assertEquals(HttpStatusCode.OK, response.status())
+        assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
         val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
         assertEquals(TEST_USER_EMAIL, userIdPrincipal?.email)
     }

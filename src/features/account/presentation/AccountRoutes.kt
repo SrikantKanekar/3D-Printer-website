@@ -13,6 +13,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
+import javax.naming.AuthenticationException
 
 fun Application.registerAccountRoutes() {
     val accountRepository by inject<AccountRepository>()
@@ -32,12 +33,10 @@ fun Application.registerAccountRoutes() {
 fun Route.getAccountRoute(accountRepository: AccountRepository) {
     get("/account") {
         val principal = call.principal<UserIdPrincipal>()!!
-        try {
-            val user = accountRepository.getUser(principal.email)!!
-            call.respond(FreeMarkerContent("account.ftl", mapOf("user" to user)))
-        } catch (e: Exception) {
-            call.respond(HttpStatusCode.NotFound, "Account doesn't exist")
-        }
+        val user = accountRepository.getUser(principal.email)
+        user?.let {
+            call.respond(FreeMarkerContent("account.ftl", mapOf("user" to it)))
+        } ?: throw AuthenticationException()
     }
 }
 

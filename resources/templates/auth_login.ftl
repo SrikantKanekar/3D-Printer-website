@@ -7,7 +7,7 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-90 p-b-30">
-				<form class="login100-form validate-form" action="/auth/login" method="post">
+				<form class="login100-form validate-form" action="/auth/login" method="post" id="login-form">
 					<div class="text-center p-t-55 p-b-30">
 						<span class="txt1">
 							Login with email
@@ -27,6 +27,10 @@
                         <span class="focus-input100"></span>
                     </div>
 
+					<div id="login-error" style="color: red"></div>
+
+					<input name="returnUrl" value="${returnUrl}" style="display: none">
+
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
                             Login
@@ -38,7 +42,7 @@
 							Don’t have an account?
 						</span>
 
-						<a href="/auth/register" class="txt3 bo1 hov1">
+						<a href="/auth/register?returnUrl=${returnUrl}" class="txt3 bo1 hov1">
 							Sign up now
 						</a>
 					</div>

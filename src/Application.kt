@@ -3,7 +3,9 @@ package com.example
 import com.example.di.authModule
 import com.example.features.wishlist.domain.WishlistCookie
 import com.example.features.account.presentation.registerAccountRoutes
+import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoutes
 import com.example.features.checkout.presentation.registerCheckoutRoutes
@@ -17,12 +19,17 @@ import com.example.features.util.presentation.registerStatusRoutes
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.client.*
+import io.ktor.client.engine.apache.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
 import io.ktor.http.content.*
+import io.ktor.locations.*
+import io.ktor.locations.url
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
+import io.ktor.util.*
 import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
 import org.koin.logger.SLF4JLogger
@@ -50,7 +57,15 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
         )
     }
 
+    install(Locations)
+
     install(Authentication) {
+        oauth("OAuth") {
+            client = HttpClient(Apache)
+            providerLookup = { loginProviders[application.locations.resolve<Login>(Login::class, this).type] }
+            urlProvider = { url(Login(it.name)) }
+        }
+
         session<UserIdPrincipal>("SESSION_AUTH") {
             challenge {
                 throw AuthenticationException()

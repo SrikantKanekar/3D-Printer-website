@@ -47,6 +47,7 @@ dependencies {
     // Ktor
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "io.ktor:ktor-client-apache:$ktor_version"
 
     // Auth
     implementation "io.ktor:ktor-auth:$ktor_version"
@@ -54,7 +55,10 @@ dependencies {
     // Sessions
     implementation "io.ktor:ktor-server-sessions:$ktor_version"
 
-    // Database
+    // Locations
+    implementation "io.ktor:ktor-locations:$ktor_version"
+
+    // MongoDb Database
     implementation 'org.litote.kmongo:kmongo:4.2.5'
     implementation 'org.litote.kmongo:kmongo-coroutine:4.2.5'
 
@@ -69,7 +73,7 @@ dependencies {
     // Security
     implementation 'commons-codec:commons-codec:1.14'
 
-    // Dependency injection
+    // Koin Dependency injection
     implementation "io.insert-koin:koin-ktor:$koin_version"
     implementation "io.insert-koin:koin-logger-slf4j:$koin_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
