@@ -41,9 +41,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false, koinModules: List<Module> = listOf(authModule)) {
 
-    val mongoDbString = System.getenv("MONGODB_URI") ?: "mongodb://localhost"
-    println("in module :$mongoDbString")
-
     install(Koin) {
         SLF4JLogger()
         modules(koinModules)

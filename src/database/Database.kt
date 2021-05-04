@@ -5,7 +5,7 @@ import com.example.features.order.domain.Order
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
-private const val DATABASE_NAME = "3D-PRINTER-DATABASE"
+const val DATABASE_NAME = "3D-PRINTER-DATABASE"
 
 // User
 const val COLLECTION_USER = "USER"
@@ -17,7 +17,9 @@ const val COLLECTION_PROCESSING = "PROCESSING"
 const val COLLECTION_HISTORY = "HISTORY"
 
 private const val connectionString = "mongodb+srv://admin:oziPlEVFkEeLuajk@3design.n5d76.mongodb.net/$DATABASE_NAME?retryWrites=true&w=majority"
-private val client = KMongo.createClient(connectionString).coroutine
+
+val mongoDbString = System.getenv("MONGODB_URI") ?: "mongodb://localhost"
+private val client = KMongo.createClient(mongoDbString).coroutine
 private val database = client.getDatabase(DATABASE_NAME)
 
 // User
