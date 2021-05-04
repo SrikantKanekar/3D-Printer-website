@@ -51,7 +51,7 @@ fun Route.createOrderRoute(orderRepository: OrderRepository) {
             if (part is PartData.FileItem) {
                 try {
                     val fileName = part.originalFileName!!
-                    val order = orderRepository.createOrder(fileName)!!
+                    val order = orderRepository.createOrder(fileName)
 
                     val principal = call.sessions.get<UserIdPrincipal>()
                     if (principal != null) {
