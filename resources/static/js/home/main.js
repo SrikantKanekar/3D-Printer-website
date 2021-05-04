@@ -288,9 +288,9 @@
     $("#overlay").fadeOut(300);
   });
 
-  $(document).ajaxError(function (event, xhr) {
+  $(document).ajaxError(function (event, xhr, setting, error) {
     alert("an error occoured");
-    console.log(xhr.responseTest);
+    console.log(error);
   });
 
 })()
