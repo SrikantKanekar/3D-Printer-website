@@ -94,6 +94,7 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
 private fun Route.loginProvider() {
     authenticate("OAuth") {
         location<Login> {
+            println("-------------aaaa------------")
             param("error") {
                 handle {
                     call.respond(HttpStatusCode.BadRequest, call.parameters.getAll("error").orEmpty())
@@ -101,8 +102,15 @@ private fun Route.loginProvider() {
             }
 
             handle {
-                val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+                val principal = call.authentication.principal<OAuthAccessTokenResponse.OAuth2>()
                 if (principal != null) {
+
+                    println("-----------------------------")
+                    println(principal.accessToken)
+                    println(principal.expiresIn)
+                    println(principal.extraParameters)
+                    println(principal.refreshToken)
+                    println(principal.tokenType)
                     call.respondText(principal.toString())
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, "No account received")
