@@ -37,10 +37,6 @@
             <h4>time ${(order.timeInMin)!""}</h4>
             <h4>delivery ${(order.dueDelivery)!""}</h4>
         </div>
-
-        <div class="mt-5">
-            <a href="/checkout/${order.id}"><button class="btn btn-primary">Checkout</button></a>
-        </div>
     </div>
 
 </@layout.main>

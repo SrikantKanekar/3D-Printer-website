@@ -111,7 +111,7 @@ private fun Route.loginProvider() {
                     println(principal.extraParameters)
                     println(principal.refreshToken)
                     println(principal.tokenType)
-                    call.respondText(principal.toString())
+                    call.respondText("Success")
                 } else {
                     call.respond(HttpStatusCode.Unauthorized, "No account received")
                 }
