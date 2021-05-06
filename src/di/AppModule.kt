@@ -3,8 +3,6 @@ package com.example.di
 import com.example.database.*
 import com.example.database.user.UserDataSource
 import com.example.database.user.UserDataSourceImpl
-import com.example.features.account.data.AccountDataSource
-import com.example.features.account.data.AccountDataSourceImpl
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminDataSource
 import com.example.features.admin.data.AdminDataSourceImpl
@@ -38,6 +36,7 @@ val appModule = module {
     single<UserDataSource> { UserDataSourceImpl(get(named(COLLECTION_USER))) }
 
     single { AuthRepository(get()) }
+    single { AccountRepository(get()) }
 
     /////////////////////////////////
 
@@ -45,10 +44,6 @@ val appModule = module {
     single(named(COLLECTION_CART)) { cartOrders }
     single(named(COLLECTION_PROCESSING)) { processingOrders }
     single(named(COLLECTION_HISTORY)) { historyOrders }
-
-    // Account
-    single<AccountDataSource> { AccountDataSourceImpl(get(named(COLLECTION_USER))) }
-    single { AccountRepository(get()) }
 
     // Order
     single<OrderDataSource> {

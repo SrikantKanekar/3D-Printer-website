@@ -2,7 +2,6 @@ package di
 
 import com.example.database.*
 import com.example.database.user.UserDataSource
-import com.example.features.account.data.AccountDataSource
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminDataSource
 import com.example.features.admin.data.AdminRepository
@@ -21,7 +20,6 @@ import com.example.features.wishlist.data.WishlistDataSource
 import com.example.features.wishlist.data.WishlistRepository
 import data.DataFactory
 import data.FakeUserDataSourceImpl
-import features.account.FakeAccountDataSourceImpl
 import features.admin.FakeAdminDataSourceImpl
 import features.cart.FakeCartDataSourceImpl
 import features.checkout.FakeCheckoutDataSourceImpl
@@ -39,14 +37,12 @@ val testAuthModule = module {
     single<UserDataSource> { FakeUserDataSourceImpl(get(named(COLLECTION_USER))) }
 
     single { AuthRepository(get()) }
+    single { AccountRepository(get()) }
 
     /////////////////////////////////////
 
     single(named(COLLECTION_WISHLIST)) { DataFactory().wishlistOrders() }
     single(named(COLLECTION_CART)) { DataFactory().cartOrders() }
-
-    single<AccountDataSource> { FakeAccountDataSourceImpl(get(named(COLLECTION_USER))) }
-    single { AccountRepository(get()) }
 
     single<OrderDataSource> {
         FakeOrderDataSourceImpl(

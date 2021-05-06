@@ -1,15 +1,16 @@
 package com.example.features.account.data
 
+import com.example.database.user.UserDataSource
 import com.example.features.account.domain.User
 
 class AccountRepository(
-    private val accountDataSource: AccountDataSource
+    private val userDataSource: UserDataSource
 ) {
     suspend fun getUser(email: String): User? {
-        return accountDataSource.get(email)
+        return userDataSource.getUser(email)
     }
 
     suspend fun updateUser(user: User): Boolean {
-        return accountDataSource.update(user)
+        return userDataSource.updateUser(user)
     }
 }
