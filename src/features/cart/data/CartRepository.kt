@@ -1,6 +1,6 @@
 package com.example.features.cart.data
 
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class CartRepository(
     private val cartDataSource: CartDataSource

@@ -1,6 +1,6 @@
 package com.example.features.wishlist.data
 
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class WishlistRepository(
     private val wishlistDataSource: WishlistDataSource

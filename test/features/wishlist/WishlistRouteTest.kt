@@ -1,7 +1,7 @@
 package features.wishlist
 
 import com.example.features.account.data.AccountRepository
-import com.example.features.order.data.OrderRepository
+import com.example.features.`object`.data.OrderRepository
 import com.example.features.wishlist.domain.WishlistCookie
 import com.example.module
 import data.Constants.TEST_CREATED_ORDER
@@ -9,9 +9,9 @@ import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_WISHLIST_ORDER
 import di.testAuthModule
 import features.auth.runWithTestUser
-import features.order.`create order after login`
-import features.order.`create order without login`
-import features.order.confirmAndDeleteFile
+import features.`object`.`create order after login`
+import features.`object`.`create order without login`
+import features.`object`.confirmAndDeleteFile
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*

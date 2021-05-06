@@ -2,6 +2,7 @@ package di
 
 import com.example.database.*
 import com.example.database.user.UserDataSource
+import com.example.features.`object`.data.ObjectDataSource
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminDataSource
 import com.example.features.admin.data.AdminRepository
@@ -12,8 +13,7 @@ import com.example.features.checkout.data.CheckoutDataSource
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.history.data.HistoryDataSource
 import com.example.features.history.data.HistoryRepository
-import com.example.features.order.data.OrderDataSource
-import com.example.features.order.data.OrderRepository
+import com.example.features.`object`.data.OrderRepository
 import com.example.features.tracker.data.TrackerDataSource
 import com.example.features.tracker.data.TrackerRepository
 import com.example.features.wishlist.data.WishlistDataSource
@@ -24,7 +24,7 @@ import features.admin.FakeAdminDataSourceImpl
 import features.cart.FakeCartDataSourceImpl
 import features.checkout.FakeCheckoutDataSourceImpl
 import features.history.FakeHistoryDataSourceImpl
-import features.order.FakeOrderDataSourceImpl
+import features.`object`.FakeObjectDataSourceImpl
 import features.tracker.FakeTrackerDataSourceImpl
 import features.wishlist.FakeWishlistDataSourceImpl
 import org.koin.core.qualifier.named
@@ -44,8 +44,8 @@ val testAuthModule = module {
     single(named(COLLECTION_WISHLIST)) { DataFactory().wishlistOrders() }
     single(named(COLLECTION_CART)) { DataFactory().cartOrders() }
 
-    single<OrderDataSource> {
-        FakeOrderDataSourceImpl(
+    single<ObjectDataSource> {
+        FakeObjectDataSourceImpl(
             userData = get(named(COLLECTION_USER)),
             wishlistOrders = get(named(COLLECTION_WISHLIST)),
             cartOrders = get(named(COLLECTION_CART))

@@ -2,12 +2,8 @@ package com.example.features.admin.presentation
 
 import com.example.features.admin.data.AdminRepository
 import com.example.features.admin.domain.AdminPrincipal
-import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants
-import com.example.features.auth.domain.UserIdPrincipal
-import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.*
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.checkout.domain.OrderStatus.*
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -74,8 +70,8 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val order = adminRepository.getProcessingOrder(id)
         if (order != null) {
-            val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTING))
-            call.respondText(result.toString())
+            //val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTING))
+            //call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
@@ -86,8 +82,8 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val order = adminRepository.getProcessingOrder(id)
         if (order != null) {
-            val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTED))
-            call.respondText(result.toString())
+            //val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTED))
+            //call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
@@ -98,8 +94,8 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val order = adminRepository.getProcessingOrder(id)
         if (order != null) {
-            val result = adminRepository.updateProcessingOrder(order.copy(status = DELIVERING))
-            call.respondText(result.toString())
+            //val result = adminRepository.updateProcessingOrder(order.copy(status = DELIVERING))
+            //call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }

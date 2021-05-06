@@ -1,7 +1,7 @@
-package features.order
+package features.`object`
 
 import com.example.features.account.data.AccountRepository
-import com.example.features.order.data.OrderRepository
+import com.example.features.`object`.data.OrderRepository
 import com.example.module
 import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_FILE_UPLOAD_NAME

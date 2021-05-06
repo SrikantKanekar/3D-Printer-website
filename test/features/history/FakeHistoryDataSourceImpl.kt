@@ -2,7 +2,7 @@ package features.history
 
 import com.example.features.account.domain.User
 import com.example.features.history.data.HistoryDataSource
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class FakeHistoryDataSourceImpl(
     private val userData: HashMap<String, User>

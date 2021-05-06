@@ -1,8 +1,7 @@
 package com.example.features.admin.data
 
-import com.example.features.order.domain.Object
-import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.*
+import com.example.features.`object`.domain.Object
+import com.example.features.`object`.domain.ObjectStatus.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
@@ -32,7 +31,7 @@ class AdminDataSourceImpl(
         val order = processingOrders.findOneById(orderId)
         return if (order != null) {
             val deleted = processingOrders.deleteOneById(order.id).wasAcknowledged()
-            val inserted = historyOrders.insertOne(order.copy(status = DONE)).wasAcknowledged()
+            val inserted = historyOrders.insertOne(order.copy(status = COMPLETED)).wasAcknowledged()
             deleted and inserted
         } else {
             false

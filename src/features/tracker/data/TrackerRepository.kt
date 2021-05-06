@@ -1,6 +1,6 @@
 package com.example.features.tracker.data
 
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class TrackerRepository(
     private val trackerDataSource: TrackerDataSource

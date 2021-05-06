@@ -1,7 +1,7 @@
 package com.example.features.checkout.data
 
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 interface CheckoutDataSource {
 

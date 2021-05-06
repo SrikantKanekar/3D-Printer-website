@@ -2,7 +2,7 @@ package features.cart
 
 import com.example.features.account.domain.User
 import com.example.features.cart.data.CartDataSource
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class FakeCartDataSourceImpl(
     private val userData: HashMap<String, User>,

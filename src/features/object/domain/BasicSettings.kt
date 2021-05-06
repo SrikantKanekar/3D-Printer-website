@@ -1,4 +1,4 @@
-package com.example.features.order.domain
+package com.example.features.`object`.domain
 
 import kotlinx.serialization.Serializable
 

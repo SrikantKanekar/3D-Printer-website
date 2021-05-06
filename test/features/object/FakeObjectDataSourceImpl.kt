@@ -1,17 +1,17 @@
-package features.order
+package features.`object`
 
+import com.example.features.`object`.data.ObjectDataSource
 import com.example.features.account.domain.User
-import com.example.features.order.data.OrderDataSource
-import com.example.features.order.domain.AdvancedSettings
-import com.example.features.order.domain.BasicSettings
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.AdvancedSettings
+import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.Object
 import data.Constants.TEST_CREATED_ORDER
 
-class FakeOrderDataSourceImpl(
+class FakeObjectDataSourceImpl(
     private val userData: HashMap<String, User>,
     private val wishlistOrders: HashMap<String, Object>,
     private val cartOrders: HashMap<String, Object>
-): OrderDataSource {
+): ObjectDataSource {
 
     override suspend fun createOrder(fileName: String): Object {
         // replace auto-generated id with test id

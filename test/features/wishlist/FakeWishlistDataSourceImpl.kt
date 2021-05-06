@@ -1,7 +1,7 @@
 package features.wishlist
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 import com.example.features.wishlist.data.WishlistDataSource
 import java.io.File
 

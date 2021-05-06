@@ -1,18 +1,18 @@
-package com.example.features.order.data
+package com.example.features.`object`.data
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.AdvancedSettings
-import com.example.features.order.domain.BasicSettings
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.AdvancedSettings
+import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.Object
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import org.litote.kmongo.setValue
 
-class OrderDataSourceImpl(
+class ObjectDataSourceImpl(
     private val users: CoroutineCollection<User>,
     private val wishlistOrders: CoroutineCollection<Object>,
     private val cartOrders: CoroutineCollection<Object>
-) : OrderDataSource {
+) : ObjectDataSource {
 
     override suspend fun createOrder(fileName: String): Object {
         val order = Object(fileName = fileName)

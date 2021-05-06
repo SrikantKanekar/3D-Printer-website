@@ -14,7 +14,7 @@ import com.example.features.checkout.presentation.registerCheckoutRoutes
 import com.example.features.history.presentation.registerHistoryRoutes
 import com.example.features.util.presentation.registerHomeRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
-import com.example.features.order.presentation.registerOrderRoutes
+import com.example.features.`object`.presentation.registerOrderRoutes
 import com.example.features.tracker.presentation.registerTrackerRoutes
 import com.example.features.wishlist.presentation.registerWishlistRoutes
 import com.example.features.util.presentation.registerStatusRoutes

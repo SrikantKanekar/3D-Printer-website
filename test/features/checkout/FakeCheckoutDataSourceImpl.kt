@@ -3,9 +3,8 @@ package features.checkout
 import com.example.features.account.domain.User
 import com.example.features.checkout.data.CheckoutDataSource
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Object
-import com.example.features.order.domain.OrderStatus
-import org.litote.kmongo.eq
+import com.example.features.`object`.domain.Object
+import com.example.features.`object`.domain.ObjectStatus.*
 
 class FakeCheckoutDataSourceImpl(
     private val userData: HashMap<String, User>,
@@ -55,7 +54,7 @@ class FakeCheckoutDataSourceImpl(
         user.currentOrders.addAll(cartOrdersIds)
 
         cartOrdersIds.forEach {
-            val order = cartOrders[it]!!.copy(status = OrderStatus.PLACED)
+            val order = cartOrders[it]!!.copy(status = TRACKING)
             cartOrders.remove(it)
             //processingOrders.insertOne(order)
         }

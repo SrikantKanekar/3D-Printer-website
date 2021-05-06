@@ -1,7 +1,7 @@
 package features.admin
 
 import com.example.features.admin.data.AdminDataSource
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 
 class FakeAdminDataSourceImpl: AdminDataSource {
     override suspend fun getProcessingOrders(): ArrayList<Object> {

@@ -1,10 +1,10 @@
-package com.example.features.order.data
+package com.example.features.`object`.data
 
-import com.example.features.order.domain.AdvancedSettings
-import com.example.features.order.domain.BasicSettings
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.AdvancedSettings
+import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.Object
 
-interface OrderDataSource {
+interface ObjectDataSource {
 
     suspend fun createOrder(fileName: String): Object
 

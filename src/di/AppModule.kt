@@ -1,8 +1,11 @@
 package com.example.di
 
 import com.example.database.*
+import com.example.database.order.OrderDataSource
+import com.example.database.order.OrderDataSourceImpl
 import com.example.database.user.UserDataSource
 import com.example.database.user.UserDataSourceImpl
+import com.example.features.`object`.data.ObjectDataSource
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminDataSource
 import com.example.features.admin.data.AdminDataSourceImpl
@@ -17,9 +20,8 @@ import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.history.data.HistoryDataSource
 import com.example.features.history.data.HistoryDataSourceImpl
 import com.example.features.history.data.HistoryRepository
-import com.example.features.order.data.OrderDataSource
-import com.example.features.order.data.OrderDataSourceImpl
-import com.example.features.order.data.OrderRepository
+import com.example.features.`object`.data.ObjectDataSourceImpl
+import com.example.features.`object`.data.OrderRepository
 import com.example.features.tracker.data.TrackerDataSource
 import com.example.features.tracker.data.TrackerDataSourceImpl
 import com.example.features.tracker.data.TrackerRepository
@@ -32,8 +34,10 @@ import org.koin.dsl.module
 val appModule = module {
 
     single(named(COLLECTION_USER)) { users }
+    single(named(COLLECTION_ORDER)) { orders }
 
     single<UserDataSource> { UserDataSourceImpl(get(named(COLLECTION_USER))) }
+    single<OrderDataSource> { OrderDataSourceImpl(get(named(COLLECTION_ORDER))) }
 
     single { AuthRepository(get()) }
     single { AccountRepository(get()) }
@@ -46,8 +50,8 @@ val appModule = module {
     single(named(COLLECTION_HISTORY)) { historyOrders }
 
     // Order
-    single<OrderDataSource> {
-        OrderDataSourceImpl(
+    single<ObjectDataSource> {
+        ObjectDataSourceImpl(
             users = get(named(COLLECTION_USER)),
             wishlistOrders = get(named(COLLECTION_WISHLIST)),
             cartOrders = get(named(COLLECTION_CART))

@@ -1,7 +1,7 @@
 package com.example.features.wishlist.data
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Object
+import com.example.features.`object`.domain.Object
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import java.io.File

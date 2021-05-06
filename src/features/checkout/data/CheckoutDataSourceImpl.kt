@@ -2,8 +2,9 @@ package com.example.features.checkout.data
 
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Object
-import com.example.features.order.domain.OrderStatus.*
+import com.example.features.`object`.domain.Object
+import com.example.features.checkout.domain.OrderStatus.*
+import com.example.features.`object`.domain.ObjectStatus.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
@@ -55,7 +56,7 @@ class CheckoutDataSourceImpl(
         user.currentOrders.addAll(cartOrdersIds)
 
         cartOrdersIds.forEach {
-            val order = cartOrders.findOneById(it)!!.copy(status = PLACED)
+            val order = cartOrders.findOneById(it)!!.copy(status = TRACKING)
             cartOrders.deleteOneById(it)
             processingOrders.insertOne(order)
         }
