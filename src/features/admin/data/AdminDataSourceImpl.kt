@@ -1,30 +1,30 @@
 package com.example.features.admin.data
 
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import com.example.features.order.domain.OrderStatus
 import com.example.features.order.domain.OrderStatus.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
 class AdminDataSourceImpl(
-    private val processingOrders: CoroutineCollection<Order>,
-    private val historyOrders: CoroutineCollection<Order>
+    private val processingOrders: CoroutineCollection<Object>,
+    private val historyOrders: CoroutineCollection<Object>
 ) : AdminDataSource {
 
-    override suspend fun getProcessingOrders(): ArrayList<Order> {
+    override suspend fun getProcessingOrders(): ArrayList<Object> {
         return ArrayList(processingOrders.find().toList())
     }
 
-    override suspend fun getOrderHistory(): ArrayList<Order> {
+    override suspend fun getOrderHistory(): ArrayList<Object> {
         return ArrayList(historyOrders.find().toList())
     }
 
-    override suspend fun getProcessingOrder(orderId: String): Order? {
+    override suspend fun getProcessingOrder(orderId: String): Object? {
         return processingOrders.findOneById(orderId)
     }
 
-    override suspend fun updateProcessingOrder(order: Order): Boolean {
-        return processingOrders.updateOne(Order::id eq order.id, order).wasAcknowledged()
+    override suspend fun updateProcessingOrder(order: Object): Boolean {
+        return processingOrders.updateOne(Object::id eq order.id, order).wasAcknowledged()
     }
 
     // handle user as well(after adding userID to order object)

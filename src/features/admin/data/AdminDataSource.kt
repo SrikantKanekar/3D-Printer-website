@@ -1,16 +1,16 @@
 package com.example.features.admin.data
 
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 interface AdminDataSource {
 
-    suspend fun getProcessingOrders(): ArrayList<Order>
+    suspend fun getProcessingOrders(): ArrayList<Object>
 
-    suspend fun getOrderHistory(): ArrayList<Order>
+    suspend fun getOrderHistory(): ArrayList<Object>
 
-    suspend fun getProcessingOrder(orderId: String): Order?
+    suspend fun getProcessingOrder(orderId: String): Object?
 
-    suspend fun updateProcessingOrder(order: Order): Boolean
+    suspend fun updateProcessingOrder(order: Object): Boolean
 
     suspend fun orderDelivered(orderId: String): Boolean
 }

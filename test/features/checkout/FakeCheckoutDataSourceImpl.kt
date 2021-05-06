@@ -3,15 +3,17 @@ package features.checkout
 import com.example.features.account.domain.User
 import com.example.features.checkout.data.CheckoutDataSource
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
+import com.example.features.order.domain.OrderStatus
+import org.litote.kmongo.eq
 
 class FakeCheckoutDataSourceImpl(
     private val userData: HashMap<String, User>,
-    private val wishlistOrders: HashMap<String, Order>,
-    private val cartOrders: HashMap<String, Order>
+    private val wishlistOrders: HashMap<String, Object>,
+    private val cartOrders: HashMap<String, Object>
 ): CheckoutDataSource {
 
-    override suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    override suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         val user = userData[email]!!
         return ArrayList(
             user.cartOrders.map {
@@ -48,6 +50,17 @@ class FakeCheckoutDataSourceImpl(
     }
 
     override suspend fun checkoutSuccess(email: String): Boolean {
-        TODO("Not yet implemented")
+        val user = userData[email]!!
+        val cartOrdersIds = user.cartOrders
+        user.currentOrders.addAll(cartOrdersIds)
+
+        cartOrdersIds.forEach {
+            val order = cartOrders[it]!!.copy(status = OrderStatus.PLACED)
+            cartOrders.remove(it)
+            //processingOrders.insertOne(order)
+        }
+        user.cartOrders.clear()
+        userData[email] = user
+        return true
     }
 }

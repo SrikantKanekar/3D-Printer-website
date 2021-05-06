@@ -2,19 +2,19 @@ package com.example.features.checkout.data
 
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import com.example.features.order.domain.OrderStatus.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
 class CheckoutDataSourceImpl(
     private val users: CoroutineCollection<User>,
-    private val wishlistOrders: CoroutineCollection<Order>,
-    private val cartOrders: CoroutineCollection<Order>,
-    private val processingOrders: CoroutineCollection<Order>
+    private val wishlistOrders: CoroutineCollection<Object>,
+    private val cartOrders: CoroutineCollection<Object>,
+    private val processingOrders: CoroutineCollection<Object>
 ): CheckoutDataSource {
 
-    override suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    override suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         val user = users.findOne(User::email eq email)!!
         return ArrayList(
             user.cartOrders.map {

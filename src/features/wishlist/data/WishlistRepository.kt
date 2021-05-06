@@ -1,6 +1,6 @@
 package com.example.features.wishlist.data
 
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 class WishlistRepository(
     private val wishlistDataSource: WishlistDataSource
@@ -10,7 +10,7 @@ class WishlistRepository(
         return wishlistDataSource.getUserWishlist(email)
     }
 
-    suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+    suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Object> {
         return wishlistDataSource.getWishlistOrderList(orderIds)
     }
 
@@ -26,7 +26,7 @@ class WishlistRepository(
         return wishlistDataSource.addToCart(email, orderId)
     }
 
-    suspend fun getAllWishlistOrders(): ArrayList<Order>{
+    suspend fun getAllWishlistOrders(): ArrayList<Object>{
         return wishlistDataSource.getAllWishlistOrders()
     }
 }

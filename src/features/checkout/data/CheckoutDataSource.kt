@@ -1,11 +1,11 @@
 package com.example.features.checkout.data
 
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 interface CheckoutDataSource {
 
-    suspend fun getUserCartOrders(email: String): ArrayList<Order>
+    suspend fun getUserCartOrders(email: String): ArrayList<Object>
 
     suspend fun getUserAddress(email: String): Address
 

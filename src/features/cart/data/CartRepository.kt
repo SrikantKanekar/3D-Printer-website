@@ -1,11 +1,11 @@
 package com.example.features.cart.data
 
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 class CartRepository(
     private val cartDataSource: CartDataSource
 ) {
-    suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         return cartDataSource.getUserCartOrders(email)
     }
 
@@ -14,7 +14,7 @@ class CartRepository(
     }
 
     // For Testing
-    suspend fun getAllCartOrders(): ArrayList<Order> {
+    suspend fun getAllCartOrders(): ArrayList<Object> {
         return cartDataSource.getAllCartOrders()
     }
 }

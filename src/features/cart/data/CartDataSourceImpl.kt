@@ -1,17 +1,17 @@
 package com.example.features.cart.data
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
 class CartDataSourceImpl(
     private val users: CoroutineCollection<User>,
-    private val wishlistOrders: CoroutineCollection<Order>,
-    private val cartOrders: CoroutineCollection<Order>
+    private val wishlistOrders: CoroutineCollection<Object>,
+    private val cartOrders: CoroutineCollection<Object>
 ) : CartDataSource {
 
-    override suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    override suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         val user = users.findOne(User::email eq email)!!
         return ArrayList(
             user.cartOrders.map {
@@ -36,7 +36,7 @@ class CartDataSourceImpl(
         return false
     }
 
-    override suspend fun getAllCartOrders(): ArrayList<Order> {
+    override suspend fun getAllCartOrders(): ArrayList<Object> {
         return ArrayList(cartOrders.find().toList())
     }
 }

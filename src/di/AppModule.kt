@@ -1,14 +1,14 @@
 package com.example.di
 
 import com.example.database.*
+import com.example.database.user.UserDataSource
+import com.example.database.user.UserDataSourceImpl
 import com.example.features.account.data.AccountDataSource
 import com.example.features.account.data.AccountDataSourceImpl
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminDataSource
 import com.example.features.admin.data.AdminDataSourceImpl
 import com.example.features.admin.data.AdminRepository
-import com.example.features.auth.data.AuthDataSource
-import com.example.features.auth.data.AuthDataSourceImpl
 import com.example.features.auth.data.AuthRepository
 import com.example.features.cart.data.CartDataSource
 import com.example.features.cart.data.CartDataSourceImpl
@@ -31,17 +31,20 @@ import com.example.features.wishlist.data.WishlistRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val authModule = module {
+val appModule = module {
 
     single(named(COLLECTION_USER)) { users }
+
+    single<UserDataSource> { UserDataSourceImpl(get(named(COLLECTION_USER))) }
+
+    single { AuthRepository(get()) }
+
+    /////////////////////////////////
+
     single(named(COLLECTION_WISHLIST)) { wishlistOrders }
     single(named(COLLECTION_CART)) { cartOrders }
     single(named(COLLECTION_PROCESSING)) { processingOrders }
     single(named(COLLECTION_HISTORY)) { historyOrders }
-
-    // Auth
-    single<AuthDataSource> { AuthDataSourceImpl(get(named(COLLECTION_USER))) }
-    single { AuthRepository(get()) }
 
     // Account
     single<AccountDataSource> { AccountDataSourceImpl(get(named(COLLECTION_USER))) }

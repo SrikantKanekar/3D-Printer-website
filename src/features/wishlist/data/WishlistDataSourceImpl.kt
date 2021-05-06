@@ -1,15 +1,15 @@
 package com.example.features.wishlist.data
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import java.io.File
 
 class WishlistDataSourceImpl(
     private val users: CoroutineCollection<User>,
-    private val wishlistOrders: CoroutineCollection<Order>,
-    private val cartOrders: CoroutineCollection<Order>
+    private val wishlistOrders: CoroutineCollection<Object>,
+    private val cartOrders: CoroutineCollection<Object>
 ) : WishlistDataSource {
 
     override suspend fun getUserWishlist(email: String): ArrayList<String> {
@@ -17,7 +17,7 @@ class WishlistDataSourceImpl(
         return user.wishlist
     }
 
-    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Object> {
         return ArrayList(
             orderIds.map {
                 wishlistOrders.findOneById(it)!!
@@ -52,7 +52,7 @@ class WishlistDataSourceImpl(
         return false
     }
 
-    override suspend fun getAllWishlistOrders(): ArrayList<Order> {
+    override suspend fun getAllWishlistOrders(): ArrayList<Object> {
         return ArrayList(wishlistOrders.find().toList())
     }
 }

@@ -2,13 +2,13 @@ package com.example.features.order.data
 
 import com.example.features.order.domain.AdvancedSettings
 import com.example.features.order.domain.BasicSettings
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 class OrderRepository(
     private val orderDataSource: OrderDataSource
 ) {
 
-    suspend fun createOrder(fileName: String): Order {
+    suspend fun createOrder(fileName: String): Object {
         return orderDataSource.createOrder(fileName)
     }
 
@@ -16,7 +16,7 @@ class OrderRepository(
         return orderDataSource.addOrderToUserWishlist(email, orderId)
     }
 
-    suspend fun getOrder(id: String): Order? {
+    suspend fun getOrder(id: String): Object? {
         return orderDataSource.getOrder(id)
     }
 

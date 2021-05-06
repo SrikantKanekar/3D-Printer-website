@@ -1,27 +1,34 @@
 package com.example.features.auth.data
 
+import com.example.database.user.UserDataSource
 import com.example.features.wishlist.domain.WishlistCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.domain.checkHashForPassword
 
 class AuthRepository(
-    private val authDataSource: AuthDataSource
+    private val userDataSource: UserDataSource
 ) {
 
     suspend fun register(user: User): Boolean {
-        return authDataSource.insert(user)
+        return userDataSource.insertUser(user)
     }
 
-    suspend fun checkIfUserExists(email: String): Boolean {
-        return authDataSource.checkIfEmailExist(email)
+    suspend fun doesUserExist(email: String): Boolean {
+        return userDataSource.doesUserExist(email)
     }
 
     suspend fun login(email: String, passwordToCheck: String): Boolean {
-        val hashedPassword = authDataSource.getPassword(email) ?: return false
+        val hashedPassword = userDataSource.getUserHashedPassword(email) ?: return false
         return checkHashForPassword(passwordToCheck, hashedPassword)
     }
 
     suspend fun syncOrders(email: String, wishlistCookie: WishlistCookie?): Boolean {
-        return authDataSource.syncOrders(email, wishlistCookie)
+        wishlistCookie?.let {
+            val user = userDataSource.getUser(email)!!
+            wishlistCookie.orders.forEach { order ->
+                if (!user.wishlist.contains(order)) user.wishlist.add(order)
+            }
+            return userDataSource.updateUser(user)
+        } ?: return true
     }
 }

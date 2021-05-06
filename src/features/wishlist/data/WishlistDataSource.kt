@@ -1,12 +1,12 @@
 package com.example.features.wishlist.data
 
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 interface WishlistDataSource {
 
     suspend fun getUserWishlist(email: String): ArrayList<String>
 
-    suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order>
+    suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Object>
 
     suspend fun deleteWishlist(orderId: String): Boolean
 
@@ -14,5 +14,5 @@ interface WishlistDataSource {
 
     suspend fun addToCart(email: String, orderId: String): Boolean
 
-    suspend fun getAllWishlistOrders(): ArrayList<Order>
+    suspend fun getAllWishlistOrders(): ArrayList<Object>
 }

@@ -1,6 +1,6 @@
 <#import "template.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Update" css="" js="/static/js/order/order.js">
+<@layout.main title="Update" css="" js="/static/js/object.js">
 
     <@header.header user="${user}" />
 

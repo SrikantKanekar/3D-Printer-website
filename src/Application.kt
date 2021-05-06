@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.di.authModule
+import com.example.di.appModule
 import com.example.features.wishlist.domain.WishlistCookie
 import com.example.features.account.presentation.registerAccountRoutes
 import com.example.features.admin.domain.AdminPrincipal
@@ -31,8 +31,6 @@ import io.ktor.locations.url
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
-import io.ktor.util.*
-import org.koin.core.logger.Level
 import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
 import org.koin.logger.SLF4JLogger
@@ -42,7 +40,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused")
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false, koinModules: List<Module> = listOf(authModule)) {
+fun Application.module(testing: Boolean = false, koinModules: List<Module> = listOf(appModule)) {
 
     install(Koin) {
         SLF4JLogger()

@@ -1,21 +1,21 @@
 package features.wishlist
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import com.example.features.wishlist.data.WishlistDataSource
 import java.io.File
 
 class FakeWishlistDataSourceImpl(
     private val userData: HashMap<String, User>,
-    private val wishlistOrders: HashMap<String, Order>,
-    private val cartOrders: HashMap<String, Order>
+    private val wishlistOrders: HashMap<String, Object>,
+    private val cartOrders: HashMap<String, Object>
 ) : WishlistDataSource {
 
     override suspend fun getUserWishlist(email: String): ArrayList<String> {
         return userData[email]!!.wishlist
     }
 
-    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Order> {
+    override suspend fun getWishlistOrderList(orderIds: ArrayList<String>): ArrayList<Object> {
         return ArrayList(
             orderIds.map {
                 wishlistOrders[it]!!
@@ -51,7 +51,7 @@ class FakeWishlistDataSourceImpl(
         return false
     }
 
-    override suspend fun getAllWishlistOrders(): ArrayList<Order> {
+    override suspend fun getAllWishlistOrders(): ArrayList<Object> {
         return ArrayList(wishlistOrders.values)
     }
 }

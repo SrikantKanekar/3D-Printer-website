@@ -1,12 +1,12 @@
 package com.example.features.checkout.data
 
 import com.example.features.checkout.domain.Address
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 class CheckoutRepository(
     private val checkoutDataSource: CheckoutDataSource
 ) {
-    suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         return checkoutDataSource.getUserCartOrders(email)
     }
 

@@ -74,7 +74,7 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
         val username = params["username"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val returnUrl = params["returnUrl"] ?: "/"
 
-        val userExists = authRepository.checkIfUserExists(email)
+        val userExists = authRepository.doesUserExist(email)
         if (!userExists) {
             if (authRepository.register(User(email, getHashWithSalt(password), username))) {
                 call.sessions.set(UserIdPrincipal(email))

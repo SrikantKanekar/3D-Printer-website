@@ -81,7 +81,7 @@ class AuthRouteTest : KoinTest {
             }.apply {
                 runBlocking {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertTrue(authRepository.checkIfUserExists("NEW_EMAIL"))
+                    assertTrue(authRepository.doesUserExist("NEW_EMAIL"))
                     val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
                     assertEquals("NEW_EMAIL", userIdPrincipal?.email)
                 }
@@ -103,7 +103,7 @@ class AuthRouteTest : KoinTest {
                 )
             }.apply {
                 runBlocking {
-                    assertTrue(authRepository.checkIfUserExists(TEST_USER_EMAIL))
+                    assertTrue(authRepository.doesUserExist(TEST_USER_EMAIL))
                     assertEquals(Constants.EMAIL_ALREADY_TAKEN, response.content)
                 }
             }

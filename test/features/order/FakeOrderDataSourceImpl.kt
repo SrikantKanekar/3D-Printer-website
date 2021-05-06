@@ -4,18 +4,18 @@ import com.example.features.account.domain.User
 import com.example.features.order.data.OrderDataSource
 import com.example.features.order.domain.AdvancedSettings
 import com.example.features.order.domain.BasicSettings
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import data.Constants.TEST_CREATED_ORDER
 
 class FakeOrderDataSourceImpl(
     private val userData: HashMap<String, User>,
-    private val wishlistOrders: HashMap<String, Order>,
-    private val cartOrders: HashMap<String, Order>
+    private val wishlistOrders: HashMap<String, Object>,
+    private val cartOrders: HashMap<String, Object>
 ): OrderDataSource {
 
-    override suspend fun createOrder(fileName: String): Order {
+    override suspend fun createOrder(fileName: String): Object {
         // replace auto-generated id with test id
-        val testOrder = Order(id = TEST_CREATED_ORDER, fileName = fileName)
+        val testOrder = Object(id = TEST_CREATED_ORDER, fileName = fileName)
         wishlistOrders[testOrder.id] = testOrder
         return testOrder
     }
@@ -27,7 +27,7 @@ class FakeOrderDataSourceImpl(
         return true
     }
 
-    private fun getOrderCollection(orderId: String): HashMap<String, Order>? {
+    private fun getOrderCollection(orderId: String): HashMap<String, Object>? {
         val wishlist = wishlistOrders[orderId]
         return if (wishlist == null) {
             val cart = cartOrders[orderId]
@@ -37,7 +37,7 @@ class FakeOrderDataSourceImpl(
         } else wishlistOrders
     }
 
-    override suspend fun getOrder(id: String): Order? {
+    override suspend fun getOrder(id: String): Object? {
         return getOrderCollection(id)?.get(id)
     }
 

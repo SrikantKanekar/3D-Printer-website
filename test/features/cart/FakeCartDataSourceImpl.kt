@@ -2,15 +2,15 @@ package features.cart
 
 import com.example.features.account.domain.User
 import com.example.features.cart.data.CartDataSource
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 
 class FakeCartDataSourceImpl(
     private val userData: HashMap<String, User>,
-    private val wishlistOrders: HashMap<String, Order>,
-    private val cartOrders: HashMap<String, Order>
+    private val wishlistOrders: HashMap<String, Object>,
+    private val cartOrders: HashMap<String, Object>
 ) : CartDataSource {
 
-    override suspend fun getUserCartOrders(email: String): ArrayList<Order> {
+    override suspend fun getUserCartOrders(email: String): ArrayList<Object> {
         val user = userData[email]!!
         return ArrayList(
             user.cartOrders.map {
@@ -35,7 +35,7 @@ class FakeCartDataSourceImpl(
         return false
     }
 
-    override suspend fun getAllCartOrders(): ArrayList<Order> {
+    override suspend fun getAllCartOrders(): ArrayList<Object> {
         return ArrayList(cartOrders.values)
     }
 }

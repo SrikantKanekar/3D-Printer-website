@@ -1,7 +1,7 @@
 package com.example.database
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
@@ -24,7 +24,7 @@ private val database = client.getDatabase(DATABASE_NAME)
 val users = database.getCollection<User>(COLLECTION_USER)
 
 // Orders
-val wishlistOrders = database.getCollection<Order>(COLLECTION_WISHLIST)
-val cartOrders = database.getCollection<Order>(COLLECTION_CART)
-val processingOrders = database.getCollection<Order>(COLLECTION_PROCESSING)
-val historyOrders = database.getCollection<Order>(COLLECTION_HISTORY)
+val wishlistOrders = database.getCollection<Object>(COLLECTION_WISHLIST)
+val cartOrders = database.getCollection<Object>(COLLECTION_CART)
+val processingOrders = database.getCollection<Object>(COLLECTION_PROCESSING)
+val historyOrders = database.getCollection<Object>(COLLECTION_HISTORY)

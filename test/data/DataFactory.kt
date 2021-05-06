@@ -1,7 +1,7 @@
 package data
 
 import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.features.order.domain.Object
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -19,24 +19,24 @@ class DataFactory {
         return map
     }
 
-    fun wishlistOrders(): HashMap<String, Order> {
-        val orderList = Gson().fromJson<List<Order>>(
+    fun wishlistOrders(): HashMap<String, Object> {
+        val orderList = Gson().fromJson<List<Object>>(
             readFile("wishlist_orders.json"),
-            object : TypeToken<List<Order>>() {}.type
+            object : TypeToken<List<Object>>() {}.type
         )
-        val map = HashMap<String, Order>()
+        val map = HashMap<String, Object>()
         for (order in orderList) {
             map[order.id] = order
         }
         return map
     }
 
-    fun cartOrders(): HashMap<String, Order> {
-        val orderList = Gson().fromJson<List<Order>>(
+    fun cartOrders(): HashMap<String, Object> {
+        val orderList = Gson().fromJson<List<Object>>(
             readFile("cart_orders.json"),
-            object : TypeToken<List<Order>>() {}.type
+            object : TypeToken<List<Object>>() {}.type
         )
-        val map = HashMap<String, Order>()
+        val map = HashMap<String, Object>()
         for (order in orderList) {
             map[order.id] = order
         }
