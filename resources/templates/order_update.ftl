@@ -32,7 +32,7 @@
         </div>
 
         <div class="mt-5">
-            <h4>status ${order.status}</h4>
+            <h4>status ${order.status!""}</h4>
             <h4>price ${(order.price)!""}</h4>
             <h4>time ${(order.timeInMin)!""}</h4>
             <h4>delivery ${(order.dueDelivery)!""}</h4>

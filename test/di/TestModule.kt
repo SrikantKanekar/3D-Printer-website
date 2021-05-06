@@ -10,10 +10,13 @@ import com.example.features.auth.data.AuthRepository
 import com.example.features.cart.data.CartDataSource
 import com.example.features.cart.data.CartRepository
 import com.example.features.checkout.data.CheckoutDataSource
-import com.example.features.checkout.data.CheckoutDataSourceImpl
 import com.example.features.checkout.data.CheckoutRepository
+import com.example.features.history.data.HistoryDataSource
+import com.example.features.history.data.HistoryRepository
 import com.example.features.order.data.OrderDataSource
 import com.example.features.order.data.OrderRepository
+import com.example.features.tracker.data.TrackerDataSource
+import com.example.features.tracker.data.TrackerRepository
 import com.example.features.wishlist.data.WishlistDataSource
 import com.example.features.wishlist.data.WishlistRepository
 import data.DataFactory
@@ -21,7 +24,9 @@ import features.account.FakeAccountDataSourceImpl
 import features.auth.FakeAuthDataSourceImpl
 import features.cart.FakeCartDataSourceImpl
 import features.checkout.FakeCheckoutDataSourceImpl
+import features.history.FakeHistoryDataSourceImpl
 import features.order.FakeOrderDataSourceImpl
+import features.tracker.FakeTrackerDataSourceImpl
 import features.wishlist.FakeWishlistDataSourceImpl
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -66,7 +71,7 @@ val testAuthModule = module {
     }
     single { CartRepository(get()) }
 
-    // Cart
+    // Checkout
     single<CheckoutDataSource> {
         FakeCheckoutDataSourceImpl(
             userData = get(named(COLLECTION_USER)),
@@ -75,4 +80,20 @@ val testAuthModule = module {
         )
     }
     single { CheckoutRepository(get()) }
+
+    // Tracking
+    single<TrackerDataSource> {
+        FakeTrackerDataSourceImpl(
+            userData = get(named(COLLECTION_USER))
+        )
+    }
+    single { TrackerRepository(get()) }
+
+    // History
+    single<HistoryDataSource> {
+        FakeHistoryDataSourceImpl(
+            userData = get(named(COLLECTION_USER))
+        )
+    }
+    single { HistoryRepository(get()) }
 }

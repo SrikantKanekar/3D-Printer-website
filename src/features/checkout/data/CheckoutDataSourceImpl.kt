@@ -3,13 +3,15 @@ package com.example.features.checkout.data
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import com.example.features.order.domain.Order
+import com.example.features.order.domain.OrderStatus.*
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
 class CheckoutDataSourceImpl(
     private val users: CoroutineCollection<User>,
     private val wishlistOrders: CoroutineCollection<Order>,
-    private val cartOrders: CoroutineCollection<Order>
+    private val cartOrders: CoroutineCollection<Order>,
+    private val processingOrders: CoroutineCollection<Order>
 ): CheckoutDataSource {
 
     override suspend fun getUserCartOrders(email: String): ArrayList<Order> {
@@ -44,6 +46,20 @@ class CheckoutDataSourceImpl(
 
     override suspend fun updateUserAddress(email: String, address: Address): Boolean {
         val user = users.findOne(User::email eq email)!!.copy(address = address)
+        return users.updateOne(User::email eq email, user).wasAcknowledged()
+    }
+
+    override suspend fun checkoutSuccess(email: String): Boolean {
+        val user = users.findOne(User::email eq email)!!
+        val cartOrdersIds = user.cartOrders
+        user.currentOrders.addAll(cartOrdersIds)
+
+        cartOrdersIds.forEach {
+            val order = cartOrders.findOneById(it)!!.copy(status = PLACED)
+            cartOrders.deleteOneById(it)
+            processingOrders.insertOne(order)
+        }
+        user.cartOrders.clear()
         return users.updateOne(User::email eq email, user).wasAcknowledged()
     }
 }

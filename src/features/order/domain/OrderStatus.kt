@@ -1,5 +1,5 @@
 package com.example.features.order.domain
 
 enum class OrderStatus {
-    CREATED, CONFIRMED, COMPLETED
+    PLACED, CANCELLED, PRINTING, PRINTED, DELIVERING, DONE
 }

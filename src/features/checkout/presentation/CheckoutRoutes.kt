@@ -30,11 +30,15 @@ private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
         val principal = call.principal<UserIdPrincipal>()!!
         val address = checkoutRepository.getUserAddress(principal.email)
         val orders = checkoutRepository.getUserCartOrders(principal.email)
-        call.respond(FreeMarkerContent("checkout.ftl", mapOf(
-            "orders" to orders,
-            "user" to principal,
-            "address" to address
-        )))
+        call.respond(
+            FreeMarkerContent(
+                "checkout.ftl", mapOf(
+                    "orders" to orders,
+                    "user" to principal,
+                    "address" to address
+                )
+            )
+        )
     }
 }
 
@@ -65,8 +69,17 @@ private fun Route.proceedToPay(checkoutRepository: CheckoutRepository) {
         val address = Address(city, state, country)
 
         val principal = call.principal<UserIdPrincipal>()!!
-        val result = checkoutRepository.updateUserAddress(principal.email, address)
+        val updated = checkoutRepository.updateUserAddress(principal.email, address)
 
-        if (result) call.respond(HttpStatusCode.OK, "Payment Gateway Succeed")
+        if (updated) {
+            // Start payment
+            val success = true // result of payment
+            if (success) {
+                val result = checkoutRepository.checkoutSuccess(principal.email)
+                if (result) call.respondText("/tracking")
+            } else {
+                call.respondText("Payment not successful")
+            }
+        }
     }
 }

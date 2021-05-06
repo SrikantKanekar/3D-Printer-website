@@ -94,7 +94,6 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
 private fun Route.loginProvider() {
     authenticate("OAuth") {
         location<Login> {
-            println("-------------aaaa------------")
             param("error") {
                 handle {
                     call.respond(HttpStatusCode.BadRequest, call.parameters.getAll("error").orEmpty())

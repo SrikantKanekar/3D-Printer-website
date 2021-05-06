@@ -12,4 +12,6 @@ interface CheckoutDataSource {
     suspend fun removeCartOrder(email: String, orderId: String): Boolean
 
     suspend fun updateUserAddress(email: String, address: Address): Boolean
+
+    suspend fun checkoutSuccess(email: String): Boolean
 }

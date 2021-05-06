@@ -3,6 +3,8 @@ package com.example
 import com.example.di.authModule
 import com.example.features.wishlist.domain.WishlistCookie
 import com.example.features.account.presentation.registerAccountRoutes
+import com.example.features.admin.domain.AdminPrincipal
+import com.example.features.admin.presentation.registerAdminRoutes
 import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.auth.domain.loginProviders
@@ -30,6 +32,7 @@ import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
 import io.ktor.util.*
+import org.koin.core.logger.Level
 import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
 import org.koin.logger.SLF4JLogger
@@ -71,6 +74,15 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
                 throw AuthenticationException()
             }
             validate { session: UserIdPrincipal ->
+                //verify in database
+                session
+            }
+        }
+        session<AdminPrincipal>("ADMIN_AUTH") {
+            challenge {
+                throw AuthenticationException()
+            }
+            validate { session: AdminPrincipal ->
                 session
             }
         }
@@ -80,15 +92,15 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
         cookie<UserIdPrincipal>(
             name = "AUTH_COOKIE",
             storage = SessionStorageMemory()
-        ) {
-            cookie.extensions["SameSite"] = "lax"
-        }
+        )
+        cookie<AdminPrincipal>(
+            name = "ADMIN_COOKIE",
+            storage = SessionStorageMemory()
+        )
         cookie<WishlistCookie>(
             name = "WISHLIST_COOKIE",
             storage = SessionStorageMemory()
-        ) {
-            cookie.extensions["SameSite"] = "lax"
-        }
+        )
     }
 
     routing {
@@ -108,4 +120,5 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     registerWishlistRoutes()
     registerHomeRoute()
     registerStatusRoutes()
+    registerAdminRoutes()
 }

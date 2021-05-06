@@ -1,6 +1,6 @@
 <#import "template.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Checkout" css="" js="">
+<@layout.main title="Checkout" css="" js="/static/js/checkout.js">
     
     <@header.header user="${user}" />
 
@@ -21,7 +21,7 @@
                 </div>
             </#list>
 
-            <form action="/checkout/pay" method="post" class="m-5">
+            <form action="/checkout/pay" method="post" class="m-5" id="checkout-form">
                 <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
                     <input type="text" name="country" value="${address.country}" class="form-control" id="country">

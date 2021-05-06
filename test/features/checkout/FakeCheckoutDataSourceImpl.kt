@@ -46,4 +46,8 @@ class FakeCheckoutDataSourceImpl(
         userData[email] = user
         return true
     }
+
+    override suspend fun checkoutSuccess(email: String): Boolean {
+        TODO("Not yet implemented")
+    }
 }
