@@ -3,6 +3,7 @@ package com.example.features.checkout.presentation
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.checkout.domain.Address
+import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -17,7 +18,7 @@ fun Application.registerCheckoutRoutes() {
     val checkoutRepository by inject<CheckoutRepository>()
 
     routing {
-        authenticate("SESSION_AUTH") {
+        authenticate(USER_SESSION_AUTH) {
             getCheckoutRoute(checkoutRepository)
             removeFromCheckout(checkoutRepository)
             proceedToPay(checkoutRepository)
@@ -29,7 +30,7 @@ private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
     get("/checkout") {
         val principal = call.principal<UserIdPrincipal>()!!
         val address = checkoutRepository.getUserAddress(principal.email)
-        val orders = checkoutRepository.getUserCartOrders(principal.email)
+        val orders = checkoutRepository.getUserCartObjects(principal.email)
         call.respond(
             FreeMarkerContent(
                 "checkout.ftl", mapOf(
@@ -50,7 +51,7 @@ private fun Route.removeFromCheckout(checkoutRepository: CheckoutRepository) {
         )
 
         val principal = call.principal<UserIdPrincipal>()!!
-        val result = checkoutRepository.removeCartOrder(principal.email, id)
+        val result = checkoutRepository.removeObjectFromCart(principal.email, id)
 
         if (result) {
             call.respondRedirect("/checkout")

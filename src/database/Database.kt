@@ -1,7 +1,6 @@
 package com.example.database
 
 import com.example.features.account.domain.User
-import com.example.features.`object`.domain.Object
 import com.example.features.checkout.domain.Order
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
@@ -16,15 +15,3 @@ private val database = client.getDatabase(DATABASE_NAME)
 
 val users = database.getCollection<User>(COLLECTION_USER)
 val orders = database.getCollection<Order>(COLLECTION_ORDER)
-
-
-// Deprecated
-const val COLLECTION_WISHLIST = "WISHLIST"
-const val COLLECTION_CART = "CART"
-const val COLLECTION_PROCESSING = "PROCESSING"
-const val COLLECTION_HISTORY = "HISTORY"
-
-val wishlistOrders = database.getCollection<Object>(COLLECTION_WISHLIST)
-val cartOrders = database.getCollection<Object>(COLLECTION_CART)
-val processingOrders = database.getCollection<Object>(COLLECTION_PROCESSING)
-val historyOrders = database.getCollection<Object>(COLLECTION_HISTORY)

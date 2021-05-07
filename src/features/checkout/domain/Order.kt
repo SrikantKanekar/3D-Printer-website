@@ -7,8 +7,8 @@ import org.bson.types.ObjectId
 
 data class Order(
     val userEmail: String,
+    var status: OrderStatus = PLACED,
     val objects: ArrayList<Object>,
-    val status: OrderStatus = PLACED,
     @BsonId
     val id: String = ObjectId().toString()
 )

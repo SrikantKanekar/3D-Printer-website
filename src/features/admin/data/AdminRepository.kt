@@ -1,27 +1,26 @@
 package com.example.features.admin.data
 
-import com.example.features.`object`.domain.Object
+import com.example.database.order.OrderDataSource
+import com.example.features.checkout.domain.Order
+import com.example.features.checkout.domain.OrderStatus
+import com.example.features.checkout.domain.OrderStatus.DELIVERED
 
 class AdminRepository(
-    private val adminDataSource: AdminDataSource
+    private val orderDataSource: OrderDataSource
 ) {
-    suspend fun getProcessingOrders(): ArrayList<Object> {
-        return adminDataSource.getProcessingOrders()
+    suspend fun getAllActiveOrders(): ArrayList<Order> {
+        return orderDataSource.getAllActiveOrders()
     }
 
-    suspend fun getOrderHistory(): ArrayList<Object> {
-        return adminDataSource.getOrderHistory()
+    suspend fun getAllCompletedOrders(): ArrayList<Order> {
+        return orderDataSource.getAllCompletedOrders()
     }
 
-    suspend fun getProcessingOrder(orderId: String): Object? {
-        return adminDataSource.getProcessingOrder(orderId)
+    suspend fun getActiveOrder(orderId: String): Order? {
+        return orderDataSource.getOrder(orderId)?.takeUnless { it.status == DELIVERED }
     }
 
-    suspend fun updateProcessingOrder(order: Object): Boolean {
-        return adminDataSource.updateProcessingOrder(order)
-    }
-
-    suspend fun orderDelivered(orderId: String): Boolean {
-        return adminDataSource.orderDelivered(orderId)
+    suspend fun updateTrackingStatus(orderId: String, status: OrderStatus): Boolean {
+        return orderDataSource.updateTrackingStatus(orderId, status)
     }
 }

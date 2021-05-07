@@ -2,6 +2,7 @@ package com.example.features.cart.presentation
 
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.cart.data.CartRepository
+import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -15,7 +16,7 @@ fun Application.registerCartRoutes() {
     val cartRepository by inject<CartRepository>()
 
     routing {
-        authenticate("SESSION_AUTH") {
+        authenticate(USER_SESSION_AUTH) {
             getCartRoute(cartRepository)
             removeFromCart(cartRepository)
         }

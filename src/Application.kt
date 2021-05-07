@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.di.appModule
-import com.example.features.wishlist.domain.ObjectsCookie
+import com.example.features.myObjects.domain.ObjectsCookie
 import com.example.features.account.presentation.registerAccountRoutes
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
@@ -16,9 +16,15 @@ import com.example.features.util.presentation.registerHomeRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
 import com.example.features.`object`.presentation.registerOrderRoutes
 import com.example.features.tracker.presentation.registerTrackerRoutes
-import com.example.features.wishlist.presentation.registerWishlistRoutes
+import com.example.features.myObjects.presentation.registerMyObjectsRoutes
 import com.example.features.util.presentation.registerStatusRoutes
-import com.example.features.wishlist.domain.ObjectsCookieSerializer
+import com.example.features.myObjects.domain.ObjectCookieSerializer
+import com.example.util.AUTH.ADMIN_SESSION_AUTH
+import com.example.util.AUTH.OAUTH
+import com.example.util.AUTH.USER_SESSION_AUTH
+import com.example.util.COOKIES.ADMIN_AUTH_COOKIE
+import com.example.util.COOKIES.AUTH_COOKIE
+import com.example.util.COOKIES.MY_OBJECTS_COOKIE
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -62,13 +68,13 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     install(Locations)
 
     install(Authentication) {
-        oauth("OAuth") {
+        oauth(OAUTH) {
             client = HttpClient(Apache)
             providerLookup = { loginProviders[application.locations.resolve<Login>(Login::class, this).type] }
             urlProvider = { url(Login(it.name)) }
         }
 
-        session<UserIdPrincipal>("SESSION_AUTH") {
+        session<UserIdPrincipal>(USER_SESSION_AUTH) {
             challenge {
                 throw AuthenticationException()
             }
@@ -77,7 +83,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
                 session
             }
         }
-        session<AdminPrincipal>("ADMIN_AUTH") {
+        session<AdminPrincipal>(ADMIN_SESSION_AUTH) {
             challenge {
                 throw AuthenticationException()
             }
@@ -89,18 +95,18 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
 
     install(Sessions) {
         cookie<UserIdPrincipal>(
-            name = "AUTH_COOKIE",
+            name = AUTH_COOKIE,
             storage = SessionStorageMemory()
         )
         cookie<AdminPrincipal>(
-            name = "ADMIN_COOKIE",
+            name = ADMIN_AUTH_COOKIE,
             storage = SessionStorageMemory()
         )
         cookie<ObjectsCookie>(
-            name = "WISHLIST_COOKIE",
+            name = MY_OBJECTS_COOKIE,
             storage = SessionStorageMemory()
         ) {
-            serializer = ObjectsCookieSerializer()
+            serializer = ObjectCookieSerializer()
         }
     }
 
@@ -118,7 +124,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     registerNotificationRoutes()
     registerOrderRoutes()
     registerTrackerRoutes()
-    registerWishlistRoutes()
+    registerMyObjectsRoutes()
     registerHomeRoute()
     registerStatusRoutes()
     registerAdminRoutes()

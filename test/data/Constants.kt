@@ -2,13 +2,23 @@ package data
 
 object Constants {
 
-    const val TEST_USER_EMAIL = "test_user_email"
-    const val TEST_USER_PASSWORD = "test_user_password"
-    const val TEST_USER_USERNAME = "test_user_username"
+    const val TEST_USER_EMAIL = "TEST_USER_EMAIL"
+    const val TEST_USER_PASSWORD = "TEST_USER_PASSWORD"
+    const val TEST_USER_USERNAME = "TEST_USER_USERNAME"
+    const val TEST_USER_HASHED_PASSWORD = "c7b05e42bc0a4777fc6699ca2e1a5c2b42404c520fd05dddb602a2f4cf2561e1:88c855955c858b31c36500cc34e77218c83b5005e5b1585b0a2a7eabfd440781"
+    const val TEST_USER_ADDRESS= "TEST_USER_ADDRESS"
 
-    const val TEST_CREATED_ORDER = "test_created_order"
-    const val TEST_WISHLIST_ORDER = "test_wishlist_order"
-    const val TEST_CART_ORDER = "test_cart_order"
+    const val TEST_MY_OBJECT = "TEST_MY_OBJECT"
+    const val TEST_CART_OBJECT = "TEST_CART_OBJECT"
+    const val TEST_TRACKING_OBJECT = "TEST_TRACKING_OBJECT"
+    const val TEST_COMPLETED_OBJECT = "TEST_COMPLETED_OBJECT"
 
+    const val TEST_PLACED_ORDER = "TEST_PLACED_ORDER"
+    const val TEST_PRINTING_ORDER = "TEST_PRINTING_ORDER"
+    const val TEST_PRINTED_ORDER = "TEST_PRINTED_ORDER"
+    const val TEST_DELIVERING_ORDER = "TEST_DELIVERING_ORDER"
+    const val TEST_DELIVERED_ORDER = "TEST_DELIVERED_ORDER"
+
+    const val TEST_CREATED_OBJECT = "TEST_CREATED_OBJECT"
     const val TEST_FILE_UPLOAD_NAME = "TEST_FILE_UPLOAD_NAME"
 }

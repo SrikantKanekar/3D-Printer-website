@@ -2,6 +2,7 @@ package com.example.features.history.presentation
 
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.history.data.HistoryRepository
+import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -14,7 +15,7 @@ fun Application.registerHistoryRoutes() {
     val historyRepository by inject<HistoryRepository>()
 
     routing {
-        authenticate("SESSION_AUTH") {
+        authenticate(USER_SESSION_AUTH) {
             getHistoryRoute(historyRepository)
         }
     }

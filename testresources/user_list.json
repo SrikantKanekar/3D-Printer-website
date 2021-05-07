@@ -9,10 +9,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   },
   {
@@ -25,10 +21,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   },
   {
@@ -41,10 +33,75 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
+    "notification": []
+  },
+  {
+    "email": "TEST_USER_EMAIL",
+    "password": "c7b05e42bc0a4777fc6699ca2e1a5c2b42404c520fd05dddb602a2f4cf2561e1:88c855955c858b31c36500cc34e77218c83b5005e5b1585b0a2a7eabfd440781",
+    "username": "TEST_USER_USERNAME",
+    "address": {
+      "city": "",
+      "state": "",
+      "country": ""
+    },
+    "objects": [
+      {
+        "id": "TEST_MY_OBJECT",
+        "fileName": "note_db",
+        "status": "NONE",
+        "basicSettings": {
+          "size": 10
+        },
+        "advancedSettings": {
+          "weight": 20
+        },
+        "price": null,
+        "timeInMin": null,
+        "dueDelivery": null
+      },
+      {
+        "id": "TEST_CART_OBJECT",
+        "fileName": "note_db",
+        "status": "CART",
+        "basicSettings": {
+          "size": 90
+        },
+        "advancedSettings": {
+          "weight": 50
+        },
+        "price": null,
+        "timeInMin": null,
+        "dueDelivery": null
+      },
+      {
+        "id": "TEST_TRACKING_OBJECT",
+        "fileName": "note_db",
+        "status": "TRACKING",
+        "basicSettings": {
+          "size": 90
+        },
+        "advancedSettings": {
+          "weight": 50
+        },
+        "price": null,
+        "timeInMin": null,
+        "dueDelivery": null
+      },
+      {
+        "id": "TEST_COMPLETED_OBJECT",
+        "fileName": "note_db",
+        "status": "COMPLETED",
+        "basicSettings": {
+          "size": 90
+        },
+        "advancedSettings": {
+          "weight": 50
+        },
+        "price": null,
+        "timeInMin": null,
+        "dueDelivery": null
+      }
+    ],
     "notification": []
   },
   {
@@ -57,10 +114,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   },
   {
@@ -73,10 +126,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   },
   {
@@ -89,10 +138,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   },
   {
@@ -105,90 +150,6 @@
       "country": ""
     },
     "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
-    "notification": []
-  },
-  {
-    "email": "test_user_email",
-    "password": "011e60e8f6fed41ef1594488c618bffc64255404544a285332c5ae147c50cb2f:0d2e79e813c117f2ef170d5da38e30693ac6df2a3180a6523dfd4458abae82f8",
-    "username": "test_user_username",
-    "address": {
-      "city": "",
-      "state": "",
-      "country": ""
-    },
-    "objects": [],
-    "wishlist": ["test_wishlist_order"],
-    "cartOrders": ["test_cart_order"],
-    "currentOrders": [],
-    "orderHistory": [],
-    "notification": []
-  },
-  {
-    "email": "email9",
-    "password": "password9",
-    "username": "username9",
-    "address": {
-      "city": "",
-      "state": "",
-      "country": ""
-    },
-    "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
-    "notification": []
-  },
-  {
-    "email": "email10",
-    "password": "password10",
-    "username": "username10",
-    "address": {
-      "city": "",
-      "state": "",
-      "country": ""
-    },
-    "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
-    "notification": []
-  },
-  {
-    "email": "email11",
-    "password": "password11",
-    "username": "username11",
-    "address": {
-      "city": "",
-      "state": "",
-      "country": ""
-    },
-    "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
-    "notification": []
-  },
-  {
-    "email": "email12",
-    "password": "password12",
-    "username": "username12",
-    "address": {
-      "city": "",
-      "state": "",
-      "country": ""
-    },
-    "objects": [],
-    "wishlist": [],
-    "cartOrders": [],
-    "currentOrders": [],
-    "orderHistory": [],
     "notification": []
   }
 ]

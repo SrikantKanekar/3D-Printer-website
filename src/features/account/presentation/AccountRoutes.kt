@@ -4,6 +4,7 @@ import com.example.features.account.data.AccountRepository
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.auth.domain.checkHashForPassword
 import com.example.features.auth.domain.getHashWithSalt
+import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -18,7 +19,7 @@ fun Application.registerAccountRoutes() {
     val accountRepository by inject<AccountRepository>()
 
     routing {
-        authenticate("SESSION_AUTH") {
+        authenticate(USER_SESSION_AUTH) {
             getAccountRoute(accountRepository)
             getUpdateAccountRoute(accountRepository)
             postUpdateAccountRoute(accountRepository)

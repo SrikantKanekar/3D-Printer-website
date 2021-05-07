@@ -4,6 +4,7 @@ import com.example.features.admin.data.AdminRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants
 import com.example.features.checkout.domain.OrderStatus.*
+import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -21,7 +22,7 @@ fun Application.registerAdminRoutes() {
     routing {
         getAdminLoginRoute()
         postAdminLoginRoute()
-        authenticate("ADMIN_AUTH") {
+        authenticate(ADMIN_SESSION_AUTH) {
             getAdminRoute(adminRepository)
             postStatusRoute(adminRepository)
         }
@@ -52,12 +53,12 @@ private fun Route.postAdminLoginRoute() {
 private fun Route.getAdminRoute(adminRepository: AdminRepository) {
     get("/admin") {
 
-        val processingOrders = adminRepository.getProcessingOrders()
-        val historyOrders = adminRepository.getOrderHistory()
+        val activeOrders = adminRepository.getAllActiveOrders()
+        val completedOrders = adminRepository.getAllCompletedOrders()
         call.respond(
             FreeMarkerContent(
                 "admin_panel.ftl", mapOf(
-                    "processingOrders" to processingOrders, "historyOrders" to historyOrders
+                    "processingOrders" to activeOrders, "historyOrders" to completedOrders
                 )
             )
         )
@@ -68,10 +69,9 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
     post("/admin/printing") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val order = adminRepository.getProcessingOrder(id)
-        if (order != null) {
-            //val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTING))
-            //call.respondText(result.toString())
+        val result = adminRepository.updateTrackingStatus(id, PRINTING)
+        if (result) {
+            call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
@@ -80,10 +80,10 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
     post("/admin/printed") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val order = adminRepository.getProcessingOrder(id)
-        if (order != null) {
-            //val result = adminRepository.updateProcessingOrder(order.copy(status = PRINTED))
-            //call.respondText(result.toString())
+
+        val result = adminRepository.updateTrackingStatus(id, PRINTED)
+        if (result) {
+            call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
@@ -92,10 +92,10 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
     post("/admin/delivering") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val order = adminRepository.getProcessingOrder(id)
-        if (order != null) {
-            //val result = adminRepository.updateProcessingOrder(order.copy(status = DELIVERING))
-            //call.respondText(result.toString())
+
+        val result = adminRepository.updateTrackingStatus(id, DELIVERING)
+        if (result) {
+            call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
@@ -104,13 +104,12 @@ private fun Route.postStatusRoute(adminRepository: AdminRepository) {
     post("/admin/delivered") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-            val result = adminRepository.orderDelivered(id)
-        if (result){
+        val result = adminRepository.updateTrackingStatus(id, DELIVERED)
+        if (result) {
             call.respondText(result.toString())
         } else {
             call.respondText("Invalid order ID")
         }
     }
-
 }
 

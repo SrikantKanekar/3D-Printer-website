@@ -2,6 +2,7 @@ package com.example.features.tracker.presentation
 
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.tracker.data.TrackerRepository
+import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -14,14 +15,14 @@ fun Application.registerTrackerRoutes() {
     val trackerRepository by inject<TrackerRepository>()
 
     routing {
-        authenticate("SESSION_AUTH") {
+        authenticate(USER_SESSION_AUTH) {
             getTrackerRoute(trackerRepository)
         }
     }
 }
 
 fun Route.getTrackerRoute(trackerRepository: TrackerRepository) {
-    get("/tracking"){
+    get("/tracking") {
 
         val principal = call.principal<UserIdPrincipal>()!!
         val orders = trackerRepository.getUserTrackingOrders(principal.email)

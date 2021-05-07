@@ -10,11 +10,7 @@ data class User(
     val email: String,
     val password: String,
     val username: String,
-    val address: Address = Address(),
+    var address: Address = Address(),
     val objects: ArrayList<Object> = ArrayList(),
-    val wishlist: ArrayList<String> = ArrayList(),
-    val cartOrders: ArrayList<String> = ArrayList(),
-    val currentOrders: ArrayList<String> = ArrayList(),
-    val orderHistory: ArrayList<String> = ArrayList(),
     val notification: ArrayList<Notification> = ArrayList(),
 )

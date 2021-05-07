@@ -1,6 +1,6 @@
 package com.example.features.auth.presentation
 
-import com.example.features.wishlist.domain.ObjectsCookie
+import com.example.features.myObjects.domain.ObjectsCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
@@ -9,6 +9,7 @@ import com.example.features.auth.domain.Constants.UNKNOWN_REGISTRATION_ERROR
 import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.auth.domain.getHashWithSalt
+import com.example.util.AUTH.OAUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -92,7 +93,7 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
 }
 
 private fun Route.loginProvider() {
-    authenticate("OAuth") {
+    authenticate(OAUTH) {
         location<Login> {
             param("error") {
                 handle {
