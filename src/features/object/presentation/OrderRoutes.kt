@@ -1,6 +1,6 @@
 package com.example.features.`object`.presentation
 
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.`object`.data.OrderRepository
 import com.example.features.`object`.domain.AdvancedSettings
@@ -57,8 +57,8 @@ fun Route.createOrderRoute(orderRepository: OrderRepository) {
                     if (principal != null) {
                         orderRepository.addOrderToUserWishlist(principal.email, order.id)
                     } else {
-                        val cookie = call.sessions.get<WishlistCookie>() ?: WishlistCookie()
-                        cookie.orders.add(order.id)
+                        val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                        cookie.objects.add(order)
                         call.sessions.set(cookie)
                     }
 

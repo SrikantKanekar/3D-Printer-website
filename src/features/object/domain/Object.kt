@@ -1,9 +1,11 @@
 package com.example.features.`object`.domain
 
 import com.example.features.`object`.domain.ObjectStatus.CREATED
+import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 
+@Serializable
 data class Object(
     val fileName: String,
     val status: ObjectStatus = CREATED,

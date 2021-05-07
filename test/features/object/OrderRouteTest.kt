@@ -64,8 +64,6 @@ class OrderRouteTest : KoinTest {
                 testUserLogin()
 
                 runBlocking {
-                    val wishlist = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
-                    assertEquals(true, wishlist.contains(TEST_CREATED_ORDER))
 
                     val order = orderRepository.getOrder(TEST_CREATED_ORDER)!!
                     assertEquals(TEST_FILE_UPLOAD_NAME, order.fileName)

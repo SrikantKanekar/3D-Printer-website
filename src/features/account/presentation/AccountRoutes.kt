@@ -13,7 +13,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
-import javax.naming.AuthenticationException
 
 fun Application.registerAccountRoutes() {
     val accountRepository by inject<AccountRepository>()
@@ -34,16 +33,14 @@ fun Route.getAccountRoute(accountRepository: AccountRepository) {
     get("/account") {
         val principal = call.principal<UserIdPrincipal>()!!
         val user = accountRepository.getUser(principal.email)
-        user?.let {
-            call.respond(FreeMarkerContent("account.ftl", mapOf("user" to it)))
-        } ?: throw AuthenticationException()
+        call.respond(FreeMarkerContent("account.ftl", mapOf("user" to user)))
     }
 }
 
 private fun Route.getUpdateAccountRoute(accountRepository: AccountRepository) {
     get("/account/update") {
         val principal = call.principal<UserIdPrincipal>()!!
-        val user = accountRepository.getUser(principal.email)!!
+        val user = accountRepository.getUser(principal.email)
         call.respond(FreeMarkerContent("account_update.ftl", mapOf("user" to user)))
     }
 }
@@ -54,7 +51,7 @@ fun Route.postUpdateAccountRoute(accountRepository: AccountRepository) {
         val params = call.receiveParameters()
         val username = params["username"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         try {
-            val user = accountRepository.getUser(principal.email)!!
+            val user = accountRepository.getUser(principal.email)
             val updated = accountRepository.updateUser(user.copy(username = username))
             if (updated) call.respondRedirect("/account")
         } catch (e: Exception) {
@@ -67,7 +64,7 @@ fun Route.postUpdateAccountRoute(accountRepository: AccountRepository) {
 private fun Route.getResetPasswordRoute(accountRepository: AccountRepository) {
     get("/account/reset-password") {
         val principal = call.principal<UserIdPrincipal>()!!
-        val user = accountRepository.getUser(principal.email)!!
+        val user = accountRepository.getUser(principal.email)
         call.respond(FreeMarkerContent("account_reset_password.ftl", mapOf("user" to user)))
     }
 }
@@ -81,7 +78,7 @@ private fun Route.postResetPasswordRoute(accountRepository: AccountRepository) {
         val confirmPassword = params["confirm_password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         try {
             if (newPassword == confirmPassword) {
-                val user = accountRepository.getUser(principal.email)!!
+                val user = accountRepository.getUser(principal.email)
                 val isPasswordCorrect = checkHashForPassword(oldPassword, user.password)
 
                 if (isPasswordCorrect) {

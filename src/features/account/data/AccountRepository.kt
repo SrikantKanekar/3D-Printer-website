@@ -6,7 +6,7 @@ import com.example.features.account.domain.User
 class AccountRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun getUser(email: String): User? {
+    suspend fun getUser(email: String): User {
         return userDataSource.getUser(email)
     }
 

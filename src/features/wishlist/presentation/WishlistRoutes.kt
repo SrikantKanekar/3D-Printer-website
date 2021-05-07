@@ -2,7 +2,7 @@ package com.example.features.wishlist.presentation
 
 import com.example.features.auth.domain.UserIdPrincipal
 import com.example.features.wishlist.data.WishlistRepository
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -29,8 +29,8 @@ fun Route.getWishlistRoute(wishlistRepository: WishlistRepository) {
         val principal = call.sessions.get<UserIdPrincipal>()
         val ordersIds = when (principal) {
             null -> {
-                val cookie = call.sessions.get<WishlistCookie>() ?: WishlistCookie()
-                cookie.orders
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                ArrayList(cookie.objects.map { it.id })
             }
             else -> wishlistRepository.getUserWishlist(principal.email)
         }
@@ -60,8 +60,8 @@ private fun Route.deleteFromWishlistRoute(wishlistRepository: WishlistRepository
         val principal = call.sessions.get<UserIdPrincipal>()
         when (principal) {
             null -> {
-                val cookie = call.sessions.get<WishlistCookie>() ?: WishlistCookie()
-                userResult = cookie.orders.remove(id)
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                userResult = cookie.objects.removeIf { it.id == id }
                 orderResult = wishlistRepository.deleteWishlist(id)
                 call.sessions.set(cookie)
             }

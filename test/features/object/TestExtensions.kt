@@ -2,7 +2,7 @@ package features.`object`
 
 import com.example.features.account.data.AccountRepository
 import com.example.features.`object`.data.OrderRepository
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_USER_EMAIL
@@ -15,6 +15,7 @@ import kotlinx.coroutines.runBlocking
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 val uploadFile = PartData.FileItem(
@@ -51,8 +52,8 @@ fun TestApplicationEngine.`create order without login`(orderRepository: OrderRep
         setBody(boundary, listOf(uploadFile))
     }.apply {
         runBlocking {
-            val cookie = response.call.sessions.get<WishlistCookie>()!!
-            assertTrue { cookie.orders.contains(TEST_CREATED_ORDER) }
+            val cookie = response.call.sessions.get<ObjectsCookie>()!!
+            assertNotNull(cookie.objects.find { it.id == TEST_CREATED_ORDER })
 
             val order = orderRepository.getOrder(TEST_CREATED_ORDER)!!
             assertEquals(TEST_FILE_UPLOAD_NAME, order.fileName)
@@ -76,7 +77,7 @@ fun TestApplicationEngine.`create order after login`(
         setBody(boundary, listOf(uploadFile))
     }.apply {
         runBlocking {
-            val wishlist = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
+            val wishlist = accountRepository.getUser(TEST_USER_EMAIL).wishlist
             assertTrue { wishlist.contains(TEST_CREATED_ORDER) }
 
             val order = orderRepository.getOrder(TEST_CREATED_ORDER)!!

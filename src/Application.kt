@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.di.appModule
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import com.example.features.account.presentation.registerAccountRoutes
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
@@ -18,6 +18,7 @@ import com.example.features.`object`.presentation.registerOrderRoutes
 import com.example.features.tracker.presentation.registerTrackerRoutes
 import com.example.features.wishlist.presentation.registerWishlistRoutes
 import com.example.features.util.presentation.registerStatusRoutes
+import com.example.features.wishlist.domain.ObjectsCookieSerializer
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -95,10 +96,12 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
             name = "ADMIN_COOKIE",
             storage = SessionStorageMemory()
         )
-        cookie<WishlistCookie>(
+        cookie<ObjectsCookie>(
             name = "WISHLIST_COOKIE",
             storage = SessionStorageMemory()
-        )
+        ) {
+            serializer = ObjectsCookieSerializer()
+        }
     }
 
     routing {

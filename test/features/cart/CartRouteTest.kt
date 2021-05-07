@@ -57,7 +57,7 @@ class CartRouteTest : KoinTest {
                         val cartOrderIds = cartRepository.getAllCartOrders().map { it.id }
                         assertFalse { cartOrderIds.contains(TEST_CART_ORDER) }
 
-                        val user = accountRepository.getUser(TEST_USER_EMAIL)!!
+                        val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertTrue { user.wishlist.contains(TEST_CART_ORDER) }
                         assertFalse { user.cartOrders.contains(TEST_CART_ORDER) }
 
@@ -81,7 +81,7 @@ class CartRouteTest : KoinTest {
                         val cartOrderIds = cartRepository.getAllCartOrders().map { it.id }
                         assertTrue { cartOrderIds.contains(TEST_CART_ORDER) }
 
-                        val user = accountRepository.getUser(TEST_USER_EMAIL)!!
+                        val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertFalse { user.wishlist.contains(TEST_CART_ORDER) }
                         assertTrue { user.cartOrders.contains(TEST_CART_ORDER) }
 

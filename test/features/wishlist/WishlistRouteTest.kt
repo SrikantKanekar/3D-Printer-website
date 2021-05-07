@@ -2,7 +2,7 @@ package features.wishlist
 
 import com.example.features.account.data.AccountRepository
 import com.example.features.`object`.data.OrderRepository
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import com.example.module
 import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_USER_EMAIL
@@ -53,8 +53,8 @@ class WishlistRouteTest : KoinTest {
                 `create order without login`(orderRepository)
                 handleRequest(HttpMethod.Get, "/wishlist/$TEST_CREATED_ORDER/delete").apply {
                     runBlocking {
-                        val cookie = response.call.sessions.get<WishlistCookie>()!!
-                        assertFalse { cookie.orders.contains(TEST_CREATED_ORDER) }
+                        val cookie = response.call.sessions.get<ObjectsCookie>()!!
+                        assertNotNull(cookie.objects.find { it.id == TEST_CREATED_ORDER })
 
                         val order = orderRepository.getOrder(TEST_CREATED_ORDER)
                         assertNull(order)
@@ -73,7 +73,7 @@ class WishlistRouteTest : KoinTest {
                 `create order after login`(accountRepository, orderRepository)
                 handleRequest(HttpMethod.Get, "/wishlist/$TEST_CREATED_ORDER/delete").apply {
                     runBlocking {
-                        val wishlist = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
+                        val wishlist = accountRepository.getUser(TEST_USER_EMAIL).wishlist
                         assertFalse { wishlist.contains(TEST_CREATED_ORDER) }
 
                         val order = orderRepository.getOrder(TEST_CREATED_ORDER)
@@ -93,8 +93,8 @@ class WishlistRouteTest : KoinTest {
                 `create order without login`(orderRepository)
                 handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/delete").apply {
                     runBlocking {
-                        val cookie = response.call.sessions.get<WishlistCookie>()!!
-                        assertTrue { cookie.orders.contains(TEST_CREATED_ORDER) }
+                        val cookie = response.call.sessions.get<ObjectsCookie>()!!
+                        assertNotNull(cookie.objects.find { it.id == TEST_CREATED_ORDER })
 
                         val order = orderRepository.getOrder(TEST_CREATED_ORDER)
                         assertNotNull(order)
@@ -115,7 +115,7 @@ class WishlistRouteTest : KoinTest {
                 handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/delete").apply {
                     runBlocking {
 
-                        val wishlist = accountRepository.getUser(TEST_USER_EMAIL)!!.wishlist
+                        val wishlist = accountRepository.getUser(TEST_USER_EMAIL).wishlist
                         assertTrue { wishlist.contains(TEST_CREATED_ORDER) }
 
                         val order = orderRepository.getOrder(TEST_CREATED_ORDER)
@@ -144,7 +144,7 @@ class WishlistRouteTest : KoinTest {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/wishlist/$TEST_WISHLIST_ORDER/cart").apply {
                     runBlocking {
-                        val user = accountRepository.getUser(TEST_USER_EMAIL)!!
+                        val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertFalse { user.wishlist.contains(TEST_WISHLIST_ORDER) }
                         assertTrue { user.cartOrders.contains(TEST_WISHLIST_ORDER) }
 
@@ -164,7 +164,7 @@ class WishlistRouteTest : KoinTest {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/cart").apply {
                     runBlocking {
-                        val user = accountRepository.getUser(TEST_USER_EMAIL)!!
+                        val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertTrue { user.wishlist.contains(TEST_WISHLIST_ORDER) }
                         assertFalse { user.cartOrders.contains(TEST_WISHLIST_ORDER) }
 

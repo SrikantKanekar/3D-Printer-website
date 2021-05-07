@@ -56,7 +56,7 @@ class AccountRouteTest: KoinTest {
                 }.apply {
                     assertEquals(HttpStatusCode.Found, response.status())
                     runBlocking {
-                        assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL)?.username)
+                        assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL).username)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class AccountRouteTest: KoinTest {
                         assertFalse(
                             checkHashForPassword(
                                 "abcd",
-                                accountRepository.getUser(TEST_USER_EMAIL)!!.password
+                                accountRepository.getUser(TEST_USER_EMAIL).password
                             )
                         )
                     }
@@ -110,7 +110,7 @@ class AccountRouteTest: KoinTest {
                         assertFalse(
                             checkHashForPassword(
                                 "Invalid password",
-                                accountRepository.getUser(TEST_USER_EMAIL)!!.password
+                                accountRepository.getUser(TEST_USER_EMAIL).password
                             )
                         )
                     }
@@ -138,7 +138,7 @@ class AccountRouteTest: KoinTest {
                         assertFalse(
                             checkHashForPassword(
                                 TEST_USER_PASSWORD,
-                                accountRepository.getUser(TEST_USER_EMAIL)!!.password
+                                accountRepository.getUser(TEST_USER_EMAIL).password
                             )
                         )
                     }

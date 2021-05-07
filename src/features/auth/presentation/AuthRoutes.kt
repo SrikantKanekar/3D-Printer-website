@@ -1,6 +1,6 @@
 package com.example.features.auth.presentation
 
-import com.example.features.wishlist.domain.WishlistCookie
+import com.example.features.wishlist.domain.ObjectsCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
@@ -49,9 +49,9 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
         val isPasswordCorrect = authRepository.login(email, password)
         if (isPasswordCorrect) {
             call.sessions.set(UserIdPrincipal(email))
-            val cookie = call.sessions.get<WishlistCookie>()
-            authRepository.syncOrders(email, cookie)
-            call.sessions.clear<WishlistCookie>()
+            val cookie = call.sessions.get<ObjectsCookie>()
+            authRepository.syncObjects(email, cookie)
+            call.sessions.clear<ObjectsCookie>()
             call.respondText(returnUrl)
         } else {
             call.respondText(EMAIL_PASSWORD_INCORRECT)
@@ -78,9 +78,9 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
         if (!userExists) {
             if (authRepository.register(User(email, getHashWithSalt(password), username))) {
                 call.sessions.set(UserIdPrincipal(email))
-                val cookie = call.sessions.get<WishlistCookie>()
-                authRepository.syncOrders(email, cookie)
-                call.sessions.clear<WishlistCookie>()
+                val cookie = call.sessions.get<ObjectsCookie>()
+                authRepository.syncObjects(email, cookie)
+                call.sessions.clear<ObjectsCookie>()
                 call.respondText(returnUrl)
             } else {
                 call.respondText(UNKNOWN_REGISTRATION_ERROR)

@@ -1,7 +1,9 @@
 package data
 
 import com.example.database.user.UserDataSource
+import com.example.features.`object`.domain.Object
 import com.example.features.account.domain.User
+import data.Constants.TEST_CREATED_ORDER
 
 class FakeUserDataSourceImpl(
     private val users: HashMap<String, User>
@@ -12,8 +14,12 @@ class FakeUserDataSourceImpl(
         return true
     }
 
-    override suspend fun getUser(email: String): User? {
+    override suspend fun getUserOrNull(email: String): User? {
         return users[email]
+    }
+
+    override suspend fun getUser(email: String): User {
+        return users[email]!!
     }
 
     override suspend fun updateUser(user: User): Boolean {
@@ -21,11 +27,7 @@ class FakeUserDataSourceImpl(
         return true
     }
 
-    override suspend fun doesUserExist(email: String): Boolean {
-        return users.containsKey(email)
-    }
-
-    override suspend fun getUserHashedPassword(email: String): String? {
-        return users[email]?.password
+    override suspend fun createNewObject(fileName: String): Object {
+        return Object(id = TEST_CREATED_ORDER, fileName = fileName)
     }
 }
