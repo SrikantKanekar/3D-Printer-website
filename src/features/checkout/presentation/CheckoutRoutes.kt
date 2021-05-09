@@ -1,6 +1,6 @@
 package com.example.features.checkout.presentation
 
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.checkout.domain.Address
 import com.example.util.AUTH.USER_SESSION_AUTH
@@ -28,7 +28,7 @@ fun Application.registerCheckoutRoutes() {
 
 private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
     get("/checkout") {
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val address = checkoutRepository.getUserAddress(principal.email)
         val orders = checkoutRepository.getUserCartObjects(principal.email)
         call.respond(
@@ -50,7 +50,7 @@ private fun Route.removeFromCheckout(checkoutRepository: CheckoutRepository) {
             status = HttpStatusCode.BadRequest
         )
 
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val result = checkoutRepository.removeObjectFromCart(principal.email, id)
 
         if (result) {
@@ -69,7 +69,7 @@ private fun Route.proceedToPay(checkoutRepository: CheckoutRepository) {
         val country = parameters["country"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val address = Address(city, state, country)
 
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val updated = checkoutRepository.updateUserAddress(principal.email, address)
 
         if (updated) {

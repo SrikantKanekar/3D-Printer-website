@@ -4,6 +4,6 @@ import io.ktor.auth.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserIdPrincipal(
+data class UserPrincipal(
     val email: String
 ) : Principal

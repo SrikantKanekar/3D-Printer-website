@@ -1,7 +1,10 @@
 package com.example.features.account.presentation
 
 import com.example.features.account.data.AccountRepository
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.account.domain.Constants.INCORRECT_PASSWORD
+import com.example.features.account.domain.Constants.NOT_UPDATED
+import com.example.features.account.domain.Constants.PASSWORD_DO_NOT_MATCH
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.auth.domain.checkHashForPassword
 import com.example.features.auth.domain.getHashWithSalt
 import com.example.util.AUTH.USER_SESSION_AUTH
@@ -16,6 +19,7 @@ import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 
 fun Application.registerAccountRoutes() {
+
     val accountRepository by inject<AccountRepository>()
 
     routing {
@@ -32,7 +36,7 @@ fun Application.registerAccountRoutes() {
 
 fun Route.getAccountRoute(accountRepository: AccountRepository) {
     get("/account") {
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val user = accountRepository.getUser(principal.email)
         call.respond(FreeMarkerContent("account.ftl", mapOf("user" to user)))
     }
@@ -40,7 +44,7 @@ fun Route.getAccountRoute(accountRepository: AccountRepository) {
 
 private fun Route.getUpdateAccountRoute(accountRepository: AccountRepository) {
     get("/account/update") {
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val user = accountRepository.getUser(principal.email)
         call.respond(FreeMarkerContent("account_update.ftl", mapOf("user" to user)))
     }
@@ -48,23 +52,23 @@ private fun Route.getUpdateAccountRoute(accountRepository: AccountRepository) {
 
 fun Route.postUpdateAccountRoute(accountRepository: AccountRepository) {
     post("/account/update") {
-        val principal = call.principal<UserIdPrincipal>()!!
         val params = call.receiveParameters()
         val username = params["username"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        try {
-            val user = accountRepository.getUser(principal.email)
-            val updated = accountRepository.updateUser(user.copy(username = username))
-            if (updated) call.respondRedirect("/account")
-        } catch (e: Exception) {
-            print(e.localizedMessage)
-            call.respond(HttpStatusCode.NotFound, "Account doesn't exist")
+
+        val principal = call.principal<UserPrincipal>()!!
+        val user = accountRepository.getUser(principal.email)
+        val updated = accountRepository.updateUser(user.copy(username = username))
+        if (updated) {
+            call.respondRedirect("/account")
+        } else {
+            call.respondText(NOT_UPDATED)
         }
     }
 }
 
 private fun Route.getResetPasswordRoute(accountRepository: AccountRepository) {
     get("/account/reset-password") {
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val user = accountRepository.getUser(principal.email)
         call.respond(FreeMarkerContent("account_reset_password.ftl", mapOf("user" to user)))
     }
@@ -72,36 +76,37 @@ private fun Route.getResetPasswordRoute(accountRepository: AccountRepository) {
 
 private fun Route.postResetPasswordRoute(accountRepository: AccountRepository) {
     post("/account/reset-password") {
-        val principal = call.principal<UserIdPrincipal>()!!
         val params = call.receiveParameters()
         val oldPassword = params["old_password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val newPassword = params["new_password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val confirmPassword = params["confirm_password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        try {
-            if (newPassword == confirmPassword) {
-                val user = accountRepository.getUser(principal.email)
-                val isPasswordCorrect = checkHashForPassword(oldPassword, user.password)
 
-                if (isPasswordCorrect) {
-                    val updated = accountRepository.updateUser(
-                        user.copy(password = getHashWithSalt(newPassword))
-                    )
-                    if (updated) call.respondRedirect("/account")
+        if (newPassword == confirmPassword) {
+            val principal = call.principal<UserPrincipal>()!!
+            val user = accountRepository.getUser(principal.email)
+            val isPasswordCorrect = checkHashForPassword(oldPassword, user.password)
+
+            if (isPasswordCorrect) {
+                val updated = accountRepository.updateUser(
+                    user.copy(password = getHashWithSalt(newPassword))
+                )
+                if (updated) {
+                    call.respondRedirect("/account")
                 } else {
-                    call.respond(HttpStatusCode.NotAcceptable, "password not correct")
+                    call.respondText(NOT_UPDATED)
                 }
             } else {
-                call.respond(HttpStatusCode.NotAcceptable, "password's don't match")
+                call.respondText(INCORRECT_PASSWORD)
             }
-        } catch (e: Exception) {
-            call.respond(HttpStatusCode.NotFound, "Account doesn't exist")
+        } else {
+            call.respondText(PASSWORD_DO_NOT_MATCH)
         }
     }
 }
 
 private fun Route.logoutRoute() {
     get("/account/logout") {
-        call.sessions.clear<UserIdPrincipal>()
+        call.sessions.clear<UserPrincipal>()
         call.respondRedirect("/")
     }
 }

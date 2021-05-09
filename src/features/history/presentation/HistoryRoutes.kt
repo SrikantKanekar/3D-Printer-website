@@ -1,6 +1,6 @@
 package com.example.features.history.presentation
 
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.history.data.HistoryRepository
 import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
@@ -24,7 +24,7 @@ fun Application.registerHistoryRoutes() {
 fun Route.getHistoryRoute(historyRepository: HistoryRepository) {
     get("/history"){
 
-        val principal = call.principal<UserIdPrincipal>()!!
+        val principal = call.principal<UserPrincipal>()!!
         val orders = historyRepository.getUserHistoryOrders(principal.email)
         call.respond(
             FreeMarkerContent(

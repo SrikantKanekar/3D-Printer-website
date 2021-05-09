@@ -4,7 +4,6 @@ import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
 import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus
 import com.example.features.`object`.domain.ObjectStatus.*
 
 class ObjectRepository(
@@ -29,7 +28,8 @@ class ObjectRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
-            .find { it.id == id }?.let { it.fileName = fileName } ?: return false
+            .find { it.id == id }
+            ?.let { it.fileName = fileName } ?: return false
         return userDataSource.updateUser(user)
     }
 
@@ -37,7 +37,8 @@ class ObjectRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
-            .find { it.id == id }?.let { it.basicSettings = basicSettings } ?: return false
+            .find { it.id == id }
+            ?.let { it.basicSettings = basicSettings } ?: return false
         return userDataSource.updateUser(user)
     }
 
@@ -45,7 +46,8 @@ class ObjectRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
-            .find { it.id == id }?.let { it.advancedSettings = advancedSettings } ?: return false
+            .find { it.id == id }
+            ?.let { it.advancedSettings = advancedSettings } ?: return false
         return userDataSource.updateUser(user)
     }
 }

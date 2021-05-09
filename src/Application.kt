@@ -1,12 +1,12 @@
 package com.example
 
 import com.example.di.appModule
-import com.example.features.myObjects.domain.ObjectsCookie
+import com.example.features.userObject.domain.ObjectsCookie
 import com.example.features.account.presentation.registerAccountRoutes
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
 import com.example.features.auth.domain.Login
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoutes
@@ -14,11 +14,12 @@ import com.example.features.checkout.presentation.registerCheckoutRoutes
 import com.example.features.history.presentation.registerHistoryRoutes
 import com.example.features.util.presentation.registerHomeRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
-import com.example.features.`object`.presentation.registerOrderRoutes
+import com.example.features.`object`.presentation.registerObjectRoutes
+import com.example.features.auth.data.AuthRepository
 import com.example.features.tracker.presentation.registerTrackerRoutes
-import com.example.features.myObjects.presentation.registerMyObjectsRoutes
+import com.example.features.userObject.presentation.registerMyObjectsRoutes
 import com.example.features.util.presentation.registerStatusRoutes
-import com.example.features.myObjects.domain.ObjectCookieSerializer
+import com.example.features.userObject.domain.ObjectCookieSerializer
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import com.example.util.AUTH.OAUTH
 import com.example.util.AUTH.USER_SESSION_AUTH
@@ -40,6 +41,7 @@ import io.ktor.serialization.*
 import io.ktor.sessions.*
 import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.inject
 import org.koin.logger.SLF4JLogger
 import javax.naming.AuthenticationException
 
@@ -74,27 +76,28 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
             urlProvider = { url(Login(it.name)) }
         }
 
-        session<UserIdPrincipal>(USER_SESSION_AUTH) {
+        session<UserPrincipal>(USER_SESSION_AUTH) {
             challenge {
                 throw AuthenticationException()
             }
-            validate { session: UserIdPrincipal ->
-                //verify in database
-                session
+            validate { principal ->
+                val authRepository by inject<AuthRepository>()
+                val exists = authRepository.doesUserExist(principal.email)
+                if (exists) principal else null
             }
         }
         session<AdminPrincipal>(ADMIN_SESSION_AUTH) {
             challenge {
                 throw AuthenticationException()
             }
-            validate { session: AdminPrincipal ->
-                session
+            validate { principal ->
+                principal
             }
         }
     }
 
     install(Sessions) {
-        cookie<UserIdPrincipal>(
+        cookie<UserPrincipal>(
             name = AUTH_COOKIE,
             storage = SessionStorageMemory()
         )
@@ -122,7 +125,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     registerCheckoutRoutes()
     registerHistoryRoutes()
     registerNotificationRoutes()
-    registerOrderRoutes()
+    registerObjectRoutes()
     registerTrackerRoutes()
     registerMyObjectsRoutes()
     registerHomeRoute()

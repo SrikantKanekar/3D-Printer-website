@@ -8,13 +8,17 @@ import com.example.features.`object`.domain.ObjectStatus.NONE
 class CartRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun getUserCartOrders(email: String): ArrayList<Object> {
-        return ArrayList(userDataSource.getUser(email).objects.filter { it.status == CART })
+    suspend fun getUserCartObjects(email: String): ArrayList<Object> {
+        val user = userDataSource.getUser(email)
+        return ArrayList(user.objects.filter { it.status == CART })
     }
 
-    suspend fun removeCartOrder(email: String, objectId: String): Boolean {
+    suspend fun removeCartObject(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
-        user.objects.find { it.id == objectId }?.status = NONE
+        user.objects
+            .filter { it.status == CART }
+            .find { it.id == objectId }
+            ?.let { it.status = NONE } ?: return false
         return userDataSource.updateUser(user)
     }
 }

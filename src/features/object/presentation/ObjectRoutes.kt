@@ -1,7 +1,7 @@
 package com.example.features.`object`.presentation
 
-import com.example.features.myObjects.domain.ObjectsCookie
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
@@ -16,23 +16,23 @@ import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 import java.io.File
 
-fun Application.registerOrderRoutes() {
+fun Application.registerObjectRoutes() {
 
-    val orderRepository by inject<ObjectRepository>()
+    val objectRepository by inject<ObjectRepository>()
 
     routing {
-        getOrderRoute()
-        createOrderRoute(orderRepository)
-        getUpdateOrderRoute(orderRepository)
-        updateFileRoute(orderRepository)
-        updateBasicSettingsRoute(orderRepository)
-        updateAdvancedSettingsRoute(orderRepository)
+        getCreateObjectRoute()
+        createObjectRoute(objectRepository)
+        getUpdateObjectRoute(objectRepository)
+        updateFileRoute(objectRepository)
+        updateBasicSettingsRoute(objectRepository)
+        updateAdvancedSettingsRoute(objectRepository)
     }
 }
 
-fun Route.getOrderRoute() {
+fun Route.getCreateObjectRoute() {
     get("/order") {
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
         call.respond(FreeMarkerContent("order_create.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
 }
@@ -44,33 +44,34 @@ fun Route.getOrderRoute() {
 
 3.Upload the file in 'uploads' folder with name orderId.
  **/
-fun Route.createOrderRoute(objectRepository: ObjectRepository) {
+fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/order/create") {
         val multipartData = call.receiveMultipart()
         multipartData.forEachPart { part ->
             if (part is PartData.FileItem) {
-                try {
-                    val fileName = part.originalFileName!!
-                    val order = objectRepository.createNewObject(fileName)
 
-                    val file = File("uploads/${order.id}")
-                    part.streamProvider().use { its ->
-                        file.outputStream().buffered().use {
-                            its.copyTo(it)
-                            val principal = call.sessions.get<UserIdPrincipal>()
+                val fileName = part.originalFileName!!
+                val obj = objectRepository.createNewObject(fileName)
+                val file = File("uploads/${obj.id}")
+                try {
+                    part.streamProvider().use { inputStream ->
+                        file.outputStream().buffered().use { outputStream ->
+                            inputStream.copyTo(outputStream)
+
+                            val principal = call.sessions.get<UserPrincipal>()
                             if (principal != null) {
-                                objectRepository.addUserObject(principal.email, order)
+                                objectRepository.addUserObject(principal.email, obj)
                             } else {
                                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                                cookie.objects.add(order)
+                                cookie.objects.add(obj)
                                 call.sessions.set(cookie)
                             }
-                            call.respondRedirect("/order/${order.id}")
+                            call.respondRedirect("/order/${obj.id}")
                         }
                     }
                 } catch (e: Exception) {
-                    println(e.localizedMessage)
-                    call.respondText("Upload not successful... retry")
+                    file.delete()
+                    call.respondText("Upload not successful")
                 }
             }
             part.dispose()
@@ -78,13 +79,10 @@ fun Route.createOrderRoute(objectRepository: ObjectRepository) {
     }
 }
 
-fun Route.getUpdateOrderRoute(objectRepository: ObjectRepository) {
+fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
     get("/order/{id}") {
-        val id = call.parameters["id"] ?: return@get call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val id = call.parameters["id"]!!
+        val principal = call.sessions.get<UserPrincipal>()
         val obj = if (principal != null) {
             objectRepository.getUserObject(principal.email, id)
         } else {
@@ -114,32 +112,32 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
         val multipartData = call.receiveMultipart()
         multipartData.forEachPart { part ->
             if (part is PartData.FileItem) {
-                try {
-                    val fileName = part.originalFileName!!
+                val fileName = part.originalFileName!!
+                val file = File("uploads/$id")
 
-                    val file = File("uploads/$id")
-                    if (file.exists()) {
-                        file.delete()
-                        part.streamProvider().use { its ->
+                if (file.exists()) {
+                    file.delete()
+                    try {
+                        part.streamProvider().use { inputStream ->
                             file.outputStream().buffered().use { outputStream ->
-                                its.copyTo(outputStream)
-                                val principal = call.sessions.get<UserIdPrincipal>()
+                                inputStream.copyTo(outputStream)
+
+                                val principal = call.sessions.get<UserPrincipal>()
                                 if (principal != null) {
                                     objectRepository.updateFileName(principal.email, id, fileName)
                                 } else {
-                                    val cookie = call.sessions.get<ObjectsCookie>()
-                                    cookie?.objects?.find { it.id == id }?.fileName = fileName
+                                    val cookie = call.sessions.get<ObjectsCookie>()!!
+                                    cookie.objects.find { it.id == id }?.fileName = fileName
                                     call.sessions.set(cookie)
                                 }
                                 call.respondText("Successfully updated")
                             }
                         }
-                    } else {
-                        call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
+                    } catch (e: Exception) {
+                        call.respondText("Upload not successful")
                     }
-                } catch (e: Exception) {
-                    println(e.localizedMessage)
-                    call.respondText("Upload not successful... retry")
+                } else {
+                    call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
                 }
             }
             part.dispose()
@@ -157,18 +155,23 @@ fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
         val size = params["size"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
         val basicSettings = BasicSettings(size = size)
 
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
+        var updated = false
         if (principal != null) {
-            objectRepository.updateBasicSettings(principal.email, id, basicSettings)
+            updated = objectRepository.updateBasicSettings(principal.email, id, basicSettings)
         } else {
             val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-            cookie.objects.find { it.id == id }?.basicSettings = basicSettings
+            cookie.objects
+                .find { it.id == id }
+                ?.let {
+                    it.basicSettings = basicSettings
+                    updated = true
+                }
             call.sessions.set(cookie)
         }
-        if (true) {
-            call.respond(basicSettings)
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
+        when (updated) {
+            true -> call.respond(basicSettings)
+            false -> call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }
@@ -183,18 +186,23 @@ fun Route.updateAdvancedSettingsRoute(objectRepository: ObjectRepository) {
         val weight = params["weight"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
         val advancedSettings = AdvancedSettings(weight = weight)
 
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
+        var updated = false
         if (principal != null) {
-            objectRepository.updateAdvancedSettings(principal.email, id, advancedSettings)
+            updated = objectRepository.updateAdvancedSettings(principal.email, id, advancedSettings)
         } else {
-            val cookie = call.sessions.get<ObjectsCookie>()
-            cookie?.objects?.find { it.id == id }?.advancedSettings = advancedSettings
+            val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+            cookie.objects
+                .find { it.id == id }
+                ?.let {
+                    it.advancedSettings = advancedSettings
+                    updated = true
+                }
             call.sessions.set(cookie)
         }
-        if (true) {
-            call.respond(advancedSettings)
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
+        when (updated) {
+            true -> call.respond(advancedSettings)
+            false -> call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.features.cart.presentation
 
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.cart.data.CartRepository
 import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
@@ -25,12 +25,12 @@ fun Application.registerCartRoutes() {
 
 private fun Route.getCartRoute(cartRepository: CartRepository) {
     get("/cart") {
-        val principal = call.principal<UserIdPrincipal>()!!
-        val orders = cartRepository.getUserCartOrders(principal.email)
+        val principal = call.principal<UserPrincipal>()!!
+        val obj = cartRepository.getUserCartObjects(principal.email)
         call.respond(
             FreeMarkerContent(
                 "cart.ftl",
-                mapOf("orders" to orders, "user" to principal)
+                mapOf("orders" to obj, "user" to principal)
             )
         )
     }
@@ -42,9 +42,8 @@ private fun Route.removeFromCart(cartRepository: CartRepository) {
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
-        val principal = call.principal<UserIdPrincipal>()!!
-        val result = cartRepository.removeCartOrder(principal.email, id)
-
+        val principal = call.principal<UserPrincipal>()!!
+        val result = cartRepository.removeCartObject(principal.email, id)
         if (result) {
             call.respondRedirect("/cart")
         } else {

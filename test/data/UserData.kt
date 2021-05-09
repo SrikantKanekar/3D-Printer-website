@@ -6,12 +6,11 @@ import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import data.Constants.TEST_CART_OBJECT
 import data.Constants.TEST_COMPLETED_OBJECT
-import data.Constants.TEST_MY_OBJECT
+import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_ADDRESS
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_HASHED_PASSWORD
-import data.Constants.TEST_USER_PASSWORD
 import data.Constants.TEST_USER_USERNAME
 import java.util.*
 
@@ -27,7 +26,7 @@ val testUser = User(
     objects = ArrayList(
         listOf(
             Object(
-                id = TEST_MY_OBJECT,
+                id = TEST_USER_OBJECT,
                 fileName = UUID.randomUUID().toString(),
                 status = NONE
             ),

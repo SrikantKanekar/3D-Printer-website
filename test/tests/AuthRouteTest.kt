@@ -1,10 +1,13 @@
 package tests
 
+import com.example.features.account.data.AccountRepository
 import com.example.features.auth.data.AuthRepository
-import com.example.features.auth.domain.Constants
+import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.module
+import data.Constants.TEST_CREATED_OBJECT
+import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
 import data.Constants.TEST_USER_USERNAME
@@ -17,12 +20,12 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class AuthRouteTest : KoinTest {
 
     private val authRepository by inject<AuthRepository>()
+    private val accountRepository by inject<AccountRepository>()
 
     @Test
     fun `get login route test`() {
@@ -58,6 +61,23 @@ class AuthRouteTest : KoinTest {
     }
 
     @Test
+    fun `objects cookie sync success`() {
+        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+            cookiesSession {
+                `create object before user login`()
+                testUserLogin()
+                runBlocking {
+                    val obj = accountRepository.getUser(TEST_USER_EMAIL)
+                        .objects
+                        .find { it.id == TEST_CREATED_OBJECT }!!
+                    assertEquals(TEST_FILE_UPLOAD_NAME, obj.fileName)
+                    assertFileNotNullAndDelete(obj.id)
+                }
+            }
+        }
+    }
+
+    @Test
     fun `get register route test`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Get, "/auth/register").apply {
@@ -80,10 +100,12 @@ class AuthRouteTest : KoinTest {
                 )
             }.apply {
                 runBlocking {
-                    assertEquals(HttpStatusCode.OK, response.status())
                     assertTrue(authRepository.doesUserExist("NEW_EMAIL"))
-                    val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
-                    assertEquals("NEW_EMAIL", userIdPrincipal?.email)
+
+                    val userPrincipal = response.call.sessions.get<UserPrincipal>()!!
+                    assertEquals("NEW_EMAIL", userPrincipal.email)
+
+                    assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
         }
@@ -104,34 +126,9 @@ class AuthRouteTest : KoinTest {
             }.apply {
                 runBlocking {
                     assertTrue(authRepository.doesUserExist(TEST_USER_EMAIL))
-                    assertEquals(Constants.EMAIL_ALREADY_TAKEN, response.content)
+                    assertEquals(EMAIL_ALREADY_TAKEN, response.content)
                 }
             }
         }
-    }
-}
-
-// Login with a registered user
-fun TestApplicationEngine.testUserLogin() {
-    handleRequest(HttpMethod.Post, "/auth/login") {
-        addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
-        setBody(
-            listOf(
-                "Email" to TEST_USER_EMAIL,
-                "Password" to TEST_USER_PASSWORD
-            ).formUrlEncode()
-        )
-    }.apply {
-        assertEquals(HttpStatusCode.OK, response.status())
-        assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
-        val userIdPrincipal = response.call.sessions.get<UserIdPrincipal>()
-        assertEquals(TEST_USER_EMAIL, userIdPrincipal?.email)
-    }
-}
-
-fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit) {
-    cookiesSession {
-        testUserLogin()
-        test()
     }
 }

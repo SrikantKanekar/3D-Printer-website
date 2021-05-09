@@ -2,7 +2,7 @@ package tests
 
 import com.example.features.account.data.AccountRepository
 import com.example.features.cart.data.CartRepository
-import com.example.features.myObjects.data.MyObjectsRepository
+import com.example.features.userObject.data.UserObjectRepository
 import com.example.module
 import data.Constants.TEST_CART_OBJECT
 import data.Constants.TEST_USER_EMAIL
@@ -20,7 +20,7 @@ import kotlin.test.assertTrue
 class CheckoutRouteTest : KoinTest {
 
     private val accountRepository by inject<AccountRepository>()
-    private val myObjectsRepository by inject<MyObjectsRepository>()
+    private val myObjectsRepository by inject<UserObjectRepository>()
     private val cartRepository by inject<CartRepository>()
 
     @Test
@@ -51,11 +51,11 @@ class CheckoutRouteTest : KoinTest {
                     runBlocking {
 
                         // change this
-                        val wishlistOrders = myObjectsRepository.getMyObjects(TEST_USER_EMAIL).map { it.id }
+                        val wishlistOrders = myObjectsRepository.getUserObjects(TEST_USER_EMAIL).map { it.id }
                         assertTrue { wishlistOrders.contains(TEST_CART_OBJECT) }
 
                         // change this
-                        val cartOrders = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
+                        val cartOrders = cartRepository.getUserCartObjects(TEST_USER_EMAIL)
                         cartOrders.forEach {
                             assertFalse { it.id == TEST_CART_OBJECT }
                         }
@@ -79,11 +79,11 @@ class CheckoutRouteTest : KoinTest {
                     runBlocking {
 
                         // change this
-                        val wishlistOrders = myObjectsRepository.getMyObjects(TEST_USER_EMAIL).map { it.id }
+                        val wishlistOrders = myObjectsRepository.getUserObjects(TEST_USER_EMAIL).map { it.id }
                         assertFalse { wishlistOrders.contains(TEST_CART_OBJECT) }
 
                         // change this
-                        val cartOrders = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
+                        val cartOrders = cartRepository.getUserCartObjects(TEST_USER_EMAIL)
 
 //                        val user = accountRepository.getUser(TEST_USER_EMAIL)
 //                        assertFalse { user.wishlist.contains(TEST_CART_OBJECT) }

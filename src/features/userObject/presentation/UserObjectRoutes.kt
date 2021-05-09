@@ -1,9 +1,9 @@
-package com.example.features.myObjects.presentation
+package com.example.features.userObject.presentation
 
 import com.example.features.`object`.domain.ObjectStatus.*
-import com.example.features.auth.domain.UserIdPrincipal
-import com.example.features.myObjects.data.MyObjectsRepository
-import com.example.features.myObjects.domain.ObjectsCookie
+import com.example.features.auth.domain.UserPrincipal
+import com.example.features.userObject.data.UserObjectRepository
+import com.example.features.userObject.domain.ObjectsCookie
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -15,21 +15,21 @@ import org.koin.ktor.ext.inject
 
 fun Application.registerMyObjectsRoutes() {
 
-    val wishlistRepository by inject<MyObjectsRepository>()
+    val userObjectRepository by inject<UserObjectRepository>()
 
     routing {
-        getWishlistRoute(wishlistRepository)
-        deleteFromWishlistRoute(wishlistRepository)
-        addToCartRoute(wishlistRepository)
+        getUserObjectRoute(userObjectRepository)
+        deleteUserObject(userObjectRepository)
+        addToCartRoute(userObjectRepository)
     }
 }
 
-fun Route.getWishlistRoute(myObjectsRepository: MyObjectsRepository) {
+fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
     get("/wishlist") {
 
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
         val objs = if (principal != null) {
-            myObjectsRepository.getMyObjects(principal.email)
+            userObjectRepository.getUserObjects(principal.email)
         } else {
             val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
             ArrayList(cookie.objects.filter { it.status == NONE })
@@ -46,30 +46,28 @@ fun Route.getWishlistRoute(myObjectsRepository: MyObjectsRepository) {
     }
 }
 
-private fun Route.deleteFromWishlistRoute(myObjectsRepository: MyObjectsRepository) {
+private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
     get("/wishlist/{id}/delete") {
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
+        var serverResult = false
 
-        val serverResult: Boolean
-        val userResult: Boolean
-
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                userResult = cookie.objects.removeIf { it.id == id }
-                serverResult = myObjectsRepository.deleteServerObjectFile(id)
+                val deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
                 call.sessions.set(cookie)
+                if (deleted) serverResult = userObjectRepository.deleteServerObjectFile(id)
             }
             else -> {
-                serverResult = myObjectsRepository.deleteServerObjectFile(id)
-                userResult = myObjectsRepository.deleteUserObject(principal.email, id)
+                val deleted = userObjectRepository.deleteUserObject(principal.email, id)
+                if (deleted) serverResult = userObjectRepository.deleteServerObjectFile(id)
             }
         }
-        if (userResult and serverResult) {
+        if (serverResult) {
             call.respondRedirect("/wishlist")
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "Invalid Order ID")
@@ -77,14 +75,14 @@ private fun Route.deleteFromWishlistRoute(myObjectsRepository: MyObjectsReposito
     }
 }
 
-private fun Route.addToCartRoute(myObjectsRepository: MyObjectsRepository) {
+private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
     get("/wishlist/{id}/cart") {
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
 
-        val principal = call.sessions.get<UserIdPrincipal>()
+        val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
                 call.respondRedirect {
@@ -93,7 +91,7 @@ private fun Route.addToCartRoute(myObjectsRepository: MyObjectsRepository) {
                 }
             }
             else -> {
-                val result = myObjectsRepository.addToCart(principal.email, id)
+                val result = userObjectRepository.addToCart(principal.email, id)
                 if (result) {
                     call.respondRedirect("/wishlist")
                 } else {

@@ -3,7 +3,6 @@ package tests
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.account.data.AccountRepository
 import com.example.features.cart.data.CartRepository
-import com.example.features.myObjects.data.MyObjectsRepository
 import com.example.module
 import data.Constants.TEST_CART_OBJECT
 import data.Constants.TEST_USER_EMAIL
@@ -15,26 +14,18 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertNotNull
 
 class CartRouteTest : KoinTest {
 
     private val accountRepository by inject<AccountRepository>()
-    private val cartRepository by inject<CartRepository>()
 
     @Test
-    fun `access cart without login`() {
+    fun `get cart route test`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Get, "/cart").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-        }
-    }
-
-    @Test
-    fun `access cart after login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/cart").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -49,14 +40,10 @@ class CartRouteTest : KoinTest {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/cart/$TEST_CART_OBJECT/remove").apply {
                     runBlocking {
-
-                        val cartObjects = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
-                        assertEquals(NONE, cartObjects.find { it.id == TEST_CART_OBJECT }?.status)
-
-//                        val user = accountRepository.getUser(TEST_USER_EMAIL)
-//                        assertTrue { user.wishlist.contains(TEST_CART_OBJECT) }
-//                        assertFalse { user.cartOrders.contains(TEST_CART_OBJECT) }
-
+                        val obj = accountRepository.getUser(TEST_USER_EMAIL).objects
+                            .filter { it.status == NONE }
+                            .find { it.id == TEST_CART_OBJECT }
+                        assertNotNull(obj)
                         assertEquals(HttpStatusCode.Found, response.status())
                     }
                 }
@@ -69,17 +56,7 @@ class CartRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/cart/invalid-order-id/remove").apply {
-                    runBlocking {
-
-                        val cartObjects = cartRepository.getUserCartOrders(TEST_USER_EMAIL)
-                        assertEquals(CART, cartObjects.find { it.id == TEST_CART_OBJECT }?.status)
-
-//                        val user = accountRepository.getUser(TEST_USER_EMAIL)
-//                        assertFalse { user.wishlist.contains(TEST_CART_OBJECT) }
-//                        assertTrue { user.cartOrders.contains(TEST_CART_OBJECT) }
-
-                        assertEquals(HttpStatusCode.NotAcceptable, response.status())
-                    }
+                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
             }
         }

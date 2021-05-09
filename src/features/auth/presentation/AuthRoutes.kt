@@ -1,13 +1,13 @@
 package com.example.features.auth.presentation
 
-import com.example.features.myObjects.domain.ObjectsCookie
+import com.example.features.userObject.domain.ObjectsCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.Constants.UNKNOWN_REGISTRATION_ERROR
 import com.example.features.auth.domain.Login
-import com.example.features.auth.domain.UserIdPrincipal
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.auth.domain.getHashWithSalt
 import com.example.util.AUTH.OAUTH
 import io.ktor.application.*
@@ -49,9 +49,9 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
 
         val isPasswordCorrect = authRepository.login(email, password)
         if (isPasswordCorrect) {
-            call.sessions.set(UserIdPrincipal(email))
+            call.sessions.set(UserPrincipal(email))
             val cookie = call.sessions.get<ObjectsCookie>()
-            authRepository.syncObjects(email, cookie)
+            authRepository.syncCookieObjects(email, cookie)
             call.sessions.clear<ObjectsCookie>()
             call.respondText(returnUrl)
         } else {
@@ -77,10 +77,12 @@ fun Route.postRegisterRoute(authRepository: AuthRepository) {
 
         val userExists = authRepository.doesUserExist(email)
         if (!userExists) {
-            if (authRepository.register(User(email, getHashWithSalt(password), username))) {
-                call.sessions.set(UserIdPrincipal(email))
+            val newUser = User(email, getHashWithSalt(password), username)
+            val registered = authRepository.register(newUser)
+            if (registered) {
+                call.sessions.set(UserPrincipal(email))
                 val cookie = call.sessions.get<ObjectsCookie>()
-                authRepository.syncObjects(email, cookie)
+                authRepository.syncCookieObjects(email, cookie)
                 call.sessions.clear<ObjectsCookie>()
                 call.respondText(returnUrl)
             } else {
