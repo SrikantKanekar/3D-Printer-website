@@ -30,11 +30,11 @@ private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
     get("/checkout") {
         val principal = call.principal<UserPrincipal>()!!
         val address = checkoutRepository.getUserAddress(principal.email)
-        val orders = checkoutRepository.getUserCartObjects(principal.email)
+        val obj = checkoutRepository.getUserCartObjects(principal.email)
         call.respond(
             FreeMarkerContent(
                 "checkout.ftl", mapOf(
-                    "orders" to orders,
+                    "objects" to obj,
                     "user" to principal,
                     "address" to address
                 )
@@ -49,14 +49,12 @@ private fun Route.removeFromCheckout(checkoutRepository: CheckoutRepository) {
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
-
         val principal = call.principal<UserPrincipal>()!!
         val result = checkoutRepository.removeObjectFromCart(principal.email, id)
-
         if (result) {
             call.respondRedirect("/checkout")
         } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid Order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }
@@ -81,6 +79,8 @@ private fun Route.proceedToPay(checkoutRepository: CheckoutRepository) {
             } else {
                 call.respondText("Payment not successful")
             }
+        } else {
+            call.respondText("Address not updated")
         }
     }
 }

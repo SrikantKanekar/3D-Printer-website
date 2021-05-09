@@ -7,23 +7,23 @@
     <div class="container" style="padding-top: 110px">
         <h2>My Prints</h2>
         
-        <#if orders?has_content>
-            <#list orders as order>
+        <#if objects?has_content>
+            <#list objects as object>
                 <div class="card">
                     <div class="card-header">
-                        ID : ${order.id}
+                        ID : ${object.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${order.fileName}</h5>
-                        <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
-                        <a href="/wishlist/${order.id}/cart" class="btn btn-primary ">Add to cart</a>
-                        <a href="/wishlist/${order.id}/delete" class="btn btn-primary ">Delete</a>
+                        <h5 class="card-title">${object.fileName}</h5>
+                        <a href="/object/${object.id}" class="btn btn-primary stretched-link">view</a>
+                        <a href="/wishlist/${object.id}/cart" class="btn btn-primary ">Add to cart</a>
+                        <a href="/wishlist/${object.id}/delete" class="btn btn-primary ">Delete</a>
                     </div>
                 </div>
             </#list>
         <#else>
             <div class="m-5">
-                <h4>No orders</h4>
+                <h4>No objects</h4>
             <div>
         </#if>
 

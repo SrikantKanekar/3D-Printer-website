@@ -25,11 +25,11 @@ fun Route.getHistoryRoute(historyRepository: HistoryRepository) {
     get("/history"){
 
         val principal = call.principal<UserPrincipal>()!!
-        val orders = historyRepository.getUserHistoryOrders(principal.email)
+        val objects = historyRepository.getUserHistoryobjects(principal.email)
         call.respond(
             FreeMarkerContent(
                 "history.ftl",
-                mapOf("orders" to orders, "user" to principal)
+                mapOf("objects" to objects, "user" to principal)
             )
         )
     }

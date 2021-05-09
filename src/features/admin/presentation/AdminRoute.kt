@@ -58,7 +58,7 @@ private fun Route.getAdminRoute(adminRepository: AdminRepository) {
         call.respond(
             FreeMarkerContent(
                 "admin_panel.ftl", mapOf(
-                    "processingOrders" to activeOrders, "historyOrders" to completedOrders
+                    "activeOrders" to activeOrders, "completedOrders" to completedOrders
                 )
             )
         )

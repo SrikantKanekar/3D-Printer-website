@@ -4,7 +4,8 @@ import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
-import data.Constants.TEST_CART_OBJECT
+import data.Constants.TEST_CART_OBJECT1
+import data.Constants.TEST_CART_OBJECT2
 import data.Constants.TEST_COMPLETED_OBJECT
 import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
@@ -31,7 +32,12 @@ val testUser = User(
                 status = NONE
             ),
             Object(
-                id = TEST_CART_OBJECT,
+                id = TEST_CART_OBJECT1,
+                fileName = UUID.randomUUID().toString(),
+                status = CART
+            ),
+            Object(
+                id = TEST_CART_OBJECT2,
                 fileName = UUID.randomUUID().toString(),
                 status = CART
             ),

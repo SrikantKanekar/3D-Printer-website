@@ -16,7 +16,7 @@ import com.example.features.cart.data.CartRepository
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.history.data.HistoryRepository
 import com.example.features.userObject.data.UserObjectRepository
-import com.example.features.tracker.data.TrackerRepository
+import com.example.features.tracking.data.TrackingRepository
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -36,5 +36,5 @@ val appModule = module {
     single { HistoryRepository(get()) }
     single { UserObjectRepository(get()) }
     single { ObjectRepository(get()) }
-    single { TrackerRepository(get()) }
+    single { TrackingRepository(get()) }
 }

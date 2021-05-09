@@ -7,7 +7,7 @@ import com.example.features.`object`.domain.ObjectStatus.COMPLETED
 class HistoryRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun getUserHistoryOrders(email: String): ArrayList<Object> {
+    suspend fun getUserHistoryobjects(email: String): ArrayList<Object> {
         return ArrayList(userDataSource.getUser(email).objects.filter { it.status == COMPLETED })
     }
 }

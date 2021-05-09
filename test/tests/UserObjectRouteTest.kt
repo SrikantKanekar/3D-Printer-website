@@ -26,11 +26,11 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `get user objects route test`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
-            handleRequest(HttpMethod.Get, "/wishlist").apply {
+            handleRequest(HttpMethod.Get, "/my-objects").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/wishlist").apply {
+                handleRequest(HttpMethod.Get, "/my-objects").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
@@ -42,7 +42,7 @@ class UserObjectRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             cookiesSession {
                 `create object before user login`()
-                handleRequest(HttpMethod.Get, "/wishlist/$TEST_CREATED_OBJECT/delete").apply {
+                handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
                     runBlocking {
                         val cookie = response.call.sessions.get<ObjectsCookie>()!!
                         assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
@@ -59,7 +59,7 @@ class UserObjectRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
-                handleRequest(HttpMethod.Get, "/wishlist/$TEST_CREATED_OBJECT/delete").apply {
+                handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, TEST_CREATED_OBJECT)
                         assertNull(obj)
@@ -74,7 +74,7 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `delete user object before login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
-            handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/delete").apply {
+            handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
                 assertEquals(HttpStatusCode.NotAcceptable, response.status())
             }
         }
@@ -84,7 +84,7 @@ class UserObjectRouteTest : KoinTest {
     fun `delete user object after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/delete").apply {
+                handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
             }
@@ -94,7 +94,7 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `add to cart before login`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
-            handleRequest(HttpMethod.Get, "/wishlist/$TEST_USER_OBJECT/cart").apply {
+            handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
                 assertEquals(HttpStatusCode.Found, response.status())
             }
         }
@@ -104,7 +104,7 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login success`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/wishlist/$TEST_USER_OBJECT/cart").apply {
+                handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
                     runBlocking {
                         val obj = accountRepository.getUser(TEST_USER_EMAIL).objects
                             .filter { it.status == CART }
@@ -121,9 +121,9 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/wishlist/invalid-order-id/cart").apply {
+                handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/cart").apply {
                     runBlocking {
-                        val obj = objectRepository.getUserObject(TEST_USER_EMAIL, "invalid-order-id")
+                        val obj = objectRepository.getUserObject(TEST_USER_EMAIL, "invalid-object-id")
                         assertNull(obj)
                         assertEquals(HttpStatusCode.NotAcceptable, response.status())
                     }

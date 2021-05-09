@@ -2,6 +2,7 @@ package tests
 
 import com.example.features.account.data.AccountRepository
 import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
@@ -67,7 +68,6 @@ fun assertFileNull(id: String) {
     assertFalse { file.exists() }
 }
 
-// Login with a registered user
 fun TestApplicationEngine.testUserLogin() {
     handleRequest(HttpMethod.Post, "/auth/login") {
         addHeader(HttpHeaders.ContentType, formUrlEncoded)
@@ -86,6 +86,22 @@ fun TestApplicationEngine.testUserLogin() {
     }
 }
 
+fun TestApplicationEngine.adminLogin() {
+    handleRequest(HttpMethod.Post, "/admin/login") {
+        addHeader(HttpHeaders.ContentType, formUrlEncoded)
+        setBody(
+            listOf(
+                "name" to "admin",
+                "Password" to "password"
+            ).formUrlEncode()
+        )
+    }.apply {
+        val adminPrincipal = response.call.sessions.get<AdminPrincipal>()!!
+        assertEquals("admin", adminPrincipal.name)
+        assertEquals(HttpStatusCode.OK, response.status())
+    }
+}
+
 fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit) {
     cookiesSession {
         testUserLogin()
@@ -93,8 +109,15 @@ fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit
     }
 }
 
+fun TestApplicationEngine.runWithAdminUser(test: TestApplicationEngine.() -> Unit) {
+    cookiesSession {
+        adminLogin()
+        test()
+    }
+}
+
 fun TestApplicationEngine.`create object before user login`() {
-    handleRequest(HttpMethod.Post, "/order/create") {
+    handleRequest(HttpMethod.Post, "/object/create") {
         addHeader(HttpHeaders.ContentType, multiPart)
         setBody("boundary", listOf(testUploadFile))
     }.apply {
@@ -110,7 +133,7 @@ fun TestApplicationEngine.`create object before user login`() {
 fun TestApplicationEngine.`create object after user login`(
     accountRepository: AccountRepository
 ) {
-    handleRequest(HttpMethod.Post, "/order/create") {
+    handleRequest(HttpMethod.Post, "/object/create") {
         addHeader(HttpHeaders.ContentType, multiPart)
         setBody("boundary", listOf(testUploadFile))
     }.apply {

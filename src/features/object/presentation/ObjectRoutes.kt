@@ -31,21 +31,21 @@ fun Application.registerObjectRoutes() {
 }
 
 fun Route.getCreateObjectRoute() {
-    get("/order") {
+    get("/object") {
         val principal = call.sessions.get<UserPrincipal>()
-        call.respond(FreeMarkerContent("order_create.ftl", mapOf("user" to (principal?.email ?: ""))))
+        call.respond(FreeMarkerContent("object_create.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
 }
 
 /**
-1.Create a new order.
+1.Create a new object.
 
-2.If user is logged in, save orderId in user database, else save in cookie.
+2.If user is logged in, save objectId in user database, else save in cookie.
 
-3.Upload the file in 'uploads' folder with name orderId.
+3.Upload the file in 'uploads' folder with name objectId.
  **/
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
-    post("/order/create") {
+    post("/object/create") {
         val multipartData = call.receiveMultipart()
         multipartData.forEachPart { part ->
             if (part is PartData.FileItem) {
@@ -66,7 +66,7 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
                                 cookie.objects.add(obj)
                                 call.sessions.set(cookie)
                             }
-                            call.respondRedirect("/order/${obj.id}")
+                            call.respondRedirect("/object/${obj.id}")
                         }
                     }
                 } catch (e: Exception) {
@@ -80,7 +80,7 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
 }
 
 fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
-    get("/order/{id}") {
+    get("/object/{id}") {
         val id = call.parameters["id"]!!
         val principal = call.sessions.get<UserPrincipal>()
         val obj = if (principal != null) {
@@ -91,20 +91,20 @@ fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
         if (obj != null) {
             call.respond(
                 FreeMarkerContent(
-                    "order_update.ftl", mapOf(
-                        "order" to obj,
+                    "object_update.ftl", mapOf(
+                        "object" to obj,
                         "user" to (principal?.email ?: "")
                     )
                 )
             )
         } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }
 
 fun Route.updateFileRoute(objectRepository: ObjectRepository) {
-    post("/order/{id}/file") {
+    post("/object/{id}/file") {
         val id = call.parameters["id"] ?: return@post call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
@@ -137,7 +137,7 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
                         call.respondText("Upload not successful")
                     }
                 } else {
-                    call.respond(HttpStatusCode.NotAcceptable, "invalid order ID")
+                    call.respond(HttpStatusCode.NotAcceptable, "invalid object ID")
                 }
             }
             part.dispose()
@@ -146,7 +146,7 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
 }
 
 fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
-    post("/order/{id}/basic") {
+    post("/object/{id}/basic") {
         val id = call.parameters["id"] ?: return@post call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
@@ -177,7 +177,7 @@ fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
 }
 
 fun Route.updateAdvancedSettingsRoute(objectRepository: ObjectRepository) {
-    post("/order/{id}/advanced") {
+    post("/object/{id}/advanced") {
         val id = call.parameters["id"] ?: return@post call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest

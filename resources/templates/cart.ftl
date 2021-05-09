@@ -7,16 +7,16 @@
     <div class="container" style="padding-top: 110px">
         <h2>Cart</h2>
         
-        <#if orders?has_content>
-            <#list orders as order>
+        <#if objects?has_content>
+            <#list objects as object>
                 <div class="card">
                     <div class="card-header">
-                        ID : ${order.id}
+                        ID : ${object.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${order.fileName}</h5>
-                        <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
-                        <a href="/cart/${order.id}/remove" class="btn btn-primary ">remove</a>
+                        <h5 class="card-title">${object.fileName}</h5>
+                        <a href="/object/${object.id}" class="btn btn-primary stretched-link">view</a>
+                        <a href="/cart/${object.id}/remove" class="btn btn-primary ">remove</a>
                     </div>
                 </div>
             </#list>

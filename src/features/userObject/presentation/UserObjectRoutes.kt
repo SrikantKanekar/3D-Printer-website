@@ -25,7 +25,7 @@ fun Application.registerMyObjectsRoutes() {
 }
 
 fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
-    get("/wishlist") {
+    get("/my-objects") {
 
         val principal = call.sessions.get<UserPrincipal>()
         val objs = if (principal != null) {
@@ -36,9 +36,9 @@ fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
         }
         call.respond(
             FreeMarkerContent(
-                "wishlist.ftl",
+                "myObjects.ftl",
                 mapOf(
-                    "orders" to objs,
+                    "objects" to objs,
                     "user" to (principal?.email ?: "")
                 )
             )
@@ -47,7 +47,7 @@ fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
 }
 
 private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
-    get("/wishlist/{id}/delete") {
+    get("/my-objects/{id}/delete") {
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
@@ -68,15 +68,15 @@ private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
             }
         }
         if (serverResult) {
-            call.respondRedirect("/wishlist")
+            call.respondRedirect("/my-objects")
         } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid Order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }
 
 private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
-    get("/wishlist/{id}/cart") {
+    get("/my-objects/{id}/cart") {
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
@@ -93,9 +93,9 @@ private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
             else -> {
                 val result = userObjectRepository.addToCart(principal.email, id)
                 if (result) {
-                    call.respondRedirect("/wishlist")
+                    call.respondRedirect("/my-objects")
                 } else {
-                    call.respond(HttpStatusCode.NotAcceptable, "Invalid Order ID")
+                    call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
                 }
             }
         }

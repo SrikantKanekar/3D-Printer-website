@@ -7,14 +7,14 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-fun Application.registerHomeRoute() {
+fun Application.registerIndexRoute() {
 
     routing {
-        homeRoute()
+        getIndexRoute()
     }
 }
 
-fun Route.homeRoute() {
+fun Route.getIndexRoute() {
     get("/") {
         val principal = call.sessions.get<UserPrincipal>()
         call.respond(FreeMarkerContent("home.ftl", mapOf("user" to (principal?.email ?: ""))))

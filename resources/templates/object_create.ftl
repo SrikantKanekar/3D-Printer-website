@@ -5,7 +5,7 @@
     <@header.header user="${user}" />
 
     <div class="container" style="padding-top: 110px">
-        <form action="/order/create" method="post" enctype="multipart/form-data">
+        <form action="/object/create" method="post" enctype="multipart/form-data">
             <label for="file" class="form-label">Upload file</label>
             <input type="file" name="file" class="form-control" id="file" />
             <button type="submit" class="btn btn-primary">Upload</button>

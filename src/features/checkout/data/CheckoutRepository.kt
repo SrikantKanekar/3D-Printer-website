@@ -21,7 +21,10 @@ class CheckoutRepository(
 
     suspend fun removeObjectFromCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
-        user.objects.find { it.id == objectId }?.status = NONE
+        user.objects
+            .filter { it.status == CART }
+            .find { it.id == objectId }
+            ?.let { it.status = NONE } ?: return false
         return userDataSource.updateUser(user)
     }
 
@@ -37,12 +40,17 @@ class CheckoutRepository(
             userEmail = email,
             objects = ArrayList()
         )
-        user.objects.filter { it.status == CART }.forEach {
-            order.objects.add(it)
-            it.status = COMPLETED
+        user.objects
+            .filter { it.status == CART }
+            .forEach {
+                order.objects.add(it)
+                it.status = TRACKING
+            }
+        var updated = false
+        if (order.objects.size > 0){
+            val ordered = orderDataSource.insertOrder(order)
+            if (ordered) updated = userDataSource.updateUser(user)
         }
-        val updated = userDataSource.updateUser(user)
-        val ordered = orderDataSource.insertOrder(order)
-        return updated and ordered
+        return updated
     }
 }

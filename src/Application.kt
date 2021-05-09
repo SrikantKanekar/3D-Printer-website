@@ -12,11 +12,11 @@ import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoutes
 import com.example.features.checkout.presentation.registerCheckoutRoutes
 import com.example.features.history.presentation.registerHistoryRoutes
-import com.example.features.util.presentation.registerHomeRoute
+import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
 import com.example.features.`object`.presentation.registerObjectRoutes
 import com.example.features.auth.data.AuthRepository
-import com.example.features.tracker.presentation.registerTrackerRoutes
+import com.example.features.tracking.presentation.registerTrackerRoutes
 import com.example.features.userObject.presentation.registerMyObjectsRoutes
 import com.example.features.util.presentation.registerStatusRoutes
 import com.example.features.userObject.domain.ObjectCookieSerializer
@@ -128,7 +128,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     registerObjectRoutes()
     registerTrackerRoutes()
     registerMyObjectsRoutes()
-    registerHomeRoute()
+    registerIndexRoute()
     registerStatusRoutes()
     registerAdminRoutes()
 }

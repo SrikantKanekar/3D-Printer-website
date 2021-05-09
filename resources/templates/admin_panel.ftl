@@ -5,16 +5,16 @@
     <@header.header user="" />
 
     <div class="container" style="padding-top: 110px">
-        <h2>Placed Orders</h2>
+        <h2>Active Orders</h2>
         
-        <#if processingOrders?has_content>
-            <#list processingOrders as order>
+        <#if activeOrders?has_content>
+            <#list activeOrders as order>
                 <div class="card">
                     <div class="card-header">
                         ID : ${order.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${order.fileName}</h5>
+                        <h5 class="card-title">${order.userEmail} ${order.status}</h5>
                         <a href="/order/${order.id}" class="btn btn-primary">view</a>
                         <div class='btn-group' role='group'>
                             <div type="button" data-href="/admin/printing" data-id="${order.id}" class="btn btn-default printing">Printing</div>
@@ -35,14 +35,14 @@
 
         <h2>Completed Orders</h2>
         
-        <#if historyOrders?has_content>
-            <#list historyOrders as order>
+        <#if completedOrders?has_content>
+            <#list completedOrders as order>
                 <div class="card">
                     <div class="card-header">
                         ID : ${order.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${order.fileName}</h5>
+                        <h5 class="card-title">${order.userEmail} ${order.status}</h5>
                         <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
                     </div>
                 </div>

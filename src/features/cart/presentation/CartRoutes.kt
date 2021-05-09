@@ -30,7 +30,7 @@ private fun Route.getCartRoute(cartRepository: CartRepository) {
         call.respond(
             FreeMarkerContent(
                 "cart.ftl",
-                mapOf("orders" to obj, "user" to principal)
+                mapOf("objects" to obj, "user" to principal)
             )
         )
     }
@@ -47,7 +47,7 @@ private fun Route.removeFromCart(cartRepository: CartRepository) {
         if (result) {
             call.respondRedirect("/cart")
         } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid Order ID")
+            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }

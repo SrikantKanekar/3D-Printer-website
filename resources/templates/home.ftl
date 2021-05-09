@@ -12,7 +12,7 @@
         <div class="col-lg-6 intro-info order-lg-first order-last" data-aos="zoom-in" data-aos-delay="100">
           <h2>Rapid Solutions<br>for Your <span>Business!</span></h2>
           <div>
-            <a href="/order" class="btn-get-started">Create</a>
+            <a href="/object" class="btn-get-started">Create</a>
           </div>
         </div>
 

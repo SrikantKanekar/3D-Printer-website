@@ -1,10 +1,12 @@
 package tests
 
+import com.example.features.`object`.domain.ObjectStatus.NONE
+import com.example.features.`object`.domain.ObjectStatus.TRACKING
 import com.example.features.account.data.AccountRepository
-import com.example.features.cart.data.CartRepository
-import com.example.features.userObject.data.UserObjectRepository
+import com.example.features.admin.data.AdminRepository
+import com.example.features.checkout.domain.OrderStatus.*
 import com.example.module
-import data.Constants.TEST_CART_OBJECT
+import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_USER_EMAIL
 import di.testModule
 import io.ktor.http.*
@@ -14,27 +16,20 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class CheckoutRouteTest : KoinTest {
 
     private val accountRepository by inject<AccountRepository>()
-    private val myObjectsRepository by inject<UserObjectRepository>()
-    private val cartRepository by inject<CartRepository>()
+    private val adminRepository by inject<AdminRepository>()
 
     @Test
-    fun `access checkout without login`() {
+    fun `get checkout route test`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Get, "/checkout").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-        }
-    }
-
-    @Test
-    fun `access checkout after login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/checkout").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -43,54 +38,29 @@ class CheckoutRouteTest : KoinTest {
         }
     }
 
-    @Test
-    fun `remove from checkout success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Get, "/checkout/$TEST_CART_OBJECT/remove").apply {
-                    runBlocking {
-
-                        // change this
-                        val wishlistOrders = myObjectsRepository.getUserObjects(TEST_USER_EMAIL).map { it.id }
-                        assertTrue { wishlistOrders.contains(TEST_CART_OBJECT) }
-
-                        // change this
-                        val cartOrders = cartRepository.getUserCartObjects(TEST_USER_EMAIL)
-                        cartOrders.forEach {
-                            assertFalse { it.id == TEST_CART_OBJECT }
-                        }
-
-//                        val user = accountRepository.getUser(TEST_USER_EMAIL)!!
-//                        assertTrue { user.wishlist.contains(TEST_CART_OBJECT) }
-//                        assertFalse { user.cartOrders.contains(TEST_CART_OBJECT) }
-
-                        assertEquals(HttpStatusCode.Found, response.status())
-                    }
-                }
-            }
-        }
-    }
+//    @Test
+//    fun `remove object from checkout success`() {
+//        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+//            runWithTestUser {
+//                handleRequest(HttpMethod.Get, "/checkout/$TEST_CART_OBJECT1/remove").apply {
+//                    runBlocking {
+//                        val obj = accountRepository.getUser(TEST_USER_EMAIL).objects
+//                            .filter { it.status == NONE }
+//                            .find { it.id == TEST_CART_OBJECT1 }
+//                        assertNotNull(obj)
+//                        assertEquals(HttpStatusCode.Found, response.status())
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     @Test
     fun `remove from checkout invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/checkout/invalid-order-id/remove").apply {
-                    runBlocking {
-
-                        // change this
-                        val wishlistOrders = myObjectsRepository.getUserObjects(TEST_USER_EMAIL).map { it.id }
-                        assertFalse { wishlistOrders.contains(TEST_CART_OBJECT) }
-
-                        // change this
-                        val cartOrders = cartRepository.getUserCartObjects(TEST_USER_EMAIL)
-
-//                        val user = accountRepository.getUser(TEST_USER_EMAIL)
-//                        assertFalse { user.wishlist.contains(TEST_CART_OBJECT) }
-//                        assertTrue { user.cartOrders.contains(TEST_CART_OBJECT) }
-
-                        assertEquals(HttpStatusCode.NotAcceptable, response.status())
-                    }
+                handleRequest(HttpMethod.Get, "/checkout/invalid-object-id/remove").apply {
+                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
             }
         }
@@ -101,7 +71,7 @@ class CheckoutRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/checkout/pay") {
-                    addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(
                         listOf(
                             "city" to "city",
@@ -111,10 +81,17 @@ class CheckoutRouteTest : KoinTest {
                     )
                 }.apply {
                     runBlocking {
+                        val order = adminRepository.getActiveOrder(TEST_CREATED_ORDER)!!
+                        assertEquals(PLACED, order.status)
+                        assertEquals(TEST_USER_EMAIL, order.userEmail)
+                        assertTrue { order.objects.size > 0 }
+                        val objs = order.objects
+
                         val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertTrue { user.address.city == "city" }
                         assertTrue { user.address.state == "state" }
                         assertTrue { user.address.country == "country" }
+                        assertTrue { user.objects.filter { it.status == TRACKING }.containsAll(objs) }
 
                         assertEquals(HttpStatusCode.OK, response.status())
                     }
