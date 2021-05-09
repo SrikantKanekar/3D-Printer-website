@@ -10,7 +10,7 @@
         <ul>
           <li><a class="nav-link active" href="/">Home</a></li>
           <li><a class="nav-link" href="/object">Create</a></li>
-          <li><a class="nav-link" href="/wishlist">My Designs</a></li>
+          <li><a class="nav-link" href="/my-objects">My Designs</a></li>
           <#if (user?has_content)>
           <li class="dropdown"><a href="/account"><span>Account</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
