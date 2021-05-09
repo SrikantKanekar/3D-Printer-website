@@ -14,10 +14,6 @@ class UserObjectRepository(
         return ArrayList(user.objects.filter { it.status == NONE })
     }
 
-    fun deleteServerObjectFile(objectId: String): Boolean {
-        return File("uploads/$objectId").delete()
-    }
-
     suspend fun deleteUserObject(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }

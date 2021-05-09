@@ -4,6 +4,7 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.data.UserObjectRepository
 import com.example.features.userObject.domain.ObjectsCookie
+import com.example.util.FileHandler.deleteFile
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -52,7 +53,7 @@ private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
-        var serverResult = false
+        var deleteFileResult = false
 
         val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
@@ -60,14 +61,14 @@ private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
                 val deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
                 call.sessions.set(cookie)
-                if (deleted) serverResult = userObjectRepository.deleteServerObjectFile(id)
+                if (deleted) deleteFileResult = deleteFile(id)
             }
             else -> {
                 val deleted = userObjectRepository.deleteUserObject(principal.email, id)
-                if (deleted) serverResult = userObjectRepository.deleteServerObjectFile(id)
+                if (deleted) deleteFileResult = deleteFile(id)
             }
         }
-        if (serverResult) {
+        if (deleteFileResult) {
             call.respondRedirect("/my-objects")
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")

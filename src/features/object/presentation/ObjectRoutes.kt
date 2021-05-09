@@ -5,6 +5,7 @@ import com.example.features.auth.domain.UserPrincipal
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
+import com.example.util.FileHandler.createFile
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -52,7 +53,7 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
 
                 val fileName = part.originalFileName!!
                 val obj = objectRepository.createNewObject(fileName)
-                val file = File("uploads/${obj.id}")
+                val file = createFile(obj.id)
                 try {
                     part.streamProvider().use { inputStream ->
                         file.outputStream().buffered().use { outputStream ->
@@ -113,7 +114,7 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
         multipartData.forEachPart { part ->
             if (part is PartData.FileItem) {
                 val fileName = part.originalFileName!!
-                val file = File("uploads/$id")
+                val file = createFile(id)
 
                 if (file.exists()) {
                     file.delete()

@@ -1,16 +1,19 @@
 package tests
 
+import com.example.features.`object`.domain.ObjectStatus.NONE
 import com.example.features.account.data.AccountRepository
-import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
-import data.Constants.TEST_UPLOAD_FILE_CONTENT
+import com.example.util.FileHandler.deleteFile
+import com.example.util.FileHandler.fileExists
+import com.example.util.FileHandler.readFileByteArray
 import data.Constants.TEST_CREATED_OBJECT
 import data.Constants.TEST_FILE_UPDATED_NAME
 import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_UPDATED_FILE_CONTENT
+import data.Constants.TEST_UPLOAD_FILE_CONTENT
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
 import io.ktor.http.*
@@ -19,9 +22,6 @@ import io.ktor.server.testing.*
 import io.ktor.sessions.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.runBlocking
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
 import kotlin.test.*
 
 val testUploadFile = PartData.FileItem(
@@ -53,19 +53,17 @@ val multiPart = ContentType.MultiPart.FormData
     .toString()
 
 fun readFileContent(id: String): ByteArray {
-    return Files.readAllBytes(Paths.get("uploads/$id"))
+    return readFileByteArray(id)
 }
 
 fun assertFileNotNullAndDelete(id: String) {
-    val file = File("uploads/$id")
-    assertTrue { file.exists() }
-    file.delete()
-    assertFalse { file.exists() }
+    assertTrue { fileExists(id) }
+    deleteFile(id)
+    assertFalse { fileExists(id) }
 }
 
 fun assertFileNull(id: String) {
-    val file = File("uploads/$id")
-    assertFalse { file.exists() }
+    assertFalse { fileExists(id) }
 }
 
 fun TestApplicationEngine.testUserLogin() {
