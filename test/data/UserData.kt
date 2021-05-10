@@ -7,6 +7,7 @@ import com.example.features.checkout.domain.Address
 import data.Constants.TEST_CART_OBJECT1
 import data.Constants.TEST_CART_OBJECT2
 import data.Constants.TEST_COMPLETED_OBJECT
+import data.Constants.TEST_PROCESSING_ORDER
 import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_ADDRESS
@@ -14,6 +15,7 @@ import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_HASHED_PASSWORD
 import data.Constants.TEST_USER_USERNAME
 import java.util.*
+import kotlin.collections.ArrayList
 
 val testUser = User(
     email = TEST_USER_EMAIL,
@@ -51,6 +53,11 @@ val testUser = User(
                 fileName = UUID.randomUUID().toString(),
                 status = COMPLETED
             )
+        )
+    ),
+    orderIds = ArrayList(
+        listOf(
+            TEST_PROCESSING_ORDER
         )
     )
 )

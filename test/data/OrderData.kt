@@ -6,8 +6,10 @@ import data.Constants.TEST_DELIVERED_ORDER
 import data.Constants.TEST_DELIVERING_ORDER
 import data.Constants.TEST_PLACED_ORDER
 import data.Constants.TEST_PROCESSING_ORDER
+import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_EMAIL
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 val testOrderData = List(15) {
@@ -30,10 +32,13 @@ val testOrderData = List(15) {
             3 -> DELIVERED
             else -> DELIVERED
         },
-        objectIds = ArrayList(
-            List(Random.nextInt(2, 5)) {
-                UUID.randomUUID().toString()
-            }
-        )
+        objectIds = when(it){
+            1 -> ArrayList(listOf(TEST_TRACKING_OBJECT))
+            else -> java.util.ArrayList(
+                List(Random.nextInt(2, 5)) {
+                    UUID.randomUUID().toString()
+                }
+            )
+        }
     )
 }.shuffled()

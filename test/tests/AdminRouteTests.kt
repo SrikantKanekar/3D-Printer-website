@@ -2,6 +2,7 @@ package tests
 
 import com.example.features.account.data.AccountRepository
 import com.example.module
+import data.Constants.TEST_PLACED_ORDER
 import di.testModule
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -52,12 +53,12 @@ class AdminRouteTests : KoinTest {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(
                         listOf(
-                            "Email" to "INVALID_EMAIL",
-                            "Password" to "INVALID_PASSWORD"
+                            "id" to TEST_PLACED_ORDER,
+                            "order_status" to "1"
                         ).formUrlEncode()
                     )
                 }.apply {
-                    //assertEquals(HttpStatusCode.OK, response.status())
+                    assertEquals("updated", response.content)
                 }
             }
         }

@@ -77,7 +77,7 @@ fun Route.updateOrderStatus(adminRepository: AdminRepository) {
 
         val updated = adminRepository.updateOrderStatus(id, orderStatus)
         when (updated) {
-            true -> call.respond("updated")
+            true -> call.respondText("updated")
             false -> call.respondText("Not updated")
         }
     }
