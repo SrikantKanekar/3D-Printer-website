@@ -14,7 +14,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerMyObjectsRoutes() {
+fun Application.registerUserObjectsRoutes() {
 
     val userObjectRepository by inject<UserObjectRepository>()
 

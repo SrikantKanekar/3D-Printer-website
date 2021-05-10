@@ -3,14 +3,16 @@
 
     $(".btn-group").on("click", ".btn", function () {
 
-        var orderId = $(this).data("id");
+        var orderId = $(".OrderId").data("id");
+        var objectId = $(this).data("id");
         var status = $(this).data("status");
 
         $.post(
-            "/admin/update/order-status",
+            "/order/update/printing-status",
             {
-                id: orderId,
-                order_status: status
+                orderId: orderId,
+                objectId: objectId,
+                printing_status: status
             },
             function (data) {
                 if (data == "updated") {

@@ -1,4 +1,4 @@
-<#macro header user="">
+<#macro header user="" admin="">
 
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center">
@@ -9,7 +9,7 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link active" href="/">Home</a></li>
-          <li><a class="nav-link" href="/object">Create</a></li>
+          <li><a class="nav-link" href="/object/create">Create</a></li>
           <li><a class="nav-link" href="/my-objects">My Designs</a></li>
           <#if (user?has_content)>
           <li class="dropdown"><a href="/account"><span>Account</span> <i class="bi bi-chevron-down"></i></a>
@@ -29,6 +29,9 @@
           </li>
           <#else>
           <li><a class="nav-link" href="/auth/login">SignIn</a></li>
+          </#if>
+          <#if (admin?has_content)>
+            <li><a class="nav-link" href="/admin">Admin</a></li>
           </#if>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

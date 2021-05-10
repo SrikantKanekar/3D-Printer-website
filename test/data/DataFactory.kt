@@ -1,7 +1,7 @@
 package data
 
 import com.example.features.account.domain.User
-import com.example.features.checkout.domain.Order
+import com.example.features.order.domain.Order
 
 fun userDataFactory(): HashMap<String, User> {
     val map = HashMap<String, User>()

@@ -1,10 +1,9 @@
 package tests
 
-import com.example.features.`object`.domain.ObjectStatus.NONE
 import com.example.features.`object`.domain.ObjectStatus.TRACKING
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminRepository
-import com.example.features.checkout.domain.OrderStatus.*
+import com.example.features.order.domain.OrderStatus.*
 import com.example.module
 import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_USER_EMAIL
@@ -16,7 +15,6 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class CheckoutRouteTest : KoinTest {
@@ -84,15 +82,19 @@ class CheckoutRouteTest : KoinTest {
                         val order = adminRepository.getActiveOrder(TEST_CREATED_ORDER)!!
                         assertEquals(PLACED, order.status)
                         assertEquals(TEST_USER_EMAIL, order.userEmail)
-                        assertTrue { order.objects.size > 0 }
-                        val objs = order.objects
+                        assertTrue { order.objectIds.size > 0 }
 
                         val user = accountRepository.getUser(TEST_USER_EMAIL)
                         assertTrue { user.address.city == "city" }
                         assertTrue { user.address.state == "state" }
                         assertTrue { user.address.country == "country" }
-                        assertTrue { user.objects.filter { it.status == TRACKING }.containsAll(objs) }
-
+                        assertTrue { user.orderIds.contains(order.id) }
+                        assertTrue {
+                            user.objects
+                                .filter { it.status == TRACKING }
+                                .map { it.id }
+                                .containsAll(order.objectIds)
+                        }
                         assertEquals(HttpStatusCode.OK, response.status())
                     }
                 }

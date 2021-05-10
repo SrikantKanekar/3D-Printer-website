@@ -28,11 +28,11 @@ class ObjectRouteTest : KoinTest {
     @Test
     fun `get create object route with or without login`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
-            handleRequest(HttpMethod.Get, "/object").apply {
+            handleRequest(HttpMethod.Get, "/object/create").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/object").apply {
+                handleRequest(HttpMethod.Get, "/object/create").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }

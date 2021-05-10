@@ -1,14 +1,15 @@
-package com.example.features.checkout.domain
+package com.example.features.order.domain
 
-import com.example.features.checkout.domain.OrderStatus.*
-import com.example.features.`object`.domain.Object
+import com.example.features.order.domain.OrderStatus.*
+import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 
+@Serializable
 data class Order(
     val userEmail: String,
     var status: OrderStatus = PLACED,
-    val objects: ArrayList<Object>,
+    val objectIds: ArrayList<String> = ArrayList(),
     @BsonId
     val id: String = ObjectId().toString()
 )

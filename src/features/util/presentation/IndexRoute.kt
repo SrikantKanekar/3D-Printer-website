@@ -17,6 +17,6 @@ fun Application.registerIndexRoute() {
 fun Route.getIndexRoute() {
     get("/") {
         val principal = call.sessions.get<UserPrincipal>()
-        call.respond(FreeMarkerContent("home.ftl", mapOf("user" to (principal?.email ?: ""))))
+        call.respond(FreeMarkerContent("index.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
 }

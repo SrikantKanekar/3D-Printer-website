@@ -5,17 +5,21 @@
     <@header.header user="${user}" />
     
     <div class="container" style="padding-top: 110px">
-        <h2>Track objects</h2>
+        <h2>Tracking orders</h2>
         
-        <#if objects?has_content>
-            <#list objects as object>
+        <#if orders?has_content>
+            <#list orders as order>
                 <div class="card">
                     <div class="card-header">
-                        ID : ${object.id}
+                        ID : ${order.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${object.fileName}</h5>
-                        <a href="/object/${object.id}" class="btn btn-primary stretched-link">view</a>
+                        <h5 class="card-title">${order.userEmail}</h5>
+                        <h5 class="card-title">${order.status}</h5>
+                        <#list order.objectIds as objectId>
+                            <h5 class="card-body">object Id: ${objectId}</h5>
+                        </#list>
+                        <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
                     </div>
                 </div>
             </#list>

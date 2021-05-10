@@ -3,7 +3,7 @@ package com.example.features.admin.presentation
 import com.example.features.admin.data.AdminRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants
-import com.example.features.checkout.domain.OrderStatus.*
+import com.example.features.order.domain.OrderStatus
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -24,7 +24,7 @@ fun Application.registerAdminRoutes() {
         postAdminLoginRoute()
         authenticate(ADMIN_SESSION_AUTH) {
             getAdminRoute(adminRepository)
-            postStatusRoute(adminRepository)
+            updateOrderStatus(adminRepository)
         }
     }
 }
@@ -53,63 +53,32 @@ private fun Route.postAdminLoginRoute() {
 private fun Route.getAdminRoute(adminRepository: AdminRepository) {
     get("/admin") {
 
+        val principal = call.principal<AdminPrincipal>()!!
         val activeOrders = adminRepository.getAllActiveOrders()
         val completedOrders = adminRepository.getAllCompletedOrders()
         call.respond(
             FreeMarkerContent(
-                "admin_panel.ftl", mapOf(
-                    "activeOrders" to activeOrders, "completedOrders" to completedOrders
+                "admin.ftl", mapOf(
+                    "activeOrders" to activeOrders,
+                    "completedOrders" to completedOrders,
+                    "admin" to principal
                 )
             )
         )
     }
 }
 
-private fun Route.postStatusRoute(adminRepository: AdminRepository) {
-    post("/admin/printing") {
+fun Route.updateOrderStatus(adminRepository: AdminRepository) {
+    post("/admin/update/order-status") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val result = adminRepository.updateTrackingStatus(id, PRINTING)
-        if (result) {
-            call.respondText(result.toString())
-        } else {
-            call.respondText("Invalid order ID")
-        }
-    }
+        val status = params["order_status"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val orderStatus = OrderStatus.values()[status]
 
-    post("/admin/printed") {
-        val params = call.receiveParameters()
-        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-
-        val result = adminRepository.updateTrackingStatus(id, PRINTED)
-        if (result) {
-            call.respondText(result.toString())
-        } else {
-            call.respondText("Invalid order ID")
-        }
-    }
-
-    post("/admin/delivering") {
-        val params = call.receiveParameters()
-        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-
-        val result = adminRepository.updateTrackingStatus(id, DELIVERING)
-        if (result) {
-            call.respondText(result.toString())
-        } else {
-            call.respondText("Invalid order ID")
-        }
-    }
-
-    post("/admin/delivered") {
-        val params = call.receiveParameters()
-        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val result = adminRepository.updateTrackingStatus(id, DELIVERED)
-        if (result) {
-            call.respondText(result.toString())
-        } else {
-            call.respondText("Invalid order ID")
+        val updated = adminRepository.updateOrderStatus(id, orderStatus)
+        when (updated) {
+            true -> call.respond("updated")
+            false -> call.respondText("Not updated")
         }
     }
 }
-

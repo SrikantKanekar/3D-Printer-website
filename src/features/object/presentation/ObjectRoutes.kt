@@ -32,7 +32,7 @@ fun Application.registerObjectRoutes() {
 }
 
 fun Route.getCreateObjectRoute() {
-    get("/object") {
+    get("/object/create") {
         val principal = call.sessions.get<UserPrincipal>()
         call.respond(FreeMarkerContent("object_create.ftl", mapOf("user" to (principal?.email ?: ""))))
     }

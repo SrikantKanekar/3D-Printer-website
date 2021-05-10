@@ -1,15 +1,19 @@
 package com.example.database.order
 
-import com.example.features.checkout.domain.Order
-import com.example.features.checkout.domain.OrderStatus
+import com.example.features.order.domain.Order
+import com.example.features.order.domain.OrderStatus
 
 interface OrderDataSource {
 
+    suspend fun creteNewOrder(userEmail: String): Order
+
     suspend fun insertOrder(order: Order): Boolean
 
-    suspend fun getOrder(orderId: String): Order?
+    suspend fun getOrderById(orderId: String): Order?
 
-    suspend fun updateTrackingStatus(orderId: String, status: OrderStatus): Boolean
+    suspend fun getOrdersByUser(userEmail: String): List<Order>
+
+    suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean
 
     suspend fun getAllActiveOrders(): ArrayList<Order>
 

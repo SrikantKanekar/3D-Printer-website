@@ -47,7 +47,7 @@ class AuthRouteTest : KoinTest {
     fun `login failure with invalid credentials`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Post, "/auth/login") {
-                addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+                addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
                         "Email" to "INVALID_EMAIL",
@@ -90,7 +90,7 @@ class AuthRouteTest : KoinTest {
     fun `register success`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Post, "/auth/register") {
-                addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+                addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
                         "Email" to "NEW_EMAIL",
@@ -115,7 +115,7 @@ class AuthRouteTest : KoinTest {
     fun `register failure email already exist`() {
         withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
             handleRequest(HttpMethod.Post, "/auth/register") {
-                addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+                addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
                         "Email" to TEST_USER_EMAIL,

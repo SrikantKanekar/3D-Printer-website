@@ -15,6 +15,7 @@ import com.example.features.auth.data.AuthRepository
 import com.example.features.cart.data.CartRepository
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.history.data.HistoryRepository
+import com.example.features.order.data.OrderRepository
 import com.example.features.userObject.data.UserObjectRepository
 import com.example.features.tracking.data.TrackingRepository
 import org.koin.core.qualifier.named
@@ -29,12 +30,13 @@ val appModule = module {
     single<OrderDataSource> { OrderDataSourceImpl(get(named(COLLECTION_ORDER))) }
 
     single { AccountRepository(get()) }
-    single { AdminRepository(get()) }
+    single { AdminRepository(get(), get()) }
     single { AuthRepository(get()) }
     single { CartRepository(get()) }
     single { CheckoutRepository(get(), get()) }
-    single { HistoryRepository(get()) }
+    single { HistoryRepository(get(), get()) }
     single { UserObjectRepository(get()) }
     single { ObjectRepository(get()) }
-    single { TrackingRepository(get()) }
+    single { OrderRepository(get(), get()) }
+    single { TrackingRepository(get(), get()) }
 }

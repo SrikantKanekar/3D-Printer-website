@@ -10,7 +10,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerTrackerRoutes() {
+fun Application.registerTrackingRoutes() {
 
     val trackingRepository by inject<TrackingRepository>()
 
@@ -25,11 +25,11 @@ fun Route.getTrackingRoute(trackingRepository: TrackingRepository) {
     get("/tracking") {
 
         val principal = call.principal<UserPrincipal>()!!
-        val obj = trackingRepository.getUserTrackingobjects(principal.email)
+        val orders = trackingRepository.getUserTrackingOrders(principal.email)
         call.respond(
             FreeMarkerContent(
                 "tracking.ftl",
-                mapOf("objects" to obj, "user" to principal)
+                mapOf("orders" to orders, "user" to principal)
             )
         )
     }

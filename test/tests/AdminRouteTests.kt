@@ -44,4 +44,22 @@ class AdminRouteTests : KoinTest {
         }
     }
 
+    @Test
+    fun `update order status`() {
+        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+            runWithAdminUser {
+                handleRequest(HttpMethod.Post, "/admin/update/order-status") {
+                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
+                    setBody(
+                        listOf(
+                            "Email" to "INVALID_EMAIL",
+                            "Password" to "INVALID_PASSWORD"
+                        ).formUrlEncode()
+                    )
+                }.apply {
+                    //assertEquals(HttpStatusCode.OK, response.status())
+                }
+            }
+        }
+    }
 }

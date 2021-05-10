@@ -16,8 +16,9 @@ import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
 import com.example.features.`object`.presentation.registerObjectRoutes
 import com.example.features.auth.data.AuthRepository
-import com.example.features.tracking.presentation.registerTrackerRoutes
-import com.example.features.userObject.presentation.registerMyObjectsRoutes
+import com.example.features.order.presentation.registerOrderRoutes
+import com.example.features.tracking.presentation.registerTrackingRoutes
+import com.example.features.userObject.presentation.registerUserObjectsRoutes
 import com.example.features.util.presentation.registerStatusRoutes
 import com.example.features.userObject.domain.ObjectCookieSerializer
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
@@ -120,15 +121,16 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = lis
     }
 
     registerAccountRoutes()
+    registerAdminRoutes()
     registerAuthRoutes()
     registerCartRoutes()
     registerCheckoutRoutes()
     registerHistoryRoutes()
     registerNotificationRoutes()
     registerObjectRoutes()
-    registerTrackerRoutes()
-    registerMyObjectsRoutes()
+    registerOrderRoutes()
+    registerTrackingRoutes()
+    registerUserObjectsRoutes()
     registerIndexRoute()
     registerStatusRoutes()
-    registerAdminRoutes()
 }

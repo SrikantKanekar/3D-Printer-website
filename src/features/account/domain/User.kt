@@ -12,5 +12,6 @@ data class User(
     val username: String,
     var address: Address = Address(),
     val objects: ArrayList<Object> = ArrayList(),
+    val orderIds: ArrayList<String> = ArrayList(),
     val notification: ArrayList<Notification> = ArrayList(),
 )

@@ -5,7 +5,6 @@ import com.example.database.user.UserDataSource
 import com.example.features.checkout.domain.Address
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
-import com.example.features.checkout.domain.Order
 
 class CheckoutRepository(
     private val userDataSource: UserDataSource,
@@ -36,20 +35,20 @@ class CheckoutRepository(
 
     suspend fun checkoutSuccess(email: String): Boolean {
         val user = userDataSource.getUser(email)
-        val order = Order(
-            userEmail = email,
-            objects = ArrayList()
-        )
+        val order = orderDataSource.creteNewOrder(userEmail = email)
         user.objects
             .filter { it.status == CART }
-            .forEach {
-                order.objects.add(it)
-                it.status = TRACKING
+            .forEach { obj ->
+                order.objectIds.add(obj.id)
+                obj.status = TRACKING
             }
         var updated = false
-        if (order.objects.size > 0){
+        if (order.objectIds.size > 0){
             val ordered = orderDataSource.insertOrder(order)
-            if (ordered) updated = userDataSource.updateUser(user)
+            if (ordered) {
+                user.orderIds.add(order.id)
+                updated = userDataSource.updateUser(user)
+            }
         }
         return updated
     }

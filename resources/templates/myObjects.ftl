@@ -1,11 +1,11 @@
 <#import "template.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="My Prints" css="" js="">
+<@layout.main title="My Objects" css="" js="">
     
     <@header.header user="${user}" />
 
     <div class="container" style="padding-top: 110px">
-        <h2>My Prints</h2>
+        <h2>My Objects</h2>
         
         <#if objects?has_content>
             <#list objects as object>
