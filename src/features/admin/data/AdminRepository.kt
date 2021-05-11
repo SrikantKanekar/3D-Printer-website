@@ -3,16 +3,18 @@ package com.example.features.admin.data
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.notification.data.NotificationRepository
+import com.example.features.notification.domain.NotificationType
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
 import com.example.features.order.domain.OrderStatus.DELIVERED
 import com.example.features.order.domain.OrderStatus.DELIVERING
-import com.example.features.order.domain.PrintingStatus
 import com.example.features.order.domain.PrintingStatus.*
 
 class AdminRepository(
     private val userDataSource: UserDataSource,
-    private val orderDataSource: OrderDataSource
+    private val orderDataSource: OrderDataSource,
+    private val notificationRepository: NotificationRepository
 ) {
     suspend fun getAllActiveOrders(): ArrayList<Order> {
         return orderDataSource.getAllActiveOrders()
@@ -30,22 +32,29 @@ class AdminRepository(
         val order = orderDataSource.getOrderById(orderId) ?: return false
 
         val user = userDataSource.getUser(order.userEmail)
-        val allPrinted = user.objects
-            .filter { it.status == TRACKING }
-            .filter { order.objectIds.contains(it.id) }
-            .all { it.printingStatus == PRINTED }
 
-        if (status == DELIVERING) if (!allPrinted) return false
+        if (status == DELIVERING) {
+            val allPrinted = user.objects
+                .filter { it.status == TRACKING }
+                .filter { order.objectIds.contains(it.id) }
+                .all { it.printingStatus == PRINTED }
+            if (!allPrinted) return false
+        }
 
         val updated = if (order.status.ordinal == status.ordinal - 1) {
             orderDataSource.updateOrderStatus(orderId, status)
         } else false
+
+        if (status == DELIVERING && updated) {
+            notificationRepository.sendNotification(NotificationType.DELIVERING, user, order)
+        }
 
         if (status == DELIVERED && updated) {
             user.objects
                 .filter { it.status == TRACKING }
                 .filter { order.objectIds.contains(it.id) }
                 .forEach { it.status = COMPLETED }
+            notificationRepository.sendNotification(NotificationType.DELIVERED, user, order)
             return userDataSource.updateUser(user)
         }
         return updated

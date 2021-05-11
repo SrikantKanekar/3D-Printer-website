@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.di.appModule
+import com.example.di.productionModules
 import com.example.features.userObject.domain.ObjectsCookie
 import com.example.features.account.presentation.registerAccountRoutes
 import com.example.features.admin.domain.AdminPrincipal
@@ -50,7 +50,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused")
 @kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false, koinModules: List<Module> = listOf(appModule)) {
+fun Application.module(testing: Boolean = false, koinModules: List<Module> = productionModules) {
 
     install(Koin) {
         SLF4JLogger()

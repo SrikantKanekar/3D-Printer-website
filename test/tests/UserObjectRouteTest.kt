@@ -8,7 +8,7 @@ import com.example.module
 import data.Constants.TEST_CREATED_OBJECT
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_OBJECT
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
@@ -25,7 +25,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `get user objects route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/my-objects").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -39,7 +39,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `delete user object before login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
@@ -56,7 +56,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `delete user object after login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
                 handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
@@ -73,7 +73,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `delete user object before login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
                 assertEquals(HttpStatusCode.NotAcceptable, response.status())
             }
@@ -82,7 +82,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `delete user object after login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
@@ -93,7 +93,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `add to cart before login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
                 assertEquals(HttpStatusCode.Found, response.status())
             }
@@ -102,7 +102,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `add to cart after login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
                     runBlocking {
@@ -119,7 +119,7 @@ class UserObjectRouteTest : KoinTest {
 
     @Test
     fun `add to cart after login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/cart").apply {
                     runBlocking {

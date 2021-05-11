@@ -4,9 +4,11 @@ import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
+import com.example.features.notification.domain.Notification
 import data.Constants.TEST_CART_OBJECT1
 import data.Constants.TEST_CART_OBJECT2
 import data.Constants.TEST_COMPLETED_OBJECT
+import data.Constants.TEST_NOTIFICATION
 import data.Constants.TEST_PROCESSING_ORDER
 import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
@@ -58,6 +60,15 @@ val testUser = User(
     orderIds = ArrayList(
         listOf(
             TEST_PROCESSING_ORDER
+        )
+    ),
+    notification = ArrayList(
+        listOf(
+            Notification(
+                title = "TEST_NOTIFICATION_TITLE",
+                message = "TEST_NOTIFICATION_MESSAGE",
+                id = TEST_NOTIFICATION
+            )
         )
     )
 )

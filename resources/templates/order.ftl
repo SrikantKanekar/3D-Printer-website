@@ -7,7 +7,7 @@
     <div class="container" style="padding-top: 110px">
         <h2 class="OrderId" data-id="${order.id}">Order ID: ${order.id}</h2>
         <h3>Status: ${order.status}</h3>
-        <h3>User: ${order.userEmail}</h3>
+        <h3 class="user" data-email="${order.userEmail}">User: ${order.userEmail}</h3>
         
         <#list order.objectIds as objectId>
             <div class="card">
@@ -26,5 +26,19 @@
                 </div>
             </div>
         </#list>
+
+        <#if admin?has_content>
+        <form action="/order/send-message" method="post" class="m-5" id="notification-form">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" id="title">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <input type="text" name="message" class="form-control" id="message">
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </#if>
     </div>
 </@layout.main>

@@ -5,7 +5,7 @@ import com.example.features.account.data.AccountRepository
 import com.example.module
 import data.Constants.TEST_CART_OBJECT1
 import data.Constants.TEST_USER_EMAIL
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
@@ -21,7 +21,7 @@ class CartRouteTest : KoinTest {
 
     @Test
     fun `get cart route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/cart").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -35,7 +35,7 @@ class CartRouteTest : KoinTest {
 
     @Test
     fun `remove from cart success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/cart/$TEST_CART_OBJECT1/remove").apply {
                     runBlocking {
@@ -52,7 +52,7 @@ class CartRouteTest : KoinTest {
 
     @Test
     fun `remove from cart invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/cart/invalid-object-id/remove").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())

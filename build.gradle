@@ -72,6 +72,7 @@ dependencies {
 
     // Security
     implementation 'commons-codec:commons-codec:1.14'
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.0'
 
     // Koin Dependency injection
     implementation "io.insert-koin:koin-ktor:$koin_version"

@@ -23,6 +23,7 @@ fun Application.registerOrderRoutes() {
         getOrderRoute(orderRepository)
         authenticate(ADMIN_SESSION_AUTH) {
             updatePrintingStatus(orderRepository)
+            sendCustomMessage(orderRepository)
         }
     }
 }
@@ -72,6 +73,20 @@ fun Route.updatePrintingStatus(objectRepository: OrderRepository) {
         when (updated) {
             true -> call.respond("updated")
             false -> call.respondText("Not updated")
+        }
+    }
+}
+
+private fun Route.sendCustomMessage(orderRepository: OrderRepository) {
+    post("/order/send-message") {
+        val params = call.receiveParameters()
+        val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val title = params["title"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val message = params["message"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        when (orderRepository.sendCustomNotification(email, title, message)) {
+            true -> call.respondText("Notification sent")
+            false -> call.respondText("Not successful")
         }
     }
 }

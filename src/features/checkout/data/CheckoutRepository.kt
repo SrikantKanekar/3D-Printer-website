@@ -5,10 +5,13 @@ import com.example.database.user.UserDataSource
 import com.example.features.checkout.domain.Address
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.notification.data.NotificationRepository
+import com.example.features.notification.domain.NotificationType.*
 
 class CheckoutRepository(
     private val userDataSource: UserDataSource,
-    private val orderDataSource: OrderDataSource
+    private val orderDataSource: OrderDataSource,
+    private val notificationRepository: NotificationRepository
 ) {
     suspend fun getUserCartObjects(email: String): ArrayList<Object> {
         return ArrayList(userDataSource.getUser(email).objects.filter { it.status == CART })
@@ -47,6 +50,7 @@ class CheckoutRepository(
             val ordered = orderDataSource.insertOrder(order)
             if (ordered) {
                 user.orderIds.add(order.id)
+                notificationRepository.sendNotification(PLACED, user, order)
                 updated = userDataSource.updateUser(user)
             }
         }

@@ -22,4 +22,21 @@
         );
     });
 
+    $("#notification-form").submit(function (e) {
+        e.preventDefault();
+        var email = $(".user").data("email");
+        var url = $(this).attr('action');
+        $.post(
+            url,
+            {
+                email: email,
+                title: $("#title").val(),
+                message: $("#message").val()
+            },
+            function (data) {
+                alert(data);
+            }
+        );
+    });
+
 })(jQuery);

@@ -24,7 +24,7 @@
               <li><a href="/cart">Cart</a></li>
               <li><a href="/tracking">Track objects</a></li>
               <li><a href="/history">object history</a></li>
-              <li><a href="#">Notifications</a></li>
+              <li><a href="/notification">Notifications</a></li>
             </ul>
           </li>
           <#else>

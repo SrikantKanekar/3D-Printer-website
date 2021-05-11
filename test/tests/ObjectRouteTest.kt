@@ -10,7 +10,7 @@ import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_UPDATED_FILE_CONTENT
 import data.Constants.TEST_UPLOAD_FILE_CONTENT
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
@@ -27,7 +27,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `get create object route with or without login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/object/create").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -41,7 +41,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `create object without login check cookie`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             `create object before user login`()
             assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
         }
@@ -49,7 +49,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `create object after user login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
                 assertTrue(readFileContent(TEST_CREATED_OBJECT).contentEquals(TEST_UPLOAD_FILE_CONTENT))
@@ -60,7 +60,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `get update object route before login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 handleRequest(HttpMethod.Get, "/object/$TEST_CREATED_OBJECT").apply {
@@ -77,7 +77,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `get update object route after login`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/object/$TEST_USER_OBJECT").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -91,7 +91,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update object file after login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
                 handleRequest(HttpMethod.Post, "/object/$TEST_CREATED_OBJECT/file") {
@@ -111,7 +111,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update object file after login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/invalid-object-id/file") {
                     addHeader(HttpHeaders.ContentType, multiPart)
@@ -125,7 +125,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update object file before login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 handleRequest(HttpMethod.Post, "/object/$TEST_CREATED_OBJECT/file") {
@@ -146,7 +146,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update object file before login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/object/invalid-object-id/file") {
                 addHeader(HttpHeaders.ContentType, multiPart)
                 setBody("boundary", listOf(testUpdateFile))
@@ -158,7 +158,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update basic settings before login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 handleRequest(HttpMethod.Post, "/object/$TEST_CREATED_OBJECT/basic") {
@@ -177,7 +177,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update basic settings before login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/object/invalid-object-id/basic") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(listOf("size" to "100").formUrlEncode())
@@ -189,7 +189,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update basic settings after login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/$TEST_USER_OBJECT/basic") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
@@ -206,7 +206,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update basic settings after login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/invalid-object-id/basic") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
@@ -220,7 +220,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update advanced settings before login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 handleRequest(HttpMethod.Post, "/object/$TEST_CREATED_OBJECT/advanced") {
@@ -239,7 +239,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update advanced settings before login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/object/invalid-object-id/advanced") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(listOf("weight" to "100").formUrlEncode())
@@ -251,7 +251,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update advanced settings after login success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/$TEST_USER_OBJECT/advanced") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
@@ -268,7 +268,7 @@ class ObjectRouteTest : KoinTest {
 
     @Test
     fun `update advanced settings after login invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/invalid-object-id/advanced") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)

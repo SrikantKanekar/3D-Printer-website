@@ -7,7 +7,7 @@ import com.example.module
 import com.example.features.auth.domain.checkHashForPassword
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
@@ -24,7 +24,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `get account route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/account").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -38,7 +38,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `get account update route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/account/update").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -52,7 +52,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `update username success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/account/update") {
                     addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
@@ -73,7 +73,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `get reset password route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/account/reset-password").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -87,7 +87,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `reset password failure password don't match`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/account/reset-password") {
                     addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
@@ -107,7 +107,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `reset password failure old password incorrect`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/account/reset-password") {
                     addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
@@ -127,7 +127,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `reset password success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/account/reset-password") {
                     addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
@@ -156,7 +156,7 @@ class AccountRouteTest : KoinTest {
 
     @Test
     fun `logout success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/account/logout").apply {
                     assertEquals(HttpStatusCode.Found, response.status())

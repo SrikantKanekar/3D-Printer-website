@@ -11,7 +11,7 @@ import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
 import data.Constants.TEST_USER_USERNAME
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
@@ -29,7 +29,7 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `get login route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/auth/login").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -38,14 +38,14 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `login success with valid credentials`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             testUserLogin()
         }
     }
 
     @Test
     fun `login failure with invalid credentials`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/auth/login") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
@@ -62,7 +62,7 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `objects cookie sync success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
                 testUserLogin()
@@ -79,7 +79,7 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `get register route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/auth/register").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -88,7 +88,7 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `register success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/auth/register") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
@@ -113,7 +113,7 @@ class AuthRouteTest : KoinTest {
 
     @Test
     fun `register failure email already exist`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Post, "/auth/register") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(

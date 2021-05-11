@@ -7,7 +7,7 @@ import com.example.features.order.domain.OrderStatus.*
 import com.example.module
 import data.Constants.TEST_CREATED_ORDER
 import data.Constants.TEST_USER_EMAIL
-import di.testModule
+import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
@@ -24,7 +24,7 @@ class CheckoutRouteTest : KoinTest {
 
     @Test
     fun `get checkout route test`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             handleRequest(HttpMethod.Get, "/checkout").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -55,7 +55,7 @@ class CheckoutRouteTest : KoinTest {
 
     @Test
     fun `remove from checkout invalid ID`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Get, "/checkout/invalid-object-id/remove").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
@@ -66,7 +66,7 @@ class CheckoutRouteTest : KoinTest {
 
     @Test
     fun `proceed to pay success`() {
-        withTestApplication({ module(testing = true, koinModules = listOf(testModule)) }) {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/checkout/pay") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
