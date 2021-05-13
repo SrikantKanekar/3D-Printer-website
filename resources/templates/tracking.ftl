@@ -19,7 +19,7 @@
                         <#list order.objectIds as objectId>
                             <h5 class="card-body">object Id: ${objectId}</h5>
                         </#list>
-                        <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
+                        <a href="/order/${order.id}" class="btn btn-primary">view</a>
                     </div>
                 </div>
             </#list>

@@ -15,7 +15,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">${object.filename}</h5>
-                        <a href="/object/${object.id}" class="btn btn-primary stretched-link">view</a>
+                        <a href="/object/${object.id}" class="btn btn-primary">view</a>
                         <a href="/checkout/${object.id}/remove" class="btn btn-primary ">remove</a>
                     </div>
                 </div>

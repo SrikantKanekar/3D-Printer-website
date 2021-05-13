@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">${order.userEmail} ${order.status}</h5>
-                        <a href="/order/${order.id}" class="btn btn-primary stretched-link">view</a>
+                        <a href="/order/${order.id}" class="btn btn-primary">view</a>
                     </div>
                 </div>
             </#list>

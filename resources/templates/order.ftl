@@ -15,7 +15,7 @@
                     ID : ${objectId} 
                 </div>
                 <div class="card-body">
-                    <a href="/object/${objectId}" class="btn btn-primary stretched-link">view</a>
+                    <a href="/object/${objectId}" class="btn btn-primary">view</a>
                     <#if admin?has_content>
                         <div class='btn-group' role='group'>
                             <div type="button" data-status="0" data-id="${objectId}" class="btn btn-default None">None</div>
