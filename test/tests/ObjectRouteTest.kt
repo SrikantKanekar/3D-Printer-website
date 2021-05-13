@@ -100,7 +100,7 @@ class ObjectRouteTest : KoinTest {
                 }.apply {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, TEST_CREATED_OBJECT)!!
-                        assertEquals(TEST_FILE_UPDATED_NAME, obj.fileName)
+                        assertEquals(TEST_FILE_UPDATED_NAME, obj.filename)
                         assertTrue(readFileContent(TEST_CREATED_OBJECT).contentEquals(TEST_UPDATED_FILE_CONTENT))
                         assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
                     }
@@ -135,7 +135,7 @@ class ObjectRouteTest : KoinTest {
                     runBlocking {
                         val cookie = response.call.sessions.get<ObjectsCookie>()!!
                         val obj = cookie.objects.find { it.id == TEST_CREATED_OBJECT }!!
-                        assertEquals(TEST_FILE_UPDATED_NAME, obj.fileName)
+                        assertEquals(TEST_FILE_UPDATED_NAME, obj.filename)
                         assertTrue(readFileContent(TEST_CREATED_OBJECT).contentEquals(TEST_UPDATED_FILE_CONTENT))
                         assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
                     }

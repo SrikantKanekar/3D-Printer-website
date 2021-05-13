@@ -28,6 +28,6 @@ class FakeUserDataSourceImpl(
     }
 
     override suspend fun createNewObject(fileName: String): Object {
-        return Object(id = TEST_CREATED_OBJECT, fileName = fileName)
+        return Object(id = TEST_CREATED_OBJECT, filename = fileName)
     }
 }

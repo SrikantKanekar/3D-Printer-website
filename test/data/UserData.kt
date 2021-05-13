@@ -32,27 +32,27 @@ val testUser = User(
         listOf(
             Object(
                 id = TEST_USER_OBJECT,
-                fileName = UUID.randomUUID().toString(),
+                filename = UUID.randomUUID().toString(),
                 status = NONE
             ),
             Object(
                 id = TEST_CART_OBJECT1,
-                fileName = UUID.randomUUID().toString(),
+                filename = UUID.randomUUID().toString(),
                 status = CART
             ),
             Object(
                 id = TEST_CART_OBJECT2,
-                fileName = UUID.randomUUID().toString(),
+                filename = UUID.randomUUID().toString(),
                 status = CART
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
-                fileName = UUID.randomUUID().toString(),
+                filename = UUID.randomUUID().toString(),
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
-                fileName = UUID.randomUUID().toString(),
+                filename = UUID.randomUUID().toString(),
                 status = COMPLETED
             )
         )
@@ -85,7 +85,7 @@ val testUsers = List(10) {
         ),
         objects = ArrayList(
             List(3) {
-                Object(fileName = UUID.randomUUID().toString())
+                Object(filename = UUID.randomUUID().toString())
             }
         )
     )

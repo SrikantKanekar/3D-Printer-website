@@ -8,13 +8,13 @@ import org.bson.types.ObjectId
 
 @Serializable
 data class Object(
-    var fileName: String,
+    var filename: String,
     var status: ObjectStatus = NONE,
     var basicSettings: BasicSettings = BasicSettings(),
     var advancedSettings: AdvancedSettings = AdvancedSettings(),
     var printingStatus: PrintingStatus = PrintingStatus.NONE,
-    val price: Int? = null,
-    val timeInMin: Int? = null,
+    var price: Int? = null,
+    var timeToPrint: Int? = null,
     val dueDelivery: String? = null,
     @BsonId
     val id: String = ObjectId().toString()

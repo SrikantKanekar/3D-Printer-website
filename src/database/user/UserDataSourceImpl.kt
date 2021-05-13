@@ -26,6 +26,6 @@ class UserDataSourceImpl(
     }
 
     override suspend fun createNewObject(fileName: String): Object {
-        return Object(fileName = fileName)
+        return Object(filename = fileName)
     }
 }

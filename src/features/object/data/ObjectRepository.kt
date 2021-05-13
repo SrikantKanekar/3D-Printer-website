@@ -29,7 +29,7 @@ class ObjectRepository(
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.fileName = fileName } ?: return false
+            ?.let { it.filename = fileName } ?: return false
         return userDataSource.updateUser(user)
     }
 

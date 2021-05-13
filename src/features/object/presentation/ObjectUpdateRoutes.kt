@@ -1,11 +1,11 @@
 package com.example.features.`object`.presentation
 
-import com.example.features.userObject.domain.ObjectsCookie
-import com.example.features.auth.domain.UserPrincipal
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
-import com.example.util.FileHandler.createFile
+import com.example.features.auth.domain.UserPrincipal
+import com.example.features.userObject.domain.ObjectsCookie
+import com.example.util.FileHandler
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -14,71 +14,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import org.koin.ktor.ext.inject
-import java.io.File
-
-fun Application.registerObjectRoutes() {
-
-    val objectRepository by inject<ObjectRepository>()
-
-    routing {
-        getCreateObjectRoute()
-        createObjectRoute(objectRepository)
-        getUpdateObjectRoute(objectRepository)
-        updateFileRoute(objectRepository)
-        updateBasicSettingsRoute(objectRepository)
-        updateAdvancedSettingsRoute(objectRepository)
-    }
-}
-
-fun Route.getCreateObjectRoute() {
-    get("/object/create") {
-        val principal = call.sessions.get<UserPrincipal>()
-        call.respond(FreeMarkerContent("object_create.ftl", mapOf("user" to (principal?.email ?: ""))))
-    }
-}
-
-/**
-1.Create a new object.
-
-2.If user is logged in, save objectId in user database, else save in cookie.
-
-3.Upload the file in 'uploads' folder with name objectId.
- **/
-fun Route.createObjectRoute(objectRepository: ObjectRepository) {
-    post("/object/create") {
-        val multipartData = call.receiveMultipart()
-        multipartData.forEachPart { part ->
-            if (part is PartData.FileItem) {
-
-                val fileName = part.originalFileName!!
-                val obj = objectRepository.createNewObject(fileName)
-                val file = createFile(obj.id)
-                try {
-                    part.streamProvider().use { inputStream ->
-                        file.outputStream().buffered().use { outputStream ->
-                            inputStream.copyTo(outputStream)
-
-                            val principal = call.sessions.get<UserPrincipal>()
-                            if (principal != null) {
-                                objectRepository.addUserObject(principal.email, obj)
-                            } else {
-                                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                                cookie.objects.add(obj)
-                                call.sessions.set(cookie)
-                            }
-                            call.respondRedirect("/object/${obj.id}")
-                        }
-                    }
-                } catch (e: Exception) {
-                    file.delete()
-                    call.respondText("Upload not successful")
-                }
-            }
-            part.dispose()
-        }
-    }
-}
 
 fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
     get("/object/{id}") {
@@ -114,7 +49,7 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
         multipartData.forEachPart { part ->
             if (part is PartData.FileItem) {
                 val fileName = part.originalFileName!!
-                val file = createFile(id)
+                val file = FileHandler.createFile(id)
 
                 if (file.exists()) {
                     file.delete()
@@ -128,7 +63,7 @@ fun Route.updateFileRoute(objectRepository: ObjectRepository) {
                                     objectRepository.updateFileName(principal.email, id, fileName)
                                 } else {
                                     val cookie = call.sessions.get<ObjectsCookie>()!!
-                                    cookie.objects.find { it.id == id }?.fileName = fileName
+                                    cookie.objects.find { it.id == id }?.filename = fileName
                                     call.sessions.set(cookie)
                                 }
                                 call.respondText("Successfully updated")

@@ -1,6 +1,6 @@
 <#macro main css js title="3d printer website">
 <!doctype html>
-<html lang="en">
+<html lang="en"  class="no-js">
 
 	<head>
 		<title>${title}</title>
@@ -37,11 +37,11 @@
 		<!--===============================================================================================-->
 		<link rel="stylesheet" type="text/css" href="/static/css/auth/util.css">
 		<link rel="stylesheet" type="text/css" href="/static/css/home/style.css">
-
 		<link rel="stylesheet" type="text/css" href=${css}>
-		<!--===============================================================================================-->  
-		<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/css/bootstrap.min.css">
+		<!--===============================================================================================--> 
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 		<!--===============================================================================================-->
+		<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 	</head>
 	<body>
 		
@@ -70,8 +70,7 @@
 		<!--===============================================================================================-->
 		<script src="/static/vendor/animsition/js/animsition.min.js"></script>
 		<!--===============================================================================================-->
-		<script src="/static/vendor/bootstrap/js/popper.js"></script>
-		<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
 		<!--===============================================================================================-->
 		<script src="/static/vendor/select2/select2.min.js"></script>
 		<!--===============================================================================================-->
@@ -80,7 +79,7 @@
 		<!--===============================================================================================-->
 		<script src="/static/vendor/countdowntime/countdowntime.js"></script>
 		<!--===============================================================================================-->
-		<script src="/static/js/home/main.js"></script>
+		<script src="/static/js/template.js"></script>
 		<script src=${js}></script>
 	</body>
 </html>

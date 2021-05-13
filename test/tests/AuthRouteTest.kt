@@ -70,7 +70,7 @@ class AuthRouteTest : KoinTest {
                     val obj = accountRepository.getUser(TEST_USER_EMAIL)
                         .objects
                         .find { it.id == TEST_CREATED_OBJECT }!!
-                    assertEquals(TEST_FILE_UPLOAD_NAME, obj.fileName)
+                    assertEquals(TEST_FILE_UPLOAD_NAME, obj.filename)
                     assertFileNotNullAndDelete(obj.id)
                 }
             }

@@ -13,7 +13,7 @@ object MessageGenerator {
 
     fun printingMessage(order: Order, obj: Object): String {
         return "Hello ${order.userEmail}\n" +
-                "your object ${obj.fileName} printing has started\n"
+                "your object ${obj.filename} printing has started\n"
     }
 
     fun deliveringMessage(order: Order): String {

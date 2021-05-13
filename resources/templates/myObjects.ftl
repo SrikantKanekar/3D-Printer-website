@@ -14,7 +14,7 @@
                         ID : ${object.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">${object.fileName}</h5>
+                        <h5 class="card-title">${object.filename}</h5>
                         <a href="/object/${object.id}" class="btn btn-primary stretched-link">view</a>
                         <a href="/my-objects/${object.id}/cart" class="btn btn-primary ">Add to cart</a>
                         <a href="/my-objects/${object.id}/delete" class="btn btn-primary ">Delete</a>

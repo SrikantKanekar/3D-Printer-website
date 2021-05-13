@@ -1,4 +1,4 @@
-(function ($) {
+$(function () {
     "use strict";
 
     $(".btn-group").on("click", ".btn", function () {
@@ -20,4 +20,4 @@
         );
     });
 
-})(jQuery);
+});

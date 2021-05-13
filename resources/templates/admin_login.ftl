@@ -1,6 +1,6 @@
 <#import "template.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Admin Login" css="/static/css/auth/main.css" js="/static/js/auth/main.js">
+<@layout.main title="Admin Login" css="/static/css/auth/main.css" js="/static/js/auth.js">
 
     <@header.header user="" />
 
