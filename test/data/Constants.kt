@@ -25,8 +25,6 @@ object Constants {
     const val TEST_CREATED_OBJECT = "TEST_CREATED_OBJECT"
     const val TEST_CREATED_ORDER = "TEST_CREATED_ORDER"
     const val TEST_FILE_UPLOAD_NAME = "TEST_FILE_UPLOAD_NAME"
-    const val TEST_FILE_UPDATED_NAME = "TEST_FILE_UPDATED_NAME"
 
     val TEST_UPLOAD_FILE_CONTENT = byteArrayOf(1, 2, 3)
-    val TEST_UPDATED_FILE_CONTENT = byteArrayOf(4, 5, 6)
 }

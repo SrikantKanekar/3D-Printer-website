@@ -39,48 +39,6 @@ fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
     }
 }
 
-fun Route.updateFileRoute(objectRepository: ObjectRepository) {
-    post("/object/{id}/file") {
-        val id = call.parameters["id"] ?: return@post call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
-        val multipartData = call.receiveMultipart()
-        multipartData.forEachPart { part ->
-            if (part is PartData.FileItem) {
-                val fileName = part.originalFileName!!
-                val file = FileHandler.createFile(id)
-
-                if (file.exists()) {
-                    file.delete()
-                    try {
-                        part.streamProvider().use { inputStream ->
-                            file.outputStream().buffered().use { outputStream ->
-                                inputStream.copyTo(outputStream)
-
-                                val principal = call.sessions.get<UserPrincipal>()
-                                if (principal != null) {
-                                    objectRepository.updateFileName(principal.email, id, fileName)
-                                } else {
-                                    val cookie = call.sessions.get<ObjectsCookie>()!!
-                                    cookie.objects.find { it.id == id }?.filename = fileName
-                                    call.sessions.set(cookie)
-                                }
-                                call.respondText("Successfully updated")
-                            }
-                        }
-                    } catch (e: Exception) {
-                        call.respondText("Upload not successful")
-                    }
-                } else {
-                    call.respond(HttpStatusCode.NotAcceptable, "invalid object ID")
-                }
-            }
-            part.dispose()
-        }
-    }
-}
-
 fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
     post("/object/{id}/basic") {
         val id = call.parameters["id"] ?: return@post call.respondText(

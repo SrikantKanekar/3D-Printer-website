@@ -32,23 +32,23 @@ fun Route.getCreateObjectRoute() {
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {
         val multipartData = call.receiveMultipart()
-        val partData = multipartData.readPart()
+        val partData = multipartData.readAllParts().first()
         if (partData is PartData.FileItem) {
             val filename = partData.originalFileName!!
             val obj = objectRepository.createNewObject(filename)
-//            val file = createFile(obj.id)
+            val file = createFile(obj.id)
             try {
                 //throw Exception()
-//                partData.streamProvider().use { inputStream ->
-//                    file.outputStream().buffered().use { outputStream ->
-//                        inputStream.copyTo(outputStream)
-//                        partData.dispose.invoke()
-//                    }
-//                }
+                partData.streamProvider().use { inputStream ->
+                    file.outputStream().buffered().use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                        partData.dispose.invoke()
+                    }
+                }
 
                 // get details from octoPrint
                 try {
-                    delay(3000)
+                    //delay(3000)
                     //throw Exception()
                     obj.apply {
                         price = 100

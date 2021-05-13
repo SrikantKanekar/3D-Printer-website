@@ -10,9 +10,7 @@ import com.example.util.FileHandler.deleteFile
 import com.example.util.FileHandler.fileExists
 import com.example.util.FileHandler.readFileByteArray
 import data.Constants.TEST_CREATED_OBJECT
-import data.Constants.TEST_FILE_UPDATED_NAME
 import data.Constants.TEST_FILE_UPLOAD_NAME
-import data.Constants.TEST_UPDATED_FILE_CONTENT
 import data.Constants.TEST_UPLOAD_FILE_CONTENT
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_PASSWORD
@@ -31,17 +29,6 @@ val testUploadFile = PartData.FileItem(
         HttpHeaders.ContentDisposition,
         ContentDisposition.Inline
             .withParameter(ContentDisposition.Parameters.FileName, TEST_FILE_UPLOAD_NAME)
-            .toString()
-    )
-)
-
-val testUpdateFile = PartData.FileItem(
-    { TEST_UPDATED_FILE_CONTENT.inputStream().asInput() },
-    { },
-    headersOf(
-        HttpHeaders.ContentDisposition,
-        ContentDisposition.Inline
-            .withParameter(ContentDisposition.Parameters.FileName, TEST_FILE_UPDATED_NAME)
             .toString()
     )
 )
@@ -122,7 +109,7 @@ fun TestApplicationEngine.`create object before user login`() {
         runBlocking {
             val cookie = response.call.sessions.get<ObjectsCookie>()!!
             assertNotNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
-            assertEquals(HttpStatusCode.Found, response.status())
+            assertEquals(HttpStatusCode.OK, response.status())
         }
     }
 }
@@ -140,7 +127,7 @@ fun TestApplicationEngine.`create object after user login`(
                 .filter { it.status == NONE }
                 .find { it.id == TEST_CREATED_OBJECT }
             assertNotNull(obj)
-            assertEquals(HttpStatusCode.Found, response.status())
+            assertEquals(HttpStatusCode.OK, response.status())
         }
     }
 }

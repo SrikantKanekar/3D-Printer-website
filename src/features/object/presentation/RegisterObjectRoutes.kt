@@ -14,7 +14,6 @@ fun Application.registerObjectRoutes() {
         createObjectRoute(objectRepository)
 
         getUpdateObjectRoute(objectRepository)
-        updateFileRoute(objectRepository)
         updateBasicSettingsRoute(objectRepository)
         updateAdvancedSettingsRoute(objectRepository)
     }

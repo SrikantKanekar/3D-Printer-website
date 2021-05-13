@@ -6,11 +6,7 @@
 
     <div class="container" style="padding-top: 110px">
         <div class="mt-5">
-            <form action="/object/${object.id}/file" method="post" enctype="multipart/form-data" id="file-form">
-                <label for="file" class="form-label">File</label>
-                <input type="file" name="file" class="form-control" id="file" />
-                <button id="button" type="submit">Upload</button>
-            </form>
+            <h2>${object.filename}</h2>
         </div>
 
         <div class="mt-5">
@@ -34,7 +30,7 @@
         <div class="mt-5">
             <h4>status ${object.status!""}</h4>
             <h4>price ${(object.price)!""}</h4>
-            <h4>time ${(object.timeInMin)!""}</h4>
+            <h4>time ${(object.timeToPrint)!""}</h4>
             <h4>delivery ${(object.dueDelivery)!""}</h4>
         </div>
     </div>
