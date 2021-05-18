@@ -1,12 +1,13 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Update" css="" js="/static/js/object.js">
+<@layout.base title="Update" css="" js="/static/js/object.js">
 
     <@header.header user="${user}" />
 
     <div class="container" style="padding-top: 110px">
         <div class="mt-5">
             <h2>${object.filename}</h2>
+            <img src="${object.image}">
         </div>
 
         <div class="mt-5">
@@ -35,4 +36,4 @@
         </div>
     </div>
 
-</@layout.main>
+</@layout.base>

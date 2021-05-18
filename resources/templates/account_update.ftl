@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Account Update" css="" js="">
+<@layout.base title="Account Update" css="" js="">
     
     <@header.header user="${user}" />
 
@@ -15,4 +15,4 @@
         </form>
     </div>
 
-</@layout.main>
+</@layout.base>

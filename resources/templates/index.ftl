@@ -1,7 +1,7 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
 <#import "footer.ftl" as footer />
-<@layout.main title="Home" css="" js="">
+<@layout.base title="Home" css="" js="">
     
   <@header.header user="${user}" />
 
@@ -10,7 +10,7 @@
     <div class="container d-flex h-100">
       <div class="row justify-content-center align-self-center" data-aos="fade-up">
         <div class="col-lg-6 intro-info order-lg-first order-last" data-aos="zoom-in" data-aos-delay="100">
-          <h2>Rapid Solutions<br>for Your <span>Business!</span></h2>
+          <h2>Solution<br>for Your <span>Business</span></h2>
           <div>
             <a href="/object/create" class="btn-get-started">Create</a>
           </div>
@@ -293,4 +293,4 @@
   <@footer.footer/>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-</@layout.main>
+</@layout.base>

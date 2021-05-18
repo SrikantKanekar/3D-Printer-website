@@ -9,6 +9,7 @@ import org.bson.types.ObjectId
 @Serializable
 data class Object(
     var filename: String,
+    var image: String? = null,
     var status: ObjectStatus = NONE,
     var basicSettings: BasicSettings = BasicSettings(),
     var advancedSettings: AdvancedSettings = AdvancedSettings(),

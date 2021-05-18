@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Account" css="" js="">
+<@layout.base title="Account" css="" js="">
     
     <@header.header user="${user}" />
 
@@ -9,4 +9,4 @@
         <p>Email : ${user.email}</p>
         <p>username : ${user.username}</p>
     </div>
-</@layout.main>
+</@layout.base>

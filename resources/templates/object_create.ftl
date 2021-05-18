@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Create" css="/static/css/object_create.css" js="/static/js/object_create.js">
+<@layout.base title="Create" css="/static/css/object_create.css" js="/static/js/object_create.js">
 
     <@header.header user="${user}" />
 
@@ -22,4 +22,4 @@
             <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </div>
-</@layout.main>
+</@layout.base>

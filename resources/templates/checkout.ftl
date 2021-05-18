@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Checkout" css="" js="/static/js/checkout.js">
+<@layout.base title="Checkout" css="" js="/static/js/checkout.js">
     
     <@header.header user="${user}" />
 
@@ -43,4 +43,4 @@
         </#if>
 
     </div>
-</@layout.main>
+</@layout.base>

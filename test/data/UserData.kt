@@ -9,6 +9,7 @@ import data.Constants.TEST_CART_OBJECT1
 import data.Constants.TEST_CART_OBJECT2
 import data.Constants.TEST_COMPLETED_OBJECT
 import data.Constants.TEST_NOTIFICATION
+import data.Constants.TEST_OBJECT_IMAGE_LINK
 import data.Constants.TEST_PROCESSING_ORDER
 import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
@@ -33,11 +34,13 @@ val testUser = User(
             Object(
                 id = TEST_USER_OBJECT,
                 filename = UUID.randomUUID().toString(),
+                image = TEST_OBJECT_IMAGE_LINK,
                 status = NONE
             ),
             Object(
                 id = TEST_CART_OBJECT1,
                 filename = UUID.randomUUID().toString(),
+                image = TEST_OBJECT_IMAGE_LINK,
                 status = CART
             ),
             Object(
@@ -48,11 +51,13 @@ val testUser = User(
             Object(
                 id = TEST_TRACKING_OBJECT,
                 filename = UUID.randomUUID().toString(),
+                image = TEST_OBJECT_IMAGE_LINK,
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
                 filename = UUID.randomUUID().toString(),
+                image = TEST_OBJECT_IMAGE_LINK,
                 status = COMPLETED
             )
         )
@@ -85,7 +90,10 @@ val testUsers = List(10) {
         ),
         objects = ArrayList(
             List(3) {
-                Object(filename = UUID.randomUUID().toString())
+                Object(
+                    filename = UUID.randomUUID().toString(),
+                    image = UUID.randomUUID().toString()
+                )
             }
         )
     )

@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Notifications" css="" js="">
+<@layout.base title="Notifications" css="" js="">
 
     <@header.header user="${user}" />
     
@@ -25,4 +25,4 @@
             <div>
         </#if>
     </div>
-</@layout.main>
+</@layout.base>

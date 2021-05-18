@@ -51,6 +51,7 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
                     //delay(3000)
                     //throw Exception()
                     obj.apply {
+                        image = "/static/images/3d-image.jpg"
                         price = 100
                         timeToPrint = 100
                     }

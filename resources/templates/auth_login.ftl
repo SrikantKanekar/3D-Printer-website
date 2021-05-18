@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Login" css="/static/css/auth/main.css" js="/static/js/auth.js">
+<@layout.base title="Login" css="/static/css/auth.css" js="/static/js/auth.js">
 
     <@header.header user="" />
 
@@ -50,4 +50,4 @@
 			</div>
 		</div>
 	</div>
-</@layout.main>
+</@layout.base>

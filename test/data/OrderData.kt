@@ -34,7 +34,7 @@ val testOrderData = List(15) {
         },
         objectIds = when(it){
             1 -> ArrayList(listOf(TEST_TRACKING_OBJECT))
-            else -> java.util.ArrayList(
+            else -> ArrayList(
                 List(Random.nextInt(2, 5)) {
                     UUID.randomUUID().toString()
                 }

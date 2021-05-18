@@ -26,5 +26,6 @@ object Constants {
     const val TEST_CREATED_ORDER = "TEST_CREATED_ORDER"
     const val TEST_FILE_UPLOAD_NAME = "TEST_FILE_UPLOAD_NAME"
 
+    const val TEST_OBJECT_IMAGE_LINK = "/static/images/3d-image.jpg"
     val TEST_UPLOAD_FILE_CONTENT = byteArrayOf(1, 2, 3)
 }

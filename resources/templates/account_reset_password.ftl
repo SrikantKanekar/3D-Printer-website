@@ -1,6 +1,6 @@
-<#import "template.ftl" as layout />
+<#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.main title="Reset Password" css="" js="">
+<@layout.base title="Reset Password" css="" js="">
 
     <@header.header user="${user}" />
 
@@ -21,4 +21,4 @@
             <button type="submit" class="btn btn-primary">Reset password</button>
         </form>
     </div>
-</@layout.main>
+</@layout.base>
