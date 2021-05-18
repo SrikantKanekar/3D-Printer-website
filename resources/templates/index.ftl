@@ -1,7 +1,7 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
 <#import "footer.ftl" as footer />
-<@layout.base title="Home" css="" js="">
+<@layout.base title="Home" css="/static/css/index.css" js="/static/js/index.js">
     
   <@header.header user="${user}" />
 
@@ -293,4 +293,34 @@
   <@footer.footer/>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  
+  <!--glightbox-->
+  <script src="/static/plugins/glightbox/js/glightbox.min.js"></script>
+  
+  <!--isotope-->
+  <script src="/static/plugins/isotope-layout/isotope.pkgd.min.js"></script>
+  
+  <!--php-email-form-->
+  <script src="/static/plugins/php-email-form/validate.js"></script>
+  
+  <!--purecounter-->
+  <script src="/static/plugins/purecounter/purecounter.js"></script>
+  
+  <!--swiper-->
+  <script src="/static/plugins/swiper/swiper-bundle.min.js"></script>
+  
+  <!--animsition-->
+  <script src="/static/plugins/animsition/js/animsition.min.js"></script>
+  
+  <!--select2-->
+  <script src="/static/plugins/select2/select2.min.js"></script>
+  
+  <!--daterangepicker-->
+  <script src="/static/plugins/daterangepicker/moment.min.js"></script>
+  <script src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+  
+  <!--countdowntime-->
+  <script src="/static/plugins/countdowntime/countdowntime.js"></script>
+
 </@layout.base>
