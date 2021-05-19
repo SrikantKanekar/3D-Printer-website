@@ -1,21 +1,33 @@
-(function ($) {
+$(document).ready(function () {
     "use strict";
 
-    $("#checkout-form").submit(function (e) {
+    $(".order_button").click(function (e) {
         e.preventDefault();
-        var url = $(this).attr('action');
-        $.post(
-            url,
-            $(this).serialize(),
-            function (data) {
 
-                if (data.startsWith("/")) {
-                    window.location.href = data;
-                } else {
-                    alert(data);
-                }
+        if ($("form")[0].checkValidity()) {
+            console.log("submitting");
+            $("#checkout_form").submit();
+        }
+
+        $('form :input[required="required"]').each(function () {
+            if (!this.validity.valid) {
+                $(this).focus();
+                // break
+                return false;
             }
-        );
+        });
     });
 
-})(jQuery);
+    $("#checkout_form").submit(function (e) {
+        e.preventDefault();
+        console.log("submitted");
+        var url = $(this).attr("action");
+        $.post(url, $(this).serialize(), function (data) {
+            if (data.startsWith("/")) {
+                window.location.href = data;
+            } else {
+                alert(data);
+            }
+        });
+    });
+});

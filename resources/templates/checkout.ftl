@@ -1,46 +1,138 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Checkout" css="" js="/static/js/checkout.js">
+<@layout.base title="Checkout" css="/static/css/checkout.css" js="/static/js/checkout.js">
     
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="Checkout"/>
+    
+	<div class="checkout">
+		<div class="container">
+			<#if objects?has_content>
+				<div class="row">
 
-    <div class="container" style="padding-top: 110px">
-        <h2>Checkout</h2>
-        
-        <#if objects?has_content>
-            <#list objects as object>
-                <div class="card">
-                    <div class="card-header">
-                        ID : ${object.id}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">${object.filename}</h5>
-                        <a href="/object/${object.id}" class="btn btn-primary">view</a>
-                        <a href="/checkout/${object.id}/remove" class="btn btn-primary ">remove</a>
-                    </div>
-                </div>
-            </#list>
+					<!-- Billing Info -->
+					<div class="col-lg-6">
+						<div class="billing checkout_section">
+							<div class="section_title">Billing Address</div>
+							<div class="section_subtitle">Enter your address info</div>
+							<div class="checkout_form_container">
+								<form action="/checkout/pay" method="POST" id="checkout_form" class="checkout_form">
+									
+									<div class="row">
+										<div class="col-xl-6">
+											<!-- firstname -->
+											<label for="firstname">First Name*</label>
+											<input name="firstname" value="${address.firstname}" type="text" id="firstname" class="checkout_input" required="required">
+										</div>
+										<div class="col-xl-6 last_name_col">
+											<!-- lastname -->
+											<label for="lastname">Last Name*</label>
+											<input name="lastname" value="${address.lastname}" type="text" id="lastname" class="checkout_input" required="required">
+										</div>
+									</div>
+									
+									<div>
+										<!-- phoneNumber -->
+										<label for="phoneNumber">Phone no*</label>
+										<input name="phoneNumber" value="${address.phoneNumber!''}" type="phone" id="phoneNumber" class="checkout_input" required="required">
+									</div>
+									
+									<div>
+										<!-- Address -->
+										<label for="address">Address*</label>
+										<input name="address" value="${address.address}" type="text" id="address" class="checkout_input" required="required">
+									</div>
+									
+									<div>
+										<!-- City / Town -->
+										<label for="city">City/Town*</label>
+										<select name="city" value="${address.city}" id="city" class="dropdown_item_select checkout_input" require="required">
+											<option></option>
+											<option>Panaji</option>
+											<option>Margao</option>
+											<option>Ponda</option>
+											<option>Muapsa</option>
+										</select>
+									</div>
+									
+									<div>
+										<!-- State -->
+										<label for="state">State*</label>
+										<select name="state" value="${address.state}" id="state" class="dropdown_item_select checkout_input" require="required">
+											<option></option>
+											<option>Goa</option>
+											<option>Karnataka</option>
+											<option>Delhi</option>
+											<option>Mumbai</option>
+										</select>
+									</div>
+									
+									<div>
+										<!-- Country -->
+										<label for="country">Country*</label>
+										<select name="country" value="${address.country}" id="country" class="dropdown_item_select checkout_input" require="required">
+											<option></option>
+											<option>India</option>
+											<option>USA</option>
+											<option>Japan</option>
+											<option>Italy</option>
+										</select>
+									</div>
+									
+									<div>
+										<!-- pinCode -->
+										<label for="pinCode">Pincode*</label>
+										<input name="pinCode" value="${address.pinCode!''}" type="number" maxlength="6" id="pinCode" class="checkout_input" required="required">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
-            <form action="/checkout/pay" method="post" class="m-5" id="checkout-form">
-                <div class="mb-3">
-                    <label for="country" class="form-label">Country</label>
-                    <input type="text" name="country" value="${address.country}" class="form-control" id="country">
-                </div>
-                <div class="mb-3">
-                    <label for="state" class="form-label">State</label>
-                    <input type="text" name="state" value="${address.state}" class="form-control" id="state">
-                </div>
-                <div class="mb-3">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" name="city" value="${address.city}" class="form-control" id="city">
-                </div>
-                <button type="submit" class="btn btn-primary">Proceed to pay</button>
-            </form>
-        <#else>
-            <div class="m-5">
-                <h4>No checkout items</h4>
-            <div>
-        </#if>
+					<!-- Order Info -->
+					<div class="col-lg-6">
+						<div class="order checkout_section">
+							<div class="section_title">Your order</div>
+							<div class="section_subtitle">Order details</div>
 
-    </div>
+							<!-- Order details -->
+							<div class="order_list_container">
+								<div class="order_list_bar d-flex flex-row align-items-center justify-content-start">
+									<div class="order_list_title">Product</div>
+									<div class="order_list_value ml-auto">Total</div>
+								</div>
+								<ul class="order_list">
+									<#list objects as object>
+										<li class="d-flex flex-row align-items-center justify-content-start">
+											<div class="order_list_title">${object.filename}</div>
+											<div class="order_list_value ml-auto">${object.price}</div>
+										</li>
+									</#list>
+									<li class="d-flex flex-row align-items-center justify-content-start">
+										<div class="order_list_title">Subtotal</div>
+										<div class="order_list_value ml-auto">$59.90</div>
+									</li>
+									<li class="d-flex flex-row align-items-center justify-content-start">
+										<div class="order_list_title">Shipping</div>
+										<div class="order_list_value ml-auto">Free</div>
+									</li>
+									<li class="d-flex flex-row align-items-center justify-content-start">
+										<div class="order_list_title">Total</div>
+										<div class="order_list_value ml-auto">$59.90</div>
+									</li>
+								</ul>
+							</div>
+
+							<!-- Order Text -->
+							<div class="order_text">some text....</div>
+							<div class="button order_button"><a href="#">Place Order</a></div>
+						</div>
+					</div>
+				</div>
+			<#else>
+				<div class="m-5">
+					<h4>No checkout items</h4>
+				<div>
+        	</#if>
+		</div>
+	</div>
 </@layout.base>

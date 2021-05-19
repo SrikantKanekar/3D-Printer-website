@@ -222,12 +222,4 @@
             <h4>No Cart items</h4>
         <div>
     </#if>  
-
-	<script src="/static/plugins/greensock/TweenMax.min.js"></script>
-	<script src="/static/plugins/greensock/TimelineMax.min.js"></script>
-	<script src="/static/plugins/scrollmagic/ScrollMagic.min.js"></script>
-	<script src="/static/plugins/greensock/animation.gsap.min.js"></script>
-	<script src="/static/plugins/greensock/ScrollToPlugin.min.js"></script>
-	<script src="/static/plugins/easing/easing.js"></script>
-	<script src="/static/plugins/parallax-js-master/parallax.min.js"></script>
 </@layout.base>

@@ -62,10 +62,17 @@ private fun Route.removeFromCheckout(checkoutRepository: CheckoutRepository) {
 private fun Route.proceedToPay(checkoutRepository: CheckoutRepository) {
     post("/checkout/pay") {
         val parameters = call.receiveParameters()
+
+        val firstname = parameters["firstname"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val lastname = parameters["lastname"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val phoneNumber = parameters["phoneNumber"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val add = parameters["address"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val city = parameters["city"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val state = parameters["state"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val country = parameters["country"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val address = Address(city, state, country)
+        val pinCode = parameters["pinCode"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val address = Address(firstname, lastname, phoneNumber.toLong(), add, city, state, country, pinCode.toInt())
 
         val principal = call.principal<UserPrincipal>()!!
         val updated = checkoutRepository.updateUserAddress(principal.email, address)

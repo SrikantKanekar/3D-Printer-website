@@ -19,9 +19,6 @@
 
 		<!--font-awesome-->
 		<link rel="stylesheet" type="text/css" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
-		
-		<!--jquery-->
-		<script src="/static/plugins/jquery/jquery-3.2.1.min.js"></script>
 
 		<!--base-->
 		<link rel="stylesheet" type="text/css" href="/static/css/base.css">
@@ -48,8 +45,19 @@
 			</div>
 		</div>
 
+		<!--jquery-->
+		<script src="/static/plugins/jquery/jquery-3.2.1.min.js"></script>
+
 		<!--bootstrap-->
 		<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<script src="/static/plugins/greensock/TweenMax.min.js"></script>
+		<script src="/static/plugins/greensock/TimelineMax.min.js"></script>
+		<script src="/static/plugins/scrollmagic/ScrollMagic.min.js"></script>
+		<script src="/static/plugins/greensock/animation.gsap.min.js"></script>
+		<script src="/static/plugins/greensock/ScrollToPlugin.min.js"></script>
+		<script src="/static/plugins/easing/easing.js"></script>
+		<script src="/static/plugins/parallax-js-master/parallax.min.js"></script>
 
 		<!--base-->
 		<script src="/static/js/base.js"></script>

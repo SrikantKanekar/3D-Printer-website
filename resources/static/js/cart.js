@@ -1,5 +1,3 @@
-/* JS Document */
-
 /******************************
 
 [Table of Contents]

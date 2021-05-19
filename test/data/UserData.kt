@@ -27,7 +27,9 @@ val testUser = User(
     address = Address(
         city = TEST_USER_ADDRESS,
         state = TEST_USER_ADDRESS,
-        country = TEST_USER_ADDRESS
+        country = TEST_USER_ADDRESS,
+        phoneNumber = 1234567899,
+        pinCode = 123456
     ),
     objects = ArrayList(
         listOf(
@@ -35,29 +37,35 @@ val testUser = User(
                 id = TEST_USER_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
+                price = 1,
                 status = NONE
             ),
             Object(
                 id = TEST_CART_OBJECT1,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
+                price = 1,
                 status = CART
             ),
             Object(
                 id = TEST_CART_OBJECT2,
                 filename = UUID.randomUUID().toString(),
+                image = TEST_OBJECT_IMAGE_LINK,
+                price = 1,
                 status = CART
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
+                price = 1,
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
+                price = 1,
                 status = COMPLETED
             )
         )

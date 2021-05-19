@@ -72,9 +72,14 @@ class CheckoutRouteTest : KoinTest {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(
                         listOf(
+                            "firstname" to "firstname",
+                            "lastname" to "lastname",
+                            "phoneNumber" to "1234567899",
+                            "address" to "address",
                             "city" to "city",
                             "state" to "state",
-                            "country" to "country"
+                            "country" to "country",
+                            "pinCode" to "123456"
                         ).formUrlEncode()
                     )
                 }.apply {

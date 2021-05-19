@@ -67,6 +67,9 @@
     .main_nav > ul > li:not(:last-child) {
         margin-right: 40px;
     }
+    .last_name_col {
+        margin-top: 15px;
+    }
 }
 
 /************
@@ -131,6 +134,9 @@
     }
     .checkout_button {
         margin-top: 15px;
+    }
+    .order {
+        margin-top: 90px;
     }
     .footer_overlay {
         height: 200px;
@@ -225,6 +231,18 @@
     }
     .checkout_button {
         width: 100%;
+    }
+    .order_button {
+        width: 100%;
+    }
+    .checkout_form label {
+        font-size: 13px;
+    }
+    .checkout_input {
+        height: 41px;
+    }
+    .checkbox_title {
+        font-size: 13px;
     }
     .copyright {
         font-size: 13px;
