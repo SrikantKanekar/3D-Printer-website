@@ -1,92 +1,131 @@
-(function () {
+/******************************
+
+[Table of Contents]
+
+1. Vars and Inits
+2. Set Header
+3. Init Menu
+4. Ajax Spinner
+
+
+******************************/
+$(document).ready(function () {
     "use strict";
 
-    /**
-     * Easy selector helper function
-     */
-    const select = (el, all = false) => {
-        el = el.trim();
-        if (all) {
-            return [...document.querySelectorAll(el)];
+    /* 
+
+	1. Vars and Inits
+
+	*/
+
+    var header = $(".header");
+    var hambActive = false;
+    var menuActive = false;
+
+    setHeader();
+
+    $(window).on("resize", function () {
+        setHeader();
+    });
+
+    $(document).on("scroll", function () {
+        setHeader();
+    });
+
+    initMenu();
+
+    /* 
+
+	2. Set Header
+
+	*/
+
+    function setHeader() {
+        if ($(window).scrollTop() > 100) {
+            header.addClass("scrolled");
         } else {
-            return document.querySelector(el);
+            header.removeClass("scrolled");
         }
-    };
-
-    /**
-     * Easy event listener function
-     */
-    const on = (type, el, listener, all = false) => {
-        let selectEl = select(el, all);
-        if (selectEl) {
-            if (all) {
-                selectEl.forEach((e) => e.addEventListener(type, listener));
-            } else {
-                selectEl.addEventListener(type, listener);
-            }
-        }
-    };
-
-    /**
-     * Easy on scroll event listener
-     */
-    const onscroll = (el, listener) => {
-        el.addEventListener("scroll", listener);
-    };
-
-    /**
-     * Mobile nav toggle
-     */
-    on("click", ".mobile-nav-toggle", function (e) {
-        select("#navbar").classList.toggle("navbar-mobile");
-        this.classList.toggle("bi-list");
-        this.classList.toggle("bi-x");
-    });
-
-    /**
-     * Mobile nav dropdowns activate
-     */
-    on(
-        "click",
-        ".navbar .dropdown > a",
-        function (e) {
-            if (select("#navbar").classList.contains("navbar-mobile")) {
-                e.preventDefault();
-                this.nextElementSibling.classList.toggle("dropdown-active");
-            }
-        },
-        true
-    );
-
-    /**
-     * Animation on scroll
-     */
-    window.addEventListener("load", () => {
-        AOS.init({
-            duration: 1000,
-            easing: "ease-in-out",
-            once: true,
-            mirror: false,
-        });
-    });
-
-    /**
-     * Back to top button
-     */
-    let backtotop = select(".back-to-top");
-    if (backtotop) {
-        const toggleBacktotop = () => {
-            if (window.scrollY > 100) {
-                backtotop.classList.add("active");
-            } else {
-                backtotop.classList.remove("active");
-            }
-        };
-        window.addEventListener("load", toggleBacktotop);
-        onscroll(document, toggleBacktotop);
     }
 
-    // Ajax spinner
+    /* 
+
+	3. Init Menu
+
+	*/
+
+    function initMenu() {
+        if ($(".hamburger").length) {
+            var hamb = $(".hamburger");
+
+            hamb.on("click", function (event) {
+                event.stopPropagation();
+
+                if (!menuActive) {
+                    openMenu();
+
+                    $(document).one("click", function cls(e) {
+                        if ($(e.target).hasClass("menu_mm")) {
+                            $(document).one("click", cls);
+                        } else {
+                            closeMenu();
+                        }
+                    });
+                } else {
+                    $(".menu").removeClass("active");
+                    menuActive = false;
+                }
+            });
+
+            //Handle page menu
+            if ($(".page_menu_item").length) {
+                var items = $(".page_menu_item");
+                items.each(function () {
+                    var item = $(this);
+
+                    item.on("click", function (evt) {
+                        if (item.hasClass("has-children")) {
+                            evt.preventDefault();
+                            evt.stopPropagation();
+                            var subItem = item.find("> ul");
+                            if (subItem.hasClass("active")) {
+                                subItem.toggleClass("active");
+                                TweenMax.to(subItem, 0.3, { height: 0 });
+                            } else {
+                                subItem.toggleClass("active");
+                                TweenMax.set(subItem, { height: "auto" });
+                                TweenMax.from(subItem, 0.3, { height: 0 });
+                            }
+                        } else {
+                            evt.stopPropagation();
+                        }
+                    });
+                });
+            }
+        }
+    }
+
+    function openMenu() {
+        var fs = $(".menu");
+        fs.addClass("active");
+        hambActive = true;
+        menuActive = true;
+    }
+
+    function closeMenu() {
+        var fs = $(".menu");
+        fs.removeClass("active");
+        hambActive = false;
+        menuActive = false;
+    }
+
+
+    /* 
+
+	4. Ajax spinner
+
+	*/
+    
     $(document).ajaxSend(function () {
         $("#overlay").fadeIn(300);
     });
@@ -99,4 +138,4 @@
         alert("an error occoured");
         console.log(error);
     });
-})();
+});

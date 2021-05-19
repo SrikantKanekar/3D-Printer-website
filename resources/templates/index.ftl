@@ -1,6 +1,5 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<#import "footer.ftl" as footer />
 <@layout.base title="Home" css="/static/css/index.css" js="/static/js/index.js">
     
   <@header.header user="${user}" />
@@ -289,8 +288,6 @@
     </section><!-- End Pricing Section -->
 
   </main><!-- End #main -->
-
-  <@footer.footer/>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

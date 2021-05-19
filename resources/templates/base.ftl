@@ -1,3 +1,4 @@
+<#import "footer.ftl" as footer />
 <#macro base css js title="3d printer website">
 <!doctype html>
 <html lang="en" class="no-js">
@@ -13,20 +14,20 @@
 		<link rel="icon" type="image/png" href="/static/images/icons/favicon.ico" />
 		<link rel="apple-touch-icon" type="image/png" href="/static/images/icons/favicon.ico">
 
-		<!--aos-->
-		<link rel="stylesheet" type="text/css" href="/static/plugins/aos/aos.css">
-
 		<!--bootstrap-->
 		<link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css">
 
 		<!--font-awesome-->
-		<link rel="stylesheet" type="text/css" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 		
 		<!--jquery-->
 		<script src="/static/plugins/jquery/jquery-3.2.1.min.js"></script>
 
 		<!--base-->
 		<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+
+		<!--responsive-->
+		<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
 		
 		<!--custom-->
 		<link rel="stylesheet" type="text/css" href=${css}>
@@ -37,15 +38,14 @@
 		
 		<#nested/>
 
+		<@footer.footer/>
+
 		<div id="overlay">
 			<div class="cv-spinner">
 				<span class="spinner"></span>
 			</div>
 		</div>
 
-		<!--aos-->
-  		<script src="/static/plugins/aos/aos.js"></script>
-		
 		<!--bootstrap-->
 		<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
