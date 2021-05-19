@@ -1,4 +1,4 @@
-<#macro header user="" admin="">
+<#macro header user="" admin="" title="3Design">
   	<!-- Header -->
 	<header class="header">
 		<div class="header_container">
@@ -13,7 +13,7 @@
 									justify-content-start
 								">
 							<div class="logo">
-								<a href="/">3Design</a>
+								${title}
 							</div>
 							<nav class="main_nav">
 								<ul>

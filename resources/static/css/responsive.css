@@ -1,6 +1,3 @@
-@charset "utf-8";
-/* CSS Document */
-
 /******************************
 
 [Table of Contents]
@@ -67,9 +64,6 @@
     .main_nav {
         margin-left: 50px;
     }
-    .search {
-        margin-left: 25px;
-    }
     .main_nav > ul > li:not(:last-child) {
         margin-right: 40px;
     }
@@ -102,18 +96,8 @@
     .header_social {
         display: none;
     }
-    .search {
-        display: none;
-    }
     .hamburger {
         display: inline-block;
-    }
-    .home {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-    .home_title {
-        font-size: 48px;
     }
     .cart_info_columns {
         display: none;
@@ -194,12 +178,6 @@
 ************/
 
 @media only screen and (max-width: 767px) {
-    .home_content {
-        width: 100%;
-    }
-    .home_title {
-        font-size: 36px;
-    }
 }
 
 /************
@@ -234,15 +212,6 @@
     .header.scrolled .logo a {
         font-size: 18px;
     }
-    .home {
-        height: 180px;
-        padding-top: 80px;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .breadcrumbs ul li a {
-        font-size: 13px;
-    }
     .button {
         width: 148px;
         height: 41px;
@@ -250,9 +219,6 @@
     .button a {
         font-size: 13px;
         line-height: 37px;
-    }
-    .home_button {
-        margin-top: 32px;
     }
     .coupon_input {
         height: 41px;
