@@ -37,15 +37,15 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
         if (partData is PartData.FileItem) {
             val filename = partData.originalFileName!!
             val obj = objectRepository.createNewObject(filename)
-            val file = createFile(obj.id)
+//            val file = createFile(obj.id)
             try {
                 //throw Exception()
-                partData.streamProvider().use { inputStream ->
-                    file.outputStream().buffered().use { outputStream ->
-                        inputStream.copyTo(outputStream)
-                        partData.dispose.invoke()
-                    }
-                }
+//                partData.streamProvider().use { inputStream ->
+//                    file.outputStream().buffered().use { outputStream ->
+//                        inputStream.copyTo(outputStream)
+//                        partData.dispose.invoke()
+//                    }
+//                }
 
                 // get details from octoPrint
                 try {

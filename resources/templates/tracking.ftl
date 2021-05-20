@@ -2,7 +2,7 @@
 <#import "header.ftl" as header />
 <@layout.base title="Tracking" css="" js="">
 
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="My objects" />
     
     <div class="container" style="padding-top: 110px">
         <h2>Tracking orders</h2>
