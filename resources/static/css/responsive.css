@@ -138,6 +138,9 @@
     .order {
         margin-top: 90px;
     }
+    .product {
+        width: calc((100% - 30px) / 2);
+    }
     .footer_overlay {
         height: 200px;
     }
@@ -184,6 +187,9 @@
 ************/
 
 @media only screen and (max-width: 767px) {
+    .sorting_container {
+        margin-top: 15px;
+    }
 }
 
 /************
@@ -243,6 +249,16 @@
     }
     .checkbox_title {
         font-size: 13px;
+    }
+    .results {
+        font-size: 13px;
+    }
+    .item_sorting > li {
+        width: 161px;
+        font-size: 13px;
+    }
+    .product {
+        width: 100%;
     }
     .copyright {
         font-size: 13px;

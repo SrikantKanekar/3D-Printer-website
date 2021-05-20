@@ -23,12 +23,12 @@
 		<!--base-->
 		<link rel="stylesheet" type="text/css" href="/static/css/base.css">
 
-		<!--responsive-->
-		<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
-		
 		<!--custom-->
 		<link rel="stylesheet" type="text/css" href=${css}>
 		
+		<!--responsive-->
+		<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
+
 		<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 	</head>
 	
@@ -56,6 +56,8 @@
 		<script src="/static/plugins/scrollmagic/ScrollMagic.min.js"></script>
 		<script src="/static/plugins/greensock/animation.gsap.min.js"></script>
 		<script src="/static/plugins/greensock/ScrollToPlugin.min.js"></script>
+		<script src="/static/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+		<script src="/static/plugins/Isotope/isotope.pkgd.min.js"></script>
 		<script src="/static/plugins/easing/easing.js"></script>
 		<script src="/static/plugins/parallax-js-master/parallax.min.js"></script>
 

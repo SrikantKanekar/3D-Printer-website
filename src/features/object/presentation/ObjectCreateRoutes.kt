@@ -14,6 +14,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 fun Route.getCreateObjectRoute() {
     get("/object/create") {
@@ -52,8 +53,8 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
                     //throw Exception()
                     obj.apply {
                         image = "/static/images/3d-image.jpg"
-                        price = 100
-                        timeToPrint = 100
+                        price = Random.nextInt(1000, 10000)
+                        timeToPrint = Random.nextInt(1, 24)
                     }
 
                     //save object to user or cookie
