@@ -7,6 +7,7 @@ import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.notification.data.NotificationRepository
 import com.example.features.notification.domain.NotificationType.*
+import kotlin.random.Random
 
 class CheckoutRepository(
     private val userDataSource: UserDataSource,
@@ -38,7 +39,11 @@ class CheckoutRepository(
 
     suspend fun checkoutSuccess(email: String): Boolean {
         val user = userDataSource.getUser(email)
-        val order = orderDataSource.creteNewOrder(userEmail = email)
+        val order = orderDataSource.creteNewOrder(
+            userEmail = email,
+            price = Random.nextInt(10000, 20000),
+            deliveryDays = Random.nextInt(5, 15),
+        )
         user.objects
             .filter { it.status == CART }
             .forEach { obj ->

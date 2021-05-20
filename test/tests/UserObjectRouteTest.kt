@@ -94,8 +94,11 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `add to cart before login`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
-                assertEquals(HttpStatusCode.Found, response.status())
+            handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+                addHeader(HttpHeaders.ContentType, formUrlEncoded)
+                setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
+            }.apply {
+                assertEquals(HttpStatusCode.OK, response.status())
             }
         }
     }
@@ -104,13 +107,15 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/my-objects/$TEST_USER_OBJECT/cart").apply {
+                handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
+                    setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
+                }.apply {
                     runBlocking {
                         val obj = accountRepository.getUser(TEST_USER_EMAIL).objects
                             .filter { it.status == CART }
                             .find { it.id == TEST_USER_OBJECT }
                         assertNotNull(obj)
-                        assertEquals(HttpStatusCode.Found, response.status())
                     }
                 }
             }
@@ -121,11 +126,13 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/cart").apply {
+                handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
+                    setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
+                }.apply {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, "invalid-object-id")
                         assertNull(obj)
-                        assertEquals(HttpStatusCode.NotAcceptable, response.status())
                     }
                 }
             }

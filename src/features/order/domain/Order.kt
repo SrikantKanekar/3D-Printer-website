@@ -10,6 +10,8 @@ data class Order(
     val userEmail: String,
     var status: OrderStatus = PLACED,
     val objectIds: ArrayList<String> = ArrayList(),
+    val price: Int,
+    val deliveryDays: Int,
     @BsonId
     val id: String = ObjectId().toString()
 )

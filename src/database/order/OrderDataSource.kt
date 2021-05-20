@@ -5,7 +5,7 @@ import com.example.features.order.domain.OrderStatus
 
 interface OrderDataSource {
 
-    suspend fun creteNewOrder(userEmail: String): Order
+    suspend fun creteNewOrder(userEmail: String, price: Int, deliveryDays: Int): Order
 
     suspend fun insertOrder(order: Order): Boolean
 

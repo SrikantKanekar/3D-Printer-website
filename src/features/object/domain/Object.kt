@@ -16,7 +16,6 @@ data class Object(
     var printingStatus: PrintingStatus = PrintingStatus.NONE,
     var price: Int? = null,
     var timeToPrint: Int? = null,
-    val dueDelivery: String? = null,
     @BsonId
     val id: String = ObjectId().toString()
 )

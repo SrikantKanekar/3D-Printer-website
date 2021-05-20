@@ -10,8 +10,13 @@ class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
 ): OrderDataSource {
 
-    override suspend fun creteNewOrder(userEmail: String): Order {
-        return Order(id = TEST_CREATED_ORDER, userEmail = userEmail)
+    override suspend fun creteNewOrder(userEmail: String, price: Int, deliveryDays: Int): Order {
+        return Order(
+            id = TEST_CREATED_ORDER,
+            userEmail = userEmail,
+            price = price,
+            deliveryDays = deliveryDays
+        )
     }
 
     override suspend fun insertOrder(order: Order): Boolean {

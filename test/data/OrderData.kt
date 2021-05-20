@@ -39,6 +39,8 @@ val testOrderData = List(15) {
                     UUID.randomUUID().toString()
                 }
             )
-        }
+        },
+        price = Random.nextInt(1000, 10000),
+        deliveryDays = Random.nextInt(4, 15)
     )
 }.shuffled()

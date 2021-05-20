@@ -58,6 +58,7 @@ $(document).ready(function () {
 
             $.post(url, { id: id }, function (data) {
                 if (data.startsWith("http")) {
+                    console.log(data);
                     window.location.href = data;
                 } else if (data == "true") {
                     // remove product
