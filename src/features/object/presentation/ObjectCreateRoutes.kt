@@ -37,9 +37,9 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
         if (partData is PartData.FileItem) {
             val filename = partData.originalFileName!!
             val obj = objectRepository.createNewObject(filename)
-//            val file = createFile(obj.id)
             try {
                 //throw Exception()
+//                val file = createFile(obj.id)
 //                partData.streamProvider().use { inputStream ->
 //                    file.outputStream().buffered().use { outputStream ->
 //                        inputStream.copyTo(outputStream)
