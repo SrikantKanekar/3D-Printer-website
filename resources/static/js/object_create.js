@@ -111,7 +111,9 @@
                 }
             };
 
-            request.send(formData);
+            //setTimeout(() => {
+                request.send(formData);
+            //}, 3000);
         } else {
             // fallback Ajax solution upload for older browsers
             var iframeName = "uploadiframe" + new Date().getTime(),
@@ -146,15 +148,16 @@
             progressBar.setAttribute("aria-valuenow", progress);
             progressBar.setAttribute("style", "width:" + progress + "%");
             if (progress == 100) uploadDone();
-            console.log(e.loaded + " / " + e.total);
         }
     };
 
     var handleData = function (data) {
         slicingDone(data);
         if (data.success == "true") {
-            window.location.href = "/object/" + data.id;
-            clearPage();
+            //setTimeout(function () {
+                window.location.href = "/object/" + data.id;
+                clearPage();
+            //}, 2000);
         }
     };
 

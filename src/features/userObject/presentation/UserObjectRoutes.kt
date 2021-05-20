@@ -85,11 +85,7 @@ private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
         val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
-                val url = call.url {
-                    path("auth/login")
-                    parameters.append("returnUrl", "/my-objects")
-                }
-                call.respondText(url)
+                call.respondText("/auth/login?returnUrl=/my-objects")
             }
             else -> {
                 val result = userObjectRepository.addToCart(principal.email, id)
