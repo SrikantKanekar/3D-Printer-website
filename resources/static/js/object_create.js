@@ -111,9 +111,7 @@
                 }
             };
 
-            setTimeout(() => {
-                request.send(formData);
-            }, 3000);
+            request.send(formData);
         } else {
             // fallback Ajax solution upload for older browsers
             var iframeName = "uploadiframe" + new Date().getTime(),
@@ -155,10 +153,8 @@
     var handleData = function (data) {
         slicingDone(data);
         if (data.success == "true") {
-            setTimeout(function () {
-                window.location.href = "/object/" + data.id;
-                clearPage();
-            }, 2000);
+            window.location.href = "/object/" + data.id;
+            clearPage();
         }
     };
 

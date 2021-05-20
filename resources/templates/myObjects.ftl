@@ -1,6 +1,6 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="My objects" css="/static/css/myObjects.css" js="/static/js/myObjects.js">
+<@layout.base title="My objects" css="" js="/static/js/myObjects.js">
     
     <@header.header user="${user}" title="My objects" />
 
@@ -44,12 +44,14 @@
 						
 							<#list objects as object>
 								<!-- Product -->
-								<div class="product">
+								<div class="product" data-id="${object.id}">
 									<div class="product_image"><img src="${object.image}" alt=""></div>
 									<div class="product_content">
 										<div class="product_title">
-											<a href="/object/${object.id}" class="product_name">${object.filename}</a>
-											<a href="/my-objects/${object.id}/cart" class="product_add_to_cart">
+											<a href="/object/${object.id}">${object.filename}</a>
+										</div>
+										<div class="product_add_to_cart">
+											<a href="/my-objects/add-to-cart">
 												<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 489 489" style="enable-background: new 00 489 489;" xml:space="preserve">
 													<g>
 														<path d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3

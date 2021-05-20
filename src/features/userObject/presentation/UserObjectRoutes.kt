@@ -12,6 +12,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
+import io.ktor.util.*
 import org.koin.ktor.ext.inject
 
 fun Application.registerUserObjectsRoutes() {
@@ -77,27 +78,22 @@ private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
 }
 
 private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
-    get("/my-objects/{id}/cart") {
-        val id = call.parameters["id"] ?: return@get call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
+    post("/my-objects/add-to-cart") {
+        val param = call.receiveParameters()
+        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
-                call.respondRedirect {
+                val url = call.url {
                     path("auth/login")
-                    parameters.append("returnUrl", call.request.uri)
+                    parameters.append("returnUrl", "/my-objects")
                 }
+                call.respondText(url)
             }
             else -> {
                 val result = userObjectRepository.addToCart(principal.email, id)
-                if (result) {
-                    call.respondRedirect("/my-objects")
-                } else {
-                    call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-                }
+                call.respondText(result.toString())
             }
         }
     }

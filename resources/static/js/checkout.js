@@ -5,7 +5,6 @@ $(document).ready(function () {
         e.preventDefault();
 
         if ($("form")[0].checkValidity()) {
-            console.log("submitting");
             $("#checkout_form").submit();
         }
 
@@ -20,7 +19,6 @@ $(document).ready(function () {
 
     $("#checkout_form").submit(function (e) {
         e.preventDefault();
-        console.log("submitted");
         var url = $(this).attr("action");
         $.post(url, $(this).serialize(), function (data) {
             if (data.startsWith("/")) {

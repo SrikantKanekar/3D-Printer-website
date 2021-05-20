@@ -119,13 +119,12 @@ $(document).ready(function () {
         menuActive = false;
     }
 
-
     /* 
 
 	4. Ajax spinner
 
 	*/
-    
+
     $(document).ajaxSend(function () {
         $("#overlay").fadeIn(300);
     });
@@ -138,4 +137,6 @@ $(document).ready(function () {
         alert("an error occoured");
         console.log(error);
     });
+
+
 });
