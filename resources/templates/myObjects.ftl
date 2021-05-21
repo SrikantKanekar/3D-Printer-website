@@ -1,6 +1,6 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="My objects" css="" js="/static/js/myObjects.js">
+<@layout.base title="My objects" css="/static/css/myObjects.css" js="/static/js/myObjects.js">
     
     <@header.header user="${user}" title="My objects" />
 

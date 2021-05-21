@@ -1,0 +1,103 @@
+.tracking_info {
+    width: 100%;
+    background: #ffffff;
+    padding-top: 150px;
+    z-index: 2;
+}
+.tracking_info_columns {
+    width: 100%;
+    border-bottom: solid 2px #e3e3e3;
+    padding-bottom: 7px;
+}
+.tracking_info_col {
+    float: left;
+    font-size: 14px;
+    font-weight: 400;
+    color: #1b1b1b;
+}
+.tracking_info_col_product {
+    width: 63%;
+}
+.tracking_info_col_price {
+    width: 10%;
+}
+.tracking_info_col_quantity {
+    width: 17%;
+    text-align: center;
+}
+.tracking_info_col_total {
+    width: 10%;
+    text-align: right;
+}
+.tracking_item {
+    padding-top: 33px;
+    padding-bottom: 33px;
+}
+.tracking_item_product {
+    width: 63%;
+}
+.tracking_item_status {
+    width: 10%;
+}
+.tracking_item_price {
+    width: 17%;
+    text-align: center;
+}
+.tracking_item_delivery {
+    width: 10%;
+    text-align: right;
+}
+.tracking_item_image div {
+    width: 183px;
+    height: 163px;
+}
+.tracking_item_image div img {
+    max-width: 100%;
+}
+.tracking_item_name_container {
+    padding-left: 36px;
+}
+.tracking_item_name a {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1b1b1b;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+.tracking_item_name a:hover {
+    color: #e95a5a;
+}
+.tracking_item_objects {
+    margin-top: 3px;
+}
+.tracking_item_objects {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c6a74;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+
+.tracking_item_status {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1b1b1b;
+}
+
+.tracking_item_price {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1b1b1b;
+}
+
+.tracking_item_delivery {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1b1b1b;
+}

@@ -1,32 +1,82 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Order history" css="" js="">
+<@layout.base title="Order history" css="/static/css/tracking.css" js="">
 
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="Order history" />
     
-    <div class="container" style="padding-top: 110px">
-        <h2>Order history</h2>
-        
-        <#if orders?has_content>
-            <#list orders as order>
-                <div class="card">
-                    <div class="card-header">
-                        ID : ${order.id}
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">${order.userEmail}</h5>
-                        <h5 class="card-title">${order.status}</h5>
-                        <#list order.objectIds as objectId>
-                            <h5 class="card-body">object Id: ${objectId}</h5>
-                        </#list>
-                        <a href="/order/${order.id}" class="btn btn-primary">view</a>
+    <div class="tracking_info">
+        <div class="container">
+
+            <#if orders?has_content>
+
+                <div class="row">
+                    <div class="col">
+                        <!-- Column Titles -->
+                        <div class="tracking_info_columns clearfix">
+                            <div class="tracking_info_col tracking_info_col_product">
+                                Order ID
+                            </div>
+                            <div class="tracking_info_col tracking_info_col_price">
+                                Status 
+                            </div>
+                            <div class="tracking_info_col tracking_info_col_quantity">
+                                Price
+                            </div>
+                            <div class="tracking_info_col tracking_info_col_total">
+                                Delivery by
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </#list>
-        <#else>
-            <div class="m-5">
+
+                <#list orders as order>
+                    <div class="row tracking_items_row">
+                        <div class="col">
+                            <!-- tracking Item -->
+                            <div class="
+                                        tracking_item
+                                        d-flex
+                                        flex-lg-row flex-column
+                                        align-items-lg-center align-items-start
+                                        justify-content-start
+                                    ">
+                                <!-- Name -->
+                                <div class="
+                                            tracking_item_product
+                                            d-flex
+                                            flex-row
+                                            align-items-center
+                                            justify-content-start
+                                        ">
+                                    <div class="tracking_item_image">
+                                        <div>
+                                            <img src="${order.image}" alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="tracking_item_name_container">
+                                        <div class="tracking_item_name">
+                                            <a href="/order/${order.id}">${order.id}</a>
+                                        </div>
+                                        <div class="tracking_item_objects">
+                                            ${order.objectIds?size} objects
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Status -->
+                                <div class="tracking_item_status">${order.status}</div>
+                                <!-- Quantity -->
+                                <div class="tracking_item_price">${order.price}</div>
+                                <!-- Total -->
+                                <div class="tracking_item_delivery">${order.deliveryDays}</div>
+                            </div>
+                        </div>
+                    </div>
+                </#list>
+
+            <#else>
                 <h4>No history items</h4>
-            <div>
-        </#if>
+            </#if>
+
+        </div>
     </div>
 </@layout.base>
