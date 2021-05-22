@@ -72,7 +72,7 @@ class OrderRouteTest: KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
-                    assertEquals("updated", response.content)
+                    assertEquals(true.toString(), response.content)
                 }
             }
         }

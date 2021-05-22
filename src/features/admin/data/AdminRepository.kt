@@ -30,9 +30,9 @@ class AdminRepository(
 
     suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {
         val order = orderDataSource.getOrderById(orderId) ?: return false
-
         val user = userDataSource.getUser(order.userEmail)
 
+        // check if all objects are printed before delivering
         if (status == DELIVERING) {
             val allPrinted = user.objects
                 .filter { it.status == TRACKING }
@@ -41,14 +41,17 @@ class AdminRepository(
             if (!allPrinted) return false
         }
 
+        // update order status
         val updated = if (order.status.ordinal == status.ordinal - 1) {
             orderDataSource.updateOrderStatus(orderId, status)
         } else false
 
+        // send notification to user when delivery starts
         if (status == DELIVERING && updated) {
             notificationRepository.sendNotification(NotificationType.DELIVERING, user, order)
         }
 
+        // update status of all individual objects and send notification
         if (status == DELIVERED && updated) {
             user.objects
                 .filter { it.status == TRACKING }

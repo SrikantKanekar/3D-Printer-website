@@ -58,7 +58,7 @@ class AdminRouteTests : KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
-                    assertEquals("updated", response.content)
+                    assertEquals("true", response.content)
                 }
             }
         }

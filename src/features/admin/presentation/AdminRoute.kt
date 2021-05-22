@@ -55,12 +55,11 @@ private fun Route.getAdminRoute(adminRepository: AdminRepository) {
 
         val principal = call.principal<AdminPrincipal>()!!
         val activeOrders = adminRepository.getAllActiveOrders()
-        val completedOrders = adminRepository.getAllCompletedOrders()
+
         call.respond(
             FreeMarkerContent(
                 "admin.ftl", mapOf(
                     "activeOrders" to activeOrders,
-                    "completedOrders" to completedOrders,
                     "admin" to principal
                 )
             )
@@ -76,9 +75,6 @@ fun Route.updateOrderStatus(adminRepository: AdminRepository) {
         val orderStatus = OrderStatus.values()[status]
 
         val updated = adminRepository.updateOrderStatus(id, orderStatus)
-        when (updated) {
-            true -> call.respondText("updated")
-            false -> call.respondText("Not updated")
-        }
+        call.respond(updated)
     }
 }
