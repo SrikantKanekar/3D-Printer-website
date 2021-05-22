@@ -1,6 +1,7 @@
 <#macro header user="" admin="" title="3Design">
   	<!-- Header -->
 	<header class="header">
+		
 		<div class="header_container">
 			<div class="container">
 				<div class="row">
@@ -20,12 +21,13 @@
 									<li class="active"><a href="/">Home</a></li>
 									<li><a href="/object/create">Create</a></li>
 									<li><a href="/my-objects">My Objects</a></li>
+									
 									<#if (user?has_content)>
 										<li class="hassubs">
 											<a href="/account">Account</a>
 											<ul>
 												<li>
-													<a href="/account">My Account</a>
+													<a href="/account">Account</a>
 												</li>
 												<li>
 													<a href="/tracking">Tracking</a>
@@ -42,13 +44,17 @@
 											</ul>
 										</li>
 									</#if>
+									
 									<#if (admin?has_content)>
 										<li><a href="/admin">Admin</a></li>
 									</#if>
+
 								</ul>
 							</nav>
 							<div class="header_extra ml-auto">
+								
 								<div class="shopping_cart">
+									
 									<#if (user?has_content)>
 									<a href="/cart">
 										<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 489 489" style="enable-background: new 00 489 489;" xml:space="preserve">
@@ -60,15 +66,18 @@
 												c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h45.2l26.9,302.3C412.8,445.2,392.1,462,366.8,462z" />
 											</g>
 										</svg>
-										<div>Cart <span>(0)</span></div>
+										<div>Cart</div>
 									</a>
 									<#else>
 									<a href="/auth/login"><div>SignIn </div></a>
 									</#if>
+
 								</div>
+								
 								<div class="hamburger">
 									<i class="fa fa-bars" aria-hidden="true"></i>
 								</div>
+
 							</div>
 						</div>
 					</div>
@@ -93,28 +102,34 @@
 				</li>
 			</ul>
 		</div>
+
 	</header>
 
 	<!-- Menu -->
 	<div class="menu menu_mm trans_300">
+		
 		<div class="menu_container menu_mm">
 			<div class="page_menu_content">
 				<ul class="page_menu_nav menu_mm">
+					
 					<li class="page_menu_item menu_mm">
 						<a href="/">Home<i class="fa fa-angle-down"></i></a>
 					</li>
+					
 					<li class="page_menu_item menu_mm">
 						<a href="/object/create">Create<i class="fa fa-angle-down"></i></a>
 					</li>
+					
 					<li class="page_menu_item menu_mm">
 						<a href="/my-objects">My Objects<i class="fa fa-angle-down"></i></a>
 					</li>
+					
 					<#if (user?has_content)>
 					<li class="page_menu_item has-children menu_mm">
 						<a href="/account">Account<i class="fa fa-angle-down"></i></a>
 						<ul class="page_menu_selection menu_mm">
 							<li class="page_menu_item menu_mm">
-								<a href="/account">My Account<i class="fa fa-angle-down"></i></a>
+								<a href="/account">Account<i class="fa fa-angle-down"></i></a>
 							</li>
 							<li class="page_menu_item menu_mm">
 								<a href="/tracking">Tracking<i class="fa fa-angle-down"></i></a>
@@ -131,6 +146,7 @@
 						</ul>
 					</li>
 					</#if>
+
 				</ul>
 			</div>
 		</div>

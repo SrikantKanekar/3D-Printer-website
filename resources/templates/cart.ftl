@@ -4,9 +4,10 @@
 
     <@header.header user="${user}" title="Cart" />
     
-    <#if objects?has_content>
-        <div class="cart_info">
-            <div class="container">
+    <div class="cart_info">
+        <div class="container">
+            
+            <#if objects?has_content>
 
                 <div class="row">
                     <div class="col">
@@ -215,11 +216,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            <#else>
+                <h4>No cart items</h4>
+            </#if> 
         </div>
-    <#else>
-        <div class="m-5">
-            <h4>No Cart items</h4>
-        <div>
-    </#if>  
+    </div>
+     
 </@layout.base>

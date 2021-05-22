@@ -2,7 +2,8 @@
 <#import "header.ftl" as header />
 <@layout.base title="Home" css="/static/css/index.css" js="/static/js/index.js">
     
-  <@header.header user="${user}" />
+	<@header.header user="${user}" />
 
-
+	<div class="main">
+	</div>
 </@layout.base>

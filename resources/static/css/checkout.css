@@ -7,6 +7,7 @@
     padding-top: 98px;
     padding-bottom: 99px;
     background: #ffffff;
+    min-height: 100vh;
     z-index: 2;
 }
 .checkout_section {

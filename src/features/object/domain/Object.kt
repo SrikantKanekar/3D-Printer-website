@@ -13,7 +13,7 @@ data class Object(
     var status: ObjectStatus = NONE,
     var basicSettings: BasicSettings = BasicSettings(),
     var advancedSettings: AdvancedSettings = AdvancedSettings(),
-    var printingStatus: PrintingStatus = PrintingStatus.NONE,
+    var printingStatus: PrintingStatus = PrintingStatus.PENDING,
     var price: Int? = null,
     var timeToPrint: Int? = null,
     @BsonId

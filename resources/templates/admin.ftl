@@ -17,9 +17,10 @@
                         <a href="/order/${order.id}" class="btn btn-primary">view</a>
                         <div class='btn-group' role='group'>
                             <div type="button" data-status="0" data-id="${order.id}" class="btn btn-default Placed">Placed</div>
-                            <div type="button" data-status="1" data-id="${order.id}" class="btn btn-default Processing">Processing</div>
-                            <div type="button" data-status="2" data-id="${order.id}" class="btn btn-default delivering">Out for delivery</div>
-                            <div type="button" data-status="3" data-id="${order.id}" class="btn btn-default delivered">Delivered</div>
+                            <div type="button" data-status="1" data-id="${order.id}" class="btn btn-default Placed">Confirmed</div>
+                            <div type="button" data-status="2" data-id="${order.id}" class="btn btn-default Processing">Processing</div>
+                            <div type="button" data-status="3" data-id="${order.id}" class="btn btn-default delivering">Out for delivery</div>
+                            <div type="button" data-status="4" data-id="${order.id}" class="btn btn-default delivered">Delivered</div>
                         </div>
                     </div>
                 </div>

@@ -30,13 +30,16 @@ fun Application.registerOrderRoutes() {
 
 fun Route.getOrderRoute(orderRepository: OrderRepository) {
     get("/order/{id}") {
+
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
         )
+
         val adminPrincipal = call.sessions.get<AdminPrincipal>()
         val userPrincipal = call.sessions.get<UserPrincipal>()
 
+        //val order = orderRepository.getOrderForAdmin(id)
         val order = when {
             adminPrincipal != null -> {
                 orderRepository.getOrderForAdmin(id)
@@ -47,11 +50,13 @@ fun Route.getOrderRoute(orderRepository: OrderRepository) {
             else -> null
         }
         order?.let {
+            val objects = orderRepository.getUserOrderObjects(order)
             call.respond(
                 FreeMarkerContent(
                     "order.ftl",
                     mapOf(
                         "order" to order,
+                        "objects" to objects,
                         "user" to (userPrincipal?.email ?: ""),
                         "admin" to (adminPrincipal?.name ?: "")
                     )
@@ -70,10 +75,7 @@ fun Route.updatePrintingStatus(objectRepository: OrderRepository) {
         val printingStatus = PrintingStatus.values()[status]
 
         val updated = objectRepository.updatePrintingStatus(orderId, objectId, printingStatus)
-        when (updated) {
-            true -> call.respond("updated")
-            false -> call.respondText("Not updated")
-        }
+        call.respond(updated)
     }
 }
 

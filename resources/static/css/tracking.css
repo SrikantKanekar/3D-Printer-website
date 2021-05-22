@@ -2,6 +2,7 @@
     width: 100%;
     background: #ffffff;
     padding-top: 150px;
+    min-height: 100vh;
     z-index: 2;
 }
 .tracking_info_columns {

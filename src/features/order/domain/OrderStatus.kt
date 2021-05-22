@@ -1,9 +1,9 @@
 package com.example.features.order.domain
 
 enum class OrderStatus {
-    PLACED, PROCESSING, DELIVERING, DELIVERED
+    PLACED, CONFIRMED, PROCESSING, DELIVERING, DELIVERED
 }
 
-enum class PrintingStatus{
-    NONE, PRINTING, PRINTED
+enum class PrintingStatus {
+    PENDING, PRINTING, PRINTED
 }
