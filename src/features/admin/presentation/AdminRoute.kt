@@ -39,7 +39,7 @@ private fun Route.postAdminLoginRoute() {
     post("/admin/login") {
         val params = call.receiveParameters()
         val name = params["name"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val password = params["Password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val password = params["password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         if (name == "admin" && password == "password") {
             call.sessions.set(AdminPrincipal(name))

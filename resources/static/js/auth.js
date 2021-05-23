@@ -1,50 +1,36 @@
-
-(function ($) {
+$(document).ready(function () {
     "use strict";
 
-    /*==================================================================
-    [ Validate ]*/
-    var input = $('.validate-input .input100');
+    var input = $(".auth_input");
 
-    $("#login-form").submit(function (e) {
+    /*
+		Form
+	*/
+    $(".auth_submit_button").click(function (e) {
         e.preventDefault();
-        var url = $(this).attr('action');
+        $("#auth_form").submit();
+    });
+
+    $("#auth_form").submit(function (e) {
+        e.preventDefault();
+        var url = $(this).attr("action");
         var check = checkValidation();
         if (check) {
-            $.post(
-                url,
-                $(this).serialize(),
-                function (data) {
-                    if (data.startsWith("/")) {
-                        window.location.href = data;
-                    } else {
-                        $("#login-error").text(data);
-                    }
+            $.post(url, $(this).serialize(), function (data) {
+                if (data.startsWith("/")) {
+                    window.location.href = data;
+                } else {
+                    $(".auth_form_error").text(data);
                 }
-            );
+            });
         }
     });
 
-    $("#register-form").submit(function (e) {
-        e.preventDefault();
-        var url = $(this).attr('action');
-        var check = checkValidation();
-        if (check) {
-            $.post(
-                url,
-                $(this).serialize(),
-                function (data) {
-                    if (data.startsWith("/")) {
-                        window.location.href = data;
-                    } else {
-                        $("#register-error").text(data);
-                    }
-                }
-            );
-        }
-    });
+    /*
+		Validation
+	*/
 
-    $('.validate-form .input100').each(function () {
+    $(".auth_form .auth_input").each(function () {
         $(this).focus(function () {
             hideValidate(this);
         });
@@ -62,47 +48,48 @@
     }
 
     function validate(input) {
-        if ($(input).attr('type') == 'email' || $(input).attr('name') == 'Email') {
-            if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+        if ($(input).attr("type") == "email") {
+            if (
+                $(input)
+                    .val()
+                    .trim()
+                    .match(
+                        /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
+                    ) == null
+            ) {
                 return false;
             }
-        }
-        else {
-            if ($(input).val().trim() == '') {
+        } else {
+            if ($(input).val().trim() == "") {
                 return false;
             }
         }
     }
 
     function showValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).addClass('alert-validate');
+        var authField = $(input).parent();
+        $(authField).addClass("alert-validate");
     }
 
     function hideValidate(input) {
-        var thisAlert = $(input).parent();
-
-        $(thisAlert).removeClass('alert-validate');
+        var authField = $(input).parent();
+        $(authField).removeClass("alert-validate");
     }
 
     /*==================================================================
     [ Show pass ]*/
     var showPass = 0;
-    $('.btn-show-pass').on('click', function () {
+    $(".btn-show-pass").on("click", function () {
         if (showPass == 0) {
-            $(this).next('input').attr('type', 'text');
-            $(this).find('i').removeClass('fa-eye');
-            $(this).find('i').addClass('fa-eye-slash');
+            $(this).next("input").attr("type", "text");
+            $(this).find("i").removeClass("fa-eye");
+            $(this).find("i").addClass("fa-eye-slash");
             showPass = 1;
-        }
-        else {
-            $(this).next('input').attr('type', 'password');
-            $(this).find('i').removeClass('fa-eye-slash');
-            $(this).find('i').addClass('fa-eye');
+        } else {
+            $(this).next("input").attr("type", "password");
+            $(this).find("i").removeClass("fa-eye-slash");
+            $(this).find("i").addClass("fa-eye");
             showPass = 0;
         }
-
     });
-
-})(jQuery);
+});

@@ -5,6 +5,7 @@ import com.example.features.account.domain.User
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.Constants.PASSWORDS_DO_NOT_MATCH
 import com.example.features.auth.domain.Constants.UNKNOWN_REGISTRATION_ERROR
 import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserPrincipal
@@ -43,8 +44,8 @@ fun Route.getLoginRoute() {
 fun Route.postLoginRoute(authRepository: AuthRepository) {
     post("/auth/login") {
         val params = call.receiveParameters()
-        val email = params["Email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val password = params["Password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val password = params["password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val returnUrl = params["returnUrl"] ?: "/"
 
         val isPasswordCorrect = authRepository.login(email, password)
@@ -70,26 +71,31 @@ fun Route.getRegisterRoute() {
 fun Route.postRegisterRoute(authRepository: AuthRepository) {
     post("auth/register") {
         val params = call.receiveParameters()
-        val email = params["Email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val password = params["Password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val username = params["username"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val password1 = params["password1"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val password2 = params["password2"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val returnUrl = params["returnUrl"] ?: "/"
 
-        val userExists = authRepository.doesUserExist(email)
-        if (!userExists) {
-            val newUser = User(email, getHashWithSalt(password), username)
-            val registered = authRepository.register(newUser)
-            if (registered) {
-                call.sessions.set(UserPrincipal(email))
-                val cookie = call.sessions.get<ObjectsCookie>()
-                authRepository.syncCookieObjects(email, cookie)
-                call.sessions.clear<ObjectsCookie>()
-                call.respondText(returnUrl)
+        if (password1 == password2) {
+            val userExists = authRepository.doesUserExist(email)
+            if (!userExists) {
+                val newUser = User(email, getHashWithSalt(password1), username)
+                val registered = authRepository.register(newUser)
+                if (registered) {
+                    call.sessions.set(UserPrincipal(email))
+                    val cookie = call.sessions.get<ObjectsCookie>()
+                    authRepository.syncCookieObjects(email, cookie)
+                    call.sessions.clear<ObjectsCookie>()
+                    call.respondText(returnUrl)
+                } else {
+                    call.respondText(UNKNOWN_REGISTRATION_ERROR)
+                }
             } else {
-                call.respondText(UNKNOWN_REGISTRATION_ERROR)
+                call.respondText(EMAIL_ALREADY_TAKEN)
             }
         } else {
-            call.respondText(EMAIL_ALREADY_TAKEN)
+            call.respondText(PASSWORDS_DO_NOT_MATCH)
         }
     }
 }

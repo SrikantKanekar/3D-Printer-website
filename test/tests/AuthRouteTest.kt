@@ -4,6 +4,7 @@ import com.example.features.account.data.AccountRepository
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.Constants.PASSWORDS_DO_NOT_MATCH
 import com.example.features.auth.domain.UserPrincipal
 import com.example.module
 import data.Constants.TEST_CREATED_OBJECT
@@ -20,6 +21,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AuthRouteTest : KoinTest {
@@ -50,8 +52,8 @@ class AuthRouteTest : KoinTest {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
-                        "Email" to "INVALID_EMAIL",
-                        "Password" to "INVALID_PASSWORD"
+                        "email" to "INVALID_EMAIL",
+                        "password" to "INVALID_PASSWORD"
                     ).formUrlEncode()
                 )
             }.apply {
@@ -93,9 +95,10 @@ class AuthRouteTest : KoinTest {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
-                        "Email" to "NEW_EMAIL",
-                        "Password" to "NEW_PASSWORD",
-                        "username" to "NEW_USERNAME"
+                        "username" to "NEW_USERNAME",
+                        "email" to "NEW_EMAIL",
+                        "password1" to "NEW_PASSWORD",
+                        "password2" to "NEW_PASSWORD"
                     ).formUrlEncode()
                 )
             }.apply {
@@ -118,15 +121,40 @@ class AuthRouteTest : KoinTest {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(
                     listOf(
-                        "Email" to TEST_USER_EMAIL,
-                        "Password" to TEST_USER_PASSWORD,
-                        "username" to TEST_USER_USERNAME
+                        "username" to TEST_USER_USERNAME,
+                        "email" to TEST_USER_EMAIL,
+                        "password1" to TEST_USER_PASSWORD,
+                        "password2" to TEST_USER_PASSWORD
                     ).formUrlEncode()
                 )
             }.apply {
                 runBlocking {
                     assertTrue(authRepository.doesUserExist(TEST_USER_EMAIL))
                     assertEquals(EMAIL_ALREADY_TAKEN, response.content)
+                    assertEquals(HttpStatusCode.OK, response.status())
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `register failure passwords don't match`() {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
+            handleRequest(HttpMethod.Post, "/auth/register") {
+                addHeader(HttpHeaders.ContentType, formUrlEncoded)
+                setBody(
+                    listOf(
+                        "username" to "NEW_USERNAME",
+                        "email" to "NEW_EMAIL",
+                        "password1" to "NEW_PASSWORD1",
+                        "password2" to "NEW_PASSWORD2"
+                    ).formUrlEncode()
+                )
+            }.apply {
+                runBlocking {
+                    assertFalse(authRepository.doesUserExist("NEW_EMAIL"))
+                    assertEquals(PASSWORDS_DO_NOT_MATCH, response.content)
+                    assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
         }

@@ -2,38 +2,30 @@
 <#import "header.ftl" as header />
 <@layout.base title="Admin Login" css="/static/css/auth.css" js="/static/js/auth.js">
 
-    <@header.header user="" />
+    <@header.header user="" title="Admin Login"/>
 
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100 p-t-90 p-b-30">
-				<form class="login100-form validate-form" action="/admin/login" method="post" id="login-form">
-					<div class="text-center p-t-55 p-b-30">
-						<span class="txt1">
-							Admin Login
-						</span>
+	<div class="auth">
+		<div class="auth_container col-lg-4 col-md-6 col-sm-8">
+			
+			<div class="auth_title">Admin Login</div>
+			<div class="auth_form_container">
+
+				<form class="auth_form" action="/admin/login" method="post" id="auth_form">
+					
+                    <div data-validate="Please enter name">
+						<input name="name" type="text" id="name" class="auth_input" placeholder="Name" required="required">
 					</div>
 
-                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter password">
-                        <input class="input100" type="text" name="name" placeholder="name">
-                        <span class="focus-input100"></span>
-                    </div>
+                    <div data-validate="Please enter password">
+						<span class="btn-show-pass">
+							<i class="fa fa fa-eye"></i>
+						</span>
+						<input name="password" type="password" id="password" class="auth_input" placeholder="Password" required="required">
+					</div>
 
-                    <div class="wrap-input100 validate-input m-b-20" data-validate="Please enter password">
-                        <span class="btn-show-pass">
-                            <i class="fa fa fa-eye"></i>
-                        </span>
-                        <input class="input100" type="password" name="Password" placeholder="Password">
-                        <span class="focus-input100"></span>
-                    </div>
-
-					<div id="login-error" style="color: red"></div>
-
-                    <div class="container-login100-form-btn">
-                        <button type="submit" class="login100-form-btn">
-                            Login
-                        </button>
-                    </div>
+                    <div class="auth_form_error"></div>
+					
+					<div class="button auth_submit_button"><a href="#">Login</a></div>
 				</form>
 			</div>
 		</div>
