@@ -138,6 +138,7 @@
 }
 
 .auth_form_error {
+    font-weight: 450;
 	color: #e95a5a;
 }
 

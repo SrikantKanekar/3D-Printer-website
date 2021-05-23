@@ -37,20 +37,6 @@ class AccountRouteTest : KoinTest {
     }
 
     @Test
-    fun `get account update route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/account/update").apply {
-                assertEquals(HttpStatusCode.Unauthorized, response.status())
-            }
-            runWithTestUser {
-                handleRequest(HttpMethod.Get, "/account/update").apply {
-                    assertEquals(HttpStatusCode.OK, response.status())
-                }
-            }
-        }
-    }
-
-    @Test
     fun `update username success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
@@ -63,23 +49,9 @@ class AccountRouteTest : KoinTest {
                     )
                 }.apply {
                     runBlocking {
-                        assertEquals(HttpStatusCode.Found, response.status())
+                        assertEquals(HttpStatusCode.OK, response.status())
                         assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL).username)
                     }
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `get reset password route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/account/reset-password").apply {
-                assertEquals(HttpStatusCode.Unauthorized, response.status())
-            }
-            runWithTestUser {
-                handleRequest(HttpMethod.Get, "/account/reset-password").apply {
-                    assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
         }
@@ -139,7 +111,7 @@ class AccountRouteTest : KoinTest {
                         ).formUrlEncode()
                     )
                 }.apply {
-                    assertEquals(HttpStatusCode.Found, response.status())
+                    assertEquals(HttpStatusCode.OK, response.status())
                     runBlocking {
                         assertFalse(
                             checkHashForPassword(

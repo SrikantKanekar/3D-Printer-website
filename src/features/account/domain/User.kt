@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class User(
     val email: String,
     val password: String,
-    val username: String,
+    var username: String,
     var address: Address = Address(),
     val objects: ArrayList<Object> = ArrayList(),
     val orderIds: ArrayList<String> = ArrayList(),
