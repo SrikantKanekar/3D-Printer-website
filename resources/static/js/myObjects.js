@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(window).on("load", function (e) {
     "use strict";
 
     var counter = $(".results span");

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(window).on("load", function (e) {
     "use strict";
 
     // window.addEventListener('pageshow', function(e){
@@ -10,13 +10,11 @@ $(document).ready(function () {
     //     }
     // });
 
-
     // $(window).bind("pageshow", function (e) {
     //     if (e.originalEvent.persisted) {
     //         window.location.reload();
     //     }
     // });
-
 
     /*
         Isotope
@@ -131,7 +129,7 @@ $(document).ready(function () {
                         product.find(".status").text(getStatus(buttonStatus));
                         if (buttonStatus == 4) {
                             grid.isotope("remove", product).isotope("layout");
-                            
+
                             // update count
                             var count = parseInt(counter.text(), 10) - 1;
                             counter.text(count);

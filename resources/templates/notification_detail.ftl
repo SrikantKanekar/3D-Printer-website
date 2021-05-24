@@ -2,7 +2,7 @@
 <#import "header.ftl" as header />
 <@layout.base title="Notification" css="" js="">
 
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="Notification" />
     
     <div class="container" style="padding-top: 110px">
         <div class="card">

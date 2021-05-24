@@ -3,6 +3,7 @@ package com.example.features.admin.presentation
 import com.example.features.admin.data.AdminRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants
+import com.example.features.auth.domain.UserPrincipal
 import com.example.features.order.domain.OrderStatus
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import io.ktor.application.*
@@ -31,7 +32,22 @@ fun Application.registerAdminRoutes() {
 
 private fun Route.getAdminLoginRoute() {
     get("/admin/login") {
-        call.respond(FreeMarkerContent("admin_login.ftl", null))
+
+        /**
+         * redirect to admin screen if already logged in as admin
+         */
+        val adminPrincipal = call.sessions.get<AdminPrincipal>()
+        if (adminPrincipal != null) {
+            call.respondRedirect("/admin")
+        } else {
+            val userPrincipal = call.sessions.get<UserPrincipal>()
+            call.respond(
+                FreeMarkerContent(
+                    "admin_login.ftl",
+                    mapOf("user" to (userPrincipal?.email ?: ""))
+                )
+            )
+        }
     }
 }
 
@@ -53,14 +69,16 @@ private fun Route.postAdminLoginRoute() {
 private fun Route.getAdminRoute(adminRepository: AdminRepository) {
     get("/admin") {
 
-        val principal = call.principal<AdminPrincipal>()!!
+        val adminPrincipal = call.principal<AdminPrincipal>()!!
+        val userPrincipal = call.sessions.get<UserPrincipal>()
         val activeOrders = adminRepository.getAllActiveOrders()
 
         call.respond(
             FreeMarkerContent(
                 "admin.ftl", mapOf(
                     "activeOrders" to activeOrders,
-                    "admin" to principal
+                    "admin" to adminPrincipal,
+                    "user" to (userPrincipal?.email ?: "")
                 )
             )
         )

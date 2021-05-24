@@ -10,7 +10,7 @@ data class Order(
     val userEmail: String,
     var status: OrderStatus = PLACED,
     val objectIds: ArrayList<String> = ArrayList(),
-    val image: String = "/static/images/3d-image.jpg",
+    val image: String = "/static/images/3d-order-image.jpeg",
     val price: Int,
     val deliveryDays: Int,
     @BsonId

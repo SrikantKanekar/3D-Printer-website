@@ -2,7 +2,7 @@
 <#import "header.ftl" as header />
 <@layout.base title="Admin Login" css="/static/css/auth.css" js="/static/js/auth.js">
 
-    <@header.header user="" title="Admin Login"/>
+    <@header.header user="${user}" title="Admin Login"/>
 
 	<div class="auth">
 		<div class="auth_container col-lg-4 col-md-6 col-sm-8">

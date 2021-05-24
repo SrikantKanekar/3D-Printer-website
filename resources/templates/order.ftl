@@ -2,7 +2,7 @@
 <#import "header.ftl" as header />
 <@layout.base title="Order" css="/static/css/order.css" js="/static/js/order.js">
 
-    <@header.header user="${user}" admin="${admin}" title="Order" />
+    <@header.header user="${user}" title="Order" />
     
     <div class="products">
 		<div class="container">

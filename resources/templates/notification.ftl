@@ -2,7 +2,7 @@
 <#import "header.ftl" as header />
 <@layout.base title="Notifications" css="" js="">
 
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="Notifications"/>
     
     <div class="container" style="padding-top: 110px">
         <#if notifications?has_content>

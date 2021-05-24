@@ -36,8 +36,13 @@ fun Application.registerAuthRoutes() {
 
 fun Route.getLoginRoute() {
     get("/auth/login") {
-        val returnUrl = call.parameters["returnUrl"] ?: "/"
-        call.respond(FreeMarkerContent("auth_login.ftl", mapOf("returnUrl" to returnUrl)))
+        val principal = call.sessions.get<UserPrincipal>()
+        if (principal != null) {
+            call.respondRedirect("/account")
+        } else {
+            val returnUrl = call.parameters["returnUrl"] ?: "/"
+            call.respond(FreeMarkerContent("auth_login.ftl", mapOf("returnUrl" to returnUrl)))
+        }
     }
 }
 
@@ -63,8 +68,13 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
 
 fun Route.getRegisterRoute() {
     get("auth/register") {
-        val returnUrl = call.parameters["returnUrl"] ?: "/"
-        call.respond(FreeMarkerContent("auth_register.ftl", mapOf("returnUrl" to returnUrl)))
+        val principal = call.sessions.get<UserPrincipal>()
+        if (principal != null) {
+            call.respondRedirect("/account")
+        } else {
+            val returnUrl = call.parameters["returnUrl"] ?: "/"
+            call.respond(FreeMarkerContent("auth_register.ftl", mapOf("returnUrl" to returnUrl)))
+        }
     }
 }
 

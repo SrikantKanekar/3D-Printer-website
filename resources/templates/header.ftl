@@ -1,4 +1,4 @@
-<#macro header user="" admin="" title="3Design">
+<#macro header user="" title="3Design">
   	<!-- Header -->
 	<header class="header">
 		
@@ -45,10 +45,6 @@
 										</li>
 									</#if>
 									
-									<#if (admin?has_content)>
-										<li><a href="/admin">Admin</a></li>
-									</#if>
-
 								</ul>
 							</nav>
 							<div class="header_extra ml-auto">

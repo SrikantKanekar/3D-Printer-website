@@ -1,6 +1,6 @@
-$(document).ready(function () {
+$(window).on("load", function (e) {
     "use strict";
-
+    
     /*
         Isotope
     */
@@ -88,11 +88,13 @@ $(document).ready(function () {
                     if (data == true) {
                         // disable the button
                         button.addClass("disabled");
-                        
+
                         // update status and isotope sort order
                         product.data("status", getPrintingStatus(buttonStatus));
-                        product.find(".product_status").text(getPrintingStatus(buttonStatus));
-                        grid.isotope('updateSortData').isotope();
+                        product
+                            .find(".product_status")
+                            .text(getPrintingStatus(buttonStatus));
+                        grid.isotope("updateSortData").isotope();
                     }
                 }
             );
