@@ -43,6 +43,10 @@
 					<span class="spinner"></span>
 				</div>
 			</div>
+
+			<div class="alert_container">
+				<div class="alert alert-dismissible" role="alert"></div>
+			</div>
 		</div>
 
 		<!--jquery-->

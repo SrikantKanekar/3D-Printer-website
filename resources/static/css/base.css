@@ -685,14 +685,6 @@ section {
 6. Loader
 *********************************/
 
-#button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 30px;
-    background-color: #eee;
-    border: solid #ccc 1px;
-    cursor: pointer;
-}
 #overlay {
     position: fixed;
     top: 0;
@@ -723,4 +715,21 @@ section {
 }
 .is-hide {
     display: none;
+}
+
+/*********************************
+6. Alert
+*********************************/
+.alert_container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 16px;
+    z-index: 1000;
+    text-align: center;
+}
+.alert {
+    display: none;
+    margin: 0 auto;
+    display: inline-block;
 }

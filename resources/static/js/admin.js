@@ -16,6 +16,23 @@ $(window).on("load", function (e) {
     //     }
     // });
 
+    /**
+     * Alert
+     */
+    function showAlert(text, alertClass) {
+        var button =
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+        $(".alert").text(text);
+        $(".alert").append(button);
+        $(".alert").addClass(alertClass);
+        $(".alert")
+            .fadeTo(2000, 500)
+            .slideUp(500, function () {
+                $(".alert").slideUp(500);
+                $(".alert").removeClass(alertClass);
+            });
+    }
+
     /*
         Isotope
     */
@@ -122,6 +139,11 @@ $(window).on("load", function (e) {
                 },
                 function (data) {
                     if (data == true) {
+                        showAlert(
+                            getStatus(buttonStatus) + " Done",
+                            "alert-success"
+                        );
+
                         // disable the button
                         button.addClass("disabled");
 
@@ -136,9 +158,28 @@ $(window).on("load", function (e) {
                             if (count == 0) sorting.hide();
                         }
                         grid.isotope("updateSortData").isotope();
+                    } else {
+                        showAlert(
+                            "Please print all objects first",
+                            "alert-danger"
+                        );
                     }
                 }
             );
+        } else {
+            if (buttonStatus > currentStatus + 1) {
+                showAlert(
+                    "Please complete " +
+                        getStatus(currentStatus + 1) +
+                        " first",
+                    "alert-danger"
+                );
+            } else {
+                showAlert(
+                    getStatus(buttonStatus) + " is already completed",
+                    "alert-danger"
+                );
+            }
         }
     });
 

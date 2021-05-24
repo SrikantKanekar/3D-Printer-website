@@ -1,6 +1,23 @@
 $(window).on("load", function (e) {
     "use strict";
-    
+
+    /**
+     * Alert
+     */
+    function showAlert(text, alertClass) {
+        var button =
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+        $(".alert").text(text);
+        $(".alert").append(button);
+        $(".alert").addClass(alertClass);
+        $(".alert")
+            .fadeTo(2000, 500)
+            .slideUp(500, function () {
+                $(".alert").slideUp(500);
+                $(".alert").removeClass(alertClass);
+            });
+    }
+
     /*
         Isotope
     */
@@ -86,6 +103,11 @@ $(window).on("load", function (e) {
                 },
                 function (data) {
                     if (data == true) {
+                        showAlert(
+                            getPrintingStatus(buttonStatus) + " Done",
+                            "alert-success"
+                        );
+
                         // disable the button
                         button.addClass("disabled");
 
@@ -95,9 +117,25 @@ $(window).on("load", function (e) {
                             .find(".product_status")
                             .text(getPrintingStatus(buttonStatus));
                         grid.isotope("updateSortData").isotope();
+                    } else {
+                        showAlert("unknown error", "alert-danger");
                     }
                 }
             );
+        } else {
+            if (buttonStatus > currentStatus + 1) {
+                showAlert(
+                    "Please complete " +
+                        getPrintingStatus(currentStatus + 1) +
+                        " first",
+                    "alert-danger"
+                );
+            } else {
+                showAlert(
+                    getPrintingStatus(buttonStatus) + " is already completed",
+                    "alert-danger"
+                );
+            }
         }
     });
 
@@ -144,7 +182,7 @@ $(window).on("load", function (e) {
                 message: $("#message").val(),
             },
             function (data) {
-                alert(data);
+                showAlert(data, "alert-success");
             }
         );
     });
