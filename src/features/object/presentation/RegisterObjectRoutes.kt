@@ -13,8 +13,8 @@ fun Application.registerObjectRoutes() {
         getCreateObjectRoute()
         createObjectRoute(objectRepository)
 
-        getUpdateObjectRoute(objectRepository)
-        updateBasicSettingsRoute(objectRepository)
-        updateAdvancedSettingsRoute(objectRepository)
+        getObjectRoute(objectRepository)
+        updateBasicSettings(objectRepository)
+        updateAdvancedSettings(objectRepository)
     }
 }

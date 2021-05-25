@@ -7,6 +7,12 @@ object MessageGenerator {
 
     fun placedMessage(order: Order): String {
         return "Hello ${order.userEmail}\n" +
+                "your order is placed\n" +
+                "${order.objectIds.size} items"
+    }
+
+    fun confirmedMessage(order: Order): String {
+        return "Hello ${order.userEmail}\n" +
                 "your order is confirmed\n" +
                 "${order.objectIds.size} items"
     }

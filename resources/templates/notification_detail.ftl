@@ -1,19 +1,26 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Notification" css="" js="">
+<@layout.base title="Notification" css="/static/css/notification.css" js="/static/js/notification.js">
 
     <@header.header user="${user}" title="Notification" />
-    
-    <div class="container" style="padding-top: 110px">
-        <div class="card">
-            <div class="card-header">
-                ID : ${notification.id}
-            </div>
-            <div class="card-body">
-                <h3 class="card-title">${notification.title}</h3>
-                <h4 class="card-title">${notification.message}</h4>
-                <h5 class="card-footer">${notification.posted_at}</h5>
-            </div>
-        </div>
-    </div>
+
+    <div class="notifications">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+                                        	
+                    <div class="notification_detail">
+                        <div class="notification_content">
+                            <div class="notification_title">
+                                <a href="/notification/${notification.id}">${notification.title}</a>
+                            </div>
+                            <div class="notification_message">${notification.message}</div>
+                            <div class="notification_date">${notification.posted_at}</div>
+                        </div>
+                    </div>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </@layout.base>

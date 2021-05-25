@@ -5,29 +5,30 @@ import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
-import com.example.util.FileHandler
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
+fun Route.getObjectRoute(objectRepository: ObjectRepository) {
     get("/object/{id}") {
         val id = call.parameters["id"]!!
+
         val principal = call.sessions.get<UserPrincipal>()
+
         val obj = if (principal != null) {
             objectRepository.getUserObject(principal.email, id)
         } else {
             call.sessions.get<ObjectsCookie>()?.objects?.find { it.id == id }
         }
+
         if (obj != null) {
             call.respond(
                 FreeMarkerContent(
-                    "object_update.ftl", mapOf(
+                    "object.ftl", mapOf(
                         "object" to obj,
                         "user" to (principal?.email ?: "")
                     )
@@ -39,7 +40,7 @@ fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
     }
 }
 
-fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
+fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
     post("/object/{id}/basic") {
         val id = call.parameters["id"] ?: return@post call.respondText(
             text = "Missing or malformed id",
@@ -70,7 +71,7 @@ fun Route.updateBasicSettingsRoute(objectRepository: ObjectRepository) {
     }
 }
 
-fun Route.updateAdvancedSettingsRoute(objectRepository: ObjectRepository) {
+fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
     post("/object/{id}/advanced") {
         val id = call.parameters["id"] ?: return@post call.respondText(
             text = "Missing or malformed id",

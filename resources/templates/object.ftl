@@ -1,8 +1,8 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Update" css="" js="/static/js/object.js">
+<@layout.base title="Object" css="/static/css/object.css" js="/static/js/object.js">
 
-    <@header.header user="${user}" />
+    <@header.header user="${user}" title="Object" />
 
     <div class="container" style="padding-top: 110px">
         <div class="mt-5">

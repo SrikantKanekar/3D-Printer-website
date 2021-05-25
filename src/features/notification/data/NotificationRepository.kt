@@ -30,8 +30,12 @@ class NotificationRepository(
     ) {
         val notification = when (type) {
             PLACED -> Notification(
-                title = "Order Confirmed",
+                title = "Order Placed",
                 message = MessageGenerator.placedMessage(order)
+            )
+            CONFIRMED -> Notification(
+                title = "Order Confirmed",
+                message = MessageGenerator.confirmedMessage(order)
             )
             PRINTING -> {
                 val obj = user.objects.find { it.id == objectId }!!

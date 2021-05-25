@@ -7,8 +7,7 @@ import com.example.features.notification.data.NotificationRepository
 import com.example.features.notification.domain.NotificationType
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.DELIVERED
-import com.example.features.order.domain.OrderStatus.DELIVERING
+import com.example.features.order.domain.OrderStatus.*
 import com.example.features.order.domain.PrintingStatus.*
 
 class AdminRepository(
@@ -47,8 +46,12 @@ class AdminRepository(
         } else false
 
         // send notification to user when delivery starts
-        if (status == DELIVERING && updated) {
-            notificationRepository.sendNotification(NotificationType.DELIVERING, user, order)
+        if (updated) {
+            if (status == CONFIRMED){
+                notificationRepository.sendNotification(NotificationType.CONFIRMED, user, order)
+            } else if (status == DELIVERING) {
+                notificationRepository.sendNotification(NotificationType.DELIVERING, user, order)
+            }
         }
 
         // update status of all individual objects and send notification
