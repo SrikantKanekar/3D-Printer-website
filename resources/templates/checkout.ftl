@@ -33,7 +33,7 @@
 									<div>
 										<!-- phoneNumber -->
 										<label for="phoneNumber">Phone no*</label>
-										<input name="phoneNumber" value="${address.phoneNumber!''}" type="phone" id="phoneNumber" class="checkout_input" required="required">
+										<input name="phoneNumber" value="${(address.phoneNumber?string.computer)!''}" type="phone" id="phoneNumber" class="checkout_input" required="required">
 									</div>
 									
 									<div>
@@ -45,8 +45,8 @@
 									<div>
 										<!-- City / Town -->
 										<label for="city">City/Town*</label>
-										<select name="city" value="${address.city}" id="city" class="dropdown_item_select checkout_input" require="required">
-											<option></option>
+										<select name="city" id="city" class="dropdown_item_select checkout_input" require="required">
+											<option selected>${address.city}</option>
 											<option>Panaji</option>
 											<option>Margao</option>
 											<option>Ponda</option>
@@ -57,31 +57,23 @@
 									<div>
 										<!-- State -->
 										<label for="state">State*</label>
-										<select name="state" value="${address.state}" id="state" class="dropdown_item_select checkout_input" require="required">
-											<option></option>
-											<option>Goa</option>
-											<option>Karnataka</option>
-											<option>Delhi</option>
-											<option>Mumbai</option>
+										<select name="state" id="state" class="dropdown_item_select checkout_input" require="required">
+											<option selected>Goa</option>
 										</select>
 									</div>
 									
 									<div>
 										<!-- Country -->
 										<label for="country">Country*</label>
-										<select name="country" value="${address.country}" id="country" class="dropdown_item_select checkout_input" require="required">
-											<option></option>
-											<option>India</option>
-											<option>USA</option>
-											<option>Japan</option>
-											<option>Italy</option>
+										<select name="country" id="country" class="dropdown_item_select checkout_input" require="required">
+											<option selected>India</option>
 										</select>
 									</div>
 									
 									<div>
 										<!-- pinCode -->
 										<label for="pinCode">Pincode*</label>
-										<input name="pinCode" value="${address.pinCode!''}" type="number" maxlength="6" id="pinCode" class="checkout_input" required="required">
+										<input name="pinCode" value="${(address.pinCode?string.computer)!''}" type="number" maxlength="6" id="pinCode" class="checkout_input" required="required">
 									</div>
 								</form>
 							</div>

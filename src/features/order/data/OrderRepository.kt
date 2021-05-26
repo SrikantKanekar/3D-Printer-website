@@ -10,6 +10,7 @@ import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus.*
 import com.example.features.order.domain.PrintingStatus
 import com.example.features.order.domain.PrintingStatus.*
+import kotlinx.datetime.Clock
 
 class OrderRepository(
     private val userDataSource: UserDataSource,
@@ -50,13 +51,26 @@ class OrderRepository(
         // The order must be in processing state
         if (order.status == PROCESSING) {
 
-            // Update user object's printingStatus
             val user = userDataSource.getUser(order.userEmail)
+
+            // Update user object's printingStatus
             user.objects
                 .filter { it.status == TRACKING }
                 .filter { it.printingStatus.ordinal == printingStatus.ordinal - 1 }
                 .find { it.id == objectId }
                 ?.let { it.printingStatus = printingStatus } ?: return false
+
+            // Update user object's tracking details
+            if (printingStatus == PRINTING) {
+                user.objects
+                    .find { it.id == objectId }
+                    ?.let { it.trackingDetails.started_at = Clock.System.now().toString() }
+            } else {
+                user.objects
+                    .find { it.id == objectId }
+                    ?.let { it.trackingDetails.completed_at = Clock.System.now().toString() }
+            }
+
             val updated = userDataSource.updateUser(user)
 
             // sends notification after order completion

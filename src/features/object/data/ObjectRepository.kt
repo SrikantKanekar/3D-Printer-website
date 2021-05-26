@@ -24,7 +24,25 @@ class ObjectRepository(
         return user.objects.find { it.id == id }
     }
 
-    suspend fun updateFileName(email: String, id: String, fileName: String): Boolean {
+    suspend fun addToCart(email: String, objectId: String): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == NONE }
+            .find { it.id == objectId }
+            ?.let { it.status = CART } ?: return false
+        return userDataSource.updateUser(user)
+    }
+
+    suspend fun removeFromCart(email: String, objectId: String): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == CART }
+            .find { it.id == objectId }
+            ?.let { it.status = NONE } ?: return false
+        return userDataSource.updateUser(user)
+    }
+
+    suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }

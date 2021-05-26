@@ -3,6 +3,7 @@ package com.example.features.`object`.presentation
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.AdvancedSettings
 import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
 import io.ktor.application.*
@@ -15,18 +16,17 @@ import io.ktor.sessions.*
 
 fun Route.getObjectRoute(objectRepository: ObjectRepository) {
     get("/object/{id}") {
-        val id = call.parameters["id"]!!
 
+        val id = call.parameters["id"]!!
         val principal = call.sessions.get<UserPrincipal>()
 
-        val obj = if (principal != null) {
-            objectRepository.getUserObject(principal.email, id)
-        } else {
-            call.sessions.get<ObjectsCookie>()?.objects?.find { it.id == id }
+        val obj = when (principal) {
+            null -> call.sessions.get<ObjectsCookie>()?.objects?.find { it.id == id }
+            else -> objectRepository.getUserObject(principal.email, id)
         }
-
-        if (obj != null) {
-            call.respond(
+        when (obj) {
+            null -> call.respond(HttpStatusCode.NotFound)
+            else -> call.respond(
                 FreeMarkerContent(
                     "object.ftl", mapOf(
                         "object" to obj,
@@ -34,9 +34,34 @@ fun Route.getObjectRoute(objectRepository: ObjectRepository) {
                     )
                 )
             )
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
+    }
+}
+
+fun Route.addToCart(objectRepository: ObjectRepository) {
+    post("/object/add-to-cart") {
+        val param = call.receiveParameters()
+        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val principal = call.sessions.get<UserPrincipal>()
+        when (principal) {
+            null -> call.respondText("/auth/login?returnUrl=/object/$id")
+            else -> {
+                val result = objectRepository.addToCart(principal.email, id)
+                call.respond(result.toString())
+            }
+        }
+    }
+}
+
+fun Route.removeFromCart(objectRepository: ObjectRepository) {
+    post("/object/remove-from-cart") {
+        val param = call.receiveParameters()
+        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val principal = call.sessions.get<UserPrincipal>()!!
+        val result = objectRepository.removeFromCart(principal.email, id)
+        call.respond(result)
     }
 }
 
@@ -51,23 +76,24 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
         val basicSettings = BasicSettings(size = size)
 
         val principal = call.sessions.get<UserPrincipal>()
+
         var updated = false
-        if (principal != null) {
-            updated = objectRepository.updateBasicSettings(principal.email, id, basicSettings)
-        } else {
-            val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-            cookie.objects
-                .find { it.id == id }
-                ?.let {
-                    it.basicSettings = basicSettings
-                    updated = true
-                }
-            call.sessions.set(cookie)
+        when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                cookie.objects
+                    .filter { it.status == NONE || it.status == CART }
+                    .find { it.id == id }
+                    ?.let {
+                        it.basicSettings = basicSettings
+                        updated = true
+                    }
+                call.sessions.set(cookie)
+            }
+            else -> updated =
+                objectRepository.updateBasicSettings(principal.email, id, basicSettings)
         }
-        when (updated) {
-            true -> call.respond(basicSettings)
-            false -> call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-        }
+        call.respond(updated)
     }
 }
 
@@ -82,22 +108,23 @@ fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
         val advancedSettings = AdvancedSettings(weight = weight)
 
         val principal = call.sessions.get<UserPrincipal>()
+
         var updated = false
-        if (principal != null) {
-            updated = objectRepository.updateAdvancedSettings(principal.email, id, advancedSettings)
-        } else {
-            val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-            cookie.objects
-                .find { it.id == id }
-                ?.let {
-                    it.advancedSettings = advancedSettings
-                    updated = true
-                }
-            call.sessions.set(cookie)
+        when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                cookie.objects
+                    .filter { it.status == NONE || it.status == CART }
+                    .find { it.id == id }
+                    ?.let {
+                        it.advancedSettings = advancedSettings
+                        updated = true
+                    }
+                call.sessions.set(cookie)
+            }
+            else -> updated =
+                objectRepository.updateAdvancedSettings(principal.email, id, advancedSettings)
         }
-        when (updated) {
-            true -> call.respond(advancedSettings)
-            false -> call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-        }
+        call.respond(updated)
     }
 }

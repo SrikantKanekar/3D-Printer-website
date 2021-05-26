@@ -68,9 +68,26 @@ $(window).on("load", function (e) {
                     counter.text(count);
                     if (count == 0) sorting.hide();
                 } else {
-                    alert("error, please try again");
+                    showAlert(
+                        "error, please try again",
+                        "alert-danger"
+                    );
                 }
             });
         });
+    }
+
+    function showAlert(text, alertClass) {
+        var button =
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+        $(".alert").text(text);
+        $(".alert").append(button);
+        $(".alert").addClass(alertClass);
+        $(".alert")
+            .fadeTo(2000, 500)
+            .slideUp(500, function () {
+                $(".alert").slideUp(500);
+                $(".alert").removeClass(alertClass);
+            });
     }
 });

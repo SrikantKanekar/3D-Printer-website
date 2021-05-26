@@ -14,6 +14,8 @@ fun Application.registerObjectRoutes() {
         createObjectRoute(objectRepository)
 
         getObjectRoute(objectRepository)
+        addToCart(objectRepository)
+        removeFromCart(objectRepository)
         updateBasicSettings(objectRepository)
         updateAdvancedSettings(objectRepository)
     }

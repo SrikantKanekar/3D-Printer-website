@@ -4,36 +4,147 @@
 
     <@header.header user="${user}" title="Object" />
 
-    <div class="container" style="padding-top: 110px">
-        <div class="mt-5">
-            <h2>${object.filename}</h2>
-            <img src="${object.image}">
-        </div>
+	<div class="object" data-id="${object.id}" data-status="${object.status}">
+		<div class="container">
 
-        <div class="mt-5">
-            <h3>Basic Settings</h3>
-            <form action="/object/${object.id}/basic" method="post" id="basic-form">
-                <label for="basic" class="form-label">size</label>
-                <input type="number" name="size" value="${object.basicSettings.size}" class="form-control" id="basic" />
-                <button id="button" type="submit">Update</button>
-            </form>
-        </div>
+			<div class="status_none">	
+				<div class="row">
+					<!-- Image -->
+					<div class="col-lg-6">
+						<div class="details_image">
+							<div class="details_image_large"><img src="${object.image}" alt="">
+							</div>
+							<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
+								<div class="details_image_thumbnail active" data-image="${object.image}"><img src="${object.image}" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpeg"><img src="/static/images/3d-image2.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image3.jpeg"><img src="/static/images/3d-image3.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image4.jpeg"><img src="/static/images/3d-image4.jpeg" alt=""></div>
+							</div>
+						</div>
+					</div>
 
-        <div class="mt-5">
-            <h3>Advanced Settings</h3>
-            <form action="/object/${object.id}/advanced" method="post" id="advanced-form">
-                <label for="advanced" class="form-label">weight</label>
-                <input type="number" name="weight" value="${object.advancedSettings.weight}" class="form-control" id="advanced" />
-                <button id="button" type="submit">Update</button>
-            </form>
-        </div>
+					<!-- Details -->
+					<div class="col-lg-6">
+						<div class="details_content">
+							<div class="details_name">${object.filename}</div>
+							<div class="details_price">$${object.price}</div>
+							<div class="details_price">${object.timeToPrint} minutes for printing</div>
+							
+							<div class="product_quantity_container">
+								<div class="product_quantity clearfix">
+									<span>Qty</span>
+									<input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+									<div class="quantity_buttons">
+										<div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
+										<div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+									</div>
+								</div>
+								<div class="button cart_button"><a href="/object/add-to-cart">Add to cart</a></div>
+							</div>
+							<div class="cart_remove_button_container">
+								<div class="button cart_remove_button"><a href="/object/remove-from-cart">Remove from cart</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <div class="mt-5">
-            <h4>status ${object.status!""}</h4>
-            <h4>price ${(object.price)!""}</h4>
-            <h4>time ${(object.timeToPrint)!""}</h4>
-            <h4>delivery ${(object.dueDelivery)!""}</h4>
-        </div>
-    </div>
+				<#--  Settings  -->
+				<div class="row">
+					<div class="col">
+						
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item setting_title">
+								<a class="active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic Settings</a>
+							</li>
+							<li class="nav-item setting_title">
+								<a id="advanced-tab" data-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="true">Advanced Settings</a>
+							</li>
+						</ul>
+						
+						<div class="tab-content setting_content" id="myTabContent">
+							
+							<div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+								<form action="/object/${object.id}/basic" method="POST" id="basic_settings_form" class="setting_form">
+									
+									<label for="size">Size</label>
+									<div data-validate="Please enter size">
+										<input type="number" name="size" value="${object.basicSettings.size?string.computer}" id="size" class="setting_input" required="required"/>
+									</div>
 
+									<div class="basic_setting_form_error"></div>
+									<div class="button basic_settings_button"><a href="#">Update</a></div>
+								</form>
+							</div>
+
+							<div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">				
+								<form action="/object/${object.id}/advanced" method="post" id="advanced_settings_form" class="setting_form">
+									
+									<label for="weight">Weight</label>
+									<div data-validate="Please enter weight">
+										<input type="number" name="weight" value="${object.advancedSettings.weight?string.computer}" id="weight" class="setting_input" required="required"/>
+									</div>
+									<div class="advanced_setting_form_error"></div>
+									<div class="button advanced_settings_button"><a href="#">Update</a></div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="status_tracking">
+				<div class="row">
+					<!-- Video streaming -->
+					<div class="col-lg-6">
+						<video class="video_container" controls>
+							<source src="/static/images/3D printed Eiffel tower time lapse.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+					</div>
+
+					<!-- Details -->
+					<div class="col-lg-6">
+						<div class="details_content">
+							<div class="details_name">${object.filename}</div>
+							<div class="details_price">$${object.price}</div>
+							<div class="details_status">Printing status : ${object.printingStatus}</div>
+							
+							<div class="details_started_at">Started at : ${object.trackingDetails.started_at!"--"}</div>
+							<div class="details_completed_by">Expected to be completed by <span>5:34 pm</span></div>			
+						</div>
+					</div>
+				</div>				
+			</div>
+
+			<div class="status_completed">
+				<div class="row">
+					<!-- Image -->
+					<div class="col-lg-6">
+						<div class="details_image">
+							<div class="details_image_large"><img src="${object.image}" alt="">
+							</div>
+							<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
+								<div class="details_image_thumbnail active" data-image="${object.image}"><img src="${object.image}" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpeg"><img src="/static/images/3d-image2.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image3.jpeg"><img src="/static/images/3d-image3.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image4.jpeg"><img src="/static/images/3d-image4.jpeg" alt=""></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Details -->
+					<div class="col-lg-6">
+						<div class="details_content">
+							<div class="details_name">${object.filename}</div>
+							<div class="details_price">$${object.price}</div>
+							<div class="details_status">Printing status : ${object.printingStatus}</div>
+							<div class="details_completed_by">Completed at ${object.trackingDetails.completed_at!"--"}</div>
+							<div class="details_completed_by">Printing duration : 2:32 hr</div>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </@layout.base>
