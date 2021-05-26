@@ -34,7 +34,7 @@ class ObjectUpdateTest : KoinTest {
                     assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
                 }
                 handleRequest(HttpMethod.Get, "/object/invalid-object-id").apply {
-                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                    assertEquals(HttpStatusCode.NotFound, response.status())
                 }
             }
         }
@@ -48,7 +48,7 @@ class ObjectUpdateTest : KoinTest {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
                 handleRequest(HttpMethod.Get, "/object/invalid-object-id").apply {
-                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                    assertEquals(HttpStatusCode.NotFound, response.status())
                 }
             }
         }
@@ -80,7 +80,7 @@ class ObjectUpdateTest : KoinTest {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(listOf("size" to "100").formUrlEncode())
             }.apply {
-                assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                assertEquals("false", response.content)
             }
         }
     }
@@ -110,7 +110,7 @@ class ObjectUpdateTest : KoinTest {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("size" to "100").formUrlEncode())
                 }.apply {
-                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                    assertEquals("false", response.content)
                 }
             }
         }
@@ -142,7 +142,7 @@ class ObjectUpdateTest : KoinTest {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(listOf("weight" to "100").formUrlEncode())
             }.apply {
-                assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                assertEquals("false", response.content)
             }
         }
     }
@@ -172,7 +172,7 @@ class ObjectUpdateTest : KoinTest {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("weight" to "100").formUrlEncode())
                 }.apply {
-                    assertEquals(HttpStatusCode.NotAcceptable, response.status())
+                    assertEquals("false", response.content)
                 }
             }
         }

@@ -22,55 +22,35 @@ $(document).ready(function () {
     /**
      * update form
      */
-    var updateInput = $(".update_input");
-
-    $(".update_button").click(function (e) {
+    $("#update_button").click(function (e) {
         e.preventDefault();
         $("#update_form").submit();
     });
 
     $("#update_form").submit(function (e) {
         e.preventDefault();
+
         var url = $(this).attr("action");
-        var check = checkUpdateValidation();
+        var input = $(this).find(".input");
+        var message = $(this).find(".form_message");
+
+        var check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
                 if (data == "updated") {
-                    $(".update_form_error").addClass("success");
+                    message.addClass("success");
                 } else {
-                    $(".update_form_error").removeClass("success");
+                    message.removeClass("success");
                 }
-                $(".update_form_error").text(data);
+                message.text(data);
             });
         }
     });
 
     /**
-     * Validation
-     */
-    $(".update_form .update_input").each(function () {
-        $(this).focus(function () {
-            hideValidate(this);
-        });
-    });
-
-    function checkUpdateValidation() {
-        var check = true;
-        for (var i = 0; i < updateInput.length; i++) {
-            if (validate(updateInput[i]) == false) {
-                showValidate(updateInput[i]);
-                check = false;
-            }
-        }
-        return check;
-    }
-
-    /**
      * change password form
      */
-    var input = $(".auth_input");
-
-    $(".change_password_button").click(function (e) {
+    $("#change_password_button").click(function (e) {
         e.preventDefault();
         $("#change_password_form").submit();
     });
@@ -78,71 +58,19 @@ $(document).ready(function () {
     $("#change_password_form").submit(function (e) {
         e.preventDefault();
         var url = $(this).attr("action");
-        var check = checkValidation();
+        var input = $(this).find(".input");
+        var message = $(this).find(".form_message");
+
+        var check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
                 if (data == "updated") {
-                    $(".change_password_form_error").addClass("success");
+                    message.addClass("success");
                 } else {
-                    $(".change_password_form_error").removeClass("success");
+                    message.removeClass("success");
                 }
-                $(".change_password_form_error").text(data);
+                message.text(data);
             });
-        }
-    });
-
-    /**
-     * Validation
-     */
-
-    $(".change_password_form .auth_input").each(function () {
-        $(this).focus(function () {
-            hideValidate(this);
-        });
-    });
-
-    function checkValidation() {
-        var check = true;
-        for (var i = 0; i < input.length; i++) {
-            if (validate(input[i]) == false) {
-                showValidate(input[i]);
-                check = false;
-            }
-        }
-        return check;
-    }
-
-    function validate(input) {
-        if ($(input).val().trim() == "") {
-            return false;
-        }
-    }
-
-    function showValidate(input) {
-        var authField = $(input).parent();
-        $(authField).addClass("alert-validate");
-    }
-
-    function hideValidate(input) {
-        var authField = $(input).parent();
-        $(authField).removeClass("alert-validate");
-    }
-
-    /**
-     * Password Visibility
-     */
-    var showPass = 0;
-    $(".btn-show-pass").on("click", function () {
-        if (showPass == 0) {
-            $(this).next("input").attr("type", "text");
-            $(this).find("i").removeClass("fa-eye");
-            $(this).find("i").addClass("fa-eye-slash");
-            showPass = 1;
-        } else {
-            $(this).next("input").attr("type", "password");
-            $(this).find("i").removeClass("fa-eye-slash");
-            $(this).find("i").addClass("fa-eye");
-            showPass = 0;
         }
     });
 });

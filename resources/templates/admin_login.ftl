@@ -7,25 +7,25 @@
 	<div class="auth">
 		<div class="auth_container col-lg-4 col-md-6 col-sm-8">
 			
-			<div class="auth_title">Admin Login</div>
-			<div class="auth_form_container">
+			<div class="form_title">Admin Login</div>
+			<div class="form_container">
 
-				<form class="auth_form" action="/admin/login" method="post" id="auth_form">
+				<form class="form" action="/admin/login" method="POST" id="auth_form">
 					
                     <div data-validate="Please enter name">
-						<input name="name" type="text" id="name" class="auth_input" placeholder="Name" required="required">
+						<input name="name" type="text" id="name" class="input" placeholder="Name" required="required">
 					</div>
 
                     <div data-validate="Please enter password">
 						<span class="btn-show-pass">
 							<i class="fa fa fa-eye"></i>
 						</span>
-						<input name="password" type="password" id="password" class="auth_input" placeholder="Password" required="required">
+						<input name="password" type="password" id="password" class="input" placeholder="Password" required="required">
 					</div>
 
-                    <div class="auth_form_error"></div>
+                    <div class="form_message"></div>
 					
-					<div class="button auth_submit_button"><a href="#">Login</a></div>
+					<div id="login_button" class="button form_submit_button"><a href="#">Login</a></div>
 				</form>
 			</div>
 		</div>

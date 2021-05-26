@@ -1,6 +1,5 @@
 /******************************
 
-[Table of Contents]
 
 1. Vars and Inits
 2. Set Header
@@ -13,12 +12,9 @@
 $(document).ready(function () {
     "use strict";
 
-    /* 
-
-	1. Vars and Inits
-
-	*/
-
+    /**
+     * 1. Vars and Inits
+     */
     var header = $(".header");
     var hambActive = false;
     var menuActive = false;
@@ -35,12 +31,9 @@ $(document).ready(function () {
 
     initMenu();
 
-    /* 
-
-	2. Set Header
-
-	*/
-
+    /**
+     * 2. Set Header
+     */
     function setHeader() {
         if ($(window).scrollTop() > 100) {
             header.addClass("scrolled");
@@ -49,12 +42,9 @@ $(document).ready(function () {
         }
     }
 
-    /* 
-
-	3. Init Menu
-
-	*/
-
+    /**
+     * 3. Init Menu
+     */
     function initMenu() {
         if ($(".hamburger").length) {
             var hamb = $(".hamburger");
@@ -120,12 +110,9 @@ $(document).ready(function () {
         menuActive = false;
     }
 
-    /* 
-
-	4. Ajax spinner
-
-	*/
-
+    /**
+     * 4. Ajax spinner
+     */
     $(document).ajaxSend(function () {
         $("#overlay").fadeIn(300);
     });
@@ -135,24 +122,88 @@ $(document).ready(function () {
     });
 
     $(document).ajaxError(function (event, xhr, setting, error) {
-        alert("an error occoured");
+        showAlert("an error occoured", "alert-danger");
         console.log(error);
     });
+});
 
-    /**
-     * Alert
-     */
-    function showAlert(text, alertClass) {
-        var button = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-        $(".alert").text(text);
-        $(".alert").append(button);
-        $(".alert").addClass(alertClass);
-        $(".alert")
-            .fadeTo(2000, 500)
-            .slideUp(500, function () {
-                $(".alert").slideUp(500);
-                $(".alert").removeClass(alertClass);
-            });
+/**
+ * 5. Alert
+ */
+function showAlert(text, alertClass) {
+    var button =
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    $(".alert").text(text);
+    $(".alert").append(button);
+    $(".alert").addClass(alertClass);
+    $(".alert_container")
+        .fadeTo(2000, 500)
+        .slideUp(500, function () {
+            $(".alert_container").slideUp(500);
+            $(".alert").removeClass(alertClass);
+        });
+}
+
+/**
+ * 6. Form
+ */
+function showValidate(input) {
+    var field = $(input).parent();
+    $(field).addClass("alert-validate");
+}
+
+function hideValidate(input) {
+    var field = $(input).parent();
+    $(field).removeClass("alert-validate");
+}
+
+function validate(input) {
+    if ($(input).attr("type") == "email") {
+        if (
+            $(input)
+                .val()
+                .trim()
+                .match(
+                    /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
+                ) == null
+        ) {
+            return false;
+        }
+    } else {
+        if ($(input).val().trim() == "") {
+            return false;
+        }
     }
-    
+}
+
+function checkValidation(input) {
+    var check = true;
+    for (var i = 0; i < input.length; i++) {
+        if (validate(input[i]) == false) {
+            showValidate(input[i]);
+            check = false;
+        }
+    }
+    return check;
+}
+
+$(".input").each(function () {
+    $(this).focus(function () {
+        hideValidate(this);
+    });
+});
+
+var showPass = 0;
+$(".btn-show-pass").on("click", function () {
+    if (showPass == 0) {
+        $(this).next("input").attr("type", "text");
+        $(this).find("i").removeClass("fa-eye");
+        $(this).find("i").addClass("fa-eye-slash");
+        showPass = 1;
+    } else {
+        $(this).next("input").attr("type", "password");
+        $(this).find("i").removeClass("fa-eye-slash");
+        $(this).find("i").addClass("fa-eye");
+        showPass = 0;
+    }
 });

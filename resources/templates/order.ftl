@@ -6,6 +6,7 @@
     
     <div class="products">
 		<div class="container">
+
 			<div class="row">
 				<div class="col">
 
@@ -79,29 +80,30 @@
 			</div>
 
 			<#if admin?has_content>
-				<div class="message_section">
-					<div class="section_title">Message Notification</div>
-						<div class="section_subtitle">Send custom notification to the user</div>
-							<div class="message_form_container">
-								<form action="/order/send-message" method="POST" class="message_form" id="message_form">
-									<div>
-										<!-- title -->
-										<label for="title">Title*</label>
-										<input name="title" type="text" id="title" class="message_input" required="required">
-									</div>
-									<div>
-										<!-- message -->
-										<label for="message">message*</label>
-										<input name="message" type="text" id="message" class="message_input" required="required">
-									</div>
-									
-									<div class="button message_button"><a href="#">Send</a></div>
-								</form>
-							</div>
+				<div class="row">
+					<div class="message_section col-lg-6">
+						<div class="form_title">Message Notification</div>
+						<div class="form_subtitle">Send custom notification to the user</div>
+						<div class="form_container">
+							<form class="form" action="/order/send-message" method="POST" id="message_form">
+								
+								<!--  title  -->
+								<div data-validate="Please enter title">
+									<input name="title" type="text" class="input" required="required">
+								</div>
+								
+								<!-- message -->
+								<div data-validate="Please enter message">
+									<input name="message" type="text" class="input" required="required">
+								</div>
+								
+								<div id="message_button" class="button form_submit_button"><a href="#">Send</a></div>
+							</form>
 						</div>
 					</div>
 				</div>
 			</#if>
+
 		</div>
 	</div>
 </@layout.base>

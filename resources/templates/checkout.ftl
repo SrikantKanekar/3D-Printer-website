@@ -11,41 +11,48 @@
 
 					<!-- Billing Info -->
 					<div class="col-lg-6">
-						<div class="billing checkout_section">
-							<div class="section_title">Billing Address</div>
-							<div class="section_subtitle">Enter your address info</div>
-							<div class="checkout_form_container">
-								<form action="/checkout/pay" method="POST" id="checkout_form" class="checkout_form">
+						<div class="checkout_section">
+							<div class="form_title">Billing Address</div>
+							<div class="form_subtitle">Enter your address info</div>
+							<div class="form_container">
+								<form class="form" action="/checkout/pay" method="POST" id="checkout_form">
 									
 									<div class="row">
+										
+										<!-- firstname -->
 										<div class="col-xl-6">
-											<!-- firstname -->
 											<label for="firstname">First Name*</label>
-											<input name="firstname" value="${address.firstname}" type="text" id="firstname" class="checkout_input" required="required">
+											<div data-validate="Enter firstname">
+												<input name="firstname" value="${address.firstname}" type="text" id="firstname" class="input" required="required">
+											</div>
 										</div>
+										
+										<!-- lastname -->
 										<div class="col-xl-6 last_name_col">
-											<!-- lastname -->
 											<label for="lastname">Last Name*</label>
-											<input name="lastname" value="${address.lastname}" type="text" id="lastname" class="checkout_input" required="required">
+											<div data-validate="Enter lastname">											
+												<input name="lastname" value="${address.lastname}" type="text" id="lastname" class="input" required="required">
+											</div>
 										</div>
+
 									</div>
 									
-									<div>
-										<!-- phoneNumber -->
-										<label for="phoneNumber">Phone no*</label>
-										<input name="phoneNumber" value="${(address.phoneNumber?string.computer)!''}" type="phone" id="phoneNumber" class="checkout_input" required="required">
+									<!-- phoneNumber -->
+									<label for="phoneNumber">Phone no*</label>
+									<div data-validate="Please enter phoneNumber">										
+										<input name="phoneNumber" value="${(address.phoneNumber?string.computer)!''}" type="phone" id="phoneNumber" class="input" required="required">
 									</div>
 									
-									<div>
-										<!-- Address -->
-										<label for="address">Address*</label>
-										<input name="address" value="${address.address}" type="text" id="address" class="checkout_input" required="required">
+									<!-- Address -->
+									<label for="address">Address*</label>
+									<div data-validate="Please enter address">										
+										<input name="address" value="${address.address}" type="text" id="address" class="input" required="required">
 									</div>
 									
-									<div>
-										<!-- City / Town -->
-										<label for="city">City/Town*</label>
-										<select name="city" id="city" class="dropdown_item_select checkout_input" require="required">
+									<!-- City / Town -->
+									<label for="city">City/Town*</label>
+									<div data-validate="Please select city">										
+										<select name="city" id="city" class="dropdown_item_select input" require="required">
 											<option selected>${address.city}</option>
 											<option>Panaji</option>
 											<option>Margao</option>
@@ -54,26 +61,26 @@
 										</select>
 									</div>
 									
-									<div>
-										<!-- State -->
-										<label for="state">State*</label>
-										<select name="state" id="state" class="dropdown_item_select checkout_input" require="required">
+									<!-- State -->
+									<label for="state">State*</label>
+									<div data-validate="Please select state">										
+										<select name="state" id="state" class="dropdown_item_select input" require="required">
 											<option selected>Goa</option>
 										</select>
 									</div>
 									
-									<div>
-										<!-- Country -->
-										<label for="country">Country*</label>
-										<select name="country" id="country" class="dropdown_item_select checkout_input" require="required">
+									<!-- Country -->
+									<label for="country">Country*</label>
+									<div data-validate="Please select country">										
+										<select name="country" id="country" class="dropdown_item_select input" require="required">
 											<option selected>India</option>
 										</select>
 									</div>
 									
-									<div>
-										<!-- pinCode -->
-										<label for="pinCode">Pincode*</label>
-										<input name="pinCode" value="${(address.pinCode?string.computer)!''}" type="number" maxlength="6" id="pinCode" class="checkout_input" required="required">
+									<!-- pinCode -->
+									<label for="pinCode">Pincode*</label>
+									<div data-validate="Please enter pincode">									
+										<input name="pinCode" value="${(address.pinCode?string.computer)!''}" type="number" maxlength="6" id="pinCode" class="input" required="required">
 									</div>
 								</form>
 							</div>
@@ -119,11 +126,8 @@
 							<div class="button order_button"><a href="#">Place Order</a></div>
 						</div>
 					</div>
+
 				</div>
-			<#else>
-				<div class="m-5">
-					<h4>No checkout items</h4>
-				<div>
         	</#if>
 		</div>
 	</div>

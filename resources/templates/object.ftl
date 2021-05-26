@@ -64,28 +64,32 @@
 						<div class="tab-content setting_content" id="myTabContent">
 							
 							<div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
-								<form action="/object/${object.id}/basic" method="POST" id="basic_settings_form" class="setting_form">
-									
-									<label for="size">Size</label>
-									<div data-validate="Please enter size">
-										<input type="number" name="size" value="${object.basicSettings.size?string.computer}" id="size" class="setting_input" required="required"/>
-									</div>
+								<div class="setting_form_container">
+									<form class="form" action="/object/${object.id}/basic" method="POST" id="basic_settings_form">
+										
+										<label for="size">Size</label>
+										<div data-validate="Please enter size">
+											<input type="number" name="size" value="${object.basicSettings.size?string.computer}" id="size" class="input" required="required"/>
+										</div>
 
-									<div class="basic_setting_form_error"></div>
-									<div class="button basic_settings_button"><a href="#">Update</a></div>
-								</form>
+										<div class="form_message"></div>
+										<div id="basic_button" class="button form_submit_button"><a href="#">Update</a></div>
+									</form>
+								</div>
 							</div>
 
 							<div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">				
-								<form action="/object/${object.id}/advanced" method="post" id="advanced_settings_form" class="setting_form">
-									
-									<label for="weight">Weight</label>
-									<div data-validate="Please enter weight">
-										<input type="number" name="weight" value="${object.advancedSettings.weight?string.computer}" id="weight" class="setting_input" required="required"/>
-									</div>
-									<div class="advanced_setting_form_error"></div>
-									<div class="button advanced_settings_button"><a href="#">Update</a></div>
-								</form>
+								<div class="setting_form_container">
+									<form class="form" action="/object/${object.id}/advanced" method="post" id="advanced_settings_form">
+										
+										<label for="weight">Weight</label>
+										<div data-validate="Please enter weight">
+											<input type="number" name="weight" value="${object.advancedSettings.weight?string.computer}" id="weight" class="input" required="required"/>
+										</div>
+										<div class="form_message"></div>
+										<div id="advanced_button" class="button form_submit_button"><a href="#">Update</a></div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

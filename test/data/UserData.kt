@@ -38,7 +38,8 @@ val testUser = User(
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
                 price = 1,
-                status = NONE
+                status = NONE,
+                timeToPrint = 12
             ),
             Object(
                 id = TEST_CART_OBJECT1,

@@ -14,42 +14,47 @@
 
 			<div class="account_collapsible_container">
 				
+				<#--  Update Account  -->
 				<button class="collapsible">Update Account</button>
 				<div class="collapsible_content">
+					<div class="update_form_container">
+						<form class="form" action="/account/update" method="POST" id="update_form">
+							<label for="username">Username</label>
+							<div data-validate="Please enter username">
+								<input name="username" id="username" value="${user.username}" type="text" class="input" required="required">
+							</div>
+							<div class="form_message"></div>
 
-					<form action="/account/update" method="POST" id="update_form" class="update_form">
-						<div data-validate="Please enter username">
-							<input name="username" value="${user.username}" type="text" placeholder="username" class="update_input" required="required">
-						</div>
-						<div class="update_form_error"></div>
-
-						<div class="button update_button"><a href="#">Update</a></div>
-					</form>
+							<div id="update_button" class="button form_submit_button"><a href="#">Update</a></div>
+						</form>
+					</div>
 				</div>
 
+				<#--  Change password  -->
 				<button class="collapsible">Change password</button>
 				<div class="collapsible_content">
+					<div class="change_password_form_container">
+						<form class="form" action="/account/reset-password" method="POST" id="change_password_form">
+							<div data-validate="Please enter password">
+								<input name="old_password" type="password" class="input" placeholder="Old Password" required="required">
+							</div>
 
-					<form action="/account/reset-password" method="POST" id="change_password_form" class="change_password_form">
-						<div data-validate="Please enter password">
-							<input name="old_password" type="password" class="auth_input" placeholder="Old Password" required="required">
-						</div>
+							<div data-validate="Please enter password">
+								<span class="btn-show-pass">
+									<i class="fa fa fa-eye"></i>
+								</span>
+								<input name="new_password" type="password" class="input" placeholder="New Password" required="required">
+							</div>
 
-						<div data-validate="Please enter password">
-							<span class="btn-show-pass">
-								<i class="fa fa fa-eye"></i>
-							</span>
-							<input name="new_password" type="password" class="auth_input" placeholder="New Password" required="required">
-						</div>
+							<div data-validate="Please enter password">
+								<input name="confirm_password" type="password" class="input" placeholder="Confirm Password" required="required">
+							</div>
 
-						<div data-validate="Please enter password">
-							<input name="confirm_password" type="password" class="auth_input" placeholder="Confirm Password" required="required">
-						</div>
+							<div class="form_message"></div>
 
-						<div class="change_password_form_error"></div>
-
-						<div class="button change_password_button"><a href="#">Change Password</a></div>
-					</form>
+							<div id="change_password_button" class="button form_submit_button"><a href="#">Change Password</a></div>
+						</form>
+					</div>
 				</div>
 
 			</div>	

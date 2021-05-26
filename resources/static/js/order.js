@@ -1,23 +1,6 @@
 $(window).on("load", function (e) {
     "use strict";
 
-    /**
-     * Alert
-     */
-    function showAlert(text, alertClass) {
-        var button =
-            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-        $(".alert").text(text);
-        $(".alert").append(button);
-        $(".alert").addClass(alertClass);
-        $(".alert")
-            .fadeTo(2000, 500)
-            .slideUp(500, function () {
-                $(".alert").slideUp(500);
-                $(".alert").removeClass(alertClass);
-            });
-    }
-
     /*
         Isotope
     */
@@ -151,39 +134,34 @@ $(window).on("load", function (e) {
         if (status == 2) return "PRINTED";
     }
 
-    /*
-        Message form
-    */
-    $(".message_button").click(function (e) {
+    /**
+     * Message form
+     */
+    $("#message_button").click(function (e) {
         e.preventDefault();
-
-        if ($("form")[0].checkValidity()) {
-            $("#message_form").submit();
-        }
-
-        $('form :input[required="required"]').each(function () {
-            if (!this.validity.valid) {
-                $(this).focus();
-                // break
-                return false;
-            }
-        });
+        $("#message_form").submit();
     });
 
     $("#message_form").submit(function (e) {
         e.preventDefault();
+
         var email = $(".results").data("email");
         var url = $(this).attr("action");
-        $.post(
-            url,
-            {
-                email: email,
-                title: $("#title").val(),
-                message: $("#message").val(),
-            },
-            function (data) {
-                showAlert(data, "alert-success");
-            }
-        );
+        var input = $(this).find(".input");
+
+        var check = checkValidation(input);
+        if (check) {
+            $.post(
+                url,
+                {
+                    email: email,
+                    title: $("[name='title']").val(),
+                    message: $("[name='message']").val(),
+                },
+                function (data) {
+                    showAlert(data, "alert-success");
+                }
+            );
+        }
     });
 });
