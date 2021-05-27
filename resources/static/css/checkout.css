@@ -2,14 +2,6 @@
 1. Checkout
 *********************************/
 
-.checkout {
-    width: 100%;
-    padding-top: 98px;
-    padding-bottom: 99px;
-    background: #ffffff;
-    min-height: 100vh;
-    z-index: 2;
-}
 .checkout_section {
     width: 100%;
     padding-top: 44px;

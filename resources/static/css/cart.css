@@ -1,23 +1,6 @@
-/******************************
-
-[Table of Contents]
-
-1. Cart Info
-
-
-******************************/
-
 /*********************************
 1. Cart Info
 *********************************/
-
-.cart_info {
-    width: 100%;
-    background: #ffffff;
-    padding-top: 150px;
-    min-height: 100vh;
-    z-index: 2;
-}
 .cart_info_columns {
     width: 100%;
     border-bottom: solid 2px #e3e3e3;
@@ -104,8 +87,6 @@
     font-size: 14px;
     font-weight: 400;
     color: #1b1b1b;
-}
-.product_quantity_container {
 }
 .product_quantity {
     display: inline-block;
@@ -213,11 +194,9 @@
 }
 .row_extra {
     margin-top: 106px;
-    padding-bottom: 100px;
 }
-.delivery {
-    width: 100%;
-}
+
+
 .section_title {
     font-size: 24px;
     font-weight: 600;
@@ -229,59 +208,11 @@
     color: #6c6a74;
     margin-top: 3px;
 }
-.delivery_options {
-    margin-top: 38px;
-}
-.delivery_option {
-    display: block;
-    position: relative;
-    padding-left: 36px;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-size: 14px;
-    font-weight: 400;
-    color: #1b1b1b;
-}
-.delivery_option:not(:last-child) {
-    margin-bottom: 27px;
-}
-.delivery_option input {
-    position: absolute;
-    opacity: 0;
-    visibility: hidden;
-}
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 4px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    border: solid 2px #9f9f9f;
-    background: #ffffff;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
-}
-.delivery_option input:checked ~ .checkmark {
-    background: #e95a5a;
-    border: solid 2px #e95a5a;
-}
-.delivery_option input:hover ~ .checkmark {
-    background: #e95a5a;
-}
-label {
-    margin-bottom: 0;
-}
-.delivery_price {
-    float: right;
-}
+
+/***********
+    coupon
+************/
+
 .coupon {
     margin-top: 83px;
 }
@@ -319,6 +250,11 @@ label {
 .coupon_button:hover span {
     color: #ffffff;
 }
+
+/**************
+    cart total
+**************/
+
 .cart_total_container {
     margin-top: 42px;
     padding-left: 45px;
@@ -347,4 +283,44 @@ label {
 }
 .checkout_button {
     width: 100%;
+}
+
+/************
+6. 991px
+************/
+
+@media only screen and (max-width: 991px) {
+    .cart_info_columns {
+        display: none;
+    }
+    .cart_items_row {
+        margin-top: 0;
+    }
+    .cart_item:first-child {
+        padding-top: 0;
+    }
+    .cart_item:not(:last-child) {
+        border-bottom: solid 2px #e3e3e3;
+    }
+    .cart_item_product,
+    .cart_item_price,
+    .cart_item_quantity,
+    .cart_item_total {
+        width: 100%;
+        text-align: left;
+    }
+    .cart_item_price,
+    .cart_item_quantity,
+    .cart_item_total {
+        margin-top: 25px;
+    }
+    .cart_buttons_right {
+        margin-top: 15px;
+    }
+    .cart_total {
+        margin-top: 100px;
+    }
+    .checkout_button {
+        margin-top: 15px;
+    }
 }

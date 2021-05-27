@@ -1,15 +1,10 @@
 .upload_box {
-    width: 100%;
-    background: #ffffff;
-    padding-top: 150px;
     text-align: center;
     margin: 0 auto;
-    min-height: 100vh;
-    z-index: 2;
 }
 
 .box {
-    font-size: 1.25rem; /* 20 */
+    font-size: 1.25rem;
     background-color: #f8f8f8;
     position: relative;
     padding: 100px 20px;

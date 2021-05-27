@@ -4,6 +4,4 @@
     
 	<@header.header user="${user}" />
 
-	<div class="main">
-	</div>
 </@layout.base>

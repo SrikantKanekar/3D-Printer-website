@@ -101,7 +101,7 @@ $(window).on("load", function (e) {
                             .text(getPrintingStatus(buttonStatus));
                         grid.isotope("updateSortData").isotope();
                     } else {
-                        showAlert("unknown error", "alert-danger");
+                        showAlert("please start PROCESSING", "alert-danger");
                     }
                 }
             );

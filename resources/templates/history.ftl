@@ -4,7 +4,6 @@
 
     <@header.header user="${user}" title="Order history" />
     
-    <div class="tracking_info">
         <div class="container">
 
             <#if orders?has_content>
@@ -74,9 +73,8 @@
                 </#list>
 
             <#else>
-                <h4>No history items</h4>
+                <div class="no_items_text">No items</div>
             </#if>
 
         </div>
-    </div>
 </@layout.base>

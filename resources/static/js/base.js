@@ -6,6 +6,7 @@
 3. Init Menu
 4. Ajax Spinner
 5. Alert
+6. Form
 
 
 ******************************/
@@ -143,6 +144,11 @@ function showAlert(text, alertClass) {
             $(".alert").removeClass(alertClass);
         });
 }
+
+$(".alert").on("close.bs.alert", function (e) {
+    e.preventDefault();
+    $(".alert_container").hide();
+});
 
 /**
  * 6. Form

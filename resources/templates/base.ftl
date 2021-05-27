@@ -34,7 +34,10 @@
 	
 	<body>
 		<div class="super_container">
-			<#nested/>
+			
+			<div class="main">
+				<#nested/>
+			</div>
 
 			<@footer.footer/>
 		
@@ -45,7 +48,7 @@
 			</div>
 
 			<div class="alert_container">
-				<div class="alert alert-dismissible" role="alert"></div>
+				<div class="alert alert-dismissible fade show" role="alert"></div>
 			</div>
 		</div>
 
