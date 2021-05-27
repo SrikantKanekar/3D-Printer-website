@@ -169,3 +169,34 @@
     width: 100%;
     margin-top: 83px;
 }
+
+/************
+4. 1199px
+************/
+
+@media only screen and (max-width: 1199px) {
+    .last_name_col {
+        margin-top: 15px;
+    }
+}
+
+/************
+6. 991px
+************/
+
+@media only screen and (max-width: 991px) {
+    .order {
+        margin-top: 90px;
+    }
+}
+
+
+/************
+11. 575px
+************/
+
+@media only screen and (max-width: 575px) {
+    .order_button {
+        width: 100%;
+    }
+}

@@ -1,20 +1,12 @@
+window.addEventListener('pageshow', function(e){
+    var historyTraversal = e.persisted || (typeof window.performance != 'undefined' && window.performance.navigation.type === 2);
+    if (historyTraversal) {
+        window.location.reload(false);
+    }
+});
+
 $(window).on("load", function (e) {
     "use strict";
-
-    // window.addEventListener('pageshow', function(e){
-    //     var historyTraversal = e.persisted || (typeof window.performance != 'undefined' && window.performance.navigation.type === 2);
-    //     if (historyTraversal) {
-    //         console.log("reloading");
-    //         window.location.reload();
-    //         console.log("reloaded");
-    //     }
-    // });
-
-    // $(window).bind("pageshow", function (e) {
-    //     if (e.originalEvent.persisted) {
-    //         window.location.reload();
-    //     }
-    // });
 
     /*
         Isotope

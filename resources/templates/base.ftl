@@ -25,10 +25,7 @@
 
 		<!--custom-->
 		<link rel="stylesheet" type="text/css" href=${css}>
-		
-		<!--responsive-->
-		<link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
-
+	
 		<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 	</head>
 	

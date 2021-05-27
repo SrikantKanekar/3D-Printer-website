@@ -1,5 +1,5 @@
 /*********************************
-1. Cart Info
+1. Cart Info Column
 *********************************/
 .cart_info_columns {
     width: 100%;
@@ -12,47 +12,67 @@
     font-weight: 400;
     color: #1b1b1b;
 }
-.cart_info_col_product {
-    width: 63%;
+.cart_info_col_object {
+    width: 60%;
 }
 .cart_info_col_price {
-    width: 10%;
+    width: 20%;
+    text-align: center;
 }
 .cart_info_col_quantity {
-    width: 17%;
+    width: 20%;
     text-align: center;
 }
-.cart_info_col_total {
-    width: 10%;
-    text-align: right;
-}
+
+/*********************************
+2. Cart Item
+*********************************/
 .cart_item {
     padding-top: 33px;
-    padding-bottom: 33px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
-.cart_item_product {
-    width: 63%;
+
+.cart_item_object {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
 }
+
 .cart_item_price {
-    width: 10%;
-}
-.cart_item_quantity {
-    width: 17%;
+    width: 20%;
     text-align: center;
 }
-.cart_item_total {
-    width: 10%;
-    text-align: right;
+
+.cart_item_quantity {
+    width: 20%;
+    text-align: center;
 }
+
 .cart_item_image div {
-    width: 183px;
+    width: 163px;
     height: 163px;
 }
+
 .cart_item_image div img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
 }
+
 .cart_item_name_container {
+    width: 70%;
     padding-left: 36px;
+}
+
+.cart_item_name {
+    width: 99%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .cart_item_name a {
     font-size: 18px;
@@ -64,12 +84,15 @@
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
+
 .cart_item_name a:hover {
     color: #e95a5a;
 }
+
 .cart_item_edit {
     margin-top: 3px;
 }
+
 .cart_item_edit a {
     font-size: 14px;
     font-weight: 500;
@@ -80,14 +103,17 @@
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
+
 .cart_item_edit a:hover {
     color: #1b1b1b;
 }
+
 .cart_item_price {
     font-size: 14px;
     font-weight: 400;
     color: #1b1b1b;
 }
+
 .product_quantity {
     display: inline-block;
     width: 147px;
@@ -174,13 +200,12 @@
     -o-transform: translateY(-3px);
     transform: translateY(-3px);
 }
-.cart_item_total {
-    font-size: 14px;
-    font-weight: 400;
-    color: #1b1b1b;
-}
+
+/*********************************
+2. Cart Buttons
+*********************************/
 .row_cart_buttons {
-    margin-top: 21px;
+    margin-top: 50px;
 }
 .continue_shopping_button {
     width: 261px;
@@ -195,7 +220,6 @@
 .row_extra {
     margin-top: 106px;
 }
-
 
 .section_title {
     font-size: 24px;
@@ -290,30 +314,42 @@
 ************/
 
 @media only screen and (max-width: 991px) {
-    .cart_info_columns {
-        display: none;
+    .cart_item_name_container {
+        width: 50%;
+        padding-left: 10px;
     }
-    .cart_items_row {
-        margin-top: 0;
+    .cart_item_name a {
+        font-size: 14px;
     }
-    .cart_item:first-child {
-        padding-top: 0;
+    .cart_item_edit a {
+        font-size: 12px;
     }
-    .cart_item:not(:last-child) {
-        border-bottom: solid 2px #e3e3e3;
+    .cart_item_price {
+        font-size: 13px;
     }
-    .cart_item_product,
-    .cart_item_price,
-    .cart_item_quantity,
-    .cart_item_total {
-        width: 100%;
-        text-align: left;
+
+    .product_quantity {
+        width: 80px;
+        height: 45px;
+        padding-left: 40px;
     }
-    .cart_item_price,
-    .cart_item_quantity,
-    .cart_item_total {
-        margin-top: 25px;
+    .product_quantity span {
+        left: 10px;
+        font-size: 14px;
+        font-weight: 550;
     }
+    .product_quantity input {
+        width: 20px;
+        height: 42px;
+        font-size: 14px;
+        font-weight: 550;
+        padding-left: 5px;
+        line-height: 33px;
+    }
+    .quantity_buttons {
+        width: 20px;
+    }
+
     .cart_buttons_right {
         margin-top: 15px;
     }
@@ -322,5 +358,19 @@
     }
     .checkout_button {
         margin-top: 15px;
+    }
+}
+
+/************
+11. 575px
+************/
+
+@media only screen and (max-width: 575px) {
+    .cart_item_name_container {
+        width: 40%;
+        padding-left: 8px;
+    }
+    .checkout_button {
+        width: 100%;
     }
 }

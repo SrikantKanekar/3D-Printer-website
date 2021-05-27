@@ -10,10 +10,9 @@
 
             <div class="row">
                 <div class="col">
-                    <!-- Column Titles -->
                     <div class="cart_info_columns clearfix">
-                        <div class="cart_info_col cart_info_col_product">
-                            Product
+                        <div class="cart_info_col cart_info_col_object">
+                            Object
                         </div>
                         <div class="cart_info_col cart_info_col_price">
                             Price
@@ -21,37 +20,22 @@
                         <div class="cart_info_col cart_info_col_quantity">
                             Quantity
                         </div>
-                        <div class="cart_info_col cart_info_col_total">
-                            Total
-                        </div>
                     </div>
                 </div>
             </div>
 
             <#list objects as object>
-                <div class="row cart_items_row">
+                <div class="row">
                     <div class="col">
-                        <!-- Cart Item -->
-                        <div class="
-                                    cart_item
-                                    d-flex
-                                    flex-lg-row flex-column
-                                    align-items-lg-center align-items-start
-                                    justify-content-start
-                                ">
+                        <div class="cart_item">
+                            
                             <!-- Name -->
-                            <div class="
-                                        cart_item_product
-                                        d-flex
-                                        flex-row
-                                        align-items-center
-                                        justify-content-start
-                                    ">
+                            <div class="cart_item_object">
+                                
                                 <div class="cart_item_image">
-                                    <div>
-                                        <img src="${object.image}" alt="" />
-                                    </div>
+                                    <div><img src="${object.image}" alt=""/></div>
                                 </div>
+                                
                                 <div class="cart_item_name_container">
                                     <div class="cart_item_name">
                                         <a href="/object/${object.id}">${object.filename}</a>
@@ -61,8 +45,10 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <!-- Price -->
-                            <div class="cart_item_price">$790.90</div>
+                            <div class="cart_item_price">&#8377;${object.price}</div>
+                            
                             <!-- Quantity -->
                             <div class="cart_item_quantity">
                                 <div class="product_quantity_container">
@@ -88,8 +74,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Total -->
-                            <div class="cart_item_total">$790.90</div>
                         </div>
                     </div>
                 </div>
@@ -118,10 +102,11 @@
                     </div>
                 </div>
             </div>
+            
             <div class="row row_extra">
+                
+                <!-- Coupon Code -->
                 <div class="col-lg-4">
-                    
-                    <!-- Coupon Code -->
                     <div class="coupon">
                         <div class="section_title">Coupon code</div>
                         <div class="section_subtitle">
@@ -138,6 +123,7 @@
                     </div>
                 </div>
 
+                <!-- Cart Total -->
                 <div class="col-lg-6 offset-lg-2">
                     <div class="cart_total">
                         <div class="section_title">Cart total</div>

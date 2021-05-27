@@ -1,23 +1,7 @@
-/******************************
-
-[Table of Contents]
-
-1. Vars and Inits
-2. Init Quantity
-
-
-******************************/
-
 $(document).ready(function () {
     "use strict";
 
-    /* 
-
-	1. Vars and Inits
-
-	*/
     initQuantity();
-
 
     /* 
 

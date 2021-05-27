@@ -2,9 +2,9 @@
 @import "/static/plugins/OwlCarousel2-2.2.1/owl.theme.default.css";
 @import "/static/plugins/OwlCarousel2-2.2.1/animate.css";
 
-/**************
+/****************
     Sorting Bar 
-***************/
+*****************/
 .sorting_bar {
     width: 100%;
     padding-bottom: 40px;
