@@ -18,7 +18,9 @@
                 <div class="box__slicing">Slicing…</div>
                 <div class="box__success">Creating New Object…</div>
                 <div class="box__error"><span></span>. <a href="" class="box__restart" role="button">Try again!</a></div>
-                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress_container">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </form>
         </div>
     </div>
