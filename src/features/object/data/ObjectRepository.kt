@@ -42,6 +42,16 @@ class ObjectRepository(
         return userDataSource.updateUser(user)
     }
 
+    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
+        val user = userDataSource.getUser(email)
+        if (quantity < 1) return false
+        user.objects
+            .filter { it.status == NONE }
+            .find { it.id == objectId }
+            ?.let { it.quantity = quantity } ?: return false
+        return userDataSource.updateUser(user)
+    }
+
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects

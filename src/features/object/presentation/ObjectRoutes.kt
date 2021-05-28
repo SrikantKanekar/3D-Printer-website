@@ -7,6 +7,7 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -61,6 +62,36 @@ fun Route.removeFromCart(objectRepository: ObjectRepository) {
 
         val principal = call.sessions.get<UserPrincipal>()!!
         val result = objectRepository.removeFromCart(principal.email, id)
+        call.respond(result)
+    }
+}
+
+fun Route.updateQuantity(objectRepository: ObjectRepository) {
+    post("/object/quantity") {
+        val params = call.receiveParameters()
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val quantity = params["quantity"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val principal = call.sessions.get<UserPrincipal>()
+        var result = false
+        when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                if (quantity > 0) {
+                    cookie.objects
+                        .filter { it.status == NONE }
+                        .find { it.id == id }
+                        ?.let {
+                            it.quantity = quantity
+                            result = true
+                        }
+                    call.sessions.set(cookie)
+                }
+            }
+            else -> {
+                result = objectRepository.updateQuantity(principal.email, id, quantity)
+            }
+        }
         call.respond(result)
     }
 }

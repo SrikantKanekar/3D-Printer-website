@@ -1,6 +1,8 @@
 $(document).ready(function () {
     "use strict";
 
+    var id = $(".object").data("id");
+
     initImage();
     initQuantity();
     handleStatus();
@@ -46,29 +48,42 @@ $(document).ready(function () {
      *  3. Init Quantity
      */
     function initQuantity() {
-        // Handle product quantity input
-        if ($(".product_quantity").length) {
-            var input = $("#quantity_input");
-            var incButton = $("#quantity_inc_button");
-            var decButton = $("#quantity_dec_button");
+        var input = $("#quantity_input");
+        var incButton = $("#quantity_inc_button");
+        var decButton = $("#quantity_dec_button");
 
-            var originalVal;
-            var endVal;
+        var url = "/object/quantity";
 
-            incButton.on("click", function () {
-                originalVal = input.val();
-                endVal = parseFloat(originalVal) + 1;
-                input.val(endVal);
-            });
+        var originalVal;
+        var endVal;
 
-            decButton.on("click", function () {
-                originalVal = input.val();
-                if (originalVal > 0) {
-                    endVal = parseFloat(originalVal) - 1;
+        incButton.on("click", function () {
+            
+            originalVal = input.val();
+            endVal = parseFloat(originalVal) + 1;
+            
+            $.post(url, { id: id, quantity: endVal }, function (data) {
+                if (data == true) {
                     input.val(endVal);
+                } else {
+                    showAlert("unknown error", "alert-danger");
                 }
             });
-        }
+        });
+
+        decButton.on("click", function () {
+            originalVal = input.val();
+            if (originalVal > 1) {
+                endVal = parseFloat(originalVal) - 1;
+                $.post(url, { id: id, quantity: endVal }, function (data) {
+                    if (data == true) {
+                        input.val(endVal);
+                    } else {
+                        showAlert("unknown error", "alert-danger");
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -77,8 +92,6 @@ $(document).ready(function () {
     $(".cart_button a").click(function (e) {
         e.preventDefault();
 
-        var product = $(this).parents(".object");
-        var id = product.data("id");
         var url = $(this).attr("href");
 
         $.post(url, { id: id }, function (data) {
@@ -100,8 +113,6 @@ $(document).ready(function () {
     $(".cart_remove_button a").click(function (e) {
         e.preventDefault();
 
-        var product = $(this).parents(".object");
-        var id = product.data("id");
         var url = $(this).attr("href");
 
         $.post(url, { id: id }, function (data) {
@@ -125,11 +136,11 @@ $(document).ready(function () {
 
     $("#basic_settings_form").submit(function (e) {
         e.preventDefault();
-        
+
         var url = $(this).attr("action");
         var input = $(this).find(".input");
         var message = $(this).find(".form_message");
-        
+
         var check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
@@ -154,7 +165,7 @@ $(document).ready(function () {
 
     $("#advanced_settings_form").submit(function (e) {
         e.preventDefault();
-        
+
         var url = $(this).attr("action");
         var input = $(this).find(".input");
         var message = $(this).find(".form_message");
