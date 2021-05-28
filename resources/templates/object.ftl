@@ -27,7 +27,7 @@
 					<div class="col-lg-6">
 						<div class="details_content">
 							<div class="details_name">${object.filename}</div>
-							<div class="details_price">$${object.price}</div>
+							<div class="details_price"><i class="fa fa-inr"></i>${object.price}</div>
 							<div class="details_price">${object.timeToPrint} minutes for printing</div>
 							
 							<div class="product_quantity_container">
@@ -110,7 +110,7 @@
 					<div class="col-lg-6">
 						<div class="details_content">
 							<div class="details_name">${object.filename}</div>
-							<div class="details_price">$${object.price}</div>
+							<div class="details_price"><i class="fa fa-inr"></i>${object.price}</div>
 							<div class="details_status">Printing status : ${object.printingStatus}</div>
 							
 							<div class="details_started_at">Started at : ${object.trackingDetails.started_at!"--"}</div>
@@ -140,7 +140,7 @@
 					<div class="col-lg-6">
 						<div class="details_content">
 							<div class="details_name">${object.filename}</div>
-							<div class="details_price">$${object.price}</div>
+							<div class="details_price"><i class="fa fa-inr"></i>${object.price}</div>
 							<div class="details_status">Printing status : ${object.printingStatus}</div>
 							<div class="details_completed_by">Completed at ${object.trackingDetails.completed_at!"--"}</div>
 							<div class="details_completed_by">Printing duration : 2:32 hr</div>							

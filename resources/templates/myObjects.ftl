@@ -62,7 +62,7 @@
 											</svg>
 										</a>
 									</div>
-									<div class="product_price">$${object.price}</div>
+									<div class="product_price"><i class="fa fa-inr"></i><span>${object.price}</span></div>
 								</div>
 							</div>
 						</#list>

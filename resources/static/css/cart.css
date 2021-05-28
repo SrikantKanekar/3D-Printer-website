@@ -28,6 +28,7 @@
 2. Cart Item
 *********************************/
 .cart_item {
+    width: 100%;
     padding-top: 33px;
     display: flex;
     flex-direction: row;
@@ -89,11 +90,11 @@
     color: #e95a5a;
 }
 
-.cart_item_edit {
+.cart_item_remove {
     margin-top: 3px;
 }
 
-.cart_item_edit a {
+.cart_item_remove a {
     font-size: 14px;
     font-weight: 500;
     color: #6c6a74;
@@ -104,7 +105,7 @@
     transition: all 200ms ease;
 }
 
-.cart_item_edit a:hover {
+.cart_item_remove a:hover {
     color: #1b1b1b;
 }
 
@@ -146,10 +147,10 @@
     font-weight: 600;
     color: #1b1b1b;
     text-align: left;
-    padding-left: 9px;
+    padding-left: 6px;
     line-height: 39px;
-    float: left;
 }
+
 .quantity_buttons {
     position: absolute;
     top: 0;
@@ -202,23 +203,22 @@
 }
 
 /*********************************
-2. Cart Buttons
+3. Cart Buttons
 *********************************/
-.row_cart_buttons {
+.button_container {
+    width: 100%;
     margin-top: 50px;
+    padding-right: 40px;
 }
-.continue_shopping_button {
-    width: 261px;
+.clear_cart_button {
+    float: right;
 }
-.clear_cart_button,
-.update_cart_button {
-    display: inline-block;
-}
-.update_cart_button {
-    margin-left: 16px;
-}
+
+/*********************************
+4. Coupon section
+*********************************/
 .row_extra {
-    margin-top: 106px;
+    margin-top: 50px;
 }
 
 .section_title {
@@ -231,14 +231,6 @@
     font-weight: 400;
     color: #6c6a74;
     margin-top: 3px;
-}
-
-/***********
-    coupon
-************/
-
-.coupon {
-    margin-top: 83px;
 }
 .coupon_form_container {
     margin-top: 42px;
@@ -275,9 +267,9 @@
     color: #ffffff;
 }
 
-/**************
-    cart total
-**************/
+/*********************************
+5. cart total
+*********************************/
 
 .cart_total_container {
     margin-top: 42px;
@@ -294,16 +286,41 @@
     width: 100%;
     height: 48px;
 }
+.cart_total_item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.grid {
+    height: 48px;
+}
 .cart_total_title {
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 14px;
     font-weight: 400;
     color: #1b1b1b;
+}
+.cart_total_details {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 .cart_total_value {
     font-size: 14px;
     font-weight: 400;
     color: #1b1b1b;
-    float: right;
+}
+.cart_total_quantity {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1b1b1b;
 }
 .checkout_button {
     width: 100%;
@@ -321,7 +338,7 @@
     .cart_item_name a {
         font-size: 14px;
     }
-    .cart_item_edit a {
+    .cart_item_remove a {
         font-size: 12px;
     }
     .cart_item_price {
@@ -329,7 +346,7 @@
     }
 
     .product_quantity {
-        width: 80px;
+        width: 90px;
         height: 45px;
         padding-left: 40px;
     }
@@ -343,18 +360,14 @@
         height: 42px;
         font-size: 14px;
         font-weight: 550;
-        padding-left: 5px;
         line-height: 33px;
     }
     .quantity_buttons {
         width: 20px;
     }
 
-    .cart_buttons_right {
-        margin-top: 15px;
-    }
     .cart_total {
-        margin-top: 100px;
+        margin-top: 50px;
     }
     .checkout_button {
         margin-top: 15px;
@@ -369,8 +382,5 @@
     .cart_item_name_container {
         width: 40%;
         padding-left: 8px;
-    }
-    .checkout_button {
-        width: 100%;
     }
 }

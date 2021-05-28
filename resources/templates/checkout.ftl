@@ -94,28 +94,34 @@
 
 						<!-- Order details -->
 						<div class="order_list_container">
-							<div class="order_list_bar d-flex flex-row align-items-center justify-content-start">
-								<div class="order_list_title">Product</div>
-								<div class="order_list_value ml-auto">Total</div>
+							<div class="order_list_bar">
+								<div class="order_list_title">Object</div>
+								<div class="order_list_details">
+									<div class="order_list_quantity">Qty</div>
+									<div class="order_list_value">Price</div>
+								</div>
 							</div>
 							<ul class="order_list">
 								<#list objects as object>
-									<li class="d-flex flex-row align-items-center justify-content-start">
+									<li class="order_list_item object_list">
 										<div class="order_list_title">${object.filename}</div>
-										<div class="order_list_value ml-auto">${object.price}</div>
+										<div class="order_list_details">
+											<div class="order_list_quantity">X<span>${object.quantity}</span></div>
+											<div class="order_list_value"><i class="fa fa-inr"></i><span>${object.price}</span></div>
+										</div>
 									</li>
 								</#list>
-								<li class="d-flex flex-row align-items-center justify-content-start">
+								<li class="order_list_item">
 									<div class="order_list_title">Subtotal</div>
-									<div class="order_list_value ml-auto">$59.90</div>
+									<div class="order_list_value subtotal"><i class="fa fa-inr"></i><span>0</span></div>
 								</li>
-								<li class="d-flex flex-row align-items-center justify-content-start">
+								<li class="order_list_item">
 									<div class="order_list_title">Shipping</div>
-									<div class="order_list_value ml-auto">Free</div>
+									<div class="order_list_value">Free</div>
 								</li>
-								<li class="d-flex flex-row align-items-center justify-content-start">
+								<li class="order_list_item">
 									<div class="order_list_title">Total</div>
-									<div class="order_list_value ml-auto">$59.90</div>
+									<div class="order_list_value total"><i class="fa fa-inr"></i><span>0</span></div>
 								</li>
 							</ul>
 						</div>

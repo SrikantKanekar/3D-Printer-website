@@ -64,7 +64,7 @@
                                 <!-- Status -->
                                 <div class="tracking_item_status">${order.status}</div>
                                 <!-- Quantity -->
-                                <div class="tracking_item_price">${order.price}</div>
+                                <div class="tracking_item_price"><i class="fa fa-inr"></i>${order.price}</div>
                                 <!-- Total -->
                                 <div class="tracking_item_delivery">${order.deliveryDays}</div>
                             </div>

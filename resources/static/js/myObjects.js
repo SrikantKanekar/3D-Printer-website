@@ -15,10 +15,9 @@ $(window).on("load", function (e) {
             getSortData: {
                 price: function (itemElement) {
                     var priceEle = $(itemElement)
-                        .find(".product_price")
+                        .find(".product_price span")
                         .text()
-                        .replace("$", "");
-                    return parseFloat(priceEle);
+                    return parseInt(priceEle);
                 },
                 name: function (itemElement) {
                     var nameEle = $(itemElement)

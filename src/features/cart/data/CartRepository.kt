@@ -21,4 +21,22 @@ class CartRepository(
             ?.let { it.status = NONE } ?: return false
         return userDataSource.updateUser(user)
     }
+
+    suspend fun clearCart(email: String): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == CART }
+            .forEach { it.status = NONE }
+        return userDataSource.updateUser(user)
+    }
+
+    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
+        val user = userDataSource.getUser(email)
+        if (quantity < 1) return false
+        user.objects
+            .filter { it.status == CART }
+            .find { it.id == objectId }
+            ?.let { it.quantity = quantity } ?: return false
+        return userDataSource.updateUser(user)
+    }
 }

@@ -7,6 +7,7 @@ import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
@@ -19,6 +20,8 @@ fun Application.registerCartRoutes() {
         authenticate(USER_SESSION_AUTH) {
             getCartRoute(cartRepository)
             removeFromCart(cartRepository)
+            clearCart(cartRepository)
+            updateQuantity(cartRepository)
         }
     }
 }
@@ -37,17 +40,32 @@ private fun Route.getCartRoute(cartRepository: CartRepository) {
 }
 
 private fun Route.removeFromCart(cartRepository: CartRepository) {
-    get("/cart/{id}/remove") {
-        val id = call.parameters["id"] ?: return@get call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
+    post("/cart/remove") {
+        val params = call.receiveParameters()
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
         val principal = call.principal<UserPrincipal>()!!
         val result = cartRepository.removeCartObject(principal.email, id)
-        if (result) {
-            call.respondRedirect("/cart")
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-        }
+        call.respond(result)
+    }
+}
+
+private fun Route.clearCart(cartRepository: CartRepository) {
+    post("/cart/clear") {
+        val principal = call.principal<UserPrincipal>()!!
+        val result = cartRepository.clearCart(principal.email)
+        call.respond(result)
+    }
+}
+
+private fun Route.updateQuantity(cartRepository: CartRepository) {
+    post("/cart/quantity") {
+        val params = call.receiveParameters()
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val quantity = params["quantity"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val principal = call.principal<UserPrincipal>()!!
+        val result = cartRepository.updateQuantity(principal.email, id, quantity)
+        call.respond(result)
     }
 }

@@ -16,6 +16,7 @@ data class Object(
     var status: ObjectStatus = NONE,
     var printingStatus: PrintingStatus = PENDING,
     var price: Int? = null,
+    var quantity: Int = 1,
     var timeToPrint: Int? = null, // approx printing time in minutes
     val trackingDetails: TrackingDetails = TrackingDetails(),
     @BsonId
