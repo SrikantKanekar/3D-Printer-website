@@ -77,3 +77,27 @@
     margin-top: 60px;
     margin-bottom: 60px;
 }
+
+/************
+6. 992px
+************/
+
+@media only screen and (max-width: 992px) {
+
+}
+
+/************
+11. 600px
+************/
+
+@media only screen and (max-width: 600px) {
+    .account_detail_container {
+        padding: 10px;
+    }
+    
+    .account_detail_container p {
+        font-size: 18px;
+        font-weight: 550;
+    }
+
+}

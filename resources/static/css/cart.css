@@ -54,14 +54,13 @@
     text-align: center;
 }
 
-.cart_item_image div {
-    width: 163px;
-    height: 163px;
+.cart_item_image {
+    width: 183px;
 }
 
-.cart_item_image div img {
+.cart_item_image img {
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .cart_item_name_container {
@@ -297,7 +296,7 @@
     height: 48px;
 }
 .cart_total_title {
-    width: 80%;
+    width: 70%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -327,12 +326,12 @@
 }
 
 /************
-6. 991px
+6. 992px
 ************/
 
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 992px) {
     .cart_item_name_container {
-        width: 50%;
+        width: 60%;
         padding-left: 10px;
     }
     .cart_item_name a {
@@ -343,6 +342,9 @@
     }
     .cart_item_price {
         font-size: 13px;
+    }
+    .cart_item_image {
+        width: 160px;
     }
 
     .product_quantity {
@@ -375,12 +377,77 @@
 }
 
 /************
-11. 575px
+11. 600px
 ************/
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 600px) {
+    .cart_info_col {
+        font-size: 12px;
+    }
+    .cart_item_image {
+        width: 130px;
+    }
     .cart_item_name_container {
-        width: 40%;
+        width: 50%;
         padding-left: 8px;
+    }
+    .cart_item_name a {
+        font-size: 11px;
+        font-weight: 450;
+    }
+    .cart_item_remove a {
+        font-size: 10px;
+        font-weight: 450;
+    }
+    .cart_item_price {
+        font-size: 10px;
+    }
+    .button_container {
+        margin-top: 40px;
+        padding-right: 20px;
+    }
+
+    .product_quantity {
+        width: 60px;
+        height: 40px;
+        border: solid 1.5px #d0d0d0;
+        padding-left: 30px;
+    }
+    .product_quantity span {
+        left: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .product_quantity input {
+        width: 20px;
+        height: 40px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 30px;
+        padding-left: 0px;
+    }
+    .quantity_buttons {
+        width: 12px;
+        right: 0px;
+    }
+
+    .cart_total_title {
+        width: 60%;
+    }
+    .cart_total_details {
+        width: 30%;
+    }
+    .cart_total_container {
+        margin-top: 25px;
+        padding: 20px;
+    }
+    .cart_total_title {
+        font-size: 12px;
+    }
+    .cart_total_value {
+        font-size: 10px;
+    }
+    .cart_total_quantity {
+        font-size: 10px;
     }
 }

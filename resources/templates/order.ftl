@@ -10,7 +10,7 @@
 			<div class="col">
 
 				<!-- Product Sorting -->
-				<div class="sorting_bar d-flex flex-md-row flex-column align-items-md-center justify-content-md-start">
+				<div class="sorting_bar">
 					
 					<div class="results" data-id="${order.id}" data-email="${order.userEmail}">
 						Order ID : ${order.id}
@@ -22,20 +22,18 @@
 					</div>
 
 					<#if objects?has_content>
-						<div class="sorting_container ml-md-auto">
-							<div class="sorting">
-								<ul class="item_sorting">
-									<li>
-										<span class="sorting_text">Sort by</span>
-										<i class="fa fa-chevron-down" aria-hidden="true"></i>
-										<ul>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "status" }'><span>Status</span></li>
-											<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Name</span></li>
-										</ul>
-									</li>
-								</ul>
-							</div>
+						<div class="sorting_container">
+							<ul class="item_sorting">
+								<li>
+									<span class="sorting_text">Sort by</span>
+									<i class="fa fa-chevron-down" aria-hidden="true"></i>
+									<ul>
+										<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span></li>
+										<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "status" }'><span>Status</span></li>
+										<li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Name</span></li>
+									</ul>
+								</li>
+							</ul>
 						</div>
 					</#if>
 

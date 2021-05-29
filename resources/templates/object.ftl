@@ -54,10 +54,10 @@
 						
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 							<li class="nav-item setting_title">
-								<a class="active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic Settings</a>
+								<a class="active" id="basic-tab" data-toggle="tab" href="#basic" role="tab" aria-controls="basic" aria-selected="true">Basic Setting</a>
 							</li>
 							<li class="nav-item setting_title">
-								<a id="advanced-tab" data-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="true">Advanced Settings</a>
+								<a id="advanced-tab" data-toggle="tab" href="#advanced" role="tab" aria-controls="advanced" aria-selected="true">Advanced Setting</a>
 							</li>
 						</ul>
 						

@@ -4,19 +4,13 @@
 
     <@header.header user="${user}" title="Notification" />
 
-		<div class="container">
-			<div class="row">
-				<div class="col">
-                                        	
-                    <div class="notification_content">
-                        <div class="notification_title">
-                            <a href="/notification/${notification.id}">${notification.title}</a>
-                        </div>
-                        <div class="notification_message">${notification.message}</div>
-                        <div class="notification_date">${notification.posted_at}</div>
-                    </div>
-                    
-				</div>
-			</div>
+		<div class="container">                            	
+            <div class="notification_detail_content">
+                <div class="notification_detail_title">
+                    ${notification.title}
+                </div>
+                <div class="notification_detail_message">${notification.message}</div>
+                <div class="notification_detail_date">${notification.posted_at}</div>
+            </div>
 		</div>
 </@layout.base>

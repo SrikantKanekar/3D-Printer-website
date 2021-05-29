@@ -34,7 +34,7 @@
                                     <div class="cart_item_object">
                                         
                                         <div class="cart_item_image">
-                                            <div><img src="${object.image}" alt=""/></div>
+                                            <img src="${object.image}" alt=""/>
                                         </div>
                                         
                                         <div class="cart_item_name_container">

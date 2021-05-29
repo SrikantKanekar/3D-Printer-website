@@ -118,7 +118,7 @@
 
 @media only screen and (max-width: 991px) {
     .order {
-        margin-top: 90px;
+        margin-top: 60px;
     }
 }
 
@@ -128,7 +128,36 @@
 ************/
 
 @media only screen and (max-width: 575px) {
-    .order_button {
-        width: 100%;
+    .order {
+        padding-left: 20px;
+        padding-bottom: 20px;
+        padding-right: 20px;
     }
+    .order_list_container {
+        margin-top: 40px;
+    }
+    .order_list_bar {
+        margin-bottom: 30px;
+    }
+    .order_list li:not(:last-child) {
+        margin-bottom: 30px;
+    }
+    .order_list_title{
+        font-size: 12px;
+        width: 60%;
+    }
+    
+    .order_list_quantity,
+    .order_list_value {
+        font-size: 10px;
+    }
+    .order_list_details {
+        width: 30%;
+    }
+    .order_text {
+        margin-top: 20px;
+    }
+    .order_button {
+        margin-top: 30px;
+    }    
 }

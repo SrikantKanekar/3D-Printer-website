@@ -949,7 +949,7 @@ input[type=number]::-webkit-outer-spin-button {
     }
     
     .main {
-        padding-bottom: 80px;
+        padding-bottom: 70px;
     }
 
     .footer_content {
@@ -998,14 +998,14 @@ input[type=number]::-webkit-outer-spin-button {
     .header_content {
         height: 70px;
     }
-    .logo a,
-    .header.scrolled .logo a {
+    .logo,
+    .header.scrolled .logo {
         font-size: 18px;
     }
 
     .main {
-        padding-top: 100px;
-        padding-bottom: 60px;
+        padding-top: 80px;
+        padding-bottom: 50px;
     }
 
     .button {
