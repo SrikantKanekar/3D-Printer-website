@@ -16,7 +16,7 @@
 							</div>
 							<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
 								<div class="details_image_thumbnail active" data-image="${object.image}"><img src="${object.image}" alt=""></div>
-								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpeg"><img src="/static/images/3d-image2.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpg"><img src="/static/images/3d-image2.jpg" alt=""></div>
 								<div class="details_image_thumbnail" data-image="/static/images/3d-image3.jpeg"><img src="/static/images/3d-image3.jpeg" alt=""></div>
 								<div class="details_image_thumbnail" data-image="/static/images/3d-image4.jpeg"><img src="/static/images/3d-image4.jpeg" alt=""></div>
 							</div>
@@ -129,7 +129,7 @@
 							</div>
 							<div class="details_image_thumbnails d-flex flex-row align-items-start justify-content-between">
 								<div class="details_image_thumbnail active" data-image="${object.image}"><img src="${object.image}" alt=""></div>
-								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpeg"><img src="/static/images/3d-image2.jpeg" alt=""></div>
+								<div class="details_image_thumbnail" data-image="/static/images/3d-image2.jpg"><img src="/static/images/3d-image2.jpg" alt=""></div>
 								<div class="details_image_thumbnail" data-image="/static/images/3d-image3.jpeg"><img src="/static/images/3d-image3.jpeg" alt=""></div>
 								<div class="details_image_thumbnail" data-image="/static/images/3d-image4.jpeg"><img src="/static/images/3d-image4.jpeg" alt=""></div>
 							</div>
