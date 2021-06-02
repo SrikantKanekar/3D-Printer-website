@@ -11,8 +11,8 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
 
             <!--favicon-->
-            <link rel="icon" type="image/png" href="/static/images/icons/favicon.ico"/>
-            <link rel="apple-touch-icon" type="image/png" href="/static/images/icons/favicon.ico">
+            <link rel="icon" type="image/png" href="/static/images/favicon.ico"/>
+            <link rel="apple-touch-icon" type="image/png" href="/static/images/favicon.ico">
 
             <!--bootstrap-->
             <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css">
