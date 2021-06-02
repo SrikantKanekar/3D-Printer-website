@@ -4,9 +4,10 @@
 1. Vars and Inits
 2. Set Header
 3. Init Menu
-4. Ajax Spinner
-5. Alert
-6. Form
+4. Theme icon
+5. Ajax Spinner
+6. Alert
+7. Form
 
 
 ******************************/
@@ -109,6 +110,28 @@ $(document).ready(function () {
         fs.removeClass("active");
         hambActive = false;
         menuActive = false;
+    }
+
+    /**
+     * 4. Theme icon
+     */
+    $(".theme_icon").click(function () {
+        $("html").toggleClass("light_theme");
+        updateTheme();
+    });
+
+    function updateTheme() {
+        var icon = $(".theme_icon").find("i");
+
+        if ($("html").hasClass("light_theme")) {
+            icon.removeClass("fa-sun-o");
+            icon.addClass("fa-moon-o");
+            localStorage.setItem("theme", "light_theme");
+        } else {
+            icon.removeClass("fa-moon-o");
+            icon.addClass("fa-sun-o");
+            localStorage.setItem("theme", "dark_theme");
+        }
     }
 
     /**
