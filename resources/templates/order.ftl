@@ -86,12 +86,12 @@
 							
 							<!--  title  -->
 							<div data-validate="Please enter title">
-								<input name="title" type="text" class="input" required="required">
+								<input name="title" type="text" class="input">
 							</div>
 							
 							<!-- message -->
 							<div data-validate="Please enter message">
-								<input name="message" type="text" class="input" required="required">
+								<input name="message" type="text" class="input">
 							</div>
 							
 							<div id="message_button" class="button form_submit_button"><a href="#">Send</a></div>

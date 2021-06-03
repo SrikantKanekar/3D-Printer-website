@@ -54,7 +54,7 @@
 
 									<div class="product_details">
 										<div class="product_details_content user_email">${order.userEmail}</div>
-										<div class="product_details_content price"><i class="fa fa-inr"></i><span>${order.price}<span></div>
+										<div class="product_details_content price"><i class="fa fa-inr"></i><span>${order.price}</span></div>
 									</div>
 
 									<div class="product_details">

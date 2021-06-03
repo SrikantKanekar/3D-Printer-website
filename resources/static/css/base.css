@@ -460,6 +460,7 @@ section {
     width: 20px;
     height: 20px;
     vertical-align: middle;
+    fill: var(--on-background);
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
     -o-transition: all 200ms ease;
@@ -701,6 +702,11 @@ section {
     text-align: center;
     font-size: 14px;
     font-weight: 500;
+    color: var(--on-background);
+}
+
+.copyright a {
+    font-weight: 550;
     color: var(--on-background);
 }
 
