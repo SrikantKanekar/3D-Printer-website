@@ -1,21 +1,21 @@
-window.addEventListener('pageshow', function(e){
-    var historyTraversal = e.persisted || (typeof window.performance != 'undefined' && window.performance.navigation.type === 2);
+window.addEventListener('pageshow', function (e) {
+    const historyTraversal = e.persisted || (typeof window.performance != 'undefined' && window.performance.navigation.type === 2);
     if (historyTraversal) {
         window.location.reload(false);
     }
 });
 
-$(window).on("load", function (e) {
+window.addEventListener('load', function () {
     "use strict";
 
-    /*
-        Isotope
-    */
-    var counter = $(".results span");
-    var sorting = $(".sorting_container");
-    var sortingButtons = $(".product_sorting_btn");
+    /**
+     Isotope
+     */
+    const counter = $(".results span");
+    const sorting = $(".sorting_container");
+    const sortingButtons = $(".product_sorting_btn");
 
-    var grid = $(".product_grid").isotope({
+    const grid = $(".product_grid").isotope({
         itemSelector: ".product",
         layoutMode: "fitRows",
         fitRows: {
@@ -23,22 +23,21 @@ $(window).on("load", function (e) {
         },
         getSortData: {
             status: function (itemElement) {
-                var statusText = $(itemElement).find(".status").text();
+                const statusText = $(itemElement).find(".status").text();
                 return statusOrdinal(statusText);
             },
             user: function (itemElement) {
-                var user_email = $(itemElement)
+                return $(itemElement)
                     .find(".user_email")
                     .text()
                     .toUpperCase();
-                return user_email;
             },
             price: function (itemElement) {
-                var price = $(itemElement).find(".price");
+                const price = $(itemElement).find(".price");
                 return price.children("span").text();
             },
             objects: function (itemElement) {
-                var size = $(itemElement).find(".size");
+                const size = $(itemElement).find(".size");
                 return size.children("span").text();
             },
         },
@@ -52,9 +51,9 @@ $(window).on("load", function (e) {
     // Sort based on the value from the sorting_type dropdown
     sortingButtons.each(function () {
         $(this).on("click", function () {
-            var parent = $(this).parent().parent().find(".sorting_text");
+            const parent = $(this).parent().parent().find(".sorting_text");
             parent.text($(this).text());
-            var option = $(this).attr("data-isotope-option");
+            let option = $(this).attr("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
         });
@@ -64,27 +63,27 @@ $(window).on("load", function (e) {
         admin control buttons
     */
     $(".btn-group").each(function (index, element) {
-        var product = $(element).parents(".product");
-        var status = statusOrdinal(product.find(".status").text());
+        const product = $(element).parents(".product");
+        const status = statusOrdinal(product.find(".status").text());
 
-        var confirmed = $(element).find(".confirmed").first();
-        var processing = $(element).find(".processing").first();
-        var delivering = $(element).find(".delivering").first();
-        var delivered = $(element).find(".delivered").first();
+        const confirmed = $(element).find(".confirmed").first();
+        const processing = $(element).find(".processing").first();
+        const delivering = $(element).find(".delivering").first();
+        const delivered = $(element).find(".delivered").first();
 
-        if (status == 1) {
+        if (status === 1) {
             confirmed.addClass("disabled");
         }
-        if (status == 2) {
+        if (status === 2) {
             confirmed.addClass("disabled");
             processing.addClass("disabled");
         }
-        if (status == 3) {
+        if (status === 3) {
             confirmed.addClass("disabled");
             processing.addClass("disabled");
             delivering.addClass("disabled");
         }
-        if (status == 4) {
+        if (status === 4) {
             confirmed.addClass("disabled");
             processing.addClass("disabled");
             delivering.addClass("disabled");
@@ -98,14 +97,14 @@ $(window).on("load", function (e) {
     });
 
     $(".btn-group").on("click", ".button.admin", function () {
-        var button = $(this);
-        var product = button.parents(".product");
+        const button = $(this);
+        const product = button.parents(".product");
 
-        var orderId = product.data("id");
-        var currentStatus = statusOrdinal(product.find(".status").text());
-        var buttonStatus = button.data("status");
+        const orderId = product.data("id");
+        const currentStatus = statusOrdinal(product.find(".status").text());
+        const buttonStatus = button.data("status");
 
-        if (buttonStatus == currentStatus + 1) {
+        if (buttonStatus === currentStatus + 1) {
             $.post(
                 "/admin/update/order-status",
                 {
@@ -113,7 +112,7 @@ $(window).on("load", function (e) {
                     order_status: buttonStatus,
                 },
                 function (data) {
-                    if (data == true) {
+                    if (data === true) {
                         showAlert(
                             getStatus(buttonStatus) + " Done",
                             "alert-success"
@@ -124,13 +123,13 @@ $(window).on("load", function (e) {
 
                         // update status and isotope sort order
                         product.find(".status").text(getStatus(buttonStatus));
-                        if (buttonStatus == 4) {
+                        if (buttonStatus === 4) {
                             grid.isotope("remove", product).isotope("layout");
 
                             // update count
-                            var count = parseInt(counter.text(), 10) - 1;
+                            const count = parseInt(counter.text(), 10) - 1;
                             counter.text(count);
-                            if (count == 0) sorting.hide();
+                            if (count === 0) sorting.hide();
                         }
                         grid.isotope("updateSortData").isotope();
                     } else {
@@ -145,8 +144,8 @@ $(window).on("load", function (e) {
             if (buttonStatus > currentStatus + 1) {
                 showAlert(
                     "Please complete " +
-                        getStatus(currentStatus + 1) +
-                        " first",
+                    getStatus(currentStatus + 1) +
+                    " first",
                     "alert-danger"
                 );
             } else {
@@ -159,18 +158,18 @@ $(window).on("load", function (e) {
     });
 
     function statusOrdinal(status) {
-        if (status == "PLACED") return 0;
-        if (status == "CONFIRMED") return 1;
-        if (status == "PROCESSING") return 2;
-        if (status == "DELIVERING") return 3;
-        if (status == "DELIVERED") return 4;
+        if (status === "PLACED") return 0;
+        if (status === "CONFIRMED") return 1;
+        if (status === "PROCESSING") return 2;
+        if (status === "DELIVERING") return 3;
+        if (status === "DELIVERED") return 4;
     }
 
     function getStatus(status) {
-        if (status == 0) return "PLACED";
-        if (status == 1) return "CONFIRMED";
-        if (status == 2) return "PROCESSING";
-        if (status == 3) return "DELIVERING";
-        if (status == 4) return "DELIVERED";
+        if (status === 0) return "PLACED";
+        if (status === 1) return "CONFIRMED";
+        if (status === 2) return "PROCESSING";
+        if (status === 3) return "DELIVERING";
+        if (status === 4) return "DELIVERED";
     }
 });

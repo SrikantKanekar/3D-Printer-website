@@ -1,5 +1,5 @@
-"use strict";
-(function (document, window) {
+document.addEventListener('DOMContentLoaded', function () {
+    "use strict";
 
     const hasAdvancedUpload = (function () {
         const div = document.createElement("div");
@@ -202,4 +202,4 @@
         input.classList.remove("has_focus");
     });
 
-})(document, window);
+});

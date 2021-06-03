@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .results {
     width: 70%;
     font-size: 14px;
@@ -22,6 +23,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .item_sorting > li {
     display: inline-block;
     width: 191px;
@@ -36,18 +38,22 @@
     font-weight: 400;
     color: var(--on-surface);
 }
+
 .item_sorting > li:last-child {
     margin-right: 0;
 }
+
 .num_sorting_text {
     padding-right: 11px;
 }
+
 .item_sorting li i {
     float: right;
     line-height: 32px;
     font-size: 10px;
     color: #787878;
 }
+
 .item_sorting li ul {
     display: block;
     position: absolute;
@@ -65,17 +71,20 @@
     -o-transition: opacity 0.3s ease;
     transition: all 0.3s ease;
 }
+
 .item_sorting > li:hover ul {
     visibility: visible;
     opacity: 1;
     top: calc(100% + 1px);
 }
+
 .item_sorting li ul li {
     display: block;
     text-align: left;
     padding-left: 15px;
     padding-right: 15px;
 }
+
 .item_sorting li ul li span {
     display: block;
     height: 36px;
@@ -89,12 +98,15 @@
     -o-transition: opacity 0.3s ease;
     transition: all 0.3s ease;
 }
+
 .item_sorting li ul li span:hover {
     color: #b5aec4;
 }
+
 .item_sorting li ul li:last-child span {
     border-bottom: none;
 }
+
 .item_sorting li span:nth-child(2) {
     margin-left: 63px;
 }
@@ -106,13 +118,16 @@
     width: calc((100% - 90px) / 4);
     margin-bottom: 59px;
 }
+
 .product_image {
     width: 100%;
 }
+
 .product_image img {
     width: 100%;
     height: auto;
 }
+
 .product_content {
     width: 100%;
     padding-top: 36px;
@@ -120,12 +135,14 @@
     padding-left: 5px;
     padding-right: 5px;
 }
+
 .product_title {
     width: 90%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .product_title a {
     font-size: 18px;
     font-weight: 500;
@@ -136,9 +153,11 @@
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
+
 .product_title a:hover {
     color: var(--primary);
 }
+
 .product_price {
     font-size: 16px;
     font-weight: 500;
@@ -155,6 +174,7 @@
     .item_sorting > li {
         width: 150px;
     }
+
     .product {
         width: calc((100% - 30px) / 2);
     }
@@ -169,6 +189,7 @@
         width: 55%;
         font-size: 13px;
     }
+
     .item_sorting > li {
         width: 120px;
         height: 34px;
@@ -176,6 +197,7 @@
         padding-right: 9px;
         font-size: 13px;
     }
+
     .product {
         width: 100%;
     }

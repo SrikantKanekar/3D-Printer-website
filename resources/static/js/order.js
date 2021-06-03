@@ -1,12 +1,12 @@
-$(window).on("load", function (e) {
+window.addEventListener('load', function () {
     "use strict";
 
-    /*
-        Isotope
-    */
-    var sortingButtons = $(".product_sorting_btn");
+    /**
+     Isotope
+     */
+    const sortingButtons = $(".product_sorting_btn");
 
-    var grid = $(".product_grid").isotope({
+    const grid = $(".product_grid").isotope({
         itemSelector: ".product",
         layoutMode: "fitRows",
         fitRows: {
@@ -14,15 +14,14 @@ $(window).on("load", function (e) {
         },
         getSortData: {
             status: function (itemElement) {
-                var statusText = $(itemElement).find(".product_status").text();
+                const statusText = $(itemElement).find(".product_status").text();
                 return printingStatusOrdinal(statusText);
             },
             name: function (itemElement) {
-                var nameEle = $(itemElement)
+                return $(itemElement)
                     .find(".product_title")
                     .text()
                     .toUpperCase();
-                return nameEle;
             },
         },
         animationOptions: {
@@ -35,9 +34,9 @@ $(window).on("load", function (e) {
     // Sort based on the value from the sorting_type dropdown
     sortingButtons.each(function () {
         $(this).on("click", function () {
-            var parent = $(this).parent().parent().find(".sorting_text");
+            const parent = $(this).parent().parent().find(".sorting_text");
             parent.text($(this).text());
-            var option = $(this).attr("data-isotope-option");
+            let option = $(this).attr("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
         });
@@ -47,16 +46,16 @@ $(window).on("load", function (e) {
         admin control buttons
     */
     $(".btn-group").each(function (index, element) {
-        var product = $(element).parents(".product");
-        var status = printingStatusOrdinal(product.data("status"));
+        const product = $(element).parents(".product");
+        const status = printingStatusOrdinal(product.data("status"));
 
-        var printing = $(element).find(".printing").first();
-        var printed = $(element).find(".printed").first();
+        const printing = $(element).find(".printing").first();
+        const printed = $(element).find(".printed").first();
 
-        if (status == 1) {
+        if (status === 1) {
             printing.addClass("disabled");
         }
-        if (status == 2) {
+        if (status === 2) {
             printing.addClass("disabled");
             printed.addClass("disabled");
         }
@@ -68,15 +67,15 @@ $(window).on("load", function (e) {
     });
 
     $(".btn-group").on("click", ".button.admin", function () {
-        var orderId = $(".results").data("id");
+        const orderId = $(".results").data("id");
 
-        var button = $(this);
-        var product = button.parents(".product");
-        var objectId = product.data("id");
-        var currentStatus = printingStatusOrdinal(product.data("status"));
-        var buttonStatus = button.data("status");
+        const button = $(this);
+        const product = button.parents(".product");
+        const objectId = product.data("id");
+        const currentStatus = printingStatusOrdinal(product.data("status"));
+        const buttonStatus = button.data("status");
 
-        if (buttonStatus == currentStatus + 1) {
+        if (buttonStatus === currentStatus + 1) {
             $.post(
                 "/order/update/printing-status",
                 {
@@ -85,7 +84,7 @@ $(window).on("load", function (e) {
                     printing_status: buttonStatus,
                 },
                 function (data) {
-                    if (data == true) {
+                    if (data === true) {
                         showAlert(
                             getPrintingStatus(buttonStatus) + " Done",
                             "alert-success"
@@ -109,8 +108,8 @@ $(window).on("load", function (e) {
             if (buttonStatus > currentStatus + 1) {
                 showAlert(
                     "Please complete " +
-                        getPrintingStatus(currentStatus + 1) +
-                        " first",
+                    getPrintingStatus(currentStatus + 1) +
+                    " first",
                     "alert-danger"
                 );
             } else {
@@ -123,15 +122,15 @@ $(window).on("load", function (e) {
     });
 
     function printingStatusOrdinal(status) {
-        if (status == "PENDING") return 0;
-        if (status == "PRINTING") return 1;
-        if (status == "PRINTED") return 2;
+        if (status === "PENDING") return 0;
+        if (status === "PRINTING") return 1;
+        if (status === "PRINTED") return 2;
     }
 
     function getPrintingStatus(status) {
-        if (status == 0) return "PENDING";
-        if (status == 1) return "PRINTING";
-        if (status == 2) return "PRINTED";
+        if (status === 0) return "PENDING";
+        if (status === 1) return "PRINTING";
+        if (status === 2) return "PRINTED";
     }
 
     /**
@@ -145,11 +144,11 @@ $(window).on("load", function (e) {
     $("#message_form").submit(function (e) {
         e.preventDefault();
 
-        var email = $(".results").data("email");
-        var url = $(this).attr("action");
-        var input = $(this).find(".input");
+        const email = $(".results").data("email");
+        const url = $(this).attr("action");
+        const input = $(this).find(".input");
 
-        var check = checkValidation(input);
+        const check = checkValidation(input);
         if (check) {
             $.post(
                 url,

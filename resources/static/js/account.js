@@ -1,16 +1,18 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
     /**
      * Collapsible
      */
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
+    const coll = document.getElementsByClassName("collapsible");
+    let i;
 
     for (i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function () {
+
             this.classList.toggle("active");
-            var content = this.nextElementSibling;
+            const content = this.nextElementSibling;
+
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
             } else {
@@ -30,14 +32,14 @@ $(document).ready(function () {
     $("#update_form").submit(function (e) {
         e.preventDefault();
 
-        var url = $(this).attr("action");
-        var input = $(this).find(".input");
-        var message = $(this).find(".form_message");
+        const url = $(this).attr("action");
+        const input = $(this).find(".input");
+        const message = $(this).find(".form_message");
 
-        var check = checkValidation(input);
+        const check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
-                if (data == "updated") {
+                if (data === "updated") {
                     message.addClass("success");
                 } else {
                     message.removeClass("success");
@@ -57,14 +59,14 @@ $(document).ready(function () {
 
     $("#change_password_form").submit(function (e) {
         e.preventDefault();
-        var url = $(this).attr("action");
-        var input = $(this).find(".input");
-        var message = $(this).find(".form_message");
+        const url = $(this).attr("action");
+        const input = $(this).find(".input");
+        const message = $(this).find(".form_message");
 
-        var check = checkValidation(input);
+        const check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
-                if (data == "updated") {
+                if (data === "updated") {
                     message.addClass("success");
                 } else {
                     message.removeClass("success");

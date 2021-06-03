@@ -1,9 +1,6 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-    /**
-     * Form
-     */ 
     $("#login_button").click(function (e) {
         e.preventDefault();
         $("#auth_form").submit();
@@ -12,11 +9,11 @@ $(document).ready(function () {
     $("#auth_form").submit(function (e) {
         e.preventDefault();
 
-        var url = $(this).attr("action");
-        var input = $(this).find(".input");
-        var message = $(this).find(".form_message");
+        const url = $(this).attr("action");
+        const input = $(this).find(".input");
+        const message = $(this).find(".form_message");
 
-        var check = checkValidation(input);
+        const check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
                 if (data.startsWith("/")) {

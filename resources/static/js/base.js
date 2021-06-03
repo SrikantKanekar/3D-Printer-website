@@ -1,25 +1,23 @@
 /******************************
 
+ 1. Vars and Inits
+ 2. Set Header
+ 3. Init Menu
+ 4. Theme icon
+ 5. Ajax Spinner
+ 6. Alert
+ 7. Form
 
-1. Vars and Inits
-2. Set Header
-3. Init Menu
-4. Theme icon
-5. Ajax Spinner
-6. Alert
-7. Form
-
-
-******************************/
-$(document).ready(function () {
+ ******************************/
+document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
     /**
      * 1. Vars and Inits
      */
-    var header = $(".header");
-    var hambActive = false;
-    var menuActive = false;
+    const header = $(".header");
+    let hambActive = false;
+    let menuActive = false;
 
     setHeader();
 
@@ -72,22 +70,22 @@ $(document).ready(function () {
 
             //Handle page menu
             if ($(".page_menu_item").length) {
-                var items = $(".page_menu_item");
+                const items = $(".page_menu_item");
                 items.each(function () {
-                    var item = $(this);
+                    const item = $(this);
 
                     item.on("click", function (evt) {
                         if (item.hasClass("has-children")) {
                             evt.preventDefault();
                             evt.stopPropagation();
-                            var subItem = item.find("> ul");
+                            const subItem = item.find("> ul");
                             if (subItem.hasClass("active")) {
                                 subItem.toggleClass("active");
-                                TweenMax.to(subItem, 0.3, { height: 0 });
+                                TweenMax.to(subItem, 0.3, {height: 0});
                             } else {
                                 subItem.toggleClass("active");
-                                TweenMax.set(subItem, { height: "auto" });
-                                TweenMax.from(subItem, 0.3, { height: 0 });
+                                TweenMax.set(subItem, {height: "auto"});
+                                TweenMax.from(subItem, 0.3, {height: 0});
                             }
                         } else {
                             evt.stopPropagation();
@@ -99,14 +97,14 @@ $(document).ready(function () {
     }
 
     function openMenu() {
-        var fs = $(".menu");
+        const fs = $(".menu");
         fs.addClass("active");
         hambActive = true;
         menuActive = true;
     }
 
     function closeMenu() {
-        var fs = $(".menu");
+        const fs = $(".menu");
         fs.removeClass("active");
         hambActive = false;
         menuActive = false;
@@ -121,7 +119,7 @@ $(document).ready(function () {
     });
 
     function updateTheme() {
-        var icon = $(".theme_icon").find("i");
+        const icon = $(".theme_icon").find("i");
 
         if ($("html").hasClass("light_theme")) {
             icon.removeClass("fa-sun-o");
@@ -146,7 +144,7 @@ $(document).ready(function () {
     });
 
     $(document).ajaxError(function (event, xhr, setting, error) {
-        showAlert("an error occoured", "alert-danger");
+        showAlert("an error occurred", "alert-danger");
         console.log(error);
     });
 });
@@ -155,7 +153,7 @@ $(document).ready(function () {
  * 5. Alert
  */
 function showAlert(text, alertClass) {
-    var button =
+    const button =
         '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
     $(".alert").text(text);
     $(".alert").append(button);
@@ -177,38 +175,38 @@ $(".alert").on("close.bs.alert", function (e) {
  * 6. Form
  */
 function showValidate(input) {
-    var field = $(input).parent();
+    const field = $(input).parent();
     $(field).addClass("alert-validate");
 }
 
 function hideValidate(input) {
-    var field = $(input).parent();
+    const field = $(input).parent();
     $(field).removeClass("alert-validate");
 }
 
 function validate(input) {
-    if ($(input).attr("type") == "email") {
+    if ($(input).attr("type") === "email") {
         if (
             $(input)
                 .val()
                 .trim()
                 .match(
-                    /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/
+                    /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(]?)$/
                 ) == null
         ) {
             return false;
         }
     } else {
-        if ($(input).val().trim() == "") {
+        if ($(input).val().trim() === "") {
             return false;
         }
     }
 }
 
 function checkValidation(input) {
-    var check = true;
-    for (var i = 0; i < input.length; i++) {
-        if (validate(input[i]) == false) {
+    let check = true;
+    for (let i = 0; i < input.length; i++) {
+        if (validate(input[i]) === false) {
             showValidate(input[i]);
             check = false;
         }
@@ -222,9 +220,9 @@ $(".input").each(function () {
     });
 });
 
-var showPass = 0;
+let showPass = 0;
 $(".btn-show-pass").on("click", function () {
-    if (showPass == 0) {
+    if (showPass === 0) {
         $(this).next("input").attr("type", "text");
         $(this).find("i").removeClass("fa-eye");
         $(this).find("i").addClass("fa-eye-slash");

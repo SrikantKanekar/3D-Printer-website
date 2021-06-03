@@ -16,7 +16,7 @@
                             Order
                         </div>
                         <div class="info_col info_col_status">
-                            Status 
+                            Status
                         </div>
                         <div class="info_col info_col_price">
                             Price
@@ -32,11 +32,11 @@
                 <div class="row">
                     <div class="col">
                         <div class="item">
-                            
+
                             <!-- Order -->
                             <div class="item_order">
                                 <div class="item_image">
-                                    <img src="${order.image}" alt="" />
+                                    <img src="${order.image}" alt=""/>
                                 </div>
                                 <div class="item_name_container">
                                     <div class="item_name">
@@ -47,13 +47,13 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <!-- Status -->
                             <div class="item_status">${order.status}</div>
-                            
+
                             <!-- price -->
                             <div class="item_price"><i class="fa fa-inr"></i>${order.price}</div>
-                            
+
                             <!-- delivery -->
                             <div class="item_delivery">${order.deliveryDays} June</div>
                         </div>

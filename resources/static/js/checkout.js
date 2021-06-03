@@ -1,4 +1,4 @@
-$(document).ready(function () {
+document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
     calculateTotal();
@@ -7,14 +7,14 @@ $(document).ready(function () {
      * Calculate total
      */
     function calculateTotal() {
-        var items = $(".object_list");
-        var total = 0;
+        const items = $(".object_list");
+        let total = 0;
         items.each(function (index, element) {
-            var price = $(this)
+            const price = $(this)
                 .find(".order_list_value span")
                 .text()
                 .replace(",", "");
-            var quantity = $(this).find(".order_list_quantity span").text();
+            const quantity = $(this).find(".order_list_quantity span").text();
 
             total += parseInt(price) * parseInt(quantity);
         });
@@ -31,10 +31,10 @@ $(document).ready(function () {
     $("#checkout_form").submit(function (e) {
         e.preventDefault();
 
-        var url = $(this).attr("action");
-        var input = $(this).find(".input");
+        const url = $(this).attr("action");
+        const input = $(this).find(".input");
 
-        var check = checkValidation(input);
+        const check = checkValidation(input);
         if (check) {
             $.post(url, $(this).serialize(), function (data) {
                 if (data.startsWith("/")) {

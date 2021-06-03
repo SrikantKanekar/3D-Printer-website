@@ -1,12 +1,12 @@
-$(window).on("load", function (e) {
+window.addEventListener('load', function () {
     "use strict";
 
-    var counter = $(".results span");
-    var sorting = $(".sorting_container");
-    var sortingButtons = $(".product_sorting_btn");
+    const counter = $(".results span");
+    const sorting = $(".sorting_container");
+    const sortingButtons = $(".product_sorting_btn");
 
     if ($(".product_grid").length) {
-        var grid = $(".product_grid").isotope({
+        const grid = $(".product_grid").isotope({
             itemSelector: ".product",
             layoutMode: "fitRows",
             fitRows: {
@@ -14,17 +14,16 @@ $(window).on("load", function (e) {
             },
             getSortData: {
                 price: function (itemElement) {
-                    var priceEle = $(itemElement)
+                    const priceEle = $(itemElement)
                         .find(".product_price span")
-                        .text()
+                        .text();
                     return parseInt(priceEle);
                 },
                 name: function (itemElement) {
-                    var nameEle = $(itemElement)
+                    return $(itemElement)
                         .find(".product_title")
                         .text()
                         .toUpperCase();
-                    return nameEle;
                 },
             },
             animationOptions: {
@@ -37,9 +36,9 @@ $(window).on("load", function (e) {
         // Sort based on the value from the sorting_type dropdown
         sortingButtons.each(function () {
             $(this).on("click", function () {
-                var parent = $(this).parent().parent().find(".sorting_text");
+                const parent = $(this).parent().parent().find(".sorting_text");
                 parent.text($(this).text());
-                var option = $(this).attr("data-isotope-option");
+                let option = $(this).attr("data-isotope-option");
                 option = JSON.parse(option);
                 grid.isotope(option);
             });
@@ -51,21 +50,21 @@ $(window).on("load", function (e) {
         $(".product_add_to_cart a").click(function (e) {
             e.preventDefault();
 
-            var product = $(this).parents(".product");
-            var id = product.data("id");
-            var url = $(this).attr("href");
+            const product = $(this).parents(".product");
+            const id = product.data("id");
+            const url = $(this).attr("href");
 
-            $.post(url, { id: id }, function (data) {
+            $.post(url, {id: id}, function (data) {
                 if (data.startsWith("/")) {
                     window.location.href = data;
-                } else if (data == "true") {
+                } else if (data === "true") {
                     // remove product
                     grid.isotope("remove", product).isotope("layout");
 
                     // update count
-                    var count = parseInt(counter.text(), 10) - 1;
+                    const count = parseInt(counter.text(), 10) - 1;
                     counter.text(count);
-                    if (count == 0) sorting.hide();
+                    if (count === 0) sorting.hide();
                 } else {
                     showAlert(
                         "error, please try again",
