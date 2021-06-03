@@ -61,9 +61,9 @@
 									<#if admin?has_content>
 										<div class="product_id">ID : ${object.id}</div>
 										<div class='btn-group' role='group'>
-											<div data-status="0" class="admin_button pending disabled"><a href="">Pending</a></div>
-											<div data-status="1" class="admin_button printing"><a href="">Printing</a></div>
-											<div data-status="2" class="admin_button printed"><a href="">Printed</a></div>
+											<div data-status="0" class="button admin pending disabled"><a href="">Pending</a></div>
+											<div data-status="1" class="button admin printing"><a href="">Printing</a></div>
+											<div data-status="2" class="button admin printed"><a href="">Printed</a></div>
 										</div>
 									</#if>
 								</div>

@@ -63,11 +63,11 @@
 									</div>
 									
 									<div class='btn-group' role='group'>
-										<div data-status="0" class="admin_button placed disabled"><a href="">Placed</a></div>
-										<div data-status="1" class="admin_button confirmed"><a href="">Confirmed</a></div>
-										<div data-status="2" class="admin_button processing"><a href="">Processing</a></div>
-										<div data-status="3" class="admin_button delivering"><a href="">Delivering</a></div>
-										<div data-status="4" class="admin_button delivered"><a href="">Delivered</a></div>
+										<div data-status="0" class="button admin placed disabled"><a href="">Placed</a></div>
+										<div data-status="1" class="button admin confirmed"><a href="">Confirmed</a></div>
+										<div data-status="2" class="button admin processing"><a href="">Processing</a></div>
+										<div data-status="3" class="button admin delivering"><a href="">Delivering</a></div>
+										<div data-status="4" class="button admin delivered"><a href="">Delivered</a></div>
 									</div>
 								</div>
 							</div>

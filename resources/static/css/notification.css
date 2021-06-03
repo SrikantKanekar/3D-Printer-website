@@ -22,22 +22,21 @@
 .notification_title a {
     font-size: 26px;
     font-weight: 550;
-    color: #1b1b1b;
+    color: var(--on-background);
     line-height: 1.1;
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
 .notification_title a:hover {
-    color: #e95a5a;
+    color: var(--primary);
 }
 
 .notification_message {
     font-size: 16px;
     font-weight: 500;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 13px;
     width: 60%;
     white-space: nowrap;
@@ -48,13 +47,13 @@
 .notification_date {
     font-size: 14px;
     font-weight: 450;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 5px;
     text-align: right;
 }
 
 .divider {
-    border-top: 1px solid #6c6a74;
+    border-top: 1px solid var(--on-surface);
 }
 
 /*********************
@@ -68,10 +67,9 @@
 .notification_detail_title {
     font-size: 30px;
     font-weight: 550;
-    color: #1b1b1b;
+    color: var(--on-background);
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
@@ -79,14 +77,14 @@
 .notification_detail_message {
     font-size: 18px;
     font-weight: 500;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 13px;
 }
 
 .notification_detail_date {
     font-size: 14px;
     font-weight: 450;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 10px;
     text-align: right;
 }

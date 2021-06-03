@@ -1,8 +1,8 @@
 "use strict";
+(function (document, window) {
 
-(function (document, window, index) {
-    var isAdvancedUpload = (function () {
-        var div = document.createElement("div");
+    const hasAdvancedUpload = (function () {
+        const div = document.createElement("div");
         return (
             ("draggable" in div || ("ondragstart" in div && "ondrop" in div)) &&
             "FormData" in window &&
@@ -10,34 +10,23 @@
         );
     })();
 
-    var form = document.querySelector(".box");
-    var input = form.querySelector('input[type="file"]');
-    var filename = form.querySelector(".box__uploading span");
-    var errorMsg = form.querySelector(".box__error span");
-    var restart = form.querySelector(".box__restart");
-    var droppedFile = false;
-    var progressBar = document.querySelector(".progress-bar");
-
-    var showFile = function (name) {
-        filename.textContent = name;
-    };
-
-    var triggerFormSubmit = function () {
-        var event = document.createEvent("HTMLEvents");
-        event.initEvent("submit", true, false);
-        form.dispatchEvent(event);
-    };
+    const form = document.querySelector(".box");
+    const input = form.querySelector('input[type="file"]');
+    const filename = form.querySelector(".box_uploading span");
+    const errorMsg = form.querySelector(".box_error span");
+    const restart = form.querySelector(".box_restart");
+    const progressBar = document.querySelector(".progress-bar");
+    let droppedFile = false;
 
     // automatically submit the form on file select
     input.addEventListener("change", function (e) {
-        showFile(e.target.files[0].name);
-        triggerFormSubmit();
+        updateFilename(e.target.files[0].name);
+        submitForm();
     });
 
     // drag and drop files if the feature is available
-    if (isAdvancedUpload) {
-        // letting the CSS part to know drag&drop is supported by the browser
-        form.classList.add("has-advanced-upload");
+    if (hasAdvancedUpload) {
+        form.classList.add("has_advanced_upload");
         [
             "drag",
             "dragstart",
@@ -55,39 +44,41 @@
 
         ["dragover", "dragenter"].forEach(function (event) {
             form.addEventListener(event, function () {
-                form.classList.add("is-dragover");
+                form.classList.add("is_dragover");
             });
         });
 
         ["dragleave", "dragend", "drop"].forEach(function (event) {
             form.addEventListener(event, function () {
-                form.classList.remove("is-dragover");
+                form.classList.remove("is_dragover");
             });
         });
 
         form.addEventListener("drop", function (e) {
-            droppedFile = e.dataTransfer.files[0].name; // the file that was dropped
-            showFile(droppedFile);
-            triggerFormSubmit();
+            droppedFile = e.dataTransfer.files[0].name;
+            updateFilename(droppedFile);
+            submitForm();
         });
     }
 
     // if the form was submitted
     form.addEventListener("submit", function (e) {
+
         // preventing the duplicate submissions if the current one is in progress
-        if (form.classList.contains("is-uploading")) return false;
+        if (form.classList.contains("is_uploading")) return false;
+
         uploadStart();
 
-        if (isAdvancedUpload) {
-            // ajax file upload for modern browsers
+        // ajax file upload for modern browsers
+        if (hasAdvancedUpload) {
             e.preventDefault();
-            var formData = new FormData(form);
+            const formData = new FormData(form);
 
             if (droppedFile) {
                 formData.append(input.getAttribute("name"), droppedFile);
             }
 
-            var request = new XMLHttpRequest();
+            const request = new XMLHttpRequest();
             request.open(
                 form.getAttribute("method"),
                 form.getAttribute("action"),
@@ -96,34 +87,29 @@
             request.upload.addEventListener(
                 "progress",
                 function (e) {
-                    handleProgress(e);
+                    updateProgress(e);
                 },
                 false
             );
             request.onreadystatechange = function () {
-                if (request.readyState == 4) {
-                    if (request.status == 200) {
-                        var data = JSON.parse(request.responseText);
-                        handleData(data);
+                if (request.readyState === 4) {
+                    if (request.status === 200) {
+                        let data = JSON.parse(request.responseText);
+                        handleSuccess(data);
                     } else {
                         handleError(request.responseText);
                     }
                 }
             };
 
-            //setTimeout(() => {
+            setTimeout(() => {
                 request.send(formData);
-            //}, 3000);
+            }, 1500);
+
         } else {
             // fallback Ajax solution upload for older browsers
-            var iframeName = "uploadiframe" + new Date().getTime(),
-                iframe = document.createElement("iframe");
-
-            $iframe = $(
-                '<iframe name="' +
-                    iframeName +
-                    '" style="display: none;"></iframe>'
-            );
+            let iframeName = "uploadiframe" + new Date().getTime()
+            let iframe = document.createElement("iframe");
 
             iframe.setAttribute("name", iframeName);
             iframe.style.display = "none";
@@ -132,9 +118,9 @@
             form.setAttribute("target", iframeName);
 
             iframe.addEventListener("load", function () {
-                var data = JSON.parse(iframe.contentDocument.body.innerHTML);
-                form.classList.remove("is-uploading");
-                form.classList.add(data == true ? "is-success" : "is-error");
+                let data = JSON.parse(iframe.contentDocument.body.innerHTML);
+                form.classList.remove("is_uploading");
+                form.classList.add(data === true ? "is_success" : "is_error");
                 form.removeAttribute("target");
                 if (!data) errorMsg.textContent = data;
                 iframe.parentNode.removeChild(iframe);
@@ -142,69 +128,78 @@
         }
     });
 
-    var handleProgress = function (e) {
-        if (e.lengthComputable) {
-            var progress = (e.loaded / e.total) * 100;
-            progressBar.setAttribute("aria-valuenow", progress);
-            progressBar.setAttribute("style", "width:" + progress + "%");
-            if (progress == 100) uploadDone();
-        }
-    };
+    function updateFilename(name) {
+        filename.textContent = name;
+    }
 
-    var handleData = function (data) {
-        slicingDone(data);
-        if (data.success == "true") {
-            //setTimeout(function () {
+    function submitForm() {
+        const event = document.createEvent("HTMLEvents");
+        event.initEvent("submit", true, false);
+        form.dispatchEvent(event);
+    }
+
+    function updateProgress(e) {
+        if (e.lengthComputable) {
+            const progress = (e.loaded / e.total) * 100;
+            progressBar.setAttribute("aria-valuenow", progress.toString());
+            progressBar.setAttribute("style", "width:" + progress + "%");
+            if (progress === 100) uploadComplete();
+        }
+    }
+
+    function handleSuccess(data) {
+        slicingComplete(data);
+        if (data.success === "true") {
+            setTimeout(function () {
                 window.location.href = "/object/" + data.id;
                 clearPage();
-            //}, 2000);
+            }, 1500);
         }
-    };
+    }
 
-    var uploadStart = function () {
-        form.classList.add("is-uploading");
-        form.classList.remove("is-error");
-    };
+    function handleError(errorMessage) {
+        form.classList.remove("is_uploading");
+        form.classList.remove("is_slicing");
+        form.classList.add("is_error");
+        errorMsg.textContent = errorMessage;
+    }
 
-    var uploadDone = function () {
-        form.classList.remove("is-uploading");
-        form.classList.add("is-slicing");
-    };
+    function uploadStart() {
+        form.classList.add("is_uploading");
+        form.classList.remove("is_error");
+    }
 
-    var slicingDone = function (data) {
-        form.classList.remove("is-slicing");
-        if (data.success == "true") {
-            form.classList.add("is-success");
+    function slicingComplete(data) {
+        form.classList.remove("is_slicing");
+        if (data.success === "true") {
+            form.classList.add("is_success");
         } else {
-            form.classList.add("is-error");
+            form.classList.add("is_error");
             errorMsg.textContent = "error creating object";
         }
-    };
+    }
 
-    var handleError = function (errorMessage) {
-        form.classList.remove("is-uploading");
-        form.classList.remove("is-slicing");
-        form.classList.add("is-error");
-        errorMsg.textContent = errorMessage;
-    };
+    function uploadComplete() {
+        form.classList.remove("is_uploading");
+        form.classList.add("is_slicing");
+    }
 
-    var clearPage = function () {
+    function clearPage() {
         form.reset();
         droppedFile = false;
-    };
+    }
 
-    // restart the form if has a state of error
     restart.addEventListener("click", function (e) {
         e.preventDefault();
-        form.classList.remove("is-error", "is-success");
+        form.classList.remove("is_error", "is_success");
     });
 
     // Firefox focus bug fix for file input
     input.addEventListener("focus", function () {
-        input.classList.add("has-focus");
+        input.classList.add("has_focus");
+    });
+    input.addEventListener("blur", function () {
+        input.classList.remove("has_focus");
     });
 
-    input.addEventListener("blur", function () {
-        input.classList.remove("has-focus");
-    });
-})(document, window, 0);
+})(document, window);

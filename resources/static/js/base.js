@@ -135,14 +135,14 @@ $(document).ready(function () {
     }
 
     /**
-     * 4. Ajax spinner
+     * 4. Ajax call spinner
      */
     $(document).ajaxSend(function () {
-        $("#overlay").fadeIn(300);
+        $(".spinner_overlay").fadeIn(300);
     });
 
     $(document).ajaxComplete(function () {
-        $("#overlay").fadeOut(300);
+        $(".spinner_overlay").fadeOut(300);
     });
 
     $(document).ajaxError(function (event, xhr, setting, error) {

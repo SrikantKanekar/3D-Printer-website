@@ -1,80 +1,74 @@
-.upload_box {
-    text-align: center;
-    margin: 0 auto;
-}
-
 .box {
     font-size: 1.25rem;
-    background-color: #f8f8f8;
-    position: relative;
+    background-color: var(--surface);
+    text-align: center;
     padding: 100px 20px;
 }
 
-.box.has-advanced-upload {
-    outline: 2px dashed #a5a5a5;
+.box.has_advanced_upload {
+    outline: 2px dashed var(--on-surface);
     outline-offset: -10px;
     -webkit-transition: outline-offset 0.15s ease-in-out,
-        background-color 0.15s linear;
+    background-color 0.15s linear;
     transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
 }
 
-.box.is-dragover {
+.box.is_dragover {
     outline-offset: -20px;
-    outline-color: #767676;
-    background-color: #f8f8f8;
+    outline-color: var(--on-surface);
+    background-color: var(--surface);
 }
 
-.box__dragndrop,
-.box__icon {
+.box_dragndrop,
+.box_icon {
     display: none;
 }
 
-.box.has-advanced-upload .box__dragndrop {
+.box.has_advanced_upload .box_dragndrop {
     display: inline;
 }
 
-.box.has-advanced-upload .box__icon {
+.box.has_advanced_upload .box_icon {
     width: 100%;
     height: 80px;
-    fill: #767676;
+    fill: var(--on-surface);
     display: block;
     margin-bottom: 40px;
 }
 
-.box.is-uploading .box__input,
-.box.is-slicing .box__input,
-.box.is-success .box__input,
-.box.is-error .box__input {
+.box.is_uploading .box_upload,
+.box.is_slicing .box_upload,
+.box.is_success .box_upload,
+.box.is_error .box_upload {
     visibility: hidden;
 }
 
-.box__uploading,
-.box__slicing,
-.box__success,
-.box__error {
+.box_uploading,
+.box_slicing,
+.box_success,
+.box_error {
     display: none;
 }
 
-.box.is-uploading .box__uploading,
-.box.box.is-slicing .box__slicing,
-.box.is-success .box__success,
-.box.is-error .box__error {
+.box.is_uploading .box_uploading,
+.box.is_slicing .box_slicing,
+.box.is_success .box_success,
+.box.is_error .box_error {
     display: block;
     position: absolute;
     top: 50%;
     right: 0;
     left: 0;
-
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
 }
 
-.box__slicing,
-.box__uploading {
+.box_slicing,
+.box_uploading {
     font-style: italic;
 }
 
-.box__success {
+.box_success {
     -webkit-animation: appear-from-inside 0.25s ease-in-out;
     animation: appear-from-inside 0.25s ease-in-out;
 }
@@ -103,25 +97,25 @@
     }
 }
 
-.box__restart {
+.box_restart {
     font-weight: 700;
 }
 
-.box__restart:focus,
-.box__restart:hover {
-    color: #767676;
+.box_restart:focus,
+.box_restart:hover {
+    color: var(--on-surface);
 }
 
-.js .box__file {
-    width: 0.1px;
-    height: 0.1px;
+.js .box_input {
+    width: 1px;
+    height: 1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
 }
 
-.js .box__file + label {
+.js .box_input + label {
     max-width: 80%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -130,48 +124,40 @@
     overflow: hidden;
 }
 
-.js .box__file + label:hover strong,
-.box__file:focus + label strong,
-.box__file.has-focus + label strong {
-    color: #767676;
+.js .box_input + label:hover strong,
+.box_input:focus + label strong,
+.box_input.has_focus + label strong {
+    color: var(--on-surface);
 }
 
-.js .box__file:focus + label,
-.js .box__file.has-focus + label {
-    outline: 1px dotted #767676;
-    outline: -webkit-focus-ring-color auto 5px;
+.js .box_input:focus + label,
+.js .box_input.has_focus + label {
+    outline: 1px dotted var(--on-surface);
 }
 
-.no-js .box__file + label {
+.no-js .box_input + label {
     display: none;
 }
 
-.no-js .box__button {
-    display: block;
-}
-
-.box__button {
+.box_button {
     font-weight: 700;
-    color: #f8f8f8;
-    background-color: #a5a5a5;
+    color: var(--on-surface);
+    background-color: var(--surface);
     display: none;
     padding: 8px 16px;
     margin: 40px auto 0;
 }
 
-.box__button:hover,
-.box__button:focus {
-    background-color: #767676;
+.no-js .box_button {
+    display: block;
 }
 
-.progress_container{
-    margin: 10px;
-    margin-left: 40px;
-    margin-right: 40px;
+.progress_container {
+    margin: 10px 40px;
 }
 
 .progress-bar {
-    width: 0%;
+    width: 0;
     height: 2px;
 }
 
@@ -195,7 +181,8 @@
         font-size: 0.9rem;
         padding: 35px 15px;
     }
-    .box.has-advanced-upload .box__icon {
+
+    .box.has_advanced_upload .box_icon {
         height: 50px;
         margin-top: 20px;
         margin-bottom: 20px;

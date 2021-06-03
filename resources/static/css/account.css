@@ -9,15 +9,15 @@
 .account_detail_container p {
     font-size: 24px;
     font-weight: 550;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 
 /*********************************
 2. collapsible
 *********************************/
 .collapsible {
-    background-color: #f8f8f8;
-    color: #767676;
+    background-color: var(--surface);
+    color: var(--on-surface);
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -32,22 +32,22 @@
 .collapsible:hover,
 .collapsible:active,
 .collapsible:focus {
-    background-color: #e9e9e9;
-    color: #1b1b1b;
+    background-color: var(--surface-hover);
+    color: var(--on-background);
     border: none;
     outline: none;
 }
 
 .collapsible:after {
     content: "\002B";
-    color: #767676;
+    color: var(--on-surface);
     font-weight: bold;
     float: right;
     margin-left: 5px;
 }
 
 .collapsible:hover:after {
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 
 .collapsible.active:after {
@@ -59,7 +59,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    background-color: #ffffff;
+    background-color: var(--background);
 }
 
 /*********************************

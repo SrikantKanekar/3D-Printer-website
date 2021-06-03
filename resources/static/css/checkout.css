@@ -6,24 +6,25 @@
     width: 100%;
     padding-top: 44px;
 }
+
 .section_title {
     font-size: 24px;
     font-weight: 600;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
+
 .section_subtitle {
     font-size: 14px;
     font-weight: 400;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 3px;
 }
+
 .dropdown_item_select {
     -webkit-appearance: none;
     -moz-appearance: none;
-    -ms-appearance: none;
-    -o-appearance: none;
     appearance: none;
-    -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    -webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     -webkit-user-select: none;
     background-image: url(/static/images/down.png);
     background-position: center right;
@@ -35,21 +36,25 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b !important;
+    color: var(--on-background) !important;
 }
+
 .dropdown_item_select::-ms-expand {
     display: none;
 }
+
 .order {
     width: 100%;
     padding-left: 60px;
-    background: #f2f4f8;
+    background: var(--surface);
     padding-bottom: 53px;
     padding-right: 58px;
 }
+
 .order_list_container {
     margin-top: 46px;
 }
+
 .order_list_bar {
     display: flex;
     flex-direction: row;
@@ -57,10 +62,11 @@
     justify-content: space-between;
     margin-bottom: 59px;
 }
-.order_list_title{
+
+.order_list_title {
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
     width: 80%;
     white-space: nowrap;
     overflow: hidden;
@@ -71,11 +77,13 @@
 .order_list_value {
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
+
 .order_list li:not(:last-child) {
     margin-bottom: 53px;
 }
+
 .order_list_item {
     display: flex;
     flex-direction: row;
@@ -90,13 +98,15 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .order_text {
     font-size: 12px;
     font-weight: 400;
     font-style: italic;
-    color: #6c6a74;
+    color: var(--on-surface);
     margin-top: 70px;
 }
+
 .order_button {
     width: 100%;
     margin-top: 83px;
@@ -133,31 +143,38 @@
         padding-bottom: 20px;
         padding-right: 20px;
     }
+
     .order_list_container {
         margin-top: 40px;
     }
+
     .order_list_bar {
         margin-bottom: 30px;
     }
+
     .order_list li:not(:last-child) {
         margin-bottom: 30px;
     }
-    .order_list_title{
+
+    .order_list_title {
         font-size: 12px;
         width: 60%;
     }
-    
+
     .order_list_quantity,
     .order_list_value {
         font-size: 10px;
     }
+
     .order_list_details {
         width: 30%;
     }
+
     .order_text {
         margin-top: 20px;
     }
+
     .order_button {
         margin-top: 30px;
-    }    
+    }
 }

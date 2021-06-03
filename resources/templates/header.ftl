@@ -1,4 +1,5 @@
 <#macro header user="" title="3Design">
+
     <!-- Header -->
     <header class="header">
 
@@ -6,16 +7,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="
-									header_content
-									d-flex
-									flex-row
-									align-items-center
-									justify-content-start
-								">
+                        <div class="header_content">
                             <div class="logo">
                                 ${title}
                             </div>
+
                             <nav class="main_nav">
                                 <ul>
                                     <li class="active"><a href="/">Home</a></li>
@@ -47,7 +43,8 @@
 
                                 </ul>
                             </nav>
-                            <div class="header_extra ml-auto">
+
+                            <div class="header_extra">
 
                                 <div class="shopping_cart">
 
@@ -87,63 +84,43 @@
                 </div>
             </div>
         </div>
-
-        <!-- Social -->
-        <div class="header_social">
-            <ul>
-                <li>
-                    <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                </li>
-            </ul>
-        </div>
-
     </header>
 
     <!-- Menu -->
-    <div class="menu menu_mm trans_300">
-
-        <div class="menu_container menu_mm">
+    <div class="menu">
+        <div class="menu_container">
             <div class="page_menu_content">
-                <ul class="page_menu_nav menu_mm">
+                <ul class="page_menu_nav">
 
-                    <li class="page_menu_item menu_mm">
+                    <li class="page_menu_item">
                         <a href="/">Home<i class="fa fa-angle-down"></i></a>
                     </li>
 
-                    <li class="page_menu_item menu_mm">
+                    <li class="page_menu_item">
                         <a href="/object/create">Create<i class="fa fa-angle-down"></i></a>
                     </li>
 
-                    <li class="page_menu_item menu_mm">
+                    <li class="page_menu_item">
                         <a href="/my-objects">My Objects<i class="fa fa-angle-down"></i></a>
                     </li>
 
                     <#if (user?has_content)>
-                        <li class="page_menu_item has-children menu_mm">
+                        <li class="page_menu_item has-children">
                             <a href="/account">Account<i class="fa fa-angle-down"></i></a>
-                            <ul class="page_menu_selection menu_mm">
-                                <li class="page_menu_item menu_mm">
+                            <ul class="page_menu_selection">
+                                <li class="page_menu_item">
                                     <a href="/account">Account<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item menu_mm">
+                                <li class="page_menu_item">
                                     <a href="/tracking">Tracking<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item menu_mm">
+                                <li class="page_menu_item">
                                     <a href="/history">History<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item menu_mm">
+                                <li class="page_menu_item">
                                     <a href="/notification">Notifications<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item menu_mm">
+                                <li class="page_menu_item">
                                     <a href="/account/logout">Logout<i class="fa fa-angle-down"></i></a>
                                 </li>
                             </ul>

@@ -14,6 +14,9 @@
             <link rel="icon" type="image/png" href="/static/images/favicon.ico"/>
             <link rel="apple-touch-icon" type="image/png" href="/static/images/favicon.ico">
 
+            <!--font-->
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900">
+
             <!--bootstrap-->
             <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css">
 
@@ -48,8 +51,8 @@
 
                 <@footer.footer/>
 
-                <div id="overlay">
-                    <div class="cv-spinner">
+                <div class="spinner_overlay">
+                    <div class="spinner_container">
                         <span class="spinner"></span>
                     </div>
                 </div>

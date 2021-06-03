@@ -92,12 +92,12 @@ $(window).on("load", function (e) {
         }
     });
 
-    $(".admin_button").click(function (e) {
+    $(".button.admin").click(function (e) {
         e.preventDefault();
         // prevent default behavior
     });
 
-    $(".btn-group").on("click", ".admin_button", function () {
+    $(".btn-group").on("click", ".button.admin", function () {
         var button = $(this);
         var product = button.parents(".product");
 

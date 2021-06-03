@@ -10,16 +10,15 @@
 .product_id a {
     font-size: 13px;
     font-weight: 450;
-    color: #1b1b1b;
+    color: var(--on-background);
     line-height: 1.1;
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
 .product_id a:hover {
-    color: #e95a5a;
+    color: var(--primary);
 }
 
 .product_details {
@@ -32,11 +31,9 @@
     display: inline;
     font-size: 16px;
     font-weight: 500;
-    color: #6c6a74;
+    color: var(--on-surface);
 }
 
-
-/* admin button */
 .btn-group {
     margin-top: 13px;
     display: flex;
@@ -45,72 +42,16 @@
     justify-content: center;
 }
 
-.admin_button {
+.button.admin {
     width: 75px;
     height: 35px;
     margin-left: 3px;
     margin-right: 3px;
     margin-top: 8px;
-    background: none;
-    text-align: center;
-    border: solid 2px #1b1b1b;
-    overflow: hidden;
-    cursor: pointer;
 }
 
-.admin_button a {
-    display: block;
-    position: relative;
+.button.admin a {
     font-size: 12px;
     font-weight: 500;
     line-height: 31px;
-    color: #1b1b1b;
-    background: none;
-    z-index: 1;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
-
-.admin_button::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 150%;
-    height: 100%;
-    background: #1b1b1b;
-    z-index: 0;
-    opacity: 0;
-    -webkit-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
-    transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
-    -webkit-transform-origin: 0% 100%;
-    transform-origin: 0% 100%;
-    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s,
-        background-color 0.3s;
-    transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
-}
-.admin_button:hover::after {
-    opacity: 1;
-    -webkit-transform: rotate3d(0, 0, 1, 0deg);
-    transform: rotate3d(0, 0, 1, 0deg);
-    -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-}
-
-.admin_button:hover a {
-    color: #ffffff;
-}
-
-.admin_button.disabled {
-    cursor: default;
-}
-
-.admin_button.disabled a {
-    background-color: #1b1b1b;
-    color: #ffffff;
-    cursor: default;
-}
-

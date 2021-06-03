@@ -10,7 +10,7 @@
     float: left;
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 .info_col_order {
     width: 55%;
@@ -78,15 +78,14 @@
 .item_name a {
     font-size: 18px;
     font-weight: 500;
-    color: #1b1b1b;
+    color: var(--on-background);
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
 .item_name a:hover {
-    color: #e95a5a;
+    color: var(--primary);
 }
 .item_objects {
     margin-top: 3px;
@@ -94,10 +93,9 @@
 .item_objects {
     font-size: 14px;
     font-weight: 500;
-    color: #6c6a74;
+    color: var(--on-surface);
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
@@ -105,19 +103,19 @@
 .item_status {
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 
 .item_price {
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 
 .item_delivery {
     font-size: 14px;
     font-weight: 400;
-    color: #1b1b1b;
+    color: var(--on-background);
 }
 
 /************

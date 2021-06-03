@@ -18,7 +18,7 @@
     font-size: 14px;
     font-weight: 400;
     white-space: pre-line;
-    color: #6c6a74;
+    color: var(--on-surface);
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -34,7 +34,7 @@
     margin-right: 8px;
     font-size: 14px;
     font-weight: 400;
-    color: #6c6a74;
+    color: var(--on-surface);
 }
 .item_sorting > li:last-child {
     margin-right: 0;
@@ -55,14 +55,13 @@
     top: 120%;
     margin: 0;
     width: 100%;
-    background: #ffffff;
+    background: var(--surface);
     visibility: hidden;
     opacity: 0;
     z-index: 1;
     box-shadow: 0 15px 25px rgba(63, 78, 100, 0.15);
     -webkit-transition: opacity 0.3s ease;
     -moz-transition: opacity 0.3s ease;
-    -ms-transition: opacity 0.3s ease;
     -o-transition: opacity 0.3s ease;
     transition: all 0.3s ease;
 }
@@ -82,12 +81,11 @@
     height: 36px;
     line-height: 36px;
     border-bottom: solid 1px #dddddd;
-    color: #6c6a74;
+    color: var(--on-surface);
     text-align: right;
     padding-right: 5px;
     -webkit-transition: opacity 0.3s ease;
     -moz-transition: opacity 0.3s ease;
-    -ms-transition: opacity 0.3s ease;
     -o-transition: opacity 0.3s ease;
     transition: all 0.3s ease;
 }
@@ -131,21 +129,20 @@
 .product_title a {
     font-size: 18px;
     font-weight: 500;
-    color: #1b1b1b;
+    color: var(--on-background);
     line-height: 1.1;
     -webkit-transition: all 200ms ease;
     -moz-transition: all 200ms ease;
-    -ms-transition: all 200ms ease;
     -o-transition: all 200ms ease;
     transition: all 200ms ease;
 }
 .product_title a:hover {
-    color: #e95a5a;
+    color: var(--primary);
 }
 .product_price {
     font-size: 16px;
     font-weight: 500;
-    color: #6c6a74;
+    color: var(--on-surface);
     line-height: 0.75;
     margin-top: 13px;
 }
