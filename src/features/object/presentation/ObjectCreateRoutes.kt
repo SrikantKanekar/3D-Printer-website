@@ -38,8 +38,10 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
             val filename = partData.originalFileName!!
             val obj = objectRepository.createNewObject(filename)
             try {
-                //throw Exception()
+
 //                val file = createFile(obj.id)
+                // uncomment to mock file upload error
+                //throw Exception()
 //                partData.streamProvider().use { inputStream ->
 //                    file.outputStream().buffered().use { outputStream ->
 //                        inputStream.copyTo(outputStream)
@@ -47,9 +49,10 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
 //                    }
 //                }
 
-                // get details from octoPrint
+                // get details from octoPrint or any software
                 try {
-                    //delay(3000)
+                    delay(1500)
+                    // uncomment to mock error from software
                     //throw Exception()
                     obj.apply {
                         image = "/static/images/3d-image.jpg"
