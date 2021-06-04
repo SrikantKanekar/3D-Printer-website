@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * Collapsible
      */
-    const coll = document.getElementsByClassName("collapsible");
+    const collapsible = document.querySelectorAll(".collapsible");
     let i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function () {
+    for (i = 0; i < collapsible.length; i++) {
+        collapsible[i].addEventListener("click", function () {
 
             this.classList.toggle("active");
             const content = this.nextElementSibling;
@@ -22,57 +22,38 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * update form
+     * Forms
      */
-    $("#update_button").click(function (e) {
+    const update_button = document.querySelector("#update_button");
+    const change_password_button = document.querySelector("#change_password_button");
+
+    update_button.addEventListener('click', function (e) {
         e.preventDefault();
-        $("#update_form").submit();
+        const update_form = document.querySelector("#update_form");
+        submitAccountForm(update_form);
     });
 
-    $("#update_form").submit(function (e) {
+    change_password_button.addEventListener('click', function (e) {
         e.preventDefault();
+        const change_password_form = document.querySelector("#change_password_form");
+        submitAccountForm(change_password_form);
+    });
 
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
-        const message = $(this).find(".form_message");
+    function submitAccountForm(form) {
+        const url = form.getAttribute("action");
+        const inputs = form.querySelectorAll(".input");
+        const message = form.querySelector(".form_message");
 
-        const check = checkValidation(input);
+        const check = checkValidation(inputs);
         if (check) {
-            $.post(url, $(this).serialize(), function (data) {
+            $.post(url, $(form).serialize(), function (data) {
                 if (data === "updated") {
-                    message.addClass("success");
+                    message.classList.add("success");
                 } else {
-                    message.removeClass("success");
+                    message.classList.remove("success");
                 }
-                message.text(data);
+                message.textContent = data;
             });
         }
-    });
-
-    /**
-     * change password form
-     */
-    $("#change_password_button").click(function (e) {
-        e.preventDefault();
-        $("#change_password_form").submit();
-    });
-
-    $("#change_password_form").submit(function (e) {
-        e.preventDefault();
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
-        const message = $(this).find(".form_message");
-
-        const check = checkValidation(input);
-        if (check) {
-            $.post(url, $(this).serialize(), function (data) {
-                if (data === "updated") {
-                    message.addClass("success");
-                } else {
-                    message.removeClass("success");
-                }
-                message.text(data);
-            });
-        }
-    });
+    }
 });

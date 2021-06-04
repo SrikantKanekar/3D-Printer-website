@@ -1,8 +1,6 @@
 window.addEventListener('load', function () {
     "use strict";
 
-    const sortingButtons = $(".product_sorting_btn");
-
     const grid = $(".notification_grid").isotope({
         itemSelector: ".notification",
         layoutMode: "fitRows",
@@ -11,15 +9,15 @@ window.addEventListener('load', function () {
         },
         getSortData: {
             date: function (itemElement) {
-                return $(itemElement)
-                    .find(".notification_date")
-                    .text()
+                return itemElement
+                    .querySelector(".notification_date")
+                    .textContent
                     .toUpperCase();
             },
             name: function (itemElement) {
-                return $(itemElement)
-                    .find(".notification_title")
-                    .text()
+                return itemElement
+                    .querySelector(".notification_title")
+                    .textContent
                     .toUpperCase();
             },
         },
@@ -30,12 +28,11 @@ window.addEventListener('load', function () {
         },
     });
 
-    // Sort based on the value from the sorting_type dropdown
-    sortingButtons.each(function () {
+    const sorting_text = document.querySelector(".sorting_text");
+    $(".product_sorting_btn").each(function () {
         $(this).on("click", function () {
-            const parent = $(this).parent().parent().find(".sorting_text");
-            parent.text($(this).text());
-            let option = $(this).attr("data-isotope-option");
+            sorting_text.textContent = this.textContent;
+            let option = this.getAttribute("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
         });

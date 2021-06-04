@@ -7,7 +7,6 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
 import io.ktor.application.*
-import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
 import io.ktor.request.*
@@ -15,6 +14,12 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
+/**
+ * This page will show the details about a object depending upon the ObjectStatus of the object.
+ * 1) [NONE]/[CART] - user can edit object properties.
+ * 2) [TRACKING]
+ * 3) [COMPLETED]
+ */
 fun Route.getObjectRoute(objectRepository: ObjectRepository) {
     get("/object/{id}") {
 

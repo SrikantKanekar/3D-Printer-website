@@ -152,23 +152,26 @@ document.addEventListener('DOMContentLoaded', function () {
 /**
  * 5. Alert
  */
+const alert_container = document.querySelector(".alert_container");
+const alert = alert_container.querySelector(".alert");
+
 function showAlert(text, alertClass) {
-    const button =
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
-    $(".alert").text(text);
-    $(".alert").append(button);
-    $(".alert").addClass(alertClass);
+    const button = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    alert.textContent = text;
+    alert.innerHTML += button;
+    alert.classList.add(alertClass);
+
     $(".alert_container")
         .fadeTo(2000, 500)
         .slideUp(500, function () {
             $(".alert_container").slideUp(500);
-            $(".alert").removeClass(alertClass);
+            alert.classList.remove(alertClass);
         });
 }
 
 $(".alert").on("close.bs.alert", function (e) {
     e.preventDefault();
-    $(".alert_container").hide();
+    alert_container.style.display = 'none';
 });
 
 /**

@@ -8,13 +8,6 @@ window.addEventListener('pageshow', function (e) {
 window.addEventListener('load', function () {
     "use strict";
 
-    /**
-     Isotope
-     */
-    const counter = $(".results span");
-    const sorting = $(".sorting_container");
-    const sortingButtons = $(".product_sorting_btn");
-
     const grid = $(".product_grid").isotope({
         itemSelector: ".product",
         layoutMode: "fitRows",
@@ -23,22 +16,20 @@ window.addEventListener('load', function () {
         },
         getSortData: {
             status: function (itemElement) {
-                const statusText = $(itemElement).find(".status").text();
+                const statusText = itemElement.querySelector(".status").textContent;
                 return statusOrdinal(statusText);
             },
             user: function (itemElement) {
-                return $(itemElement)
-                    .find(".user_email")
-                    .text()
+                return itemElement
+                    .querySelector(".user_email")
+                    .textContent
                     .toUpperCase();
             },
             price: function (itemElement) {
-                const price = $(itemElement).find(".price");
-                return price.children("span").text();
+                return itemElement.querySelector(".price span").textContent;
             },
             objects: function (itemElement) {
-                const size = $(itemElement).find(".size");
-                return size.children("span").text();
+                return itemElement.querySelector(".size span").textContent;
             },
         },
         animationOptions: {
@@ -48,63 +39,68 @@ window.addEventListener('load', function () {
         },
     });
 
-    // Sort based on the value from the sorting_type dropdown
-    sortingButtons.each(function () {
+    const sorting_text = document.querySelector(".sorting_text");
+    $(".product_sorting_btn").each(function () {
         $(this).on("click", function () {
-            const parent = $(this).parent().parent().find(".sorting_text");
-            parent.text($(this).text());
-            let option = $(this).attr("data-isotope-option");
+            sorting_text.textContent = this.textContent;
+            let option = this.getAttribute("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
         });
     });
 
-    /*
+    /**
         admin control buttons
     */
-    $(".btn-group").each(function (index, element) {
-        const product = $(element).parents(".product");
-        const status = statusOrdinal(product.find(".status").text());
+    const button_group = $(".btn-group");
 
-        const confirmed = $(element).find(".confirmed").first();
-        const processing = $(element).find(".processing").first();
-        const delivering = $(element).find(".delivering").first();
-        const delivered = $(element).find(".delivered").first();
+    button_group.each(function (index, element) {
+        const product = element.closest(".product");
+        const status = statusOrdinal(product.querySelector(".status").textContent);
+
+        const confirmed = element.querySelector(".confirmed");
+        const processing = element.querySelector(".processing");
+        const delivering = element.querySelector(".delivering");
+        const delivered = element.querySelector(".delivered");
 
         if (status === 1) {
-            confirmed.addClass("disabled");
+            confirmed.classList.add("disabled");
         }
         if (status === 2) {
-            confirmed.addClass("disabled");
-            processing.addClass("disabled");
+            confirmed.classList.add("disabled");
+            processing.classList.add("disabled");
         }
         if (status === 3) {
-            confirmed.addClass("disabled");
-            processing.addClass("disabled");
-            delivering.addClass("disabled");
+            confirmed.classList.add("disabled");
+            processing.classList.add("disabled");
+            delivering.classList.add("disabled");
         }
         if (status === 4) {
-            confirmed.addClass("disabled");
-            processing.addClass("disabled");
-            delivering.addClass("disabled");
-            delivered.addClass("disabled");
+            confirmed.classList.add("disabled");
+            processing.classList.add("disabled");
+            delivering.classList.add("disabled");
+            delivered.classList.add("disabled");
         }
     });
 
-    $(".button.admin").click(function (e) {
+    $(".button.admin").on('click',function (e) {
         e.preventDefault();
         // prevent default behavior
     });
 
-    $(".btn-group").on("click", ".button.admin", function () {
-        const button = $(this);
-        const product = button.parents(".product");
+    const counter = document.querySelector(".results span");
+    const sorting = document.querySelector(".sorting_container");
 
-        const orderId = product.data("id");
-        const currentStatus = statusOrdinal(product.find(".status").text());
-        const buttonStatus = button.data("status");
+    button_group.on("click", ".button.admin", function () {
+        const button = this;
+        const product = button.closest(".product");
 
-        if (buttonStatus === currentStatus + 1) {
+        const orderId = product.getAttribute("data-id");
+        const status = product.querySelector(".status");
+        const currentStatus = statusOrdinal(status.textContent);
+        const buttonStatus = button.getAttribute("data-status");
+
+        if (buttonStatus == currentStatus + 1) {
             $.post(
                 "/admin/update/order-status",
                 {
@@ -119,17 +115,18 @@ window.addEventListener('load', function () {
                         );
 
                         // disable the button
-                        button.addClass("disabled");
+                        button.classList.add("disabled");
 
                         // update status and isotope sort order
-                        product.find(".status").text(getStatus(buttonStatus));
-                        if (buttonStatus === 4) {
-                            grid.isotope("remove", product).isotope("layout");
+                        status.textContent = getStatus(buttonStatus);
+
+                        if (buttonStatus == 4) {
+                            grid.isotope("remove", $(product)).isotope("layout");
 
                             // update count
-                            const count = parseInt(counter.text(), 10) - 1;
-                            counter.text(count);
-                            if (count === 0) sorting.hide();
+                            const count = parseInt(counter.textContent, 10) - 1;
+                            counter.textContent = count.toString();
+                            if (count === 0) sorting.style.display = "none";
                         }
                         grid.isotope("updateSortData").isotope();
                     } else {
@@ -158,18 +155,18 @@ window.addEventListener('load', function () {
     });
 
     function statusOrdinal(status) {
-        if (status === "PLACED") return 0;
-        if (status === "CONFIRMED") return 1;
-        if (status === "PROCESSING") return 2;
-        if (status === "DELIVERING") return 3;
-        if (status === "DELIVERED") return 4;
+        if (status == "PLACED") return 0;
+        if (status == "CONFIRMED") return 1;
+        if (status == "PROCESSING") return 2;
+        if (status == "DELIVERING") return 3;
+        if (status == "DELIVERED") return 4;
     }
 
     function getStatus(status) {
-        if (status === 0) return "PLACED";
-        if (status === 1) return "CONFIRMED";
-        if (status === 2) return "PROCESSING";
-        if (status === 3) return "DELIVERING";
-        if (status === 4) return "DELIVERED";
+        if (status == 0) return "PLACED";
+        if (status == 1) return "CONFIRMED";
+        if (status == 2) return "PROCESSING";
+        if (status == 3) return "DELIVERING";
+        if (status == 4) return "DELIVERED";
     }
 });

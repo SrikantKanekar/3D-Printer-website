@@ -1,11 +1,6 @@
 window.addEventListener('load', function () {
     "use strict";
 
-    /**
-     Isotope
-     */
-    const sortingButtons = $(".product_sorting_btn");
-
     const grid = $(".product_grid").isotope({
         itemSelector: ".product",
         layoutMode: "fitRows",
@@ -14,13 +9,13 @@ window.addEventListener('load', function () {
         },
         getSortData: {
             status: function (itemElement) {
-                const statusText = $(itemElement).find(".product_status").text();
+                const statusText = itemElement.querySelector(".product_status").textContent;
                 return printingStatusOrdinal(statusText);
             },
             name: function (itemElement) {
-                return $(itemElement)
-                    .find(".product_title")
-                    .text()
+                return itemElement
+                    .querySelector(".product_title")
+                    .textContent
                     .toUpperCase();
             },
         },
@@ -31,51 +26,53 @@ window.addEventListener('load', function () {
         },
     });
 
-    // Sort based on the value from the sorting_type dropdown
-    sortingButtons.each(function () {
+    const sorting_text = document.querySelector(".sorting_text");
+    $(".product_sorting_btn").each(function () {
         $(this).on("click", function () {
-            const parent = $(this).parent().parent().find(".sorting_text");
-            parent.text($(this).text());
-            let option = $(this).attr("data-isotope-option");
+            sorting_text.textContent = this.textContent;
+            let option = this.getAttribute("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
         });
     });
 
-    /*
-        admin control buttons
-    */
-    $(".btn-group").each(function (index, element) {
-        const product = $(element).parents(".product");
-        const status = printingStatusOrdinal(product.data("status"));
+    /**
+     admin control buttons
+     */
+    const button_group = $(".btn-group");
 
-        const printing = $(element).find(".printing").first();
-        const printed = $(element).find(".printed").first();
+    button_group.each(function (index, element) {
+        const product = element.closest(".product");
+        const status = printingStatusOrdinal(product.getAttribute("data-status"));
+
+        const printing = element.querySelector(".printing");
+        const printed = element.querySelector(".printed");
 
         if (status === 1) {
-            printing.addClass("disabled");
+            printing.classList.add("disabled");
         }
         if (status === 2) {
-            printing.addClass("disabled");
-            printed.addClass("disabled");
+            printing.classList.add("disabled");
+            printed.classList.add("disabled");
         }
     });
 
-    $(".button.admin").click(function (e) {
+    $(".button.admin").on('click', function (e) {
         e.preventDefault();
         // prevent default behavior
     });
 
-    $(".btn-group").on("click", ".button.admin", function () {
+    button_group.on("click", ".button.admin", function () {
         const orderId = $(".results").data("id");
 
-        const button = $(this);
-        const product = button.parents(".product");
-        const objectId = product.data("id");
-        const currentStatus = printingStatusOrdinal(product.data("status"));
-        const buttonStatus = button.data("status");
+        const button = this;
+        const product = button.closest(".product");
 
-        if (buttonStatus === currentStatus + 1) {
+        const objectId = product.getAttribute("data-id");
+        const currentStatus = printingStatusOrdinal(product.getAttribute("data-status"));
+        const buttonStatus = button.getAttribute("data-status");
+
+        if (buttonStatus == currentStatus + 1) {
             $.post(
                 "/order/update/printing-status",
                 {
@@ -91,13 +88,13 @@ window.addEventListener('load', function () {
                         );
 
                         // disable the button
-                        button.addClass("disabled");
+                        button.classList.add("disabled");
 
                         // update status and isotope sort order
-                        product.data("status", getPrintingStatus(buttonStatus));
+                        product.setAttribute("data-status", getPrintingStatus(buttonStatus));
                         product
-                            .find(".product_status")
-                            .text(getPrintingStatus(buttonStatus));
+                            .querySelector(".product_status")
+                            .textContent = getPrintingStatus(buttonStatus);
                         grid.isotope("updateSortData").isotope();
                     } else {
                         showAlert("please start PROCESSING", "alert-danger");
@@ -122,15 +119,15 @@ window.addEventListener('load', function () {
     });
 
     function printingStatusOrdinal(status) {
-        if (status === "PENDING") return 0;
-        if (status === "PRINTING") return 1;
-        if (status === "PRINTED") return 2;
+        if (status == "PENDING") return 0;
+        if (status == "PRINTING") return 1;
+        if (status == "PRINTED") return 2;
     }
 
     function getPrintingStatus(status) {
-        if (status === 0) return "PENDING";
-        if (status === 1) return "PRINTING";
-        if (status === 2) return "PRINTED";
+        if (status == 0) return "PENDING";
+        if (status == 1) return "PRINTING";
+        if (status == 2) return "PRINTED";
     }
 
     /**

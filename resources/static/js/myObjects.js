@@ -1,77 +1,78 @@
 window.addEventListener('load', function () {
     "use strict";
 
-    const counter = $(".results span");
-    const sorting = $(".sorting_container");
-    const sortingButtons = $(".product_sorting_btn");
+    const grid = $(".product_grid").isotope({
+        itemSelector: ".product",
+        layoutMode: "fitRows",
+        fitRows: {
+            gutter: 30,
+        },
+        getSortData: {
+            price: function (itemElement) {
+                const price = itemElement
+                    .querySelector(".product_price span")
+                    .textContent;
+                return parseInt(price, 10);
+            },
+            name: function (itemElement) {
+                return itemElement
+                    .querySelector(".product_title")
+                    .textContent
+                    .toUpperCase();
+            },
+        },
+        animationOptions: {
+            duration: 750,
+            easing: "linear",
+            queue: false,
+        },
+    });
 
-    if ($(".product_grid").length) {
-        const grid = $(".product_grid").isotope({
-            itemSelector: ".product",
-            layoutMode: "fitRows",
-            fitRows: {
-                gutter: 30,
-            },
-            getSortData: {
-                price: function (itemElement) {
-                    const priceEle = $(itemElement)
-                        .find(".product_price span")
-                        .text();
-                    return parseInt(priceEle);
-                },
-                name: function (itemElement) {
-                    return $(itemElement)
-                        .find(".product_title")
-                        .text()
-                        .toUpperCase();
-                },
-            },
-            animationOptions: {
-                duration: 750,
-                easing: "linear",
-                queue: false,
-            },
+    const sorting_text = document.querySelector(".sorting_text");
+    $(".product_sorting_btn").each(function () {
+        $(this).on("click", function () {
+            sorting_text.textContent = this.textContent;
+            let option = this.getAttribute("data-isotope-option");
+            option = JSON.parse(option);
+            grid.isotope(option);
         });
+    });
 
-        // Sort based on the value from the sorting_type dropdown
-        sortingButtons.each(function () {
-            $(this).on("click", function () {
-                const parent = $(this).parent().parent().find(".sorting_text");
-                parent.text($(this).text());
-                let option = $(this).attr("data-isotope-option");
-                option = JSON.parse(option);
-                grid.isotope(option);
-            });
-        });
+    /**
+     add to cart
+     */
+    const result = document.querySelector(".results span");
 
-        /*
-            add to cart
-        */
-        $(".product_add_to_cart a").click(function (e) {
-            e.preventDefault();
+    $(".product_add_to_cart a").on("click",function (e) {
+        e.preventDefault();
 
-            const product = $(this).parents(".product");
-            const id = product.data("id");
-            const url = $(this).attr("href");
+        const product = this.closest(".product");
+        const id = product.getAttribute("data-id");
+        const url = this.getAttribute("href");
 
-            $.post(url, {id: id}, function (data) {
-                if (data.startsWith("/")) {
-                    window.location.href = data;
-                } else if (data === "true") {
-                    // remove product
-                    grid.isotope("remove", product).isotope("layout");
+        $.post(url, {id: id}, function (data) {
+            if (data.startsWith("/")) {
+                window.location.href = data;
+            } else if (data === "true") {
 
-                    // update count
-                    const count = parseInt(counter.text(), 10) - 1;
-                    counter.text(count);
-                    if (count === 0) sorting.hide();
-                } else {
-                    showAlert(
-                        "error, please try again",
-                        "alert-danger"
-                    );
+                // remove product
+                grid.isotope("remove", product).isotope("layout");
+
+                // update count
+                const count = parseInt(result.textContent, 10) - 1;
+                result.textContent = count.toString();
+
+                // hide if no objects present
+                if (count === 0) {
+                    const sorting = document.querySelector(".sorting_container");
+                    sorting.style.display = "none";
                 }
-            });
+            } else {
+                showAlert(
+                    "error, please try again",
+                    "alert-danger"
+                );
+            }
         });
-    }
+    });
 });
