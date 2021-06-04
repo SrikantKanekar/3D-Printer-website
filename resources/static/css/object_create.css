@@ -1,16 +1,24 @@
+* {
+    -webkit-transition: all 0ms ease;
+    -moz-transition: all 0ms ease;
+    -o-transition: all 0ms ease;
+    transition: all 0ms ease;
+}
+
 .box {
     font-size: 1.25rem;
     background-color: var(--surface);
     text-align: center;
     padding: 100px 20px;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
 }
 
 .box.has_advanced_upload {
     outline: 2px dashed var(--on-surface);
     outline-offset: -10px;
-    -webkit-transition: outline-offset 0.15s ease-in-out,
-    background-color 0.15s linear;
-    transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
 }
 
 .box.is_dragover {
@@ -60,6 +68,9 @@
     right: 0;
     left: 0;
     -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
 
@@ -70,6 +81,8 @@
 
 .box_success {
     -webkit-animation: appear-from-inside 0.25s ease-in-out;
+    -moz-animation: appear-from-inside 0.25s ease-in-out;
+    -o-animation: appear-from-inside 0.25s ease-in-out;
     animation: appear-from-inside 0.25s ease-in-out;
 }
 
@@ -82,6 +95,30 @@
     }
     to {
         -webkit-transform: translateY(-50%) scale(1);
+    }
+}
+
+@-moz-keyframes appear-from-inside {
+    from {
+        -moz-transform: translateY(-50%) scale(0);
+    }
+    75% {
+        -moz-transform: translateY(-50%) scale(1.1);
+    }
+    to {
+        -moz-transform: translateY(-50%) scale(1);
+    }
+}
+
+@-o-keyframes appear-from-inside {
+    from {
+        -o-transform: translateY(-50%) scale(0);
+    }
+    75% {
+        -o-transform: translateY(-50%) scale(1.1);
+    }
+    to {
+        -o-transform: translateY(-50%) scale(1);
     }
 }
 

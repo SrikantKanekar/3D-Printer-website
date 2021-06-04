@@ -37,10 +37,6 @@
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .details_image_thumbnail.active::after,
@@ -119,10 +115,6 @@
     font-size: 24px;
     font-weight: 550;
     color: var(--on-surface);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .setting_title a:hover {

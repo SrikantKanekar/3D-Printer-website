@@ -1,19 +1,15 @@
 @import "/static/css/isotopeLayout.css";
 
-
 .product_add_to_cart a svg {
     display: inline;
     position: absolute;
-    right: 0%;
-    top: 0%;
+    right: 0;
+    top: 0;
     width: 20px;
     height: 20px;
     z-index: 2;
     vertical-align: middle;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
+    fill: var(--on-surface);
 }
 
 .product_add_to_cart a:hover svg {

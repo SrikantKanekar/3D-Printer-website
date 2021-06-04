@@ -19,8 +19,15 @@
 * {
     margin: 0;
     padding: 0;
+    vertical-align: middle;
+
     -webkit-font-smoothing: antialiased;
     text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;
 }
 
 /* Default dark theme */
@@ -179,10 +186,6 @@ section {
     color: var(--on-background);
     background: none;
     z-index: 1;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .button::after {
@@ -195,12 +198,20 @@ section {
     background: var(--on-background);
     z-index: 0;
     opacity: 0;
+
     -webkit-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
+    -moz-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
+    -o-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
     transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
+
     -webkit-transform-origin: 0 100%;
+    -moz-transform-origin: 0 100%;
+    -o-transform-origin: 0 100%;
     transform-origin: 0 100%;
-    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s,
-    background-color 0.3s;
+
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
+    -moz-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
+    -o-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
     transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
 
@@ -209,6 +220,8 @@ section {
     -webkit-transform: rotate3d(0, 0, 1, 0deg);
     transform: rotate3d(0, 0, 1, 0deg);
     -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+    -moz-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+    -o-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
     transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
@@ -238,14 +251,14 @@ section {
     position: absolute;
     top: 50%;
     left: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--on-surface);
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--on-surface);
 }
 
 .product_quantity input {
@@ -341,10 +354,6 @@ section {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .header.scrolled .header_content {
@@ -355,10 +364,6 @@ section {
     font-size: 30px;
     font-weight: 700;
     color: var(--on-background);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .header.scrolled .logo {
@@ -378,10 +383,6 @@ section {
     font-size: 16px;
     font-weight: 600;
     color: var(--on-surface);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .main_nav > ul > li > a:hover,
@@ -392,16 +393,16 @@ section {
 .main_nav ul li.hassubs::after {
     position: absolute;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
     left: calc(100% + 3px);
     font-family: "FontAwesome", sans-serif;
     font-size: 10px;
     content: "\f078";
     color: var(--on-surface);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .main_nav ul li:hover::after,
@@ -418,10 +419,6 @@ section {
     padding: 25px 25px 25px 35px;
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .hassubs:hover ul {
@@ -438,10 +435,6 @@ section {
     font-size: 14px;
     font-weight: 600;
     color: var(--on-surface);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .hassubs ul li a:hover {
@@ -461,10 +454,6 @@ section {
     height: 20px;
     vertical-align: middle;
     fill: var(--on-background);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .shopping_cart a:hover svg,
@@ -480,10 +469,6 @@ section {
     font-weight: 500;
     color: var(--on-background);
     margin-left: 13px;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .theme_icon {
@@ -495,10 +480,6 @@ section {
 
 .theme_icon i {
     font-size: 15px;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .theme_icon i:hover {
@@ -534,10 +515,6 @@ section {
     height: 100vh;
     background: var(--menu-background);
     z-index: 101;
-    -webkit-transition: all 300ms ease;
-    -moz-transition: all 300ms ease;
-    -o-transition: all 300ms ease;
-    transition: all 300ms ease;
 }
 
 .menu.active {
@@ -578,10 +555,6 @@ section {
     line-height: 50px;
     height: 50px;
     font-size: 16px;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .page_menu_item > a:hover {
@@ -619,10 +592,6 @@ section {
     color: var(--on-background);
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
     font-size: 14px;
-    -webkit-transition: opacity 0.3s ease;
-    -moz-transition: opacity 0.3s ease;
-    -o-transition: opacity 0.3s ease;
-    transition: all 0.3s ease;
 }
 
 .page_menu_selection li a:hover {
@@ -651,10 +620,6 @@ section {
     font-size: 16px;
     color: #b5b5b5;
     padding: 5px;
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .menu_social ul li a i:hover {
@@ -726,10 +691,6 @@ section {
 .footer_social ul li a i {
     font-size: 17px;
     color: var(--on-background);
-    -webkit-transition: all 200ms ease;
-    -moz-transition: all 200ms ease;
-    -o-transition: all 200ms ease;
-    transition: all 200ms ease;
 }
 
 .footer_social ul li a i:hover {
@@ -879,10 +840,6 @@ select:-webkit-autofill:active {
     right: 25px;
     padding: 0 5px;
     cursor: pointer;
-    -webkit-transition: background 0.4s;
-    -o-transition: background 0.4s;
-    -moz-transition: background 0.4s;
-    transition: background 0.4s;
 }
 
 .btn-show-pass:hover {
@@ -912,11 +869,6 @@ select:-webkit-autofill:active {
     border-radius: 14px;
     padding: 4px 25px 4px 10px;
     top: 50%;
-    -webkit-transform: translateY(-50%);
-    -moz-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    transform: translateY(-50%);
     right: 10px;
     pointer-events: none;
     color: var(--primary);
@@ -925,10 +877,11 @@ select:-webkit-autofill:active {
     text-align: left;
     visibility: hidden;
     opacity: 0;
-    -webkit-transition: opacity 0.4s;
-    -o-transition: opacity 0.4s;
-    -moz-transition: opacity 0.4s;
-    transition: opacity 0.4s;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .alert-validate::after {
@@ -940,12 +893,12 @@ select:-webkit-autofill:active {
     color: var(--primary);
     font-size: 16px;
     top: 50%;
+    right: 16px;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    right: 16px;
 }
 
 .alert-validate:hover:before {
