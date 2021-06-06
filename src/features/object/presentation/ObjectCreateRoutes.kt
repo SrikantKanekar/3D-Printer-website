@@ -16,6 +16,12 @@ import io.ktor.sessions.*
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
+/**
+ * *User can create new objects without logging in...
+ * 1) if user is not logged in, newly created objects will be stored in 'MY_OBJECTS_COOKIE'.
+ * 2) users will be prompted to login when user tried to add object to Cart.
+ * 3) after logging in, all the cookie objects will be synced with account object.
+ */
 fun Route.getCreateObjectRoute() {
     get("/object/create") {
         val principal = call.sessions.get<UserPrincipal>()
@@ -30,6 +36,15 @@ fun Route.getCreateObjectRoute() {
     }
 }
 
+/**
+ * * As soon as user uploads file...
+ * 1) the file will be stored inside project root folder 'uploads'.
+ * 2) the file is named as its unique generated Id.
+ * 3) After file is uploaded, the software(octo-print or any other) will scan the design.
+ * 4) If the design cannot be printed on our printer, it will show suitable error
+ * 5) else the software will return image, price...etc ..etc..
+ * 6) If any error occurs during file upload or by the software, the uploaded file will be deleted.
+ */
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {
         val multipartData = call.receiveMultipart()
@@ -39,15 +54,15 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
             val obj = objectRepository.createNewObject(filename)
             try {
 
-//                val file = createFile(obj.id)
+                val file = createFile(obj.id)
                 // uncomment to mock file upload error
                 //throw Exception()
-//                partData.streamProvider().use { inputStream ->
-//                    file.outputStream().buffered().use { outputStream ->
-//                        inputStream.copyTo(outputStream)
-//                        partData.dispose.invoke()
-//                    }
-//                }
+                partData.streamProvider().use { inputStream ->
+                    file.outputStream().buffered().use { outputStream ->
+                        inputStream.copyTo(outputStream)
+                        partData.dispose.invoke()
+                    }
+                }
 
                 // get details from octoPrint or any software
                 try {

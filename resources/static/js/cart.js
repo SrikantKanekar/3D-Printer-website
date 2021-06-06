@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
+    const cart = document.querySelector(".cart");
+    const cart_grid = document.querySelector(".cart_grid");
+    const total_grid = document.querySelector(".total_grid");
+
     initQuantity();
     calculateTotal();
 
     /**
-     * Cart Grid and Total grid
+     * Cart Grid and Total grid Isotope
      */
-    const cart_grid = $(".cart_grid").isotope({
+    const cart_isotope = $(cart_grid).isotope({
         itemSelector: ".cart_item",
         layoutMode: "fitRows",
         fitRows: {
@@ -20,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
     });
 
-    const total_grid = $(".total_grid").isotope({
-        itemSelector: ".cart_total_item",
+    const total_isotope = $(total_grid).isotope({
+        itemSelector: ".total_item",
         layoutMode: "fitRows",
         fitRows: {
             gutter: 30,
@@ -36,35 +40,36 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * remove cart item
      */
-    $(".cart_item_remove a").click(function (e) {
+    $(".item_remove a").on('click', function (e) {
         e.preventDefault();
 
-        const cart_item = $(this).parents(".cart_item");
-        const id = cart_item.data("id");
-        const cart_total_item = $(".total_grid").find(`[data-id='${id}']`);
-        const url = $(this).attr("href");
+        const cart_item = this.closest(".cart_item");
+        const id = cart_item.getAttribute("data-id");
+        const url = this.getAttribute("href");
+
+        const total_item = total_grid.querySelector(`[data-id='${id}']`);
 
         $.post(url, {id: id}, function (data) {
             if (data === true) {
                 // remove cart item
-                cart_grid.isotope("remove", cart_item).isotope("layout");
+                cart_isotope.isotope("remove", $(cart_item)).isotope("layout");
 
                 // remove cart total item
-                total_grid.isotope("remove", cart_total_item).isotope("layout");
+                total_isotope.isotope("remove", $(total_item)).isotope("layout");
             } else {
                 showAlert("error, please try again", "alert-danger");
             }
         });
     });
 
-    cart_grid.on("removeComplete", function () {
-        const item_count = $(".cart_item").length;
-        if (item_count === 0) {
-            $(".cart").hide();
+    cart_isotope.on("removeComplete", function () {
+        const cart_count = $(".cart_item").length;
+        if (cart_count === 0) {
+            cart.style.display = 'none';
         }
     });
 
-    total_grid.on("removeComplete", function () {
+    total_isotope.on("removeComplete", function () {
         calculateTotal();
     });
 
@@ -72,47 +77,45 @@ document.addEventListener('DOMContentLoaded', function () {
      * Calculate total
      */
     function calculateTotal() {
-        const items = $(".total_grid .cart_total_item");
+        const items = total_grid.querySelectorAll(".total_item");
         let total = 0;
-        items.each(function (index, element) {
-            const price = $(this)
-                .find(".cart_total_value span")
-                .text()
+        $(items).each(function () {
+            const price = this
+                .querySelector(".total_value span")
+                .textContent
                 .replace(",", "");
-            const id = $(this).data("id");
-            const quantity = $(".cart_grid")
-                .find(`[data-id='${id}']`)
-                .find(".quantity_input")
-                .val();
-            $(this).find(".cart_total_quantity span").text(quantity);
-            total += parseInt(price) * quantity;
+            const id = this.getAttribute("data-id");
+            const quantity = cart_grid
+                .querySelector(`[data-id='${id}']`)
+                .querySelector("input")
+                .value;
+            this.querySelector(".total_quantity span").textContent = quantity;
+            total += parseFloat(price) * quantity;
         });
         total = total.toLocaleString();
-        $(".subtotal span").text(total);
-        $(".total span").text(total);
+        document.querySelector(".subtotal span").textContent = total;
+        document.querySelector(".total span").textContent = total;
     }
 
     /**
      * Quantity
      */
     function initQuantity() {
+
         const url = "cart/quantity";
 
-        $(".quantity_inc").click(function (e) {
+        $(".quantity_inc").on('click', function (e) {
             e.preventDefault();
 
-            const id = $(this).parents(".cart_item").data("id");
-            const input = $(this)
-                .parents(".product_quantity")
-                .find(".quantity_input");
-            console.log(id);
+            const id = this.closest(".cart_item").getAttribute("data-id");
+            const input = this.closest(".quantity").querySelector("input");
 
-            const originalVal = input.val();
-            const endVal = parseFloat(originalVal) + 1;
+            const originalValue = input.value;
+            const newValue = parseFloat(originalValue) + 1;
 
-            $.post(url, {id: id, quantity: endVal}, function (data) {
+            $.post(url, {id: id, quantity: newValue}, function (data) {
                 if (data === true) {
-                    input.val(endVal);
+                    input.value = newValue.toString();
                     calculateTotal();
                 } else {
                     showAlert("unknown error", "alert-danger");
@@ -120,20 +123,19 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        $(".quantity_dec").click(function (e) {
+        $(".quantity_dec").on('click', function (e) {
             e.preventDefault();
 
-            const id = $(this).parents(".cart_item").data("id");
-            const input = $(this)
-                .parents(".product_quantity")
-                .find(".quantity_input");
+            const id = this.closest(".cart_item").getAttribute("data-id");
+            const input = this.closest(".quantity").querySelector("input");
 
-            const originalVal = input.val();
-            if (originalVal > 1) {
-                const endVal = parseFloat(originalVal) - 1;
-                $.post(url, {id: id, quantity: endVal}, function (data) {
+            const originalValue = input.value;
+
+            if (originalValue > 1) {
+                const newValue = parseFloat(originalValue) - 1;
+                $.post(url, {id: id, quantity: newValue}, function (data) {
                     if (data === true) {
-                        input.val(endVal);
+                        input.value = newValue.toString();
                         calculateTotal();
                     } else {
                         showAlert("unknown error", "alert-danger");
@@ -146,14 +148,14 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * clear cart
      */
-    $(".clear_cart_button").click(function (e) {
+    $(".clear_cart_button").on('click', function (e) {
         e.preventDefault();
 
         const url = "/cart/clear";
 
         $.post(url, {}, function (data) {
             if (data === true) {
-                $(".cart").hide();
+                cart.style.display = 'none';
                 showAlert("Cleared cart", "alert-success");
             } else {
                 showAlert("unknown error", "alert-danger");
@@ -164,13 +166,9 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * Coupon form
      */
-    $(".coupon_button").click(function (e) {
+    $(".coupon_button").on('click', function (e) {
         e.preventDefault();
-        $("#coupon_form").submit();
-    });
-
-    $("#coupon_form").submit(function (e) {
-        e.preventDefault();
+        //document.querySelector("#coupon_form"); -> submit
         showAlert("Invalid coupon ID", "alert-danger");
     });
 });

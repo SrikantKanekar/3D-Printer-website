@@ -1,29 +1,29 @@
 /*********************************
 1. Cart Info Column
 *********************************/
-.cart_info_columns {
+.info_column {
     width: 100%;
     border-bottom: solid 2px rgba(0, 0, 0, 0.2);
     padding-bottom: 7px;
 }
 
-.cart_info_col {
+.info_column > div {
     float: left;
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--on-background);
 }
 
-.cart_info_col_object {
+.info_object {
     width: 60%;
 }
 
-.cart_info_col_price {
+.info_price {
     width: 20%;
     text-align: center;
 }
 
-.cart_info_col_quantity {
+.info_quantity {
     width: 20%;
     text-align: center;
 }
@@ -40,7 +40,7 @@
     align-items: center;
 }
 
-.cart_item_object {
+.item_object {
     width: 60%;
     display: flex;
     flex-direction: row;
@@ -48,65 +48,61 @@
     align-items: center;
 }
 
-.cart_item_price {
-    width: 20%;
-    text-align: center;
-}
-
-.cart_item_quantity {
-    width: 20%;
-    text-align: center;
-}
-
-.cart_item_image {
+.item_image {
     width: 183px;
 }
 
-.cart_item_image img {
+.item_image img {
     width: 100%;
     height: auto;
 }
 
-.cart_item_name_container {
+.item_name_container {
     width: 70%;
     padding-left: 36px;
 }
 
-.cart_item_name {
+.item_name {
     width: 99%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.cart_item_name a {
+.item_name a {
     font-size: 18px;
     font-weight: 500;
     color: var(--on-background);
 }
 
-.cart_item_name a:hover {
+.item_name a:hover {
     color: var(--primary);
 }
 
-.cart_item_remove {
+.item_remove {
     margin-top: 3px;
 }
 
-.cart_item_remove a {
+.item_remove a {
     font-size: 14px;
     font-weight: 500;
     color: var(--on-surface);
 }
 
-.cart_item_remove a:hover {
+.item_remove a:hover {
     color: var(--on-background);
 }
 
-.cart_item_price {
+.item_price {
+    width: 20%;
+    text-align: center;
     font-size: 14px;
-    font-weight: 400;
-    color: var(--on-background);
+    font-weight: 450;
+}
+
+.item_quantity {
+    width: 20%;
+    text-align: center;
 }
 
 /*********************************
@@ -186,22 +182,22 @@
 5. cart total
 *********************************/
 
-.cart_total_container {
+.total_container {
     margin-top: 42px;
     padding: 20px 44px 19px 45px;
     background: var(--surface);
 }
 
-.cart_total_container ul {
+.total_container ul {
     width: 100%;
 }
 
-.cart_total_container ul li {
+.total_container ul li {
     width: 100%;
     height: 48px;
 }
 
-.cart_total_item {
+.total_item {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -213,7 +209,7 @@
     height: 48px;
 }
 
-.cart_total_title {
+.total_title {
     width: 70%;
     white-space: nowrap;
     overflow: hidden;
@@ -223,7 +219,7 @@
     color: var(--on-background);
 }
 
-.cart_total_details {
+.total_details {
     width: 30%;
     display: flex;
     flex-direction: row;
@@ -231,13 +227,8 @@
     justify-content: space-between;
 }
 
-.cart_total_value {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--on-background);
-}
-
-.cart_total_quantity {
+.total_quantity,
+.total_value {
     font-size: 14px;
     font-weight: 400;
     color: var(--on-background);
@@ -252,41 +243,42 @@
 ************/
 
 @media only screen and (max-width: 992px) {
-    .cart_item_name_container {
+    .item_name_container {
         width: 60%;
         padding-left: 10px;
     }
 
-    .cart_item_name a {
+    .item_name a {
         font-size: 14px;
     }
 
-    .cart_item_remove a {
+    .item_remove a {
         font-size: 12px;
     }
 
-    .cart_item_price {
+    .item_price {
         font-size: 13px;
+        font-weight: 400;
     }
 
-    .cart_item_image {
+    .item_image {
         width: 160px;
     }
 
 
-    .product_quantity {
+    .quantity {
         max-width: 90px;
         height: 50px;
         padding-left: 35px;
     }
 
-    .product_quantity span {
+    .quantity span {
         left: 10px;
         font-size: 14px;
         font-weight: 550;
     }
 
-    .product_quantity input {
+    .quantity input {
         width: 30px;
         height: 47px;
         font-size: 14px;
@@ -311,30 +303,31 @@
 ************/
 
 @media only screen and (max-width: 600px) {
-    .cart_info_col {
+    .info_column > div {
         font-size: 12px;
+        font-weight: 450;
     }
 
-    .cart_item_image {
+    .item_image {
         width: 130px;
     }
 
-    .cart_item_name_container {
+    .item_name_container {
         width: 50%;
         padding-left: 8px;
     }
 
-    .cart_item_name a {
+    .item_name a {
         font-size: 11px;
         font-weight: 450;
     }
 
-    .cart_item_remove a {
+    .item_remove a {
         font-size: 10px;
         font-weight: 450;
     }
 
-    .cart_item_price {
+    .item_price {
         font-size: 10px;
     }
 
@@ -344,19 +337,19 @@
     }
 
 
-    .product_quantity {
+    .quantity {
         max-width: 60px;
         height: 40px;
         padding-left: 25px;
     }
 
-    .product_quantity span {
+    .quantity span {
         left: 5px;
         font-size: 11px;
         font-weight: 550;
     }
 
-    .product_quantity input {
+    .quantity input {
         width: 15px;
         height: 38px;
         font-size: 11px;
@@ -367,28 +360,25 @@
         width: 13px;
     }
 
-    .cart_total_title {
+    .total_title {
         width: 60%;
     }
 
-    .cart_total_details {
+    .total_details {
         width: 30%;
     }
 
-    .cart_total_container {
+    .total_container {
         margin-top: 25px;
         padding: 20px;
     }
 
-    .cart_total_title {
+    .total_title {
         font-size: 12px;
     }
 
-    .cart_total_value {
-        font-size: 10px;
-    }
-
-    .cart_total_quantity {
+    .total_quantity,
+    .total_value {
         font-size: 10px;
     }
 }

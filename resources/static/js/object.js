@@ -1,23 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-    const id = $(".object").data("id");
+    const object = $(".object")
+    const id = object.data("id");
+    const status = object.data("status");
 
+    handleStatus();
     initImage();
     initQuantity();
-    handleStatus();
 
     /**
-     * 1. handle Status
+     * Handle Status
      */
     function handleStatus() {
-        const status = $(".object").data("status");
         if (status === "NONE" || status === "CART") {
             $(".status_none").show();
             if (status === "NONE") {
-                $(".product_quantity_container").show();
+                $(".cart_buttons_container").show();
             } else if (status === "CART") {
-                $(".cart_remove_button_container").show();
+                $(".remove_cart_button_container").show();
             }
         } else if (status === "TRACKING") {
             $(".status_tracking").show();
@@ -27,11 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     *  2. Init Image
+     *  Init Image
      */
     function initImage() {
-        const images = $(".details_image_thumbnail");
-        const selected = $(".details_image_large img");
+        const selected = $(".image_selected img");
+        const images = $(".thumbnail_image");
 
         images.each(function () {
             const image = $(this);
@@ -45,39 +46,40 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     *  3. Init Quantity
+     *  Init Quantity
      */
     function initQuantity() {
-        const input = $("#quantity_input");
-        const incButton = $("#quantity_inc_button");
-        const decButton = $("#quantity_dec_button");
+        const quantity = document.querySelector(".quantity");
+        const input = quantity.querySelector("input");
+        const incButton = quantity.querySelector(".quantity_inc");
+        const decButton = quantity.querySelector(".quantity_dec");
 
         const url = "/object/quantity";
 
         let originalVal;
-        let endVal;
+        let newValue;
 
-        incButton.on("click", function () {
+        incButton.addEventListener("click", function () {
 
-            originalVal = input.val();
-            endVal = parseFloat(originalVal) + 1;
+            originalVal = input.value;
+            newValue = parseFloat(originalVal) + 1;
 
-            $.post(url, {id: id, quantity: endVal}, function (data) {
+            $.post(url, {id: id, quantity: newValue}, function (data) {
                 if (data === true) {
-                    input.val(endVal);
+                    input.value = newValue;
                 } else {
                     showAlert("unknown error", "alert-danger");
                 }
             });
         });
 
-        decButton.on("click", function () {
-            originalVal = input.val();
+        decButton.addEventListener("click", function () {
+            originalVal = input.value;
             if (originalVal > 1) {
-                endVal = parseFloat(originalVal) - 1;
-                $.post(url, {id: id, quantity: endVal}, function (data) {
+                newValue = parseFloat(originalVal) - 1;
+                $.post(url, {id: id, quantity: newValue}, function (data) {
                     if (data === true) {
-                        input.val(endVal);
+                        input.value = newValue;
                     } else {
                         showAlert("unknown error", "alert-danger");
                     }
@@ -87,9 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     *  4. add to cart
+     *  Add to cart
      */
-    $(".cart_button a").click(function (e) {
+    $(".cart_button a").on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).attr("href");
@@ -98,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.startsWith("/")) {
                 window.location.href = data;
             } else if (data === "true") {
-                $(".product_quantity_container").hide();
-                $(".cart_remove_button_container").show();
+                $(".cart_buttons_container").hide();
+                $(".remove_cart_button_container").show();
                 showAlert("Done", "alert-success");
             } else {
                 showAlert("error, please try again", "alert-danger");
@@ -108,17 +110,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /**
-     *  5. remove from cart
+     *  Remove from cart
      */
-    $(".cart_remove_button a").click(function (e) {
+    $(".cart_remove_button a").on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).attr("href");
 
         $.post(url, {id: id}, function (data) {
             if (data === true) {
-                $(".cart_remove_button_container").hide();
-                $(".product_quantity_container").show();
+                $(".remove_cart_button_container").hide();
+                $(".cart_buttons_container").show();
                 showAlert("Done", "alert-success");
             } else {
                 showAlert("error, please try again", "alert-danger");
@@ -129,58 +131,37 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * basic setting form
      */
-    $("#basic_button").click(function (e) {
+    $("#basic_button").on('click', function (e) {
         e.preventDefault();
-        $("#basic_settings_form").submit();
-    });
-
-    $("#basic_settings_form").submit(function (e) {
-        e.preventDefault();
-
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
-        const message = $(this).find(".form_message");
-
-        const check = checkValidation(input);
-        if (check) {
-            $.post(url, $(this).serialize(), function (data) {
-                if (data === true) {
-                    message.addClass("success");
-                    message.text("updated");
-                } else {
-                    message.removeClass("success");
-                    message.text("error");
-                }
-            });
-        }
+        const form = document.querySelector("#basic_settings_form");
+        submitSettingForm(form);
     });
 
     /**
      * advanced setting form
      */
-    $("#advanced_button").click(function (e) {
+    $("#advanced_button").on('click', function (e) {
         e.preventDefault();
-        $("#advanced_settings_form").submit();
+        const form = document.querySelector("#advanced_settings_form");
+        submitSettingForm(form);
     });
 
-    $("#advanced_settings_form").submit(function (e) {
-        e.preventDefault();
+    function submitSettingForm(form){
+        const url = form.getAttribute("action");
+        const inputs = form.querySelectorAll(".input");
+        const message = form.querySelector(".form_message");
 
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
-        const message = $(this).find(".form_message");
-
-        const check = checkValidation(input);
+        const check = checkValidation(inputs);
         if (check) {
-            $.post(url, $(this).serialize(), function (data) {
+            $.post(url, $(form).serialize(), function (data) {
                 if (data === true) {
-                    message.addClass("success");
-                    message.text("updated");
+                    message.classList.add("success");
+                    message.textContent = "updated";
                 } else {
-                    message.removeClass("success");
-                    message.text("error");
+                    message.classList.remove("success");
+                    message.textContent = "error";
                 }
             });
         }
-    });
+    }
 });

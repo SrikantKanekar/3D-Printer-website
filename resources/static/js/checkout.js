@@ -3,40 +3,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calculateTotal();
 
-    /**
-     * Calculate total
-     */
     function calculateTotal() {
-        const items = $(".object_list");
+        const objects = $(".object");
         let total = 0;
-        items.each(function (index, element) {
-            const price = $(this)
-                .find(".order_list_value span")
-                .text()
+        objects.each(function () {
+            const price = this
+                .querySelector(".list_price span")
+                .textContent
                 .replace(",", "");
-            const quantity = $(this).find(".order_list_quantity span").text();
+            const quantity = this.querySelector(".list_quantity span").textContent;
 
-            total += parseInt(price) * parseInt(quantity);
+            total += parseFloat(price) * parseFloat(quantity);
         });
         total = total.toLocaleString();
-        $(".subtotal span").text(total);
-        $(".total span").text(total);
+        document.querySelector(".subtotal span").textContent = total;
+        document.querySelector(".total span").textContent = total;
     }
 
-    $(".order_button").click(function (e) {
-        e.preventDefault();
-        $("#checkout_form").submit();
-    });
-
-    $("#checkout_form").submit(function (e) {
+    $(".order_button").on('click', function (e) {
         e.preventDefault();
 
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
+        const form = document.querySelector("#checkout_form");
 
-        const check = checkValidation(input);
+        const url = form.getAttribute("action");
+        const inputs = form.querySelectorAll(".input");
+
+        const check = checkValidation(inputs);
         if (check) {
-            $.post(url, $(this).serialize(), function (data) {
+            $.post(url, $(form).serialize(), function (data) {
                 if (data.startsWith("/")) {
                     window.location.href = data;
                 } else {

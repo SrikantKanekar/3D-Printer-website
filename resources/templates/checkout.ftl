@@ -99,35 +99,40 @@
 
                         <!-- Order details -->
                         <div class="order_list_container">
-                            <div class="order_list_bar">
-                                <div class="order_list_title">Object</div>
-                                <div class="order_list_details">
-                                    <div class="order_list_quantity">Qty</div>
-                                    <div class="order_list_value">Price</div>
+                            <div class="list_bar">
+                                <div class="list_title">Object</div>
+                                <div class="list_details">
+                                    <div class="list_quantity">Qty</div>
+                                    <div class="list_price">Price</div>
                                 </div>
                             </div>
                             <ul class="order_list">
                                 <#list objects as object>
-                                    <li class="order_list_item object_list">
-                                        <div class="order_list_title">${object.filename}</div>
-                                        <div class="order_list_details">
-                                            <div class="order_list_quantity">X<span>${object.quantity}</span></div>
-                                            <div class="order_list_value"><i
-                                                        class="fa fa-inr"></i><span>${object.price}</span></div>
+                                    <li class="list_item object">
+                                        <div class="list_title">${object.filename}</div>
+                                        <div class="list_details">
+                                            <div class="list_quantity">X<span>${object.quantity}</span></div>
+                                            <div class="list_price">
+                                                <i class="fa fa-inr"></i><span>${object.price}</span>
+                                            </div>
                                         </div>
                                     </li>
                                 </#list>
-                                <li class="order_list_item">
-                                    <div class="order_list_title">Subtotal</div>
-                                    <div class="order_list_value subtotal"><i class="fa fa-inr"></i><span>0</span></div>
+                                <li class="list_item">
+                                    <div class="list_title">Subtotal</div>
+                                    <div class="list_price subtotal">
+                                        <i class="fa fa-inr"></i><span>0</span>
+                                    </div>
                                 </li>
-                                <li class="order_list_item">
-                                    <div class="order_list_title">Shipping</div>
-                                    <div class="order_list_value">Free</div>
+                                <li class="list_item">
+                                    <div class="list_title">Shipping</div>
+                                    <div class="list_price">Free</div>
                                 </li>
-                                <li class="order_list_item">
-                                    <div class="order_list_title">Total</div>
-                                    <div class="order_list_value total"><i class="fa fa-inr"></i><span>0</span></div>
+                                <li class="list_item">
+                                    <div class="list_title">Total</div>
+                                    <div class="list_price total">
+                                        <i class="fa fa-inr"></i><span>0</span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

@@ -237,7 +237,7 @@ section {
 /*********************************
 2. Qty Button
 *********************************/
-.product_quantity {
+.quantity {
     display: inline-block;
     width: 147px;
     height: 61px;
@@ -247,7 +247,7 @@ section {
     vertical-align: middle;
 }
 
-.product_quantity span {
+.quantity span {
     position: absolute;
     top: 50%;
     left: 25px;
@@ -261,7 +261,7 @@ section {
     transform: translateY(-50%);
 }
 
-.product_quantity input {
+.quantity input {
     display: block;
     width: 40px;
     height: 60px;
