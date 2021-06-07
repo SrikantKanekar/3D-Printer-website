@@ -8,33 +8,33 @@
         <div class="row">
             <div class="col">
 
-                <!-- Product Sorting -->
+                <!--Sorting -->
                 <div class="sorting_bar">
 
                     <div class="results">Showing <span>${objects?size}</span> objects</div>
 
                     <#if objects?has_content>
                         <div class="sorting_container">
-                            <ul class="item_sorting">
+                            <ul class="sorting">
                                 <li>
                                     <span class="sorting_text">Sort by</span>
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     <ul>
-                                        <li class="product_sorting_btn"
-                                            data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>
+                                            <span>Default</span>
                                         </li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'>
-                                            <span>Price</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'>
-                                            <span>Name</span></li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "price" }'>
+                                            <span>Price</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "name" }'>
+                                            <span>Name</span>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </#if>
-
                 </div>
-
             </div>
         </div>
         <div class="row">
@@ -44,9 +44,12 @@
                     <#if objects?has_content>
 
                         <#list objects as object>
+
                             <!-- Product -->
                             <div class="product" data-id="${object.id}">
-                                <div class="product_image"><img src="${object.image}" alt=""></div>
+                                <div class="product_image">
+                                    <img src="${object.image}" alt="">
+                                </div>
                                 <div class="product_content">
                                     <div class="product_title">
                                         <a href="/object/${object.id}">${object.filename}</a>
@@ -67,14 +70,13 @@
 											</svg>
                                         </a>
                                     </div>
-                                    <div class="product_price"><i class="fa fa-inr"></i><span>${object.price}</span>
+                                    <div class="product_price">
+                                        <i class="fa fa-inr"></i><span>${object.price}</span>
                                     </div>
                                 </div>
                             </div>
                         </#list>
-
                     </#if>
-
                 </div>
             </div>
         </div>

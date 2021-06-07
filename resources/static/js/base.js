@@ -15,16 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * 1. Vars and Inits
      */
-    const header = $(".header");
-    let hambActive = false;
+    const header = document.querySelector(".header");
+    const menu = document.querySelector(".menu");
     let menuActive = false;
 
     setHeader();
-
     $(window).on("resize", function () {
         setHeader();
     });
-
     $(document).on("scroll", function () {
         setHeader();
     });
@@ -36,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     function setHeader() {
         if ($(window).scrollTop() > 100) {
-            header.addClass("scrolled");
+            header.classList.add("scrolled");
         } else {
-            header.removeClass("scrolled");
+            header.classList.remove("scrolled");
         }
     }
 
@@ -46,80 +44,65 @@ document.addEventListener('DOMContentLoaded', function () {
      * 3. Init Menu
      */
     function initMenu() {
-        if ($(".hamburger").length) {
-            var hamb = $(".hamburger");
+        $(".hamburger").on("click", function (e) {
+            e.stopPropagation();
 
-            hamb.on("click", function (event) {
-                event.stopPropagation();
+            if (!menuActive) {
+                openMenu();
+                $(document).one("click", function () {
+                    closeMenu();
+                });
+            } else {
+                closeMenu();
+            }
+        });
 
-                if (!menuActive) {
-                    openMenu();
+        //Handle page menu
+        const items = $(".menu_item");
+        items.each(function () {
+            const item = $(this);
 
-                    $(document).one("click", function cls(e) {
-                        if ($(e.target).hasClass("menu_mm")) {
-                            $(document).one("click", cls);
-                        } else {
-                            closeMenu();
-                        }
-                    });
+            item.on("click", function (e) {
+                if (item.hasClass("has-children")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const subItem = item.find("> ul");
+                    if (subItem.hasClass("active")) {
+                        subItem.toggleClass("active");
+                        TweenMax.to(subItem, 0.3, {height: 0});
+                    } else {
+                        subItem.toggleClass("active");
+                        TweenMax.set(subItem, {height: "auto"});
+                        TweenMax.from(subItem, 0.3, {height: 0});
+                    }
                 } else {
-                    $(".menu").removeClass("active");
-                    menuActive = false;
+                    e.stopPropagation();
                 }
             });
-
-            //Handle page menu
-            if ($(".page_menu_item").length) {
-                const items = $(".page_menu_item");
-                items.each(function () {
-                    const item = $(this);
-
-                    item.on("click", function (evt) {
-                        if (item.hasClass("has-children")) {
-                            evt.preventDefault();
-                            evt.stopPropagation();
-                            const subItem = item.find("> ul");
-                            if (subItem.hasClass("active")) {
-                                subItem.toggleClass("active");
-                                TweenMax.to(subItem, 0.3, {height: 0});
-                            } else {
-                                subItem.toggleClass("active");
-                                TweenMax.set(subItem, {height: "auto"});
-                                TweenMax.from(subItem, 0.3, {height: 0});
-                            }
-                        } else {
-                            evt.stopPropagation();
-                        }
-                    });
-                });
-            }
-        }
+        });
     }
 
     function openMenu() {
-        const fs = $(".menu");
-        fs.addClass("active");
-        hambActive = true;
+        menu.classList.add("active");
         menuActive = true;
     }
 
     function closeMenu() {
-        const fs = $(".menu");
-        fs.removeClass("active");
-        hambActive = false;
+        menu.classList.remove("active");
         menuActive = false;
     }
 
     /**
      * 4. Theme icon
      */
-    $(".theme_icon").click(function () {
+    const icon = $(".theme_icon").find("i");
+    icon.on('click', function () {
         $("html").toggleClass("light_theme");
         updateTheme();
+
     });
 
     function updateTheme() {
-        const icon = $(".theme_icon").find("i");
 
         if ($("html").hasClass("light_theme")) {
             icon.removeClass("fa-sun-o");
@@ -218,7 +201,7 @@ function checkValidation(input) {
 }
 
 $(".input").each(function () {
-    $(this).focus(function () {
+    $(this).on('focus', function () {
         hideValidate(this);
     });
 });

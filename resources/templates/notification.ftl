@@ -15,23 +15,23 @@
 
                     <#if notifications?has_content>
                         <div class="sorting_container">
-                            <ul class="item_sorting">
+                            <ul class="sorting">
                                 <li>
                                     <span class="sorting_text">Sort by</span>
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     <ul>
-                                        <li class="product_sorting_btn"
-                                            data-isotope-option='{ "sortBy": "original-order" }'><span>Date</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'>
-                                            <span>Name</span></li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>
+                                            <span>Date</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "name" }'>
+                                            <span>Name</span>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </#if>
-
                 </div>
-
             </div>
         </div>
         <div class="row">

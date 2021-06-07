@@ -89,38 +89,38 @@
     <!-- Menu -->
     <div class="menu">
         <div class="menu_container">
-            <div class="page_menu_content">
-                <ul class="page_menu_nav">
+            <div class="menu_content">
+                <ul class="menu_nav">
 
-                    <li class="page_menu_item">
+                    <li class="menu_item">
                         <a href="/">Home<i class="fa fa-angle-down"></i></a>
                     </li>
 
-                    <li class="page_menu_item">
+                    <li class="menu_item">
                         <a href="/object/create">Create<i class="fa fa-angle-down"></i></a>
                     </li>
 
-                    <li class="page_menu_item">
+                    <li class="menu_item">
                         <a href="/my-objects">My Objects<i class="fa fa-angle-down"></i></a>
                     </li>
 
                     <#if (user?has_content)>
-                        <li class="page_menu_item has-children">
+                        <li class="menu_item has-children">
                             <a href="/account">Account<i class="fa fa-angle-down"></i></a>
-                            <ul class="page_menu_selection">
-                                <li class="page_menu_item">
+                            <ul class="menu_selection">
+                                <li class="menu_item">
                                     <a href="/account">Account<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item">
+                                <li class="menu_item">
                                     <a href="/tracking">Tracking<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item">
+                                <li class="menu_item">
                                     <a href="/history">History<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item">
+                                <li class="menu_item">
                                     <a href="/notification">Notifications<i class="fa fa-angle-down"></i></a>
                                 </li>
-                                <li class="page_menu_item">
+                                <li class="menu_item">
                                     <a href="/account/logout">Logout<i class="fa fa-angle-down"></i></a>
                                 </li>
                             </ul>

@@ -1,25 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-    $("#login_button").click(function (e) {
+    $("#login_button").on('click', function (e) {
         e.preventDefault();
-        $("#auth_form").submit();
-    });
+        const form = document.querySelector("#auth_form");
+        const url = form.getAttribute("action");
+        const inputs = form.querySelectorAll(".input");
+        const message = form.querySelector(".form_message");
 
-    $("#auth_form").submit(function (e) {
-        e.preventDefault();
-
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
-        const message = $(this).find(".form_message");
-
-        const check = checkValidation(input);
+        const check = checkValidation(inputs);
         if (check) {
-            $.post(url, $(this).serialize(), function (data) {
+            $.post(url, $(form).serialize(), function (data) {
                 if (data.startsWith("/")) {
                     window.location.href = data;
                 } else {
-                    message.text(data);
+                    message.textContent = data;
                 }
             });
         }

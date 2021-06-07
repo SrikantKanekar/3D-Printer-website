@@ -28,10 +28,9 @@ window.addEventListener('load', function () {
         },
     });
 
-    const sorting_text = document.querySelector(".sorting_text");
-    $(".product_sorting_btn").each(function () {
+    $(".sorting_button").each(function () {
         $(this).on("click", function () {
-            sorting_text.textContent = this.textContent;
+            document.querySelector(".sorting_text").textContent = this.textContent;
             let option = this.getAttribute("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);

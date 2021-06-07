@@ -11,15 +11,14 @@
             <form class="form" action="/auth/login" method="POST" id="auth_form">
 
                 <div data-validate="Please enter email: example@abc.xyz">
-                    <input name="email" type="email" id="email" class="input" placeholder="Email" required="required">
+                    <input name="email" type="email" id="email" class="input" placeholder="Email">
                 </div>
 
                 <div data-validate="Please enter password">
 					<span class="btn-show-pass">
 						<i class="fa fa fa-eye"></i>
 					</span>
-                    <input name="password" type="password" id="password" class="input" placeholder="Password"
-                           required="required">
+                    <input name="password" type="password" id="password" class="input" placeholder="Password">
                 </div>
 
                 <div class="form_message"></div>

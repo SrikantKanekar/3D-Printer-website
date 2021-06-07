@@ -10,37 +10,39 @@
             <div class="row">
                 <div class="col">
 
-                    <!-- Product Sorting -->
+                    <!--Sorting -->
                     <div class="sorting_bar">
 
                         <div class="results">
                             <span>${activeOrders?size}</span> active orders
                         </div>
-
+item
                         <div class="sorting_container">
-                            <ul class="item_sorting">
+                            <ul class="sorting">
                                 <li>
                                     <span class="sorting_text">Sort by</span>
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     <ul>
-                                        <li class="product_sorting_btn"
-                                            data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>
+                                            <span>Default</span>
                                         </li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "status" }'>
-                                            <span>Status</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "user" }'>
-                                            <span>User</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "price" }'>
-                                            <span>Price</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "objects" }'>
-                                            <span>Objects</span></li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "status" }'>
+                                            <span>Status</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "user" }'>
+                                            <span>User</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "price" }'>
+                                            <span>Price</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "objects" }'>
+                                            <span>Objects</span>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-
                     </div>
-
                 </div>
             </div>
 
@@ -51,50 +53,54 @@
                         <#list activeOrders as order>
 
                             <div class="product" data-id="${order.id}">
-                                <div class="product_image"><img src="${order.image}" alt=""></div>
-                                <div class="product_content">
+                                <div class="product_image">
+                                    <img src="${order.image}" alt="">
+                                </div>
 
+                                <div class="product_content">
                                     <div class="product_id">
                                         <a href="/order/${order.id}">ID : ${order.id}</a>
                                     </div>
 
                                     <div class="product_details">
                                         <div class="product_details_content user_email">${order.userEmail}</div>
-                                        <div class="product_details_content price"><i
-                                                    class="fa fa-inr"></i><span>${order.price}</span></div>
+                                        <div class="product_details_content price">
+                                            <i class="fa fa-inr"></i><span>${order.price}</span>
+                                        </div>
                                     </div>
 
                                     <div class="product_details">
                                         <div class="product_details_content status">${order.status}</div>
-                                        <div class="product_details_content size"><span>${order.objectIds?size}</span>
-                                            objects
+                                        <div class="product_details_content size">
+                                            <span>${order.objectIds?size}</span> objects
                                         </div>
                                     </div>
 
                                     <div class='btn-group' role='group'>
-                                        <div data-status="0" class="button admin placed disabled"><a href="">Placed</a>
+                                        <div data-status="0" class="button admin placed disabled">
+                                            <a href="">Placed</a>
                                         </div>
-                                        <div data-status="1" class="button admin confirmed"><a href="">Confirmed</a>
+                                        <div data-status="1" class="button admin confirmed">
+                                            <a href="">Confirmed</a>
                                         </div>
-                                        <div data-status="2" class="button admin processing"><a href="">Processing</a>
+                                        <div data-status="2" class="button admin processing">
+                                            <a href="">Processing</a>
                                         </div>
-                                        <div data-status="3" class="button admin delivering"><a href="">Delivering</a>
+                                        <div data-status="3" class="button admin delivering">
+                                            <a href="">Delivering</a>
                                         </div>
-                                        <div data-status="4" class="button admin delivered"><a href="">Delivered</a>
+                                        <div data-status="4" class="button admin delivered">
+                                            <a href="">Delivered</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </#list>
-
                     </div>
                 </div>
             </div>
         <#else>
             <div class="no_items_text">No items</div>
         </#if>
-
     </div>
-
 </@layout.base>

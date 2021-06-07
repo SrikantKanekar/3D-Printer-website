@@ -26,10 +26,9 @@ window.addEventListener('load', function () {
         },
     });
 
-    const sorting_text = document.querySelector(".sorting_text");
-    $(".product_sorting_btn").each(function () {
+    $(".sorting_button").each(function () {
         $(this).on("click", function () {
-            sorting_text.textContent = this.textContent;
+            document.querySelector(".sorting_text").textContent = this.textContent;
             let option = this.getAttribute("data-isotope-option");
             option = JSON.parse(option);
             grid.isotope(option);
@@ -133,19 +132,14 @@ window.addEventListener('load', function () {
     /**
      * Message form
      */
-    $("#message_button").click(function (e) {
+    $("#message_button").on('click', function (e) {
         e.preventDefault();
-        $("#message_form").submit();
-    });
-
-    $("#message_form").submit(function (e) {
-        e.preventDefault();
-
+        const form = document.querySelector("#message_form");
         const email = $(".results").data("email");
-        const url = $(this).attr("action");
-        const input = $(this).find(".input");
+        const url = form.getAttribute("action");
+        const inputs = form.querySelectorAll(".input");
 
-        const check = checkValidation(input);
+        const check = checkValidation(inputs);
         if (check) {
             $.post(
                 url,

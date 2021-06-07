@@ -473,7 +473,7 @@ section {
 
 .theme_icon {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 15px;
     vertical-align: middle;
     cursor: pointer;
 }
@@ -488,9 +488,10 @@ section {
 
 .hamburger {
     display: none;
-    margin-left: 30px;
+    margin-left: 20px;
     cursor: pointer;
     margin-right: 4px;
+    vertical-align: middle;
     -webkit-transform: translateY(2px);
     -moz-transform: translateY(2px);
     -ms-transform: translateY(2px);
@@ -531,24 +532,24 @@ section {
     height: 500px;
 }
 
-.page_menu_content {
+.menu_content {
     padding-left: 30px;
     padding-right: 30px;
     overflow: hidden;
     text-align: right;
 }
 
-.page_menu_item {
+.menu_nav > li {
+    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.menu_item {
     display: block;
     position: relative;
     vertical-align: middle;
 }
 
-.page_menu_nav > li {
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
-}
-
-.page_menu_item > a {
+.menu_item > a {
     display: block;
     color: var(--on-background);
     font-weight: 700;
@@ -557,20 +558,20 @@ section {
     font-size: 16px;
 }
 
-.page_menu_item > a:hover {
+.menu_item > a:hover {
     color: #c3c1cc;
 }
 
-.page_menu_item a i {
+.menu_item a i {
     display: none;
     margin-left: 8px;
 }
 
-.page_menu_item.has-children > a > i {
+.menu_item.has-children > a > i {
     display: inline-block;
 }
 
-.page_menu_selection {
+.menu_selection {
     margin: 0;
     width: 100%;
     height: 0;
@@ -578,27 +579,27 @@ section {
     z-index: 1;
 }
 
-.page_menu_selection li {
+.menu_selection li {
     padding-right: 15px;
     line-height: 40px;
 }
 
-.page_menu_selection li:last-child {
+.menu_selection li:last-child {
     padding-bottom: 20px;
 }
 
-.page_menu_selection li a {
+.menu_selection li a {
     display: block;
     color: var(--on-background);
     border-bottom: solid 1px rgba(0, 0, 0, 0.2);
     font-size: 14px;
 }
 
-.page_menu_selection li a:hover {
+.menu_selection li a:hover {
     color: #c3c1cc;
 }
 
-.page_menu_selection li:last-child a {
+.menu_selection li:last-child a {
     border-bottom: none;
 }
 
@@ -1020,8 +1021,8 @@ select:-webkit-autofill:active {
         padding-top: 80px;
     }
 
-    .page_menu_item > a,
-    .page_menu_selection li a {
+    .menu_item > a,
+    .menu_selection li a {
         font-size: 13px;
         height: 40px;
         line-height: 40px;

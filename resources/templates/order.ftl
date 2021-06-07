@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col">
 
-                <!-- Product Sorting -->
+                <!--Sorting -->
                 <div class="sorting_bar">
 
                     <div class="results" data-id="${order.id}" data-email="${order.userEmail}">
@@ -23,26 +23,26 @@
 
                     <#if objects?has_content>
                         <div class="sorting_container">
-                            <ul class="item_sorting">
+                            <ul class="sorting">
                                 <li>
                                     <span class="sorting_text">Sort by</span>
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     <ul>
-                                        <li class="product_sorting_btn"
-                                            data-isotope-option='{ "sortBy": "original-order" }'><span>Default</span>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>
+                                            <span>Default</span>
                                         </li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "status" }'>
-                                            <span>Status</span></li>
-                                        <li class="product_sorting_btn" data-isotope-option='{ "sortBy": "name" }'>
-                                            <span>Name</span></li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "status" }'>
+                                            <span>Status</span>
+                                        </li>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "name" }'>
+                                            <span>Name</span>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
                     </#if>
-
                 </div>
-
             </div>
         </div>
 
@@ -54,9 +54,11 @@
 
                         <#list objects as object>
                             <div class="product" data-id="${object.id}" data-status="${object.printingStatus}">
-                                <div class="product_image"><img src="${object.image}" alt=""></div>
-                                <div class="product_content">
+                                <div class="product_image">
+                                    <img src="${object.image}" alt="">
+                                </div>
 
+                                <div class="product_content">
                                     <div class="product_title">
                                         <a href="/object/${object.id}">${object.filename}</a>
                                     </div>
@@ -65,11 +67,14 @@
                                     <#if admin?has_content>
                                         <div class="product_id">ID : ${object.id}</div>
                                         <div class='btn-group' role='group'>
-                                            <div data-status="0" class="button admin pending disabled"><a href="">Pending</a>
+                                            <div data-status="0" class="button admin pending disabled">
+                                                <a href="">Pending</a>
                                             </div>
-                                            <div data-status="1" class="button admin printing"><a href="">Printing</a>
+                                            <div data-status="1" class="button admin printing">
+                                                <a href="">Printing</a>
                                             </div>
-                                            <div data-status="2" class="button admin printed"><a href="">Printed</a>
+                                            <div data-status="2" class="button admin printed">
+                                                <a href="">Printed</a>
                                             </div>
                                         </div>
                                     </#if>
@@ -101,7 +106,9 @@
                                 <input name="message" type="text" class="input">
                             </div>
 
-                            <div id="message_button" class="button form_submit_button"><a href="#">Send</a></div>
+                            <div id="message_button" class="button form_submit_button">
+                                <a href="#">Send</a>
+                            </div>
                         </form>
                     </div>
                 </div>
