@@ -74,47 +74,100 @@
                 <div class="row">
                     <div class="col">
 
+                        <!-- Setting tabs -->
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                            <!-- Basic tab -->
                             <li class="nav-item">
                                 <a class="active" id="basic-tab" data-toggle="tab" href="#basic"
-                                   role="tab" aria-controls="basic" aria-selected="true">Basic Setting
+                                   role="tab" aria-controls="basic" aria-selected="true">Basic
                                 </a>
                             </li>
+
+                            <!-- Intermediate tab -->
+                            <li class="nav-item">
+                                <a id="intermediate-tab" data-toggle="tab" href="#intermediate" role="tab"
+                                   aria-controls="intermediate" aria-selected="true">Intermediate
+                                </a>
+                            </li>
+
+                            <!-- Advanced tab -->
                             <li class="nav-item">
                                 <a id="advanced-tab" data-toggle="tab" href="#advanced" role="tab"
-                                   aria-controls="advanced" aria-selected="true">Advanced Setting
+                                   aria-controls="advanced" aria-selected="true">Advanced
                                 </a>
                             </li>
                         </ul>
 
+                        <!-- Setting contents -->
                         <div class="tab-content" id="myTabContent">
+
+                            <!-- Basic -->
                             <div class="tab-pane fade show active" id="basic" role="tabpanel"
                                  aria-labelledby="basic-tab">
                                 <form class="form" action="/object/update/basic-settings" id="basic_settings_form">
 
+                                    <label for="quality">Quality</label>
+                                    <div data-validate="Please select value">
+                                        <select name="quality" id="quality" class="dropdown_item_select input">
+                                            <option value="${object.basicSetting.quality}" selected></option>
+                                            <option value="SUPER">Super</option>
+                                            <option value="DYNAMIC">Dynamic</option>
+                                            <option value="STANDARD">Standard</option>
+                                            <option value="LOW">Low</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="infill">Infill (%)</label>
+                                    <div data-validate="Value between 0 and 100">
+                                        <input type="number" name="infill" id="infill" class="input"
+                                               value="${object.basicSetting.infill}"/>
+                                    </div>
+
+                                    <label class="checkbox_container">Gradual Infill
+                                        <input type="checkbox" id="gradual_infill" name="gradual_infill"
+                                                ${object.basicSetting.gradualInfill?then('checked','')}>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="checkbox_container">Support
+                                        <input type="checkbox" id="support" name="support"
+                                                ${object.basicSetting.support?then('checked','')}>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <div class="form_message"></div>
+
+                                    <div id="basic_button" class="button form_submit_button">
+                                        <a href="#">Update</a>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Intermediate -->
+                            <div class="tab-pane fade" id="intermediate" role="tabpanel"
+                                 aria-labelledby="intermediate-tab">
+                                <form class="form" action="/object/update/intermediate-settings"
+                                      id="intermediate_settings_form">
+
                                     <label for="layer_height">Layer Height (mm)</label>
                                     <div data-validate="value between 0.1 and 0.3">
                                         <input type="number" name="layer_height" id="layer_height" class="input"
-                                               value="${object.basicSettings.layerHeight}"/>
-                                    </div>
-
-                                    <label for="wall_thickness">Wall Thickness (mm)</label>
-                                    <div data-validate="value should be greater than 0.1">
-                                        <input type="number" name="wall_thickness" id="wall_thickness" class="input"
-                                               value="${object.basicSettings.wallThickness}"/>
+                                               value="${object.intermediateSetting.layerHeight}"/>
                                     </div>
 
                                     <label for="infill_density">Infill Density (%)</label>
                                     <div data-validate="Value between 0 and 100">
                                         <input type="number" name="infill_density" id="infill_density" class="input"
-                                               value="${object.basicSettings.infillDensity}"/>
+                                               value="${object.intermediateSetting.infillDensity}"/>
                                     </div>
 
                                     <label for="infill_pattern">Infill Pattern</label>
                                     <div data-validate="Please select value">
                                         <select name="infill_pattern" id="infill_pattern"
                                                 class="dropdown_item_select input">
-                                            <option value="${object.basicSettings.infillPattern}" selected></option>
+                                            <option value="${object.intermediateSetting.infillPattern}"
+                                                    selected></option>
                                             <option value="LINES">Lines</option>
                                             <option value="GRID">Grid</option>
                                             <option value="TRIANGLES">Triangles</option>
@@ -133,7 +186,7 @@
 
                                     <label class="checkbox_container">Generate Support
                                         <input type="checkbox" id="generate_support" name="generate_support"
-                                                ${object.basicSettings.generateSupport?then('checked','')}>
+                                                ${object.intermediateSetting.generateSupport?then('checked','')}>
                                         <span class="checkmark"></span>
                                     </label>
 
@@ -141,7 +194,8 @@
                                     <div data-validate="Please select value">
                                         <select name="support_structure" id="support_structure"
                                                 class="dropdown_item_select input">
-                                            <option value="${object.basicSettings.supportStructure}" selected></option>
+                                            <option value="${object.intermediateSetting.supportStructure}"
+                                                    selected></option>
                                             <option value="NORMAL">Normal</option>
                                             <option value="TREE">Tree</option>
                                         </select>
@@ -151,24 +205,26 @@
                                     <div data-validate="Please select value">
                                         <select name="support_placement" id="support_placement"
                                                 class="dropdown_item_select input">
-                                            <option value="${object.basicSettings.supportPlacement}" selected></option>
+                                            <option value="${object.intermediateSetting.supportPlacement}"
+                                                    selected></option>
                                             <option value="TOUCHING_BUILD_PLATE">Touching Build Plate</option>
                                             <option value="EVERYWHERE">Everywhere</option>
                                         </select>
                                     </div>
 
                                     <label for="support_overhang_angle">Support Overhang Angle</label>
-                                    <div data-validate="value between 0 and 360">
+                                    <div data-validate="value between 0 and 89">
                                         <input type="number" name="support_overhang_angle" id="support_overhang_angle"
                                                class="input"
-                                               value="${object.basicSettings.supportOverhangAngle}"/>
+                                               value="${object.intermediateSetting.supportOverhangAngle}"/>
                                     </div>
 
                                     <label for="support_pattern">Support Pattern</label>
                                     <div data-validate="Please select value">
                                         <select name="support_pattern" id="support_pattern"
                                                 class="dropdown_item_select input">
-                                            <option value="${object.basicSettings.supportPattern}" selected></option>
+                                            <option value="${object.intermediateSetting.supportPattern}"
+                                                    selected></option>
                                             <option value="LINES">Lines</option>
                                             <option value="GRID">Grid</option>
                                             <option value="TRIANGLES">Triangles</option>
@@ -182,27 +238,100 @@
                                     <label for="support_density">Support Density (%)</label>
                                     <div data-validate="Value between 0 and 100">
                                         <input type="number" name="support_density" id="support_density" class="input"
-                                               value="${object.basicSettings.supportDensity}"/>
+                                               value="${object.intermediateSetting.supportDensity}"/>
                                     </div>
 
                                     <div class="form_message"></div>
 
-                                    <div id="basic_button" class="button form_submit_button">
+                                    <div id="intermediate_button" class="button form_submit_button">
                                         <a href="#">Update</a>
                                     </div>
                                 </form>
                             </div>
 
+                            <!-- Advanced -->
                             <div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
                                 <form class="form" action="/object/update/advanced-settings"
                                       id="advanced_settings_form">
 
-                                    <label for="weight">Weight</label>
-                                    <div data-validate="Please enter weight">
-                                        <input type="number" name="weight" id="weight"
-                                               value="${object.advancedSettings.weight?string.computer}" class="input"/>
+                                    <label for="wall_line_width">Wall Line Width (mm)</label>
+                                    <div data-validate="Value between 0.4 and 1.2">
+                                        <input type="number" name="wall_line_width" id="wall_line_width"
+                                               value="${object.advancedSetting.wallLineWidth}" class="input"/>
                                     </div>
+
+                                    <label for="top_bottom_line_width">Top/Bottom Line Width (mm)</label>
+                                    <div data-validate="Value between 0.4 and 1.2">
+                                        <input type="number" name="top_bottom_line_width" id="top_bottom_line_width"
+                                               value="${object.advancedSetting.topBottomLineWidth}" class="input"/>
+                                    </div>
+
+                                    <label for="wall_thickness">Wall Thickness (mm)</label>
+                                    <div data-validate="Value between 0.4 and 1.2">
+                                        <input type="number" name="wall_thickness" id="wall_thickness" class="input"
+                                               value="${object.advancedSetting.wallThickness}"/>
+                                    </div>
+
+                                    <label for="wall_line_count">Wall Line Count</label>
+                                    <div data-validate="Value between 2 and 8">
+                                        <input type="number" name="wall_line_count" id="wall_line_count" class="input"
+                                               value="${object.advancedSetting.wallLineCount}"/>
+                                    </div>
+
+                                    <label for="top_thickness">Top Thickness (mm)</label>
+                                    <div data-validate="Value between 0.8 and 2">
+                                        <input type="number" name="top_thickness" id="top_thickness"
+                                               value="${object.advancedSetting.topThickness}" class="input"/>
+                                    </div>
+
+                                    <label for="bottom_thickness">Bottom Thickness (mm)</label>
+                                    <div data-validate="Value between 0.8 and 2">
+                                        <input type="number" name="bottom_thickness" id="bottom_thickness"
+                                               value="${object.advancedSetting.bottomThickness}" class="input"/>
+                                    </div>
+
+                                    <label for="infill_speed">Infill Speed (mm/s)</label>
+                                    <div data-validate="Value between 25 and 100">
+                                        <input type="number" name="infill_speed" id="infill_speed"
+                                               value="${object.advancedSetting.infillSpeed}" class="input"/>
+                                    </div>
+
+                                    <label for="outer_wall_speed">Outer Wall Speed (mm/s)</label>
+                                    <div data-validate="Value between 25 and 100">
+                                        <input type="number" name="outer_wall_speed" id="outer_wall_speed"
+                                               value="${object.advancedSetting.outerWallSpeed}" class="input"/>
+                                    </div>
+
+                                    <label for="inner_wall_speed">Inner Wall Speed (mm/s)</label>
+                                    <div data-validate="Value between 25 and 100">
+                                        <input type="number" name="inner_wall_speed" id="inner_wall_speed"
+                                               value="${object.advancedSetting.innerWallSpeed}" class="input"/>
+                                    </div>
+
+                                    <label for="top_bottom_speed">Top Bottom Speed (mm/s)</label>
+                                    <div data-validate="Value between 25 and 100">
+                                        <input type="number" name="top_bottom_speed" id="top_bottom_speed"
+                                               value="${object.advancedSetting.topBottomSpeed}" class="input"/>
+                                    </div>
+
+                                    <label for="support_speed">Support Speed (mm/s)</label>
+                                    <div data-validate="Value between 25 and 100">
+                                        <input type="number" name="support_speed" id="support_speed"
+                                               value="${object.advancedSetting.supportSpeed}" class="input"/>
+                                    </div>
+
+                                    <label for="print_sequence">Print Sequence</label>
+                                    <div data-validate="Please select value">
+                                        <select name="print_sequence" id="print_sequence"
+                                                class="dropdown_item_select input">
+                                            <option value="${object.advancedSetting.printSequence}" selected></option>
+                                            <option value="ALL_AT_ONCE">All At Once</option>
+                                            <option value="ONE_AT_A_TIME">One At A Time</option>
+                                        </select>
+                                    </div>
+
                                     <div class="form_message"></div>
+
                                     <div id="advanced_button" class="button form_submit_button">
                                         <a href="#">Update</a>
                                     </div>

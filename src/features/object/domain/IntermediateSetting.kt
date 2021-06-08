@@ -6,9 +6,8 @@ import com.example.features.`object`.domain.SupportStructure.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BasicSettings(
+data class IntermediateSetting(
     val layerHeight: Float = 0.2F,
-    val wallThickness: Float = 0.8F,
     val infillDensity: Float = 20F,
     val infillPattern: InfillPattern = LINES,
     val generateSupport: Boolean = true,

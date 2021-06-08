@@ -137,24 +137,14 @@ document.addEventListener('DOMContentLoaded', function () {
         submitSettingForm(form);
     });
 
-    // capitalize default text of select
-    const infillPattern = document.querySelector("#infill_pattern");
-    const supportStructure = document.querySelector("#support_structure");
-    const supportPlacement = document.querySelector("#support_placement");
-    const supportPattern = document.querySelector("#support_pattern");
-
-    capitalize(infillPattern);
-    capitalize(supportStructure);
-    capitalize(supportPlacement);
-    capitalize(supportPattern);
-
-    function capitalize(input){
-        const child = input.firstElementChild;
-        let text = child.value;
-        text = text.replaceAll("_", " ").toLowerCase();
-        text = text.replace(/\b\w/g, l => l.toUpperCase());
-        child.textContent = text;
-    }
+    /**
+     * intermediate setting form
+     */
+    $("#intermediate_button").on('click', function (e) {
+        e.preventDefault();
+        const form = document.querySelector("#intermediate_settings_form");
+        submitSettingForm(form);
+    });
 
     /**
      * advanced setting form
@@ -201,13 +191,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
         switch (input.id) {
+            //Basic
+            case "infill":
+                value = parseFloat(input.value);
+                if (value < 0 || value > 100) return false;
+                break;
+
+            //Intermediate
             case "layer_height":
                 value = parseFloat(input.value);
                 if (value < 0.1 || value > 0.3) return false;
-                break;
-            case "wall_thickness":
-                value = parseFloat(input.value);
-                if (value < 0.1) return false;
                 break;
             case "infill_density":
                 value = parseFloat(input.value);
@@ -215,12 +208,60 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case "support_overhang_angle":
                 value = parseFloat(input.value);
-                if (value < 0 || value > 100) return false;
+                if (value < 0 || value > 89) return false;
                 break;
             case "support_density":
                 value = parseFloat(input.value);
                 if (value < 0 || value > 100) return false;
                 break;
+
+            //Advanced
+            case "wall_line_width":
+            case "top_bottom_line_width":
+            case "wall_thickness":
+                value = parseFloat(input.value);
+                if (value < 0.4 || value > 1.2) return false;
+                break;
+            case "wall_line_count":
+                value = parseFloat(input.value);
+                if (value < 2 || value > 8) return false;
+                break;
+            case "top_thickness":
+            case "bottom_thickness":
+                value = parseFloat(input.value);
+                if (value < 0.8 || value > 2) return false;
+                break;
+            case "infill_speed":
+            case "outer_wall_speed":
+            case "inner_wall_speed":
+            case "top_bottom_speed":
+            case "support_speed":
+                value = parseFloat(input.value);
+                if (value < 25 || value > 100) return false;
+                break;
         }
+    }
+
+    // capitalize enum text value of selected
+    const quality = document.querySelector("#quality");
+    const infillPattern = document.querySelector("#infill_pattern");
+    const supportStructure = document.querySelector("#support_structure");
+    const supportPlacement = document.querySelector("#support_placement");
+    const supportPattern = document.querySelector("#support_pattern");
+    const printSequence = document.querySelector("#print_sequence");
+
+    capitalize(quality);
+    capitalize(infillPattern);
+    capitalize(supportStructure);
+    capitalize(supportPlacement);
+    capitalize(supportPattern);
+    capitalize(printSequence);
+
+    function capitalize(input) {
+        const child = input.firstElementChild;
+        let text = child.value;
+        text = text.replaceAll("_", " ").toLowerCase();
+        text = text.replace(/\b\w/g, l => l.toUpperCase());
+        child.textContent = text;
     }
 });

@@ -11,8 +11,9 @@ import org.bson.types.ObjectId
 data class Object(
     var filename: String, // give the object same name as filename,can be changed later by user
     var image: String? = null,
-    var basicSettings: BasicSettings = BasicSettings(),
-    var advancedSettings: AdvancedSettings = AdvancedSettings(),
+    var basicSetting: BasicSetting = BasicSetting(),
+    var intermediateSetting: IntermediateSetting = IntermediateSetting(),
+    var advancedSetting: AdvancedSetting = AdvancedSetting(),
     var status: ObjectStatus = NONE,
     var printingStatus: PrintingStatus = PENDING,
     var price: Int? = null,

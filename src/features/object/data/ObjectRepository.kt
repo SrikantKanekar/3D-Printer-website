@@ -1,8 +1,9 @@
 package com.example.features.`object`.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.AdvancedSettings
-import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.AdvancedSetting
+import com.example.features.`object`.domain.BasicSetting
+import com.example.features.`object`.domain.IntermediateSetting
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
 
@@ -61,21 +62,30 @@ class ObjectRepository(
         return userDataSource.updateUser(user)
     }
 
-    suspend fun updateBasicSettings(email: String, id: String, basicSettings: BasicSettings): Boolean {
+    suspend fun updateBasicSettings(email: String, id: String, basicSetting: BasicSetting): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.basicSettings = basicSettings } ?: return false
+            ?.let { it.basicSetting = basicSetting } ?: return false
         return userDataSource.updateUser(user)
     }
 
-    suspend fun updateAdvancedSettings(email: String, id: String, advancedSettings: AdvancedSettings): Boolean {
+    suspend fun updateIntermediateSettings(email: String, id: String, intermediateSetting: IntermediateSetting): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.advancedSettings = advancedSettings } ?: return false
+            ?.let { it.intermediateSetting = intermediateSetting } ?: return false
+        return userDataSource.updateUser(user)
+    }
+
+    suspend fun updateAdvancedSettings(email: String, id: String, advancedSetting: AdvancedSetting): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == NONE || it.status == CART }
+            .find { it.id == id }
+            ?.let { it.advancedSetting = advancedSetting } ?: return false
         return userDataSource.updateUser(user)
     }
 }

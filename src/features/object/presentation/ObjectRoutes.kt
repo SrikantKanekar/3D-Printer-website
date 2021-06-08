@@ -106,8 +106,46 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
         val params = call.receiveParameters()
 
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val quality = params["quality"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val infill = params["infill"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val gradualInfill = params["gradual_infill"]
+        val support = params["support"]
+
+        val basicSettings = BasicSetting(
+            quality = Quality.valueOf(quality),
+            infill = infill,
+            gradualInfill = gradualInfill == "on",
+            support = support == "on"
+        )
+
+        val principal = call.sessions.get<UserPrincipal>()
+        var updated = false
+        when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                cookie.objects
+                    .filter { it.status == NONE || it.status == CART }
+                    .find { it.id == id }
+                    ?.let {
+                        it.basicSetting = basicSettings
+                        updated = true
+                    }
+                call.sessions.set(cookie)
+            }
+            else -> updated =
+                objectRepository.updateBasicSettings(principal.email, id, basicSettings) //principal.email
+        }
+        call.respond(updated)
+    }
+}
+
+fun Route.updateIntermediateSettings(objectRepository: ObjectRepository) {
+    post("/object/update/intermediate-settings") {
+
+        val params = call.receiveParameters()
+
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val layerHeight = params["layer_height"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val wallThickness = params["wall_thickness"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
         val infillDensity = params["infill_density"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
         val infillPattern = params["infill_pattern"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val generateSupport = params["generate_support"]
@@ -117,9 +155,8 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
         val supportPattern = params["support_pattern"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val supportDensity = params["support_density"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-        val basicSettings = BasicSettings(
+        val basicSettings = IntermediateSetting(
             layerHeight = layerHeight,
-            wallThickness = wallThickness,
             infillDensity = infillDensity,
             infillPattern = InfillPattern.valueOf(infillPattern),
             generateSupport = generateSupport == "on",
@@ -138,13 +175,13 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
                     .filter { it.status == NONE || it.status == CART }
                     .find { it.id == id }
                     ?.let {
-                        it.basicSettings = basicSettings
+                        it.intermediateSetting = basicSettings
                         updated = true
                     }
                 call.sessions.set(cookie)
             }
             else -> updated =
-                objectRepository.updateBasicSettings(principal.email, id, basicSettings)
+                objectRepository.updateIntermediateSettings(principal.email, id, basicSettings)
         }
         call.respond(updated)
     }
@@ -154,9 +191,34 @@ fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
     post("/object/update/advanced-settings") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val weight = params["weight"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-        val advancedSettings = AdvancedSettings(weight = weight)
+        val wallLineWidth = params["wall_line_width"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val topBottomLineWidth = params["top_bottom_line_width"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val wallThickness = params["wall_thickness"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val wallLineCount = params["wall_line_count"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val topThickness = params["top_thickness"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val bottomThickness = params["bottom_thickness"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val infillSpeed = params["infill_speed"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val outerWallSpeed = params["outer_wall_speed"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val innerWallSpeed = params["inner_wall_speed"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val topBottomSpeed = params["top_bottom_speed"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val supportSpeed = params["support_speed"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val printSequence = params["print_sequence"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val advancedSettings = AdvancedSetting(
+            wallLineWidth = wallLineWidth,
+            topBottomLineWidth = topBottomLineWidth,
+            wallThickness = wallThickness,
+            wallLineCount = wallLineCount,
+            topThickness = topThickness,
+            bottomThickness = bottomThickness,
+            infillSpeed = infillSpeed,
+            outerWallSpeed = outerWallSpeed,
+            innerWallSpeed = innerWallSpeed,
+            topBottomSpeed = topBottomSpeed,
+            supportSpeed = supportSpeed,
+            printSequence = PrintSequence.valueOf(printSequence)
+        )
 
         val principal = call.sessions.get<UserPrincipal>()
 
@@ -168,7 +230,7 @@ fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
                     .filter { it.status == NONE || it.status == CART }
                     .find { it.id == id }
                     ?.let {
-                        it.advancedSettings = advancedSettings
+                        it.advancedSetting = advancedSettings
                         updated = true
                     }
                 call.sessions.set(cookie)

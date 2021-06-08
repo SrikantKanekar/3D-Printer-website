@@ -55,24 +55,24 @@
 }
 
 .object_content {
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .object_name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 24px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 550;
     color: var(--on-background);
-    margin-top: -9px;
+    margin-bottom: 12px;
 }
 
 .object_description {
     font-size: 16px;
     font-weight: 500;
     color: var(--on-surface);
-    margin-top: 12px;
+    margin-bottom: 5px;
 }
 
 .cart_buttons_container {
@@ -112,11 +112,11 @@
 
 .nav-item {
     display: inline-block;
-    padding-right: 35px;
+    padding-right: 40px;
 }
 
 .nav-item a {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 550;
     color: var(--on-surface);
 }
@@ -133,6 +133,9 @@
     margin-top: 44px;
 }
 
+/******************
+    checkbox
+ *****************/
 .checkbox_container {
     display: block;
     position: relative;
@@ -157,7 +160,7 @@
 /* Create a custom checkbox */
 .checkmark {
     position: absolute;
-    top: 3px;
+    top: 2px;
     left: 8px;
     height: 15px;
     width: 15px;
@@ -226,12 +229,8 @@
 ************/
 
 @media only screen and (max-width: 992px) {
-    .object_content {
-        margin-top: 80px;
-    }
-
     .nav {
-        margin-top: 60px;
+        margin-top: 70px;
     }
 }
 
@@ -241,16 +240,27 @@
 ************/
 
 @media only screen and (max-width: 600px) {
+    .object_name {
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    .object_description {
+        font-size: 15px;
+        font-weight: 500;
+    }
+
     .nav {
-        margin-top: 40px;
+        margin-top: 50px;
     }
 
     .nav-item {
-        padding-right: 15px;
+        padding-right: 13px;
     }
 
     .nav-item a {
-        font-size: 15px;
+        font-size: 17px;
+        font-weight: 500;
     }
 
     .cart_buttons_container {

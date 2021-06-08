@@ -18,6 +18,7 @@ fun Application.registerObjectRoutes() {
         removeFromCart(objectRepository)
         updateQuantity(objectRepository)
         updateBasicSettings(objectRepository)
+        updateIntermediateSettings(objectRepository)
         updateAdvancedSettings(objectRepository)
     }
 }
