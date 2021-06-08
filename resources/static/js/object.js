@@ -137,6 +137,25 @@ document.addEventListener('DOMContentLoaded', function () {
         submitSettingForm(form);
     });
 
+    // capitalize default text of select
+    const infillPattern = document.querySelector("#infill_pattern");
+    const supportStructure = document.querySelector("#support_structure");
+    const supportPlacement = document.querySelector("#support_placement");
+    const supportPattern = document.querySelector("#support_pattern");
+
+    capitalize(infillPattern);
+    capitalize(supportStructure);
+    capitalize(supportPlacement);
+    capitalize(supportPattern);
+
+    function capitalize(input){
+        const child = input.firstElementChild;
+        let text = child.value;
+        text = text.replaceAll("_", " ").toLowerCase();
+        text = text.replace(/\b\w/g, l => l.toUpperCase());
+        child.textContent = text;
+    }
+
     /**
      * advanced setting form
      */
@@ -146,14 +165,14 @@ document.addEventListener('DOMContentLoaded', function () {
         submitSettingForm(form);
     });
 
-    function submitSettingForm(form){
+    function submitSettingForm(form) {
         const url = form.getAttribute("action");
         const inputs = form.querySelectorAll(".input");
         const message = form.querySelector(".form_message");
 
-        const check = checkValidation(inputs);
+        const check = checkSettingValidation(inputs);
         if (check) {
-            $.post(url, $(form).serialize(), function (data) {
+            $.post(url, $(form).serialize() + "&id=" + id, function (data) {
                 if (data === true) {
                     message.classList.add("success");
                     message.textContent = "updated";
@@ -162,6 +181,46 @@ document.addEventListener('DOMContentLoaded', function () {
                     message.textContent = "error";
                 }
             });
+        }
+    }
+
+    function checkSettingValidation(inputs) {
+        let check = true;
+        for (let i = 0; i < inputs.length; i++) {
+            if (validateSetting(inputs[i]) === false) {
+                showValidate(inputs[i]);
+                check = false;
+            }
+        }
+        return check;
+    }
+
+    function validateSetting(input) {
+        let value = input.value.trim();
+        if (value === "") {
+            return false;
+        }
+        switch (input.id) {
+            case "layer_height":
+                value = parseFloat(input.value);
+                if (value < 0.1 || value > 0.3) return false;
+                break;
+            case "wall_thickness":
+                value = parseFloat(input.value);
+                if (value < 0.1) return false;
+                break;
+            case "infill_density":
+                value = parseFloat(input.value);
+                if (value < 0 || value > 100) return false;
+                break;
+            case "support_overhang_angle":
+                value = parseFloat(input.value);
+                if (value < 0 || value > 100) return false;
+                break;
+            case "support_density":
+                value = parseFloat(input.value);
+                if (value < 0 || value > 100) return false;
+                break;
         }
     }
 });

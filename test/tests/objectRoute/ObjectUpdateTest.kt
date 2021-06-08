@@ -61,12 +61,12 @@ class ObjectUpdateTest : KoinTest {
                 `create object before user login`()
                 handleRequest(HttpMethod.Post, "/object/$TEST_CREATED_OBJECT/basic") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
-                    setBody(listOf("size" to "100").formUrlEncode())
+                    setBody(listOf("layer_height" to "0.3").formUrlEncode())
                 }.apply {
                     runBlocking {
                         val cookie = response.call.sessions.get<ObjectsCookie>()!!
                         val obj = cookie.objects.find { it.id == TEST_CREATED_OBJECT }!!
-                        assertEquals(100, obj.basicSettings.size)
+                        assertEquals(0.3F, obj.basicSettings.layerHeight)
                     }
                 }
             }
@@ -91,11 +91,11 @@ class ObjectUpdateTest : KoinTest {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/object/$TEST_USER_OBJECT/basic") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
-                    setBody(listOf("size" to "100").formUrlEncode())
+                    setBody(listOf("layer_height" to "0.1").formUrlEncode())
                 }.apply {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, TEST_USER_OBJECT)!!
-                        assertEquals(100, obj.basicSettings.size)
+                        assertEquals(0.1F, obj.basicSettings.layerHeight)
                     }
                 }
             }

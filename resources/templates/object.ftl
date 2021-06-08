@@ -90,23 +90,112 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="basic" role="tabpanel"
                                  aria-labelledby="basic-tab">
-                                <form class="form" action="/object/${object.id}/basic" id="basic_settings_form">
+                                <form class="form" action="/object/update/basic-settings" id="basic_settings_form">
 
-                                    <label for="size">Size</label>
-                                    <div data-validate="Please enter size">
-                                        <input type="number" name="size" id="size"
-                                               value="${object.basicSettings.size?string.computer}"
-                                               class="input"/>
+                                    <label for="layer_height">Layer Height (mm)</label>
+                                    <div data-validate="value between 0.1 and 0.3">
+                                        <input type="number" name="layer_height" id="layer_height" class="input"
+                                               value="${object.basicSettings.layerHeight}"/>
+                                    </div>
+
+                                    <label for="wall_thickness">Wall Thickness (mm)</label>
+                                    <div data-validate="value should be greater than 0.1">
+                                        <input type="number" name="wall_thickness" id="wall_thickness" class="input"
+                                               value="${object.basicSettings.wallThickness}"/>
+                                    </div>
+
+                                    <label for="infill_density">Infill Density (%)</label>
+                                    <div data-validate="Value between 0 and 100">
+                                        <input type="number" name="infill_density" id="infill_density" class="input"
+                                               value="${object.basicSettings.infillDensity}"/>
+                                    </div>
+
+                                    <label for="infill_pattern">Infill Pattern</label>
+                                    <div data-validate="Please select value">
+                                        <select name="infill_pattern" id="infill_pattern"
+                                                class="dropdown_item_select input">
+                                            <option value="${object.basicSettings.infillPattern}" selected></option>
+                                            <option value="LINES">Lines</option>
+                                            <option value="GRID">Grid</option>
+                                            <option value="TRIANGLES">Triangles</option>
+                                            <option value="TRI_HEXAGON">Tri Hexagon</option>
+                                            <option value="CUBIC">Cubic</option>
+                                            <option value="CUBIC_SUBDIVISION">Cubic Subdivision</option>
+                                            <option value="OCTET">Octet</option>
+                                            <option value="QUARTER_CUBIC">Quarter Cubic</option>
+                                            <option value="CONCENTRIC">Concentric</option>
+                                            <option value="ZIG_ZAG">Zig Zag</option>
+                                            <option value="CROSS">Cross</option>
+                                            <option value="CROSS_3D">Cross 3D</option>
+                                            <option value="GYROID">Gyroid</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="checkbox_container">Generate Support
+                                        <input type="checkbox" id="generate_support" name="generate_support"
+                                                ${object.basicSettings.generateSupport?then('checked','')}>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label for="support_structure">Support Structure</label>
+                                    <div data-validate="Please select value">
+                                        <select name="support_structure" id="support_structure"
+                                                class="dropdown_item_select input">
+                                            <option value="${object.basicSettings.supportStructure}" selected></option>
+                                            <option value="NORMAL">Normal</option>
+                                            <option value="TREE">Tree</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="support_placement">Support Placement</label>
+                                    <div data-validate="Please select value">
+                                        <select name="support_placement" id="support_placement"
+                                                class="dropdown_item_select input">
+                                            <option value="${object.basicSettings.supportPlacement}" selected></option>
+                                            <option value="TOUCHING_BUILD_PLATE">Touching Build Plate</option>
+                                            <option value="EVERYWHERE">Everywhere</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="support_overhang_angle">Support Overhang Angle</label>
+                                    <div data-validate="value between 0 and 360">
+                                        <input type="number" name="support_overhang_angle" id="support_overhang_angle"
+                                               class="input"
+                                               value="${object.basicSettings.supportOverhangAngle}"/>
+                                    </div>
+
+                                    <label for="support_pattern">Support Pattern</label>
+                                    <div data-validate="Please select value">
+                                        <select name="support_pattern" id="support_pattern"
+                                                class="dropdown_item_select input">
+                                            <option value="${object.basicSettings.supportPattern}" selected></option>
+                                            <option value="LINES">Lines</option>
+                                            <option value="GRID">Grid</option>
+                                            <option value="TRIANGLES">Triangles</option>
+                                            <option value="CONCENTRIC">Concentric</option>
+                                            <option value="ZIG_ZAG">Zig Zag</option>
+                                            <option value="CROSS">Cross</option>
+                                            <option value="GYROID">Gyroid</option>
+                                        </select>
+                                    </div>
+
+                                    <label for="support_density">Support Density (%)</label>
+                                    <div data-validate="Value between 0 and 100">
+                                        <input type="number" name="support_density" id="support_density" class="input"
+                                               value="${object.basicSettings.supportDensity}"/>
                                     </div>
 
                                     <div class="form_message"></div>
+
                                     <div id="basic_button" class="button form_submit_button">
                                         <a href="#">Update</a>
                                     </div>
                                 </form>
                             </div>
+
                             <div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
-                                <form class="form" action="/object/${object.id}/advanced" id="advanced_settings_form">
+                                <form class="form" action="/object/update/advanced-settings"
+                                      id="advanced_settings_form">
 
                                     <label for="weight">Weight</label>
                                     <div data-validate="Please enter weight">

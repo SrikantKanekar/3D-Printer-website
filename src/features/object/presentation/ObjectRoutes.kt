@@ -1,8 +1,7 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.features.`object`.domain.AdvancedSettings
-import com.example.features.`object`.domain.BasicSettings
+import com.example.features.`object`.domain.*
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.userObject.domain.ObjectsCookie
@@ -102,17 +101,35 @@ fun Route.updateQuantity(objectRepository: ObjectRepository) {
 }
 
 fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
-    post("/object/{id}/basic") {
-        val id = call.parameters["id"] ?: return@post call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
+    post("/object/update/basic-settings") {
+
         val params = call.receiveParameters()
-        val size = params["size"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val basicSettings = BasicSettings(size = size)
 
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val layerHeight = params["layer_height"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val wallThickness = params["wall_thickness"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val infillDensity = params["infill_density"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val infillPattern = params["infill_pattern"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val generateSupport = params["generate_support"]
+        val supportStructure = params["support_structure"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val supportPlacement = params["support_placement"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val supportOverhangAngle = params["support_overhang_angle"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val supportPattern = params["support_pattern"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val supportDensity = params["support_density"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val basicSettings = BasicSettings(
+            layerHeight = layerHeight,
+            wallThickness = wallThickness,
+            infillDensity = infillDensity,
+            infillPattern = InfillPattern.valueOf(infillPattern),
+            generateSupport = generateSupport == "on",
+            supportStructure = SupportStructure.valueOf(supportStructure),
+            supportPlacement = SupportPlacement.valueOf(supportPlacement),
+            supportOverhangAngle = supportOverhangAngle,
+            supportPattern = SupportPattern.valueOf(supportPattern),
+            supportDensity = supportDensity
+        )
         val principal = call.sessions.get<UserPrincipal>()
-
         var updated = false
         when (principal) {
             null -> {
@@ -134,13 +151,11 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
 }
 
 fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
-    post("/object/{id}/advanced") {
-        val id = call.parameters["id"] ?: return@post call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
+    post("/object/update/advanced-settings") {
         val params = call.receiveParameters()
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val weight = params["weight"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
+
         val advancedSettings = AdvancedSettings(weight = weight)
 
         val principal = call.sessions.get<UserPrincipal>()
