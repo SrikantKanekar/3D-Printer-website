@@ -53,7 +53,8 @@
 
                     <div class="form_message"></div>
 
-                    <div id="change_password_button" class="button form_submit_button"><a href="#">Change Password</a>
+                    <div id="change_password_button" class="button form_submit_button">
+                        <a href="#">Change Password</a>
                     </div>
                 </form>
             </div>
