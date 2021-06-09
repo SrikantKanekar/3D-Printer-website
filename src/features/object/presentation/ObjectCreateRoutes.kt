@@ -72,8 +72,6 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
                     //get the image of the file
                     obj.apply {
                         image = "/static/images/3d-image.jpg"
-                        price = Random.nextInt(1000, 10000)
-                        timeToPrint = Random.nextInt(1, 24)
                     }
 
                     //save object to user or cookie
