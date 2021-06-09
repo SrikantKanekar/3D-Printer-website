@@ -54,12 +54,13 @@
                                     <div class="product_title">
                                         <a href="/object/${object.id}">${object.filename}</a>
                                     </div>
-                                    <div class="product_add_to_cart">
-                                        <a href="/my-objects/add-to-cart">
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                 viewBox="0 0 489 489" style="enable-background: new 00 489 489;"
-                                                 xml:space="preserve">
+                                    <#if object.slicingDetails.uptoDate = true>
+                                        <div class="add_to_cart">
+                                            <a href="/my-objects/add-to-cart">
+                                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     viewBox="0 0 489 489" style="enable-background: new 00 489 489;"
+                                                     xml:space="preserve">
 												<g>
                                                     <path d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3
 													c-7,0-12.8,5.3-13.4,12.3l-28,315.3c0,0.4-0.1,0.8-0.1,1.2c0,35.9,32.9,65.1,73.4,65.1h244.6c40.5,0,73.4-29.2,73.4-65.1
@@ -68,11 +69,16 @@
 													c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-41h45.2l26.9,302.3C412.8,445.2,392.1,462,366.8,462z"/>
                                                 </g>
 											</svg>
-                                        </a>
-                                    </div>
-                                    <div class="product_price">
-                                        <i class="fa fa-inr"></i><span>${object.price}</span>
-                                    </div>
+                                            </a>
+                                        </div>
+                                        <div class="price">
+                                            <i class="fa fa-inr"></i><span>${object.slicingDetails.totalPrice}</span>
+                                        </div>
+                                    <#else>
+                                        <div class="slicing_pending">
+                                            Slicing pending
+                                        </div>
+                                    </#if>
                                 </div>
                             </div>
                         </#list>

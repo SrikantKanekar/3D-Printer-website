@@ -113,7 +113,7 @@
                                         <div class="list_details">
                                             <div class="list_quantity">X<span>${object.quantity}</span></div>
                                             <div class="list_price">
-                                                <i class="fa fa-inr"></i><span>${object.price}</span>
+                                                <i class="fa fa-inr"></i><span>${object.slicingDetails.totalPrice}</span>
                                             </div>
                                         </div>
                                     </li>

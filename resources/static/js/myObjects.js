@@ -9,10 +9,15 @@ window.addEventListener('load', function () {
         },
         getSortData: {
             price: function (itemElement) {
-                const price = itemElement
-                    .querySelector(".product_price span")
-                    .textContent;
-                return parseInt(price, 10);
+                const price = itemElement.querySelector(".price");
+                if (document.body.contains(price)){
+                    let priceValue = price
+                        .querySelector("span")
+                        .textContent;
+                    return parseInt(priceValue, 10);
+                } else {
+                    return 0;
+                }
             },
             name: function (itemElement) {
                 return itemElement
@@ -42,7 +47,7 @@ window.addEventListener('load', function () {
      */
     const result = document.querySelector(".results span");
 
-    $(".product_add_to_cart a").on("click",function (e) {
+    $(".add_to_cart a").on("click",function (e) {
         e.preventDefault();
 
         const product = this.closest(".product");

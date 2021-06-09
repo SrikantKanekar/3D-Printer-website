@@ -24,7 +24,7 @@ class UserObjectRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE }
-            .find { it.id == objectId }
+            .find { it.id == objectId && it.slicingDetails.uptoDate }
             ?.let { it.status = CART } ?: return false
         return userDataSource.updateUser(user)
     }

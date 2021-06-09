@@ -15,45 +15,6 @@
     height: auto;
 }
 
-.thumbnail_images {
-    margin-top: 17px;
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content: space-between;
-}
-
-.thumbnail_image {
-    width: calc((100% - 51px) / 4);
-    cursor: pointer;
-}
-
-.thumbnail_image::after {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: solid 2px var(--on-background);
-    content: "";
-    background: transparent;
-    pointer-events: none;
-    visibility: hidden;
-    opacity: 0;
-}
-
-.thumbnail_image.active::after,
-.thumbnail_image:hover::after {
-    visibility: visible;
-    opacity: 1;
-}
-
-.thumbnail_image img {
-    width: 100%;
-    height: auto;
-}
-
 .object_content {
     margin-top: 25px;
 }
@@ -68,38 +29,35 @@
     margin-bottom: 12px;
 }
 
-.object_description {
+.upto_date{
+    display: none;
     font-size: 16px;
     font-weight: 500;
     color: var(--on-surface);
+}
+
+.slicing_details {
+    display: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--on-surface);
+}
+
+.slicing_details > div {
     margin-bottom: 5px;
+    word-spacing: 3px;
 }
 
-.cart_buttons_container {
-    margin-top: 48px;
-    display: none;
-}
-
-.remove_cart_button_container {
-    margin-top: 48px;
-    display: none;
-}
-
-.cart_button {
+.object_content .button {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 13px;
+    margin-right: 13px;
 }
 
-.cart_remove_button {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 13px;
-}
-
-.cart_remove_button::after,
-.cart_button::after {
-    background: var(--on-background);
+.cart_buttons,
+.remove_cart_button {
+    margin-top: 48px;
+    display: none;
 }
 
 /************
@@ -215,6 +173,16 @@
     border: none;
 }
 
+.object_description {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--on-surface);
+}
+
+.object_description > div {
+    margin-bottom: 5px;
+}
+
 /************
  Status completed
 ************/
@@ -245,6 +213,10 @@
         font-weight: 500;
     }
 
+    .slicing_details > div {
+        font-size: 15px;
+    }
+
     .object_description {
         font-size: 15px;
         font-weight: 500;
@@ -263,33 +235,12 @@
         font-weight: 500;
     }
 
-    .cart_buttons_container {
+    .cart_buttons,
+    .remove_cart_button {
         margin-top: 30px;
     }
 
-    .remove_cart_button_container {
-        margin-top: 30px;
-    }
-
-    .quantity {
-        max-width: 120px;
-        height: 55px;
-        padding-left: 55px;
-    }
-
-    .quantity span {
-        left: 17px;
-    }
-
-    .quantity input {
-        height: 54px;
-    }
-
-    .quantity_buttons {
-        width: 23px;
-    }
-
-    .cart_button {
+    .cart_buttons .button {
         max-width: 40%;
     }
 }

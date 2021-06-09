@@ -11,14 +11,13 @@ import org.bson.types.ObjectId
 data class Object(
     var filename: String, // give the object same name as filename,can be changed later by user
     var image: String? = null,
+    var quantity: Int = 1,
+    var status: ObjectStatus = NONE,
+    var printingStatus: PrintingStatus = PENDING,
     var basicSetting: BasicSetting = BasicSetting(),
     var intermediateSetting: IntermediateSetting = IntermediateSetting(),
     var advancedSetting: AdvancedSetting = AdvancedSetting(),
-    var status: ObjectStatus = NONE,
-    var printingStatus: PrintingStatus = PENDING,
-    var price: Int? = null,
-    var quantity: Int = 1,
-    var timeToPrint: Int? = null, // approx printing time in minutes
+    var slicingDetails: SlicingDetails = SlicingDetails(),
     val trackingDetails: TrackingDetails = TrackingDetails(),
     @BsonId
     val id: String = ObjectId().toString()

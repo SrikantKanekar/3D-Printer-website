@@ -46,7 +46,7 @@
                                     </div>
 
                                     <!-- Price -->
-                                    <div class="item_price"><i class="fa fa-inr"></i> ${object.price}</div>
+                                    <div class="item_price"><i class="fa fa-inr"></i> ${object.slicingDetails.totalPrice}</div>
 
                                     <!-- Quantity -->
                                     <div class="item_quantity">
@@ -114,7 +114,7 @@
                                                     </div>
                                                     <div class="total_value">
                                                         <i class="fa fa-inr"></i>
-                                                        <span>${object.price}</span>
+                                                        <span>${object.slicingDetails.totalPrice}</span>
                                                     </div>
                                                 </div>
                                             </div>

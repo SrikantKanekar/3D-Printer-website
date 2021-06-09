@@ -15,20 +15,6 @@
                         <div class="image_selected">
                             <img src="${object.image}" alt="">
                         </div>
-                        <div class="thumbnail_images">
-                            <div class="thumbnail_image active" data-image="${object.image}">
-                                <img src="${object.image}" alt="">
-                            </div>
-                            <div class="thumbnail_image" data-image="/static/images/3d-image2.jpg">
-                                <img src="/static/images/3d-image2.jpg" alt="">
-                            </div>
-                            <div class="thumbnail_image" data-image="/static/images/3d-image3.jpeg">
-                                <img src="/static/images/3d-image3.jpeg" alt="">
-                            </div>
-                            <div class="thumbnail_image" data-image="/static/images/3d-image4.jpeg">
-                                <img src="/static/images/3d-image4.jpeg" alt="">
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Details -->
@@ -36,33 +22,40 @@
                         <div class="object_content">
 
                             <div class="object_name">${object.filename}</div>
-                            <div class="object_description"><i class="fa fa-inr"></i>${object.price}</div>
-                            <div class="object_description">${object.timeToPrint} minutes for printing</div>
 
-                            <div class="cart_buttons_container">
-                                <div class="quantity">
-                                    <span>Qty</span>
+                            <div class="upto_date" data-value="${object.slicingDetails.uptoDate?c}">
+                                Slicing details are not upto date
+                            </div>
 
-                                    <input type="number" value="${object.quantity}">
-
-                                    <div class="quantity_buttons">
-
-                                        <div class="quantity_inc quantity_control">
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </div>
-
-                                        <div class="quantity_dec quantity_control">
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
+                            <div class="slicing_details">
+                                <div class="time" data-value="${(object.slicingDetails.time)!}">
+                                    Time <span></span>
                                 </div>
-                                <div class="button cart_button">
+                                <div class="material_weight" data-value="${(object.slicingDetails.materialWeight)!}">
+                                    Material Weight <span></span>g
+                                </div>
+                                <div class="material_cost" data-value="${(object.slicingDetails.materialCost)!}">
+                                    Material Cost <i class="fa fa-inr"></i><span></span>
+                                </div>
+                                <div class="electricity_cost" data-value="${(object.slicingDetails.electricityCost)!}">
+                                    Electricity Cost <i class="fa fa-inr"></i><span></span>
+                                </div>
+                                <div class="total_price" data-value="${(object.slicingDetails.totalPrice)!}">
+                                    Total Price <i class="fa fa-inr"></i><span></span>
+                                </div>
+                            </div>
+
+                            <div class="cart_buttons">
+                                <div class="button slice">
+                                    <a href="/object/slice">Slice</a>
+                                </div>
+                                <div class="button add_to_cart">
                                     <a href="/object/add-to-cart">Add to cart</a>
                                 </div>
                             </div>
 
-                            <div class="remove_cart_button_container">
-                                <div class="button cart_remove_button">
+                            <div class="remove_cart_button">
+                                <div class="button remove_from_cart">
                                     <a href="/object/remove-from-cart">Remove from cart</a>
                                 </div>
                             </div>
@@ -357,11 +350,12 @@
                     <div class="col-lg-6">
                         <div class="object_content">
                             <div class="object_name">${object.filename}</div>
-                            <div class="object_description"><i class="fa fa-inr"></i>${object.price}</div>
-                            <div class="object_description">Printing status : ${object.printingStatus}</div>
-
-                            <div class="object_description">Started at : ${object.trackingDetails.started_at!"--"}</div>
-                            <div class="object_description">Expected to be completed by <span>5:34 pm</span></div>
+                            <div class="object_description">
+                                <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
+                                <div class="">Printing status : ${object.printingStatus}</div>
+                                <div class="">Started at : ${object.trackingDetails.started_at!"--"}</div>
+                                <div class="">Expected to be completed by <span>5:34 pm</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -375,20 +369,6 @@
                             <div class="image_selected">
                                 <img src="${object.image}" alt="">
                             </div>
-                            <div class="thumbnail_images">
-                                <div class="thumbnail_image active" data-image="${object.image}">
-                                    <img src="${object.image}" alt="">
-                                </div>
-                                <div class="thumbnail_image" data-image="/static/images/3d-image2.jpg">
-                                    <img src="/static/images/3d-image2.jpg" alt="">
-                                </div>
-                                <div class="thumbnail_image" data-image="/static/images/3d-image3.jpeg">
-                                    <img src="/static/images/3d-image3.jpeg" alt="">
-                                </div>
-                                <div class="thumbnail_image" data-image="/static/images/3d-image4.jpeg">
-                                    <img src="/static/images/3d-image4.jpeg" alt="">
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -396,11 +376,12 @@
                     <div class="col-lg-6">
                         <div class="object_content">
                             <div class="object_name">${object.filename}</div>
-                            <div class="object_description"><i class="fa fa-inr"></i>${object.price}</div>
-                            <div class="object_description">Printing status : ${object.printingStatus}</div>
-                            <div class="object_description">Completed
-                                at ${object.trackingDetails.completed_at!"--"}</div>
-                            <div class="object_description">Printing duration : 2:32 hr</div>
+                            <div class="object_description">
+                                <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
+                                <div class="">Printing status : ${object.printingStatus}</div>
+                                <div class="">Completed at ${object.trackingDetails.completed_at!"--"}</div>
+                                <div class="">Printing duration : 2:32 hr</div>
+                            </div>
                         </div>
                     </div>
                 </div>

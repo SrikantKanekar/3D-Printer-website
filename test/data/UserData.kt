@@ -37,36 +37,30 @@ val testUser = User(
                 id = TEST_USER_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
-                price = 1,
                 status = NONE,
-                timeToPrint = 12
             ),
             Object(
                 id = TEST_CART_OBJECT1,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
-                price = 1,
                 status = CART
             ),
             Object(
                 id = TEST_CART_OBJECT2,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
-                price = 1,
                 status = CART
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
-                price = 1,
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
                 filename = UUID.randomUUID().toString(),
                 image = TEST_OBJECT_IMAGE_LINK,
-                price = 1,
                 status = COMPLETED
             )
         )

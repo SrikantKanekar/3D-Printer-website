@@ -106,6 +106,100 @@
 }
 
 /*********************************
+2. Qty Button
+*********************************/
+.quantity {
+    display: inline-block;
+    width: 147px;
+    height: 61px;
+    border: solid 2px #d0d0d0;
+    overflow: hidden;
+    padding-left: 70px;
+    vertical-align: middle;
+}
+
+.quantity span {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--on-surface);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.quantity input {
+    display: block;
+    width: 40px;
+    height: 60px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--background);
+    color: var(--on-background);
+    text-align: center;
+}
+
+.quantity_buttons {
+    position: absolute;
+    top: 0;
+    right: 1px;
+    height: 100%;
+    width: 29px;
+}
+
+.quantity_inc,
+.quantity_dec {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    cursor: pointer;
+}
+
+.quantity_control i {
+    font-size: 10px;
+    color: var(--on-surface);
+    pointer-events: none;
+}
+
+.quantity_inc {
+    padding-bottom: 3px;
+    justify-content: flex-end;
+}
+
+.quantity_inc i {
+    -webkit-transform: translateY(3px);
+    -moz-transform: translateY(3px);
+    -ms-transform: translateY(3px);
+    -o-transform: translateY(3px);
+    transform: translateY(3px);
+}
+
+.quantity_dec {
+    padding-top: 3px;
+    justify-content: flex-start;
+}
+
+.quantity_dec i {
+    -webkit-transform: translateY(-3px);
+    -moz-transform: translateY(-3px);
+    -ms-transform: translateY(-3px);
+    -o-transform: translateY(-3px);
+    transform: translateY(-3px);
+}
+
+/*********************************
 3. Cart Buttons
 *********************************/
 .button_container {

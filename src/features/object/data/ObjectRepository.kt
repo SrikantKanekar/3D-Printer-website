@@ -1,11 +1,10 @@
 package com.example.features.`object`.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.AdvancedSetting
-import com.example.features.`object`.domain.BasicSetting
-import com.example.features.`object`.domain.IntermediateSetting
-import com.example.features.`object`.domain.Object
+import com.example.features.`object`.domain.*
 import com.example.features.`object`.domain.ObjectStatus.*
+import kotlinx.coroutines.delay
+import kotlin.random.Random
 
 class ObjectRepository(
     private val userDataSource: UserDataSource
@@ -25,11 +24,50 @@ class ObjectRepository(
         return user.objects.find { it.id == id }
     }
 
+    /**
+     * use object ID value to get the object file, slice the file in octoPrint
+     */
+    suspend fun slice(objectId: String): SlicingDetails? {
+        delay(3000)
+        val time = "7hr 37min"
+        val materialWeight = Random.nextInt(10, 100)
+        val materialCost = Random.nextInt(500, 1500)
+        val electricityCost = Random.nextInt(100, 300)
+        val totalPrice = Random.nextInt(2000, 4000)
+        return SlicingDetails(
+            time = time,
+            materialWeight = materialWeight,
+            materialCost = materialCost,
+            electricityCost = electricityCost,
+            totalPrice = totalPrice
+        )
+    }
+
+    suspend fun sliceUserObject(email: String, objectId: String): SlicingDetails? {
+        val result = slice(objectId)
+        result?.let {
+            val user = userDataSource.getUser(email)
+            user.objects
+                .filter { it.status == NONE }
+                .find { it.id == objectId }
+                ?.apply {
+                    slicingDetails.uptoDate = true
+                    slicingDetails.time = result.time
+                    slicingDetails.materialWeight = result.materialWeight
+                    slicingDetails.materialCost = result.materialCost
+                    slicingDetails.electricityCost = result.electricityCost
+                    slicingDetails.totalPrice = result.totalPrice
+                }
+            userDataSource.updateUser(user)
+        }
+        return result
+    }
+
     suspend fun addToCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE }
-            .find { it.id == objectId }
+            .find { it.id == objectId && it.slicingDetails.uptoDate }
             ?.let { it.status = CART } ?: return false
         return userDataSource.updateUser(user)
     }
@@ -40,16 +78,6 @@ class ObjectRepository(
             .filter { it.status == CART }
             .find { it.id == objectId }
             ?.let { it.status = NONE } ?: return false
-        return userDataSource.updateUser(user)
-    }
-
-    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
-        val user = userDataSource.getUser(email)
-        if (quantity < 1) return false
-        user.objects
-            .filter { it.status == NONE }
-            .find { it.id == objectId }
-            ?.let { it.quantity = quantity } ?: return false
         return userDataSource.updateUser(user)
     }
 
@@ -67,16 +95,26 @@ class ObjectRepository(
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.basicSetting = basicSetting } ?: return false
+            ?.let {
+                it.basicSetting = basicSetting
+                it.slicingDetails.uptoDate = false
+            } ?: return false
         return userDataSource.updateUser(user)
     }
 
-    suspend fun updateIntermediateSettings(email: String, id: String, intermediateSetting: IntermediateSetting): Boolean {
+    suspend fun updateIntermediateSettings(
+        email: String,
+        id: String,
+        intermediateSetting: IntermediateSetting
+    ): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.intermediateSetting = intermediateSetting } ?: return false
+            ?.let {
+                it.intermediateSetting = intermediateSetting
+                it.slicingDetails.uptoDate = false
+            } ?: return false
         return userDataSource.updateUser(user)
     }
 
@@ -85,7 +123,10 @@ class ObjectRepository(
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
-            ?.let { it.advancedSetting = advancedSetting } ?: return false
+            ?.let {
+                it.advancedSetting = advancedSetting
+                it.slicingDetails.uptoDate = false
+            } ?: return false
         return userDataSource.updateUser(user)
     }
 }

@@ -41,9 +41,8 @@ fun Route.getCreateObjectRoute() {
  * 1) the file will be stored inside project root folder 'uploads'.
  * 2) the file is named as its unique generated Id.
  * 3) After file is uploaded, the software(octo-print or any other) will scan the design.
- * 4) If the design cannot be printed on our printer, it will show suitable error
- * 5) else the software will return image, price...etc ..etc..
- * 6) If any error occurs during file upload or by the software, the uploaded file will be deleted.
+ * 4) If the design cannot be printed on our printer, it will show error
+ * 5) If any error occurs during file upload or by the software, the uploaded file will be deleted.
  */
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {
@@ -64,11 +63,13 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
 //                    }
 //                }
 
-                // get details from octoPrint or any software
+                // check file using octoPrint or any software
                 try {
                     delay(1500)
                     // uncomment to mock error from software
                     //throw Exception()
+
+                    //get the image of the file
                     obj.apply {
                         image = "/static/images/3d-image.jpg"
                         price = Random.nextInt(1000, 10000)

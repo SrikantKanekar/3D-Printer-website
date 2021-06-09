@@ -5,122 +5,121 @@ document.addEventListener('DOMContentLoaded', function () {
     const id = object.data("id");
     const status = object.data("status");
 
-    handleStatus();
-    initImage();
-    initQuantity();
+    // status
+    const statusNone = document.querySelector(".status_none");
+    const statusTracking = document.querySelector(".status_tracking");
+    const statusCompleted = document.querySelector(".status_completed");
 
     /**
      * Handle Status
      */
-    function handleStatus() {
-        if (status === "NONE" || status === "CART") {
-            $(".status_none").show();
-            if (status === "NONE") {
-                $(".cart_buttons_container").show();
-            } else if (status === "CART") {
-                $(".remove_cart_button_container").show();
-            }
-        } else if (status === "TRACKING") {
-            $(".status_tracking").show();
-        } else if (status === "COMPLETED") {
-            $(".status_completed").show();
+    if (status === "NONE" || status === "CART") {
+        statusNone.style.display = "block";
+        if (status === "NONE") {
+            $(".cart_buttons").show();
+        } else if (status === "CART") {
+            $(".remove_cart_button").show();
+        }
+    } else if (status === "TRACKING") {
+        statusTracking.style.display = "block";
+    } else if (status === "COMPLETED") {
+        statusCompleted.style.display = "block";
+    }
+
+
+    /**
+     *  Slice
+     */
+    const uptoDate = statusNone.querySelector(".upto_date");
+    const slicingDetails = statusNone.querySelector(".slicing_details");
+    setSlicingDetails();
+
+    function setSlicingDetails() {
+        let uptoDateValue = uptoDate.getAttribute("data-value");
+        if (uptoDateValue === "true") {
+            slicingDetails.style.display = "block";
+            const children = slicingDetails.children;
+            $(children).each(function () {
+                let value = $(this).data("value");
+                if (value) $(this).find("span").text(value);
+            });
+        } else {
+            uptoDate.style.display = "block";
         }
     }
 
-    /**
-     *  Init Image
-     */
-    function initImage() {
-        const selected = $(".image_selected img");
-        const images = $(".thumbnail_image");
-
-        images.each(function () {
-            const image = $(this);
-            image.on("click", function () {
-                const imagePath = String(image.data("image"));
-                selected.attr("src", imagePath);
-                images.removeClass("active");
-                image.addClass("active");
-            });
-        });
-    }
-
-    /**
-     *  Init Quantity
-     */
-    function initQuantity() {
-        const quantity = document.querySelector(".quantity");
-        const input = quantity.querySelector("input");
-        const incButton = quantity.querySelector(".quantity_inc");
-        const decButton = quantity.querySelector(".quantity_dec");
-
-        const url = "/object/quantity";
-
-        let originalVal;
-        let newValue;
-
-        incButton.addEventListener("click", function () {
-
-            originalVal = input.value;
-            newValue = parseFloat(originalVal) + 1;
-
-            $.post(url, {id: id, quantity: newValue}, function (data) {
-                if (data === true) {
-                    input.value = newValue;
-                } else {
-                    showAlert("unknown error", "alert-danger");
-                }
-            });
-        });
-
-        decButton.addEventListener("click", function () {
-            originalVal = input.value;
-            if (originalVal > 1) {
-                newValue = parseFloat(originalVal) - 1;
-                $.post(url, {id: id, quantity: newValue}, function (data) {
-                    if (data === true) {
-                        input.value = newValue;
-                    } else {
-                        showAlert("unknown error", "alert-danger");
-                    }
-                });
-            }
-        });
-    }
-
-    /**
-     *  Add to cart
-     */
-    $(".cart_button a").on('click', function (e) {
+    $(".slice a").on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).attr("href");
 
         $.post(url, {id: id}, function (data) {
-            if (data.startsWith("/")) {
-                window.location.href = data;
-            } else if (data === "true") {
-                $(".cart_buttons_container").hide();
-                $(".remove_cart_button_container").show();
-                showAlert("Done", "alert-success");
+            if (data !== "null") {
+                showAlert("Slicing Done", "alert-success");
+                updateSlicingDetails(data);
             } else {
                 showAlert("error, please try again", "alert-danger");
             }
         });
     });
 
+    function updateSlicingDetails(data) {
+        slicingDetails.querySelector(".time").setAttribute("data-value", data.time);
+        slicingDetails.querySelector(".material_weight").setAttribute("data-value", data.materialWeight);
+        slicingDetails.querySelector(".material_cost").setAttribute("data-value", data.materialCost);
+        slicingDetails.querySelector(".electricity_cost").setAttribute("data-value", data.electricityCost);
+        slicingDetails.querySelector(".total_price").setAttribute("data-value", data.totalPrice);
+
+        uptoDate.setAttribute("data-value", "true");
+        uptoDate.style.display = "none";
+        slicingDetails.style.display = "none";
+        setSlicingDetails();
+    }
+
+    function removeSlicingDetails() {
+        uptoDate.setAttribute("data-value", "false");
+        uptoDate.style.display = "none";
+        slicingDetails.style.display = "none";
+        setSlicingDetails();
+    }
+
+    /**
+     *  Add to cart
+     */
+    $(".add_to_cart a").on('click', function (e) {
+        e.preventDefault();
+
+        let uptoDateValue = uptoDate.getAttribute("data-value");
+        if (uptoDateValue === "true") {
+            const url = $(this).attr("href");
+            $.post(url, {id: id}, function (data) {
+                if (data.startsWith("/")) {
+                    window.location.href = data;
+                } else if (data === "true") {
+                    $(".cart_buttons").hide();
+                    $(".remove_cart_button").show();
+                    showAlert("Done", "alert-success");
+                } else {
+                    showAlert("error, please try again", "alert-danger");
+                }
+            });
+        } else {
+            showAlert("Please complete slicing", "alert-danger");
+        }
+    });
+
     /**
      *  Remove from cart
      */
-    $(".cart_remove_button a").on('click', function (e) {
+    $(".remove_from_cart a").on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).attr("href");
 
         $.post(url, {id: id}, function (data) {
             if (data === true) {
-                $(".remove_cart_button_container").hide();
-                $(".cart_buttons_container").show();
+                $(".remove_cart_button").hide();
+                $(".cart_buttons").show();
                 showAlert("Done", "alert-success");
             } else {
                 showAlert("error, please try again", "alert-danger");
@@ -166,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data === true) {
                     message.classList.add("success");
                     message.textContent = "updated";
+                    removeSlicingDetails();
                 } else {
                     message.classList.remove("success");
                     message.textContent = "error";

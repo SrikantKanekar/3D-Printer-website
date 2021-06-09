@@ -43,6 +43,44 @@ fun Route.getObjectRoute(objectRepository: ObjectRepository) {
     }
 }
 
+fun Route.slice(objectRepository: ObjectRepository) {
+    post("/object/slice") {
+        val param = call.receiveParameters()
+        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        val principal = call.sessions.get<UserPrincipal>()
+        var result: SlicingDetails?
+        when (principal) {
+            null -> {
+                result = objectRepository.slice(id)
+                result?.let {
+                    val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                    cookie.objects
+                        .filter { it.status == NONE }
+                        .find { it.id == id }
+                        ?.apply {
+                            slicingDetails.uptoDate = true
+                            slicingDetails.time = result!!.time
+                            slicingDetails.materialWeight = result!!.materialWeight
+                            slicingDetails.materialCost = result!!.materialCost
+                            slicingDetails.electricityCost = result!!.electricityCost
+                            slicingDetails.totalPrice = result!!.totalPrice
+                        }
+                    call.sessions.set(cookie)
+                }
+            }
+            else -> {
+                result = objectRepository.sliceUserObject(principal.email, id)
+            }
+        }
+        if (result != null){
+            call.respond(result)
+        } else {
+            call.respondText("null")
+        }
+    }
+}
+
 fun Route.addToCart(objectRepository: ObjectRepository) {
     post("/object/add-to-cart") {
         val param = call.receiveParameters()
@@ -66,36 +104,6 @@ fun Route.removeFromCart(objectRepository: ObjectRepository) {
 
         val principal = call.sessions.get<UserPrincipal>()!!
         val result = objectRepository.removeFromCart(principal.email, id)
-        call.respond(result)
-    }
-}
-
-fun Route.updateQuantity(objectRepository: ObjectRepository) {
-    post("/object/quantity") {
-        val params = call.receiveParameters()
-        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val quantity = params["quantity"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
-
-        val principal = call.sessions.get<UserPrincipal>()
-        var result = false
-        when (principal) {
-            null -> {
-                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                if (quantity > 0) {
-                    cookie.objects
-                        .filter { it.status == NONE }
-                        .find { it.id == id }
-                        ?.let {
-                            it.quantity = quantity
-                            result = true
-                        }
-                    call.sessions.set(cookie)
-                }
-            }
-            else -> {
-                result = objectRepository.updateQuantity(principal.email, id, quantity)
-            }
-        }
         call.respond(result)
     }
 }
@@ -128,12 +136,13 @@ fun Route.updateBasicSettings(objectRepository: ObjectRepository) {
                     .find { it.id == id }
                     ?.let {
                         it.basicSetting = basicSettings
+                        it.slicingDetails.uptoDate = false
                         updated = true
                     }
                 call.sessions.set(cookie)
             }
             else -> updated =
-                objectRepository.updateBasicSettings(principal.email, id, basicSettings) //principal.email
+                objectRepository.updateBasicSettings(principal.email, id, basicSettings)
         }
         call.respond(updated)
     }
@@ -176,6 +185,7 @@ fun Route.updateIntermediateSettings(objectRepository: ObjectRepository) {
                     .find { it.id == id }
                     ?.let {
                         it.intermediateSetting = basicSettings
+                        it.slicingDetails.uptoDate = false
                         updated = true
                     }
                 call.sessions.set(cookie)
@@ -231,6 +241,7 @@ fun Route.updateAdvancedSettings(objectRepository: ObjectRepository) {
                     .find { it.id == id }
                     ?.let {
                         it.advancedSetting = advancedSettings
+                        it.slicingDetails.uptoDate = false
                         updated = true
                     }
                 call.sessions.set(cookie)
