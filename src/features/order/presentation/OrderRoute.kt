@@ -15,7 +15,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerOrderRoutes() {
+fun Application.registerOrderRoute() {
 
     val orderRepository by inject<OrderRepository>()
 

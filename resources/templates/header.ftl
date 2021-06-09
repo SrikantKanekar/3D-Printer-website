@@ -26,10 +26,7 @@
                                                     <a href="/account">Account</a>
                                                 </li>
                                                 <li>
-                                                    <a href="/tracking">Tracking</a>
-                                                </li>
-                                                <li>
-                                                    <a href="/history">History</a>
+                                                    <a href="/orders">Orders</a>
                                                 </li>
                                                 <li>
                                                     <a href="/notification">Notifications</a>
@@ -112,10 +109,7 @@
                                     <a href="/account">Account<i class="fa fa-angle-down"></i></a>
                                 </li>
                                 <li class="menu_item">
-                                    <a href="/tracking">Tracking<i class="fa fa-angle-down"></i></a>
-                                </li>
-                                <li class="menu_item">
-                                    <a href="/history">History<i class="fa fa-angle-down"></i></a>
+                                    <a href="/orders">Orders<i class="fa fa-angle-down"></i></a>
                                 </li>
                                 <li class="menu_item">
                                     <a href="/notification">Notifications<i class="fa fa-angle-down"></i></a>

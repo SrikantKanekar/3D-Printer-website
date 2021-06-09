@@ -1,13 +1,13 @@
 /*********************************
 1. Info Column
 *********************************/
-.info_columns {
+.info_column {
     width: 100%;
     border-bottom: solid 2px #e3e3e3;
     padding-bottom: 7px;
 }
 
-.info_col {
+.info_column > div {
     float: left;
     font-size: 14px;
     font-weight: 400;
@@ -52,21 +52,6 @@
     justify-content: start;
 }
 
-.item_status {
-    width: 15%;
-    text-align: center;
-}
-
-.item_price {
-    width: 15%;
-    text-align: center;
-}
-
-.item_delivery {
-    width: 15%;
-    text-align: right;
-}
-
 .item_image {
     width: 183px;
 }
@@ -100,27 +85,30 @@
 
 .item_objects {
     margin-top: 3px;
-}
-
-.item_objects {
     font-size: 14px;
     font-weight: 500;
     color: var(--on-surface);
 }
 
 .item_status {
+    width: 15%;
+    text-align: center;
     font-size: 14px;
     font-weight: 400;
     color: var(--on-background);
 }
 
 .item_price {
+    width: 15%;
+    text-align: center;
     font-size: 14px;
     font-weight: 400;
     color: var(--on-background);
 }
 
 .item_delivery {
+    width: 15%;
+    text-align: right;
     font-size: 14px;
     font-weight: 400;
     color: var(--on-background);
@@ -131,7 +119,7 @@
 ************/
 
 @media only screen and (max-width: 992px) {
-    .info_col {
+    .info_column > div {
         font-size: 13px;
     }
 
@@ -171,7 +159,7 @@
 ************/
 
 @media only screen and (max-width: 600px) {
-    .info_col {
+    .info_column > div {
         font-size: 10px;
     }
 

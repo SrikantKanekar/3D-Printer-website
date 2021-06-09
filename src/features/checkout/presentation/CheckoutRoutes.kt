@@ -82,7 +82,7 @@ private fun Route.proceedToPay(checkoutRepository: CheckoutRepository) {
             val success = true // result of payment
             if (success) {
                 val result = checkoutRepository.checkoutSuccess(principal.email)
-                if (result) call.respondText("/tracking")
+                if (result) call.respondText("/orders")
             } else {
                 call.respondText("Payment not successful")
             }

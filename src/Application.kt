@@ -11,13 +11,12 @@ import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoutes
 import com.example.features.checkout.presentation.registerCheckoutRoutes
-import com.example.features.history.presentation.registerHistoryRoutes
 import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
 import com.example.features.`object`.presentation.registerObjectRoutes
 import com.example.features.auth.data.AuthRepository
-import com.example.features.order.presentation.registerOrderRoutes
-import com.example.features.tracking.presentation.registerTrackingRoutes
+import com.example.features.order.presentation.registerOrderRoute
+import com.example.features.orders.presentation.registerOrdersRoute
 import com.example.features.userObject.presentation.registerUserObjectsRoutes
 import com.example.features.util.presentation.registerStatusRoutes
 import com.example.features.userObject.domain.ObjectCookieSerializer
@@ -125,11 +124,10 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
     registerAuthRoutes()
     registerCartRoutes()
     registerCheckoutRoutes()
-    registerHistoryRoutes()
     registerNotificationRoutes()
     registerObjectRoutes()
-    registerOrderRoutes()
-    registerTrackingRoutes()
+    registerOrderRoute()
+    registerOrdersRoute()
     registerUserObjectsRoutes()
     registerIndexRoute()
     registerStatusRoutes()

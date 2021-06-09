@@ -1,7 +1,7 @@
-package com.example.features.tracking.presentation
+package com.example.features.orders.presentation
 
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.tracking.data.TrackingRepository
+import com.example.features.orders.data.OrdersRepository
 import com.example.util.AUTH.USER_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -10,25 +10,25 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerTrackingRoutes() {
+fun Application.registerOrdersRoute() {
 
-    val trackingRepository by inject<TrackingRepository>()
+    val ordersRepository by inject<OrdersRepository>()
 
     routing {
         authenticate(USER_SESSION_AUTH) {
-            getTrackingRoute(trackingRepository)
+            getOrdersRoute(ordersRepository)
         }
     }
 }
 
-fun Route.getTrackingRoute(trackingRepository: TrackingRepository) {
-    get("/tracking") {
+fun Route.getOrdersRoute(ordersRepository: OrdersRepository) {
+    get("/orders") {
 
         val principal = call.principal<UserPrincipal>()!!
-        val orders = trackingRepository.getUserTrackingOrders(principal.email)
+        val orders = ordersRepository.getUserOrders(principal.email)
         call.respond(
             FreeMarkerContent(
-                "tracking.ftl",
+                "orders.ftl",
                 mapOf("orders" to orders, "user" to principal)
             )
         )

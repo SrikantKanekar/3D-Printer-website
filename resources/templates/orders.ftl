@@ -1,8 +1,8 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Order history" css="/static/css/tracking.css" js="">
+<@layout.base title="Orders" css="/static/css/orders.css" js="">
 
-    <@header.header user="${user}" title="Order history" />
+    <@header.header user="${user}" title="Orders" />
 
     <div class="container">
 
@@ -11,17 +11,17 @@
             <div class="row">
                 <div class="col">
                     <!-- Column Titles -->
-                    <div class="info_columns clearfix">
-                        <div class="info_col info_col_order">
+                    <div class="info_column clearfix">
+                        <div class="info_col_order">
                             Order
                         </div>
-                        <div class="info_col info_col_status">
+                        <div class="info_col_status">
                             Status
                         </div>
-                        <div class="info_col info_col_price">
+                        <div class="info_col_price">
                             Price
                         </div>
-                        <div class="info_col info_col_delivery">
+                        <div class="info_col_delivery">
                             Delivery
                         </div>
                     </div>

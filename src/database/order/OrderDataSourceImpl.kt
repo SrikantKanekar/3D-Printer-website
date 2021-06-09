@@ -29,7 +29,7 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun getOrdersByUser(userEmail: String): List<Order> {
-        return orders.find(Order::userEmail eq userEmail).toList()
+        return orders.find(Order::userEmail eq userEmail).toList().reversed()
     }
 
     override suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {

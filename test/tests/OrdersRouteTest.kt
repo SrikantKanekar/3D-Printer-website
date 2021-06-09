@@ -7,16 +7,16 @@ import io.ktor.server.testing.*
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class HistoryRouteTest {
+class OrdersRouteTest {
 
     @Test
-    fun `get history route test`() {
+    fun `get orders route test`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/history").apply {
+            handleRequest(HttpMethod.Get, "/orders").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/history").apply {
+                handleRequest(HttpMethod.Get, "/orders").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
