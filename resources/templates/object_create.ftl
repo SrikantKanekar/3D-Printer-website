@@ -25,7 +25,7 @@
             </div>
 
             <div class="box_uploading">Uploading <span></span> …</div>
-            <div class="box_slicing">Slicing…</div>
+            <div class="box_scanning">Scanning File…</div>
             <div class="box_success">Creating New Object…</div>
             <div class="box_error">
                 <span></span>. <a href="" class="box_restart" role="button">Try again!</a>

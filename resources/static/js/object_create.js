@@ -101,11 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             };
-
-            setTimeout(() => {
-                request.send(formData);
-            }, 1500);
-
+            request.send(formData);
         } else {
             // fallback Ajax solution upload for older browsers
             let iframeName = "uploadiframe" + new Date().getTime()
@@ -143,12 +139,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const progress = (e.loaded / e.total) * 100;
             progressBar.setAttribute("aria-valuenow", progress.toString());
             progressBar.setAttribute("style", "width:" + progress + "%");
-            if (progress === 100) uploadComplete();
+            if (progress === 100) scanningStart();
         }
     }
 
     function handleSuccess(data) {
-        slicingComplete(data);
+        creatingObject(data);
         if (data.success === "true") {
             setTimeout(function () {
                 window.location.href = "/object/" + data.id;
@@ -159,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleError(errorMessage) {
         form.classList.remove("is_uploading");
-        form.classList.remove("is_slicing");
+        form.classList.remove("is_scanning");
         form.classList.add("is_error");
         errorMsg.textContent = errorMessage;
     }
@@ -169,19 +165,19 @@ document.addEventListener('DOMContentLoaded', function () {
         form.classList.remove("is_error");
     }
 
-    function slicingComplete(data) {
-        form.classList.remove("is_slicing");
+    function scanningStart() {
+        form.classList.remove("is_uploading");
+        form.classList.add("is_scanning");
+    }
+
+    function creatingObject(data) {
+        form.classList.remove("is_scanning");
         if (data.success === "true") {
             form.classList.add("is_success");
         } else {
             form.classList.add("is_error");
             errorMsg.textContent = "error creating object";
         }
-    }
-
-    function uploadComplete() {
-        form.classList.remove("is_uploading");
-        form.classList.add("is_slicing");
     }
 
     function clearPage() {
@@ -201,5 +197,4 @@ document.addEventListener('DOMContentLoaded', function () {
     input.addEventListener("blur", function () {
         input.classList.remove("has_focus");
     });
-
 });
