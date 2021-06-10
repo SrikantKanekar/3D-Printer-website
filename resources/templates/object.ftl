@@ -102,8 +102,8 @@
 
                                     <label for="quality">Quality</label>
                                     <div data-validate="Please select value">
-                                        <select name="quality" id="quality" class="dropdown_item_select input">
-                                            <option value="${object.basicSetting.quality}" selected></option>
+                                        <select name="quality" id="quality" class="dropdown_item_select input"
+                                                data-value="${object.basicSetting.quality}">
                                             <option value="SUPER">Super</option>
                                             <option value="DYNAMIC">Dynamic</option>
                                             <option value="STANDARD">Standard</option>
@@ -158,9 +158,8 @@
                                     <label for="infill_pattern">Infill Pattern</label>
                                     <div data-validate="Please select value">
                                         <select name="infill_pattern" id="infill_pattern"
-                                                class="dropdown_item_select input">
-                                            <option value="${object.intermediateSetting.infillPattern}"
-                                                    selected></option>
+                                                class="dropdown_item_select input"
+                                                data-value="${object.intermediateSetting.infillPattern}">
                                             <option value="LINES">Lines</option>
                                             <option value="GRID">Grid</option>
                                             <option value="TRIANGLES">Triangles</option>
@@ -186,9 +185,8 @@
                                     <label for="support_structure">Support Structure</label>
                                     <div data-validate="Please select value">
                                         <select name="support_structure" id="support_structure"
-                                                class="dropdown_item_select input">
-                                            <option value="${object.intermediateSetting.supportStructure}"
-                                                    selected></option>
+                                                class="dropdown_item_select input"
+                                                data-value="${object.intermediateSetting.supportStructure}">
                                             <option value="NORMAL">Normal</option>
                                             <option value="TREE">Tree</option>
                                         </select>
@@ -197,9 +195,8 @@
                                     <label for="support_placement">Support Placement</label>
                                     <div data-validate="Please select value">
                                         <select name="support_placement" id="support_placement"
-                                                class="dropdown_item_select input">
-                                            <option value="${object.intermediateSetting.supportPlacement}"
-                                                    selected></option>
+                                                class="dropdown_item_select input"
+                                                data-value="${object.intermediateSetting.supportPlacement}">
                                             <option value="TOUCHING_BUILD_PLATE">Touching Build Plate</option>
                                             <option value="EVERYWHERE">Everywhere</option>
                                         </select>
@@ -215,9 +212,8 @@
                                     <label for="support_pattern">Support Pattern</label>
                                     <div data-validate="Please select value">
                                         <select name="support_pattern" id="support_pattern"
-                                                class="dropdown_item_select input">
-                                            <option value="${object.intermediateSetting.supportPattern}"
-                                                    selected></option>
+                                                class="dropdown_item_select input"
+                                                data-value="${object.intermediateSetting.supportPattern}">
                                             <option value="LINES">Lines</option>
                                             <option value="GRID">Grid</option>
                                             <option value="TRIANGLES">Triangles</option>
@@ -316,8 +312,8 @@
                                     <label for="print_sequence">Print Sequence</label>
                                     <div data-validate="Please select value">
                                         <select name="print_sequence" id="print_sequence"
-                                                class="dropdown_item_select input">
-                                            <option value="${object.advancedSetting.printSequence}" selected></option>
+                                                class="dropdown_item_select input"
+                                                data-value="${object.advancedSetting.printSequence}">
                                             <option value="ALL_AT_ONCE">All At Once</option>
                                             <option value="ONE_AT_A_TIME">One At A Time</option>
                                         </select>

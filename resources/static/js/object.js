@@ -128,6 +128,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /**
+     * Settings
+     */
+    // set dropdown values
+    $(".dropdown_item_select").each(function (){
+        this.value = this.getAttribute("data-value");
+    });
+
+    /**
      * basic setting form
      */
     $("#basic_button").on('click', function (e) {
@@ -242,26 +250,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // capitalize enum text value of selected
-    const quality = document.querySelector("#quality");
-    const infillPattern = document.querySelector("#infill_pattern");
-    const supportStructure = document.querySelector("#support_structure");
-    const supportPlacement = document.querySelector("#support_placement");
-    const supportPattern = document.querySelector("#support_pattern");
-    const printSequence = document.querySelector("#print_sequence");
-
-    capitalize(quality);
-    capitalize(infillPattern);
-    capitalize(supportStructure);
-    capitalize(supportPlacement);
-    capitalize(supportPattern);
-    capitalize(printSequence);
-
-    function capitalize(input) {
-        const child = input.firstElementChild;
-        let text = child.value;
-        text = text.replaceAll("_", " ").toLowerCase();
-        text = text.replace(/\b\w/g, l => l.toUpperCase());
-        child.textContent = text;
-    }
+    // const infillPattern = document.querySelector("#infill_pattern");
+    // const supportStructure = document.querySelector("#support_structure");
+    // const supportPlacement = document.querySelector("#support_placement");
+    // const supportPattern = document.querySelector("#support_pattern");
+    // const printSequence = document.querySelector("#print_sequence");
+    //
+    // capitalize(infillPattern);
+    // capitalize(supportStructure);
+    // capitalize(supportPlacement);
+    // capitalize(supportPattern);
+    // capitalize(printSequence);
+    //
+    // function capitalize(input) {
+    //     const child = input.firstElementChild;
+    //     let text = child.value;
+    //     text = text.replaceAll("_", " ").toLowerCase();
+    //     text = text.replace(/\b\w/g, l => l.toUpperCase());
+    //     child.textContent = text;
+    // }
 });
