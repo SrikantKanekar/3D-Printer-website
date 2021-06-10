@@ -91,47 +91,18 @@ class ObjectRepository(
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
             ?.let { it.filename = fileName } ?: return false
         return userDataSource.updateUser(user)
     }
 
-    suspend fun updateBasicSettings(email: String, id: String, basicSetting: BasicSetting): Boolean {
+    suspend fun updateSetting(email: String, id: String, setting: Setting): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == NONE || it.status == CART }
+            .filter { it.status == NONE }
             .find { it.id == id }
             ?.let {
-                it.basicSetting = basicSetting
-                it.slicingDetails.uptoDate = false
-            } ?: return false
-        return userDataSource.updateUser(user)
-    }
-
-    suspend fun updateIntermediateSettings(
-        email: String,
-        id: String,
-        intermediateSetting: IntermediateSetting
-    ): Boolean {
-        val user = userDataSource.getUser(email)
-        user.objects
-            .filter { it.status == NONE || it.status == CART }
-            .find { it.id == id }
-            ?.let {
-                it.intermediateSetting = intermediateSetting
-                it.slicingDetails.uptoDate = false
-            } ?: return false
-        return userDataSource.updateUser(user)
-    }
-
-    suspend fun updateAdvancedSettings(email: String, id: String, advancedSetting: AdvancedSetting): Boolean {
-        val user = userDataSource.getUser(email)
-        user.objects
-            .filter { it.status == NONE || it.status == CART }
-            .find { it.id == id }
-            ?.let {
-                it.advancedSetting = advancedSetting
+                it.setting = setting
                 it.slicingDetails.uptoDate = false
             } ?: return false
         return userDataSource.updateUser(user)

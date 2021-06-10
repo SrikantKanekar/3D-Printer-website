@@ -61,19 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        $(".slice a").on('click', function (e) {
-            e.preventDefault();
-            const url = $(this).attr("href");
-            $.post(url, {id: id}, function (data) {
-                if (data !== "null") {
-                    showAlert("Slicing Done", "alert-success");
-                    updateSlicingDetails(data);
-                } else {
-                    showAlert("error, please try again", "alert-danger");
-                }
-            });
-        });
-
         function updateSlicingDetails(data) {
             slicingDetails.querySelector(".time").setAttribute("data-value", data.time);
             slicingDetails.querySelector(".material_weight").setAttribute("data-value", data.materialWeight);
@@ -93,6 +80,19 @@ document.addEventListener('DOMContentLoaded', function () {
             slicingDetails.style.display = "none";
             setSlicingDetails();
         }
+
+        $(".slice a").on('click', function (e) {
+            e.preventDefault();
+            const url = $(this).attr("href");
+            $.post(url, {id: id}, function (data) {
+                if (data !== "null") {
+                    showAlert("Slicing Done", "alert-success");
+                    updateSlicingDetails(data);
+                } else {
+                    showAlert("error, please try again", "alert-danger");
+                }
+            });
+        });
 
         /**
          *  Add to cart
@@ -153,30 +153,9 @@ document.addEventListener('DOMContentLoaded', function () {
         /**
          * Settings
          */
-        // set dropdown values
-        $(".dropdown_item_select").each(function () {
-            this.value = this.getAttribute("data-value");
-        });
-
-        $("#basic_button").on('click', function (e) {
+        $("#setting_button").on('click', function (e) {
             e.preventDefault();
-            const form = document.querySelector("#basic_settings_form");
-            submitSettingForm(form);
-        });
-
-        $("#intermediate_button").on('click', function (e) {
-            e.preventDefault();
-            const form = document.querySelector("#intermediate_settings_form");
-            submitSettingForm(form);
-        });
-
-        $("#advanced_button").on('click', function (e) {
-            e.preventDefault();
-            const form = document.querySelector("#advanced_settings_form");
-            submitSettingForm(form);
-        });
-
-        function submitSettingForm(form) {
+            const form = document.querySelector("#setting_form");
             const url = form.getAttribute("action");
             const inputs = form.querySelectorAll(".input");
             const message = form.querySelector(".form_message");
@@ -196,47 +175,46 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 showAlert("Form has errors", "alert-danger");
             }
-        }
-
-        function enableSettings() {
-
-            inputs.each(function () {
-                this.readOnly = false;
-            });
-            inputs.off('click');
-            $("select").each(function () {
-                $(this).find("option").each(function () {
-                    this.disabled = false;
-                });
-            });
-            $("input[type=checkbox]").off('click');
-            $(".form_submit_button").show();
-        }
-
-        function disableSettings() {
-            inputs.each(function () {
-                this.readOnly = true;
-            });
-            inputs.on('click', function () {
-                showAlert("Settings can't be changed", "alert-danger");
-            });
-            $("select").each(function () {
-                const value = this.value;
-                $(this).find("option").each(function () {
-                    if (this.value !== value) {
-                        this.disabled = true;
-                    }
-                });
-            });
-            $("input[type=checkbox]").on('click', function () {
-                return false;
-            });
-            $(".form_submit_button").hide();
-        }
+        });
 
     } else if (document.body.contains(statusTracking)) {
-        // Todo
+        disableSettings();
     } else if (document.body.contains(statusCompleted)) {
-        // Todo
+        disableSettings();
+    }
+
+    function enableSettings() {
+        inputs.each(function () {
+            this.readOnly = false;
+        });
+        inputs.off('click');
+        $("select").each(function () {
+            $(this).find("option").each(function () {
+                this.disabled = false;
+            });
+        });
+        $("input[type=checkbox]").off('click');
+        $(".form_submit_button").show();
+    }
+
+    function disableSettings() {
+        inputs.each(function () {
+            this.readOnly = true;
+        });
+        inputs.on('click', function () {
+            showAlert("Settings can't be changed", "alert-danger");
+        });
+        $("select").each(function () {
+            const value = this.value;
+            $(this).find("option").each(function () {
+                if (this.value !== value) {
+                    this.disabled = true;
+                }
+            });
+        });
+        $("input[type=checkbox]").on('click', function () {
+            return false;
+        });
+        $(".form_submit_button").hide();
     }
 });

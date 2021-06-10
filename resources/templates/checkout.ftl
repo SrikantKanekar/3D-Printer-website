@@ -55,8 +55,8 @@
                                 <!-- City / Town -->
                                 <label for="city">City/Town*</label>
                                 <div data-validate="Please select city">
-                                    <select name="city" id="city" class="dropdown_item_select input">
-                                        <option selected>${address.city}</option>
+                                    <select name="city" id="city" class="dropdown_item_select input"
+                                            data-value="${address.city}">
                                         <option>Panaji</option>
                                         <option>Margao</option>
                                         <option>Ponda</option>
@@ -67,16 +67,18 @@
                                 <!-- State -->
                                 <label for="state">State*</label>
                                 <div data-validate="Please select state">
-                                    <select name="state" id="state" class="dropdown_item_select input">
-                                        <option selected>Goa</option>
+                                    <select name="state" id="state" class="dropdown_item_select input"
+                                            data-value="${address.state}">
+                                        <option>Goa</option>
                                     </select>
                                 </div>
 
                                 <!-- Country -->
                                 <label for="country">Country*</label>
                                 <div data-validate="Please select country">
-                                    <select name="country" id="country" class="dropdown_item_select input">
-                                        <option selected>India</option>
+                                    <select name="country" id="country" class="dropdown_item_select input"
+                                            data-value="${address.country}">
+                                        <option>India</option>
                                     </select>
                                 </div>
 

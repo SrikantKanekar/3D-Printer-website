@@ -269,6 +269,11 @@ $(".btn-show-pass").on("click", function () {
     }
 });
 
+// set dropdown values
+$(".dropdown_item_select").each(function () {
+    this.value = this.getAttribute("data-value");
+});
+
 //prevent scrolling value on input
 $(document).on('wheel', 'input[type=number]', function () {
     $(this).blur();

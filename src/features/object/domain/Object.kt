@@ -9,14 +9,12 @@ import org.bson.types.ObjectId
 
 @Serializable
 data class Object(
-    var filename: String, // give the object same name as filename,can be changed later by user
+    var filename: String,
     var image: String? = null,
     var quantity: Int = 1,
     var status: ObjectStatus = NONE,
     var printingStatus: PrintingStatus = PENDING,
-    var basicSetting: BasicSetting = BasicSetting(),
-    var intermediateSetting: IntermediateSetting = IntermediateSetting(),
-    var advancedSetting: AdvancedSetting = AdvancedSetting(),
+    var setting: Setting = Setting(),
     var slicingDetails: SlicingDetails = SlicingDetails(),
     val trackingDetails: TrackingDetails = TrackingDetails(),
     @BsonId

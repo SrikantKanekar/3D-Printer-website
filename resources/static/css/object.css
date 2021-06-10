@@ -59,32 +59,16 @@
 /************
  Settings 
 ************/
-.nav {
+
+.setting {
     margin-top: 90px;
-    border-bottom: none;
 }
 
-.nav-item {
-    display: inline-block;
-    padding-right: 40px;
-}
-
-.nav-item a {
-    font-size: 28px;
+.setting_title {
+    font-size: 30px;
     font-weight: 550;
-    color: var(--on-surface);
-}
-
-.nav-item a:hover {
     color: var(--on-background);
-}
-
-.nav-item a.active {
-    color: var(--on-background);
-}
-
-.tab-content {
-    margin-top: 44px;
+    margin-bottom: 40px;
 }
 
 /******************
@@ -161,13 +145,13 @@
 ************/
 .delete_object {
     display: none;
-    margin-top: 48px;
+    margin-top: 50px;
     font-size: 30px;
     font-weight: 550;
     color: var(--on-background);
 }
 
-.delete_button{
+.delete_button {
     margin-top: 30px;
 }
 
@@ -200,7 +184,7 @@
 ************/
 
 @media only screen and (max-width: 992px) {
-    .nav {
+    .setting {
         margin-top: 70px;
     }
 }
@@ -225,19 +209,6 @@
         font-weight: 500;
     }
 
-    .nav {
-        margin-top: 50px;
-    }
-
-    .nav-item {
-        padding-right: 13px;
-    }
-
-    .nav-item a {
-        font-size: 17px;
-        font-weight: 500;
-    }
-
     .cart_buttons,
     .remove_cart_button {
         margin-top: 30px;
@@ -245,5 +216,15 @@
 
     .cart_buttons .button {
         max-width: 40%;
+    }
+
+    .setting {
+        margin-top: 50px;
+    }
+
+    .delete_object,
+    .setting_title {
+        font-size: 22px;
+        font-weight: 550;
     }
 }
