@@ -31,7 +31,7 @@ section {
     display: block;
     width: 50px;
     height: 3px;
-    background: #e03a3c;
+    background: var(--primary);
     bottom: 0;
     left: calc(50% - 25px);
 }
@@ -108,7 +108,7 @@ section {
     font-size: 13px;
     display: inline-flex;
     align-items: center;
-    border: 2px solid #e03a3c;
+    border: 2px solid var(--primary);
 }
 
 .about .content .about-btn i {
@@ -117,8 +117,7 @@ section {
 }
 
 .about .content .about-btn:hover {
-    background: #e35052;
-    background: #e03a3c;
+    background: var(--primary);
 }
 
 .about .icon-boxes .icon-box {
@@ -127,7 +126,7 @@ section {
 
 .about .icon-boxes .icon-box i {
     font-size: 40px;
-    color: #e03a3c;
+    color: var(--primary);
     margin-bottom: 10px;
 }
 
@@ -166,7 +165,7 @@ section {
     width: 100%;
     position: relative;
     text-align: center;
-    box-shadow: 0px 2px 35px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 35px rgba(0, 0, 0, 0.06);
     border-radius: 4px;
 }
 
@@ -179,10 +178,10 @@ section {
     transform: translateX(-50%);
     font-size: 24px;
     background: #fff;
-    color: #e03a3c;
+    color: var(--primary);
     border-radius: 50px;
     border: 2px solid #fff;
-    box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -252,7 +251,7 @@ section {
 }
 
 .pricing .box ul i {
-    color: #e03a3c;
+    color: var(--primary);
     font-size: 18px;
     padding-right: 4px;
 }
@@ -284,7 +283,7 @@ section {
 }
 
 .pricing .featured {
-    background: #e03a3c;
+    background: var(--primary);
 }
 
 /*--------------------------------------------------------------
@@ -300,7 +299,7 @@ section {
 
 .contact .info-box i {
     font-size: 32px;
-    color: #e03a3c;
+    color: var(--primary);
     border-radius: 50%;
     padding: 8px;
     border: 2px dotted #f8d4d5;
@@ -391,7 +390,7 @@ section {
 }
 
 .contact .php-email-form button[type="submit"] {
-    background: #e03a3c;
+    background: var(--primary);
     border: 0;
     padding: 10px 32px;
     color: #fff;
@@ -400,7 +399,7 @@ section {
 }
 
 .contact .php-email-form button[type="submit"]:hover {
-    background: #e35052;
+    background: var(--primary);
 }
 
 @-webkit-keyframes animate-loading {

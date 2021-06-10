@@ -81,6 +81,13 @@ class ObjectRepository(
         return userDataSource.updateUser(user)
     }
 
+    suspend fun deleteUserObject(email: String, objectId: String): Boolean {
+        val user = userDataSource.getUser(email)
+        val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
+        return userDataSource.updateUser(user) and deleted
+    }
+
+
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects

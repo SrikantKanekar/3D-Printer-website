@@ -2,10 +2,6 @@
  Status none 
 ************/
 
-.status_none {
-    display: none;
-}
-
 .image_selected {
     width: 100%;
 }
@@ -29,7 +25,7 @@
     margin-bottom: 12px;
 }
 
-.upto_date{
+.upto_date {
     display: none;
     font-size: 16px;
     font-weight: 500;
@@ -161,12 +157,23 @@
 }
 
 /************
+ Delete Object
+************/
+.delete_object {
+    display: none;
+    margin-top: 48px;
+    font-size: 30px;
+    font-weight: 550;
+    color: var(--on-background);
+}
+
+.delete_button{
+    margin-top: 30px;
+}
+
+/************
  Status tracking 
 ************/
-
-.status_tracking {
-    display: none;
-}
 
 .video_container {
     width: 100%;
@@ -186,10 +193,6 @@
 /************
  Status completed
 ************/
-
-.status_completed {
-    display: none;
-}
 
 
 /************

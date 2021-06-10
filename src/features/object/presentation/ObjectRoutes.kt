@@ -4,7 +4,9 @@ import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.*
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
+import com.example.features.objects.data.ObjectsRepository
 import com.example.features.objects.domain.ObjectsCookie
+import com.example.util.FileHandler
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -105,6 +107,31 @@ fun Route.removeFromCart(objectRepository: ObjectRepository) {
         val principal = call.sessions.get<UserPrincipal>()!!
         val result = objectRepository.removeFromCart(principal.email, id)
         call.respond(result)
+    }
+}
+
+fun Route.deleteObject(objectRepository: ObjectRepository) {
+    post("/object/delete") {
+
+        val param = call.receiveParameters()
+        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+
+        var deleteFileResult = false
+
+        val principal = call.sessions.get<UserPrincipal>()
+        when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                val deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
+                call.sessions.set(cookie)
+                if (deleted) deleteFileResult = FileHandler.deleteFile(id)
+            }
+            else -> {
+                val deleted = objectRepository.deleteUserObject(principal.email, id)
+                if (deleted) deleteFileResult = FileHandler.deleteFile(id)
+            }
+        }
+        call.respond(deleteFileResult)
     }
 }
 

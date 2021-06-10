@@ -13,12 +13,6 @@ class ObjectsRepository(
         return user.objects.reversed()
     }
 
-    suspend fun deleteUserObject(email: String, objectId: String): Boolean {
-        val user = userDataSource.getUser(email)
-        val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
-        return userDataSource.updateUser(user) and deleted
-    }
-
     suspend fun addToCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects

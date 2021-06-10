@@ -171,21 +171,65 @@ function hideValidate(input) {
 }
 
 function validate(input) {
-    if ($(input).attr("type") === "email") {
-        if (
-            $(input)
-                .val()
-                .trim()
-                .match(
-                    /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(]?)$/
-                ) == null
-        ) {
-            return false;
-        }
-    } else {
-        if ($(input).val().trim() === "") {
-            return false;
-        }
+    let value = input.value.trim();
+    if (value === "") {
+        return false;
+    }
+    switch (input.id) {
+        case "email":
+            if (value.match(/^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(]?)$/) == null) {
+                return false;
+            }
+            break;
+
+        //Basic
+        case "infill":
+            value = parseFloat(input.value);
+            if (value < 0 || value > 100) return false;
+            break;
+
+        //Intermediate
+        case "layer_height":
+            value = parseFloat(input.value);
+            if (value < 0.1 || value > 0.3) return false;
+            break;
+        case "infill_density":
+            value = parseFloat(input.value);
+            if (value < 0 || value > 100) return false;
+            break;
+        case "support_overhang_angle":
+            value = parseFloat(input.value);
+            if (value < 0 || value > 89) return false;
+            break;
+        case "support_density":
+            value = parseFloat(input.value);
+            if (value < 0 || value > 100) return false;
+            break;
+
+        //Advanced
+        case "wall_line_width":
+        case "top_bottom_line_width":
+        case "wall_thickness":
+            value = parseFloat(input.value);
+            if (value < 0.4 || value > 1.2) return false;
+            break;
+        case "wall_line_count":
+            value = parseFloat(input.value);
+            if (value < 2 || value > 8) return false;
+            break;
+        case "top_thickness":
+        case "bottom_thickness":
+            value = parseFloat(input.value);
+            if (value < 0.8 || value > 2) return false;
+            break;
+        case "infill_speed":
+        case "outer_wall_speed":
+        case "inner_wall_speed":
+        case "top_bottom_speed":
+        case "support_speed":
+            value = parseFloat(input.value);
+            if (value < 25 || value > 100) return false;
+            break;
     }
 }
 
@@ -200,10 +244,14 @@ function checkValidation(input) {
     return check;
 }
 
-$(".input").each(function () {
-    $(this).on('focus', function () {
-        hideValidate(this);
-    });
+const input = $("input");
+input.on('focus', function () {
+    hideValidate(this);
+});
+input.on('focusout', function () {
+    if (validate(this) === false) {
+        showValidate(this);
+    }
 });
 
 let showPass = 0;
@@ -220,3 +268,8 @@ $(".btn-show-pass").on("click", function () {
         showPass = 0;
     }
 });
+
+//prevent scrolling value on input
+$(document).on('wheel', 'input[type=number]', function () {
+    $(this).blur();
+})

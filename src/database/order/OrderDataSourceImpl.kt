@@ -38,11 +38,7 @@ class OrderDataSourceImpl(
             .wasAcknowledged()
     }
 
-    override suspend fun getAllActiveOrders(): ArrayList<Order> {
-        return ArrayList(orders.find().filter(Order::status ne DELIVERED).toList())
-    }
-
-    override suspend fun getAllCompletedOrders(): ArrayList<Order> {
-        return ArrayList(orders.find().filter(Order::status eq DELIVERED).toList())
+    override suspend fun getAllActiveOrders(): List<Order> {
+        return orders.find().filter(Order::status ne DELIVERED).toList().reversed()
     }
 }

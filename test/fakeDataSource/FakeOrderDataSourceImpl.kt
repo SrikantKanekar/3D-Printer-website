@@ -38,11 +38,7 @@ class FakeOrderDataSourceImpl(
         return true
     }
 
-    override suspend fun getAllActiveOrders(): ArrayList<Order> {
-        return ArrayList(orders.values.filter { it.status != DELIVERED })
-    }
-
-    override suspend fun getAllCompletedOrders(): ArrayList<Order> {
-        return ArrayList(orders.values.filter { it.status == DELIVERED })
+    override suspend fun getAllActiveOrders(): List<Order> {
+        return orders.values.filter { it.status != DELIVERED }
     }
 }

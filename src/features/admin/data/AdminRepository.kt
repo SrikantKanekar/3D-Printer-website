@@ -15,12 +15,8 @@ class AdminRepository(
     private val orderDataSource: OrderDataSource,
     private val notificationRepository: NotificationRepository
 ) {
-    suspend fun getAllActiveOrders(): ArrayList<Order> {
+    suspend fun getAllActiveOrders(): List<Order> {
         return orderDataSource.getAllActiveOrders()
-    }
-
-    suspend fun getAllCompletedOrders(): ArrayList<Order> {
-        return orderDataSource.getAllCompletedOrders()
     }
 
     suspend fun getActiveOrder(orderId: String): Order? {

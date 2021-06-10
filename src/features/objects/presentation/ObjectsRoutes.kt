@@ -20,7 +20,6 @@ fun Application.registerObjectsRoute() {
 
     routing {
         getObjectsRoute(objectsRepository)
-        deleteObject(objectsRepository)
         addToCart(objectsRepository)
     }
 }
@@ -44,35 +43,6 @@ private fun Route.getObjectsRoute(objectsRepository: ObjectsRepository) {
                 )
             )
         )
-    }
-}
-
-private fun Route.deleteObject(objectsRepository: ObjectsRepository) {
-    get("/objects/{id}/delete") {
-        val id = call.parameters["id"] ?: return@get call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
-        var deleteFileResult = false
-
-        val principal = call.sessions.get<UserPrincipal>()
-        when (principal) {
-            null -> {
-                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                val deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
-                call.sessions.set(cookie)
-                if (deleted) deleteFileResult = deleteFile(id)
-            }
-            else -> {
-                val deleted = objectsRepository.deleteUserObject(principal.email, id)
-                if (deleted) deleteFileResult = deleteFile(id)
-            }
-        }
-        if (deleteFileResult) {
-            call.respondRedirect("/objects")
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-        }
     }
 }
 

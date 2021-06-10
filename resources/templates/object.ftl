@@ -7,8 +7,8 @@
     <div class="object" data-id="${object.id}" data-status="${object.status}">
         <div class="container">
 
-            <div class="status_none">
-                <div class="row">
+            <#if object.status == "NONE" || object.status == "CART">
+                <div class="row status_none">
 
                     <!-- Image -->
                     <div class="col-lg-6">
@@ -31,13 +31,15 @@
                                 <div class="time" data-value="${(object.slicingDetails.time)!}">
                                     Time <span></span>
                                 </div>
-                                <div class="material_weight" data-value="${(object.slicingDetails.materialWeight)!}">
+                                <div class="material_weight"
+                                     data-value="${(object.slicingDetails.materialWeight)!}">
                                     Material Weight <span></span>g
                                 </div>
                                 <div class="material_cost" data-value="${(object.slicingDetails.materialCost)!}">
                                     Material Cost <i class="fa fa-inr"></i><span></span>
                                 </div>
-                                <div class="electricity_cost" data-value="${(object.slicingDetails.electricityCost)!}">
+                                <div class="electricity_cost"
+                                     data-value="${(object.slicingDetails.electricityCost)!}">
                                     Electricity Cost <i class="fa fa-inr"></i><span></span>
                                 </div>
                                 <div class="total_price" data-value="${(object.slicingDetails.totalPrice)!}">
@@ -64,7 +66,7 @@
                 </div>
 
                 <!--  Settings  -->
-                <div class="row">
+                <div class="row settings">
                     <div class="col">
 
                         <!-- Setting tabs -->
@@ -204,7 +206,8 @@
 
                                     <label for="support_overhang_angle">Support Overhang Angle</label>
                                     <div data-validate="value between 0 and 89">
-                                        <input type="number" name="support_overhang_angle" id="support_overhang_angle"
+                                        <input type="number" name="support_overhang_angle"
+                                               id="support_overhang_angle"
                                                class="input"
                                                value="${object.intermediateSetting.supportOverhangAngle}"/>
                                     </div>
@@ -226,7 +229,8 @@
 
                                     <label for="support_density">Support Density (%)</label>
                                     <div data-validate="Value between 0 and 100">
-                                        <input type="number" name="support_density" id="support_density" class="input"
+                                        <input type="number" name="support_density" id="support_density"
+                                               class="input"
                                                value="${object.intermediateSetting.supportDensity}"/>
                                     </div>
 
@@ -263,7 +267,8 @@
 
                                     <label for="wall_line_count">Wall Line Count</label>
                                     <div data-validate="Value between 2 and 8">
-                                        <input type="number" name="wall_line_count" id="wall_line_count" class="input"
+                                        <input type="number" name="wall_line_count" id="wall_line_count"
+                                               class="input"
                                                value="${object.advancedSetting.wallLineCount}"/>
                                     </div>
 
@@ -329,10 +334,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="status_tracking">
-                <div class="row">
+                <div class="delete_object">
+                    <div>Delete</div>
+                    <div class="button delete_button">
+                        <a href="#">Delete</a>
+                    </div>
+                </div>
+            <#elseif object.status == "TRACKING">
+                <div class="row status_tracking">
 
                     <!-- Video streaming -->
                     <div class="col-lg-6">
@@ -355,10 +365,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="status_completed">
-                <div class="row">
+            <#elseif object.status == "COMPLETED">
+                <div class="row status_completed">
                     <!-- Image -->
                     <div class="col-lg-6">
                         <div class="details_image">
@@ -381,7 +389,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </#if>
         </div>
     </div>
 
