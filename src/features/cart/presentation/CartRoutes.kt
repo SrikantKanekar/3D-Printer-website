@@ -12,7 +12,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerCartRoutes() {
+fun Application.registerCartRoute() {
 
     val cartRepository by inject<CartRepository>()
 

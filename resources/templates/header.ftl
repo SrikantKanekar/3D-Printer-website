@@ -16,7 +16,7 @@
                                 <ul>
                                     <li class="active"><a href="/">Home</a></li>
                                     <li><a href="/object/create">Create</a></li>
-                                    <li><a href="/my-objects">My Objects</a></li>
+                                    <li><a href="/objects">My Objects</a></li>
 
                                     <#if (user?has_content)>
                                         <li class="hassubs">
@@ -98,7 +98,7 @@
                     </li>
 
                     <li class="menu_item">
-                        <a href="/my-objects">My Objects<i class="fa fa-angle-down"></i></a>
+                        <a href="/objects">My Objects<i class="fa fa-angle-down"></i></a>
                     </li>
 
                     <#if (user?has_content)>

@@ -1,6 +1,6 @@
 package com.example.features.auth.presentation
 
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Constants.EMAIL_ALREADY_TAKEN

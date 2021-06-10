@@ -17,7 +17,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerAccountRoutes() {
+fun Application.registerAccountRoute() {
 
     val accountRepository by inject<AccountRepository>()
 

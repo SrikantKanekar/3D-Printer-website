@@ -4,7 +4,7 @@ import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.*
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*

@@ -3,7 +3,7 @@ package tests
 import com.example.features.account.data.AccountRepository
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.domain.ObjectStatus.*
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
 import data.Constants.TEST_CREATED_OBJECT
 import data.Constants.TEST_USER_EMAIL
@@ -18,7 +18,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.*
 
-class UserObjectRouteTest : KoinTest {
+class ObjectsRouteTest : KoinTest {
 
     private val objectRepository by inject<ObjectRepository>()
     private val accountRepository by inject<AccountRepository>()
@@ -26,11 +26,11 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `get user objects route test`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/my-objects").apply {
+            handleRequest(HttpMethod.Get, "/objects").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/my-objects").apply {
+                handleRequest(HttpMethod.Get, "/objects").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
@@ -42,7 +42,7 @@ class UserObjectRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
-                handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
+                handleRequest(HttpMethod.Get, "/objects/$TEST_CREATED_OBJECT/delete").apply {
                     runBlocking {
                         val cookie = response.call.sessions.get<ObjectsCookie>()!!
                         assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
@@ -59,7 +59,7 @@ class UserObjectRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
-                handleRequest(HttpMethod.Get, "/my-objects/$TEST_CREATED_OBJECT/delete").apply {
+                handleRequest(HttpMethod.Get, "/objects/$TEST_CREATED_OBJECT/delete").apply {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, TEST_CREATED_OBJECT)
                         assertNull(obj)
@@ -74,7 +74,7 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `delete user object before login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
+            handleRequest(HttpMethod.Get, "/objects/invalid-object-id/delete").apply {
                 assertEquals(HttpStatusCode.NotAcceptable, response.status())
             }
         }
@@ -84,7 +84,7 @@ class UserObjectRouteTest : KoinTest {
     fun `delete user object after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Get, "/my-objects/invalid-object-id/delete").apply {
+                handleRequest(HttpMethod.Get, "/objects/invalid-object-id/delete").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
             }
@@ -94,7 +94,7 @@ class UserObjectRouteTest : KoinTest {
     @Test
     fun `add to cart before login`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+            handleRequest(HttpMethod.Post, "/objects/add-to-cart") {
                 addHeader(HttpHeaders.ContentType, formUrlEncoded)
                 setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
             }.apply {
@@ -107,7 +107,7 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+                handleRequest(HttpMethod.Post, "/objects/add-to-cart") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
                 }.apply {
@@ -126,7 +126,7 @@ class UserObjectRouteTest : KoinTest {
     fun `add to cart after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
-                handleRequest(HttpMethod.Post, "/my-objects/add-to-cart") {
+                handleRequest(HttpMethod.Post, "/objects/add-to-cart") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
                 }.apply {

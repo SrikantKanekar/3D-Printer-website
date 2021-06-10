@@ -9,5 +9,5 @@ object AUTH {
 object COOKIES {
     const val AUTH_COOKIE = "AUTH_COOKIE"
     const val ADMIN_AUTH_COOKIE = "ADMIN_AUTH_COOKIE"
-    const val MY_OBJECTS_COOKIE = "MY_OBJECTS_COOKIE"
+    const val OBJECTS_COOKIE = "OBJECTS_COOKIE"
 }

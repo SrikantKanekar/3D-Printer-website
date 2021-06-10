@@ -5,7 +5,7 @@ import com.example.features.account.data.AccountRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.util.FileHandler.deleteFile
 import com.example.util.FileHandler.fileExists
 import com.example.util.FileHandler.readFileByteArray

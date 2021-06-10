@@ -1,4 +1,4 @@
-package com.example.features.userObject.domain
+package com.example.features.objects.domain
 
 import com.example.features.`object`.domain.Object
 import com.google.gson.Gson

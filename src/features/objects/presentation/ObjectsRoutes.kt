@@ -1,9 +1,9 @@
-package com.example.features.userObject.presentation
+package com.example.features.objects.presentation
 
 import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.userObject.data.UserObjectRepository
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.data.ObjectsRepository
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.util.FileHandler.deleteFile
 import io.ktor.application.*
 import io.ktor.freemarker.*
@@ -12,33 +12,32 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import io.ktor.util.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerUserObjectsRoutes() {
+fun Application.registerObjectsRoute() {
 
-    val userObjectRepository by inject<UserObjectRepository>()
+    val objectsRepository by inject<ObjectsRepository>()
 
     routing {
-        getUserObjectRoute(userObjectRepository)
-        deleteUserObject(userObjectRepository)
-        addToCartRoute(userObjectRepository)
+        getObjectsRoute(objectsRepository)
+        deleteObject(objectsRepository)
+        addToCart(objectsRepository)
     }
 }
 
-fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
-    get("/my-objects") {
+private fun Route.getObjectsRoute(objectsRepository: ObjectsRepository) {
+    get("/objects") {
 
         val principal = call.sessions.get<UserPrincipal>()
         val objs = if (principal != null) {
-            userObjectRepository.getUserObjects(principal.email)
+            objectsRepository.getUserObjects(principal.email)
         } else {
             val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
             ArrayList(cookie.objects.filter { it.status == NONE })
         }
         call.respond(
             FreeMarkerContent(
-                "myObjects.ftl",
+                "objects.ftl",
                 mapOf(
                     "objects" to objs,
                     "user" to (principal?.email ?: "")
@@ -48,8 +47,8 @@ fun Route.getUserObjectRoute(userObjectRepository: UserObjectRepository) {
     }
 }
 
-private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
-    get("/my-objects/{id}/delete") {
+private fun Route.deleteObject(objectsRepository: ObjectsRepository) {
+    get("/objects/{id}/delete") {
         val id = call.parameters["id"] ?: return@get call.respondText(
             text = "Missing or malformed id",
             status = HttpStatusCode.BadRequest
@@ -65,30 +64,30 @@ private fun Route.deleteUserObject(userObjectRepository: UserObjectRepository) {
                 if (deleted) deleteFileResult = deleteFile(id)
             }
             else -> {
-                val deleted = userObjectRepository.deleteUserObject(principal.email, id)
+                val deleted = objectsRepository.deleteUserObject(principal.email, id)
                 if (deleted) deleteFileResult = deleteFile(id)
             }
         }
         if (deleteFileResult) {
-            call.respondRedirect("/my-objects")
+            call.respondRedirect("/objects")
         } else {
             call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
         }
     }
 }
 
-private fun Route.addToCartRoute(userObjectRepository: UserObjectRepository) {
-    post("/my-objects/add-to-cart") {
+private fun Route.addToCart(objectsRepository: ObjectsRepository) {
+    post("/objects/add-to-cart") {
         val param = call.receiveParameters()
         val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
-                call.respondText("/auth/login?returnUrl=/my-objects")
+                call.respondText("/auth/login?returnUrl=/objects")
             }
             else -> {
-                val result = userObjectRepository.addToCart(principal.email, id)
+                val result = objectsRepository.addToCart(principal.email, id)
                 call.respondText(result.toString())
             }
         }

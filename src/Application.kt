@@ -1,31 +1,31 @@
 package com.example
 
 import com.example.di.productionModules
-import com.example.features.userObject.domain.ObjectsCookie
-import com.example.features.account.presentation.registerAccountRoutes
+import com.example.features.objects.domain.ObjectsCookie
+import com.example.features.account.presentation.registerAccountRoute
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
 import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
-import com.example.features.cart.presentation.registerCartRoutes
-import com.example.features.checkout.presentation.registerCheckoutRoutes
+import com.example.features.cart.presentation.registerCartRoute
+import com.example.features.checkout.presentation.registerCheckoutRoute
 import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
-import com.example.features.`object`.presentation.registerObjectRoutes
+import com.example.features.`object`.presentation.registerObjectRoute
 import com.example.features.auth.data.AuthRepository
 import com.example.features.order.presentation.registerOrderRoute
 import com.example.features.orders.presentation.registerOrdersRoute
-import com.example.features.userObject.presentation.registerUserObjectsRoutes
+import com.example.features.objects.presentation.registerObjectsRoute
 import com.example.features.util.presentation.registerStatusRoutes
-import com.example.features.userObject.domain.ObjectCookieSerializer
+import com.example.features.objects.domain.ObjectCookieSerializer
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import com.example.util.AUTH.OAUTH
 import com.example.util.AUTH.USER_SESSION_AUTH
 import com.example.util.COOKIES.ADMIN_AUTH_COOKIE
 import com.example.util.COOKIES.AUTH_COOKIE
-import com.example.util.COOKIES.MY_OBJECTS_COOKIE
+import com.example.util.COOKIES.OBJECTS_COOKIE
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -106,7 +106,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
             storage = SessionStorageMemory()
         )
         cookie<ObjectsCookie>(
-            name = MY_OBJECTS_COOKIE,
+            name = OBJECTS_COOKIE,
             storage = SessionStorageMemory()
         ) {
             serializer = ObjectCookieSerializer()
@@ -119,16 +119,16 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
         }
     }
 
-    registerAccountRoutes()
+    registerAccountRoute()
     registerAdminRoutes()
     registerAuthRoutes()
-    registerCartRoutes()
-    registerCheckoutRoutes()
+    registerCartRoute()
+    registerCheckoutRoute()
     registerNotificationRoutes()
-    registerObjectRoutes()
+    registerObjectRoute()
+    registerObjectsRoute()
     registerOrderRoute()
     registerOrdersRoute()
-    registerUserObjectsRoutes()
     registerIndexRoute()
     registerStatusRoutes()
 }

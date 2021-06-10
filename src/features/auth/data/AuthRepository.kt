@@ -1,7 +1,7 @@
 package com.example.features.auth.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.features.account.domain.User
 import com.example.features.auth.domain.checkHashForPassword
 

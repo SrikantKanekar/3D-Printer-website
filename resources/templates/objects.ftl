@@ -1,6 +1,6 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="My objects" css="/static/css/myObjects.css" js="/static/js/myObjects.js">
+<@layout.base title="My objects" css="/static/css/objects.css" js="/static/js/objects.js">
 
     <@header.header user="${user}" title="My objects" />
 
@@ -21,10 +21,10 @@
                                     <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     <ul>
                                         <li class="sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>
-                                            <span>Default</span>
+                                            <span>Date</span>
                                         </li>
-                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "price" }'>
-                                            <span>Price</span>
+                                        <li class="sorting_button" data-isotope-option='{ "sortBy": "status" }'>
+                                            <span>Status</span>
                                         </li>
                                         <li class="sorting_button" data-isotope-option='{ "sortBy": "name" }'>
                                             <span>Name</span>
@@ -46,7 +46,7 @@
                         <#list objects as object>
 
                             <!-- Product -->
-                            <div class="product" data-id="${object.id}">
+                            <div class="product" data-id="${object.id}" data-status="${object.status}">
                                 <div class="product_image">
                                     <img src="${object.image}" alt="">
                                 </div>
@@ -54,12 +54,17 @@
                                     <div class="product_title">
                                         <a href="/object/${object.id}">${object.filename}</a>
                                     </div>
-                                    <#if object.slicingDetails.uptoDate = true>
+
+                                    <div class="slicing_pending" data-uptoDate="${object.slicingDetails.uptoDate?c}">
+                                        Slicing pending
+                                    </div>
+                                    <div class="slicing_done">
                                         <div class="add_to_cart">
-                                            <a href="/my-objects/add-to-cart">
+                                            <a href="/objects/add-to-cart">
                                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
                                                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                     viewBox="0 0 489 489" style="enable-background: new 00 489 489;"
+                                                     viewBox="0 0 489 489"
+                                                     style="enable-background: new 00 489 489;"
                                                      xml:space="preserve">
 												<g>
                                                     <path d="M440.1,422.7l-28-315.3c-0.6-7-6.5-12.3-13.4-12.3h-57.6C340.3,42.5,297.3,0,244.5,0s-95.8,42.5-96.6,95.1H90.3
@@ -72,13 +77,18 @@
                                             </a>
                                         </div>
                                         <div class="price">
-                                            <i class="fa fa-inr"></i><span>${object.slicingDetails.totalPrice}</span>
+                                            <i class="fa fa-inr"></i><span>${object.slicingDetails.totalPrice!}</span>
                                         </div>
-                                    <#else>
-                                        <div class="slicing_pending">
-                                            Slicing pending
-                                        </div>
-                                    </#if>
+                                    </div>
+                                    <div class="status_cart">
+                                        CART
+                                    </div>
+                                    <div class="status_tracking">
+                                        TRACKING
+                                    </div>
+                                    <div class="status_completed">
+                                        COMPLETED
+                                    </div>
                                 </div>
                             </div>
                         </#list>

@@ -1,17 +1,16 @@
-package com.example.features.userObject.data
+package com.example.features.objects.data
 
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
-import java.io.File
 
-class UserObjectRepository(
+class ObjectsRepository(
     private val userDataSource: UserDataSource
 ) {
 
-    suspend fun getUserObjects(email: String): ArrayList<Object> {
+    suspend fun getUserObjects(email: String): List<Object> {
         val user = userDataSource.getUser(email)
-        return ArrayList(user.objects.filter { it.status == NONE })
+        return user.objects.reversed()
     }
 
     suspend fun deleteUserObject(email: String, objectId: String): Boolean {

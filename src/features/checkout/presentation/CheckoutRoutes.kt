@@ -13,7 +13,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerCheckoutRoutes() {
+fun Application.registerCheckoutRoute() {
 
     val checkoutRepository by inject<CheckoutRepository>()
 

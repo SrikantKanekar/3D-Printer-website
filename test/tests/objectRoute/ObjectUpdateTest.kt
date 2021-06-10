@@ -1,7 +1,7 @@
 package tests.objectRoute
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
 import data.Constants
 import data.Constants.TEST_CREATED_OBJECT

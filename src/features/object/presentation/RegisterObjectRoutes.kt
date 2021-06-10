@@ -5,7 +5,7 @@ import io.ktor.application.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-fun Application.registerObjectRoutes() {
+fun Application.registerObjectRoute() {
 
     val objectRepository by inject<ObjectRepository>()
 
