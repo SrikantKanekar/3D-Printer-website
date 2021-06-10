@@ -2,7 +2,7 @@ package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.userObject.domain.ObjectsCookie
+import com.example.features.objects.domain.ObjectsCookie
 import com.example.util.FileHandler.createFile
 import com.example.util.FileHandler.deleteFile
 import io.ktor.application.*
