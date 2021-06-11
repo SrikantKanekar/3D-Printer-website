@@ -9,6 +9,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Setting(
+    val advanced: Boolean = false,
+
     //basic
     val quality: Quality = STANDARD,
     val infill: Float = 20F,

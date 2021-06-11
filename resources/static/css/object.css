@@ -71,6 +71,16 @@
     margin-bottom: 40px;
 }
 
+.basic_container,
+.advanced_container {
+    display: none;
+}
+
+.basic_container > div:not(:last-child),
+.advanced_container > div:not(:last-child) {
+    margin-bottom: 25px;
+}
+
 /******************
     checkbox
  *****************/

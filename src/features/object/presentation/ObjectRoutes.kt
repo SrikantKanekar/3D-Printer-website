@@ -142,6 +142,8 @@ fun Route.updateSetting(objectRepository: ObjectRepository) {
 
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
+        val advanced = params["advanced"]
+
         // basic
         val quality = params["quality"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val infill = params["infill"]?.toFloat() ?: return@post call.respond(HttpStatusCode.BadRequest)
@@ -174,6 +176,7 @@ fun Route.updateSetting(objectRepository: ObjectRepository) {
         val printSequence = params["print_sequence"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
         val setting = Setting(
+            advanced = advanced == "on",
             quality = Quality.valueOf(quality),
             infill = infill,
             gradualInfill = gradualInfill == "on",

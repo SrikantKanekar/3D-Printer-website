@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 $.post(url, $(form).serialize() + "&id=" + id, function (data) {
                     if (data === true) {
                         message.classList.add("success");
-                        message.textContent = "updated";
+                        message.textContent = "successfully updated";
                         removeSlicingDetails();
                     } else {
                         message.classList.remove("success");
@@ -181,6 +181,36 @@ document.addEventListener('DOMContentLoaded', function () {
         disableSettings();
     } else if (document.body.contains(statusCompleted)) {
         disableSettings();
+    }
+
+    /**
+     * Settings
+     */
+    const basicContainer = document.querySelector(".basic_container");
+    const advancedContainer = document.querySelector(".advanced_container");
+    const checkbox = document.querySelector("#advanced");
+    if (checkbox.checked) {
+        enableAdvancedSetting();
+    } else {
+        enableBasicSetting();
+    }
+
+    checkbox.addEventListener('change', function (e) {
+        if (e.currentTarget.checked) {
+            enableAdvancedSetting();
+        } else {
+            enableBasicSetting();
+        }
+    });
+
+    function enableBasicSetting() {
+        advancedContainer.style.display = "none";
+        basicContainer.style.display = "block";
+    }
+
+    function enableAdvancedSetting() {
+        basicContainer.style.display = "none";
+        advancedContainer.style.display = "block";
     }
 
     function enableSettings() {
