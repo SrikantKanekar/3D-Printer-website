@@ -45,7 +45,7 @@
         <body>
             <div class="super_container">
 
-                <div class="main">
+                <div class="main_container">
                     <#nested/>
                 </div>
 

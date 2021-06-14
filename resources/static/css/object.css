@@ -2,13 +2,19 @@
  Status none 
 ************/
 
-.image_selected {
+.canvas_container {
     width: 100%;
 }
 
-.image_selected img {
+.canvas_container canvas {
     width: 100%;
-    height: auto;
+    height: 100%;
+}
+
+#gui{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .object_content {

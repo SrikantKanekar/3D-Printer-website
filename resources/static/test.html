@@ -9,11 +9,15 @@
                 height: 100vh;
             }
 
-            .canvas {
-                position: fixed;
+            .canvas_container {
+                margin: auto;
+                width: 800px;
+            }
+
+            #gui{
+                position: absolute;
                 top: 0;
-                left: 0;
-                outline: none;
+                right: 0;
             }
         </style>
         <!-- three js -->
@@ -27,15 +31,18 @@
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     </head>
     <body>
-        <canvas class="canvas"></canvas>
+        <div class="canvas_container">
+            <canvas id="canvas"></canvas>
+        </div>
         <script>
 
             // Canvas
-            const canvas = document.querySelector('.canvas');
+            const canvasContainer = document.querySelector(".canvas_container");
+            const canvas = document.querySelector('#canvas');
 
             const sizes = {
-                width: window.innerWidth,
-                height: window.innerHeight
+                width: canvasContainer.clientWidth,
+                height: 0.8 * canvasContainer.clientWidth
             }
 
             // scene
@@ -75,7 +82,7 @@
 
             // GLTF loader
             let loader = new THREE.GLTFLoader();
-            loader.load('/static/images/skull_downloadable/scene.gltf', function (gltf) {
+            loader.load('images/skull_downloadable/scene.gltf', function (gltf) {
                 const model = gltf.scene.children[0];
                 model.traverse(n => {
                     if (n.isMesh) {
@@ -109,8 +116,8 @@
             // browser resize
             window.addEventListener('resize', () => {
                 // Update sizes
-                sizes.width = window.innerWidth;
-                sizes.height = window.innerHeight;
+                sizes.width = canvasContainer.clientWidth;
+                sizes.height = 0.8 * canvasContainer.clientWidth;
 
                 // Update camera
                 camera.aspect = sizes.width / sizes.height;
@@ -122,7 +129,10 @@
             });
 
             // Gui Controller
-            const gui = new dat.GUI();
+            const gui = new dat.GUI({autoPlace: false});
+            gui.close();
+            gui.domElement.id = "gui";
+            canvasContainer.appendChild(gui.domElement);
 
             const cameraFolder = gui.addFolder("Camera")
             cameraFolder.add(camera.position, "x", 0, 10, 0.01).listen()

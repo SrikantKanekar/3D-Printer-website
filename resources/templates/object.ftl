@@ -10,10 +10,10 @@
             <#if object.status == "NONE" || object.status == "CART">
                 <div class="row status_none">
 
-                    <!-- Image -->
+                    <!-- Canvas -->
                     <div class="col-lg-6">
-                        <div class="image_selected">
-                            <img src="${object.image}" alt="">
+                        <div class="canvas_container">
+                            <canvas id="canvas"></canvas>
                         </div>
                     </div>
 
@@ -90,12 +90,10 @@
                 </div>
             <#elseif object.status == "COMPLETED">
                 <div class="row status_completed">
-                    <!-- Image -->
+                    <!-- Canvas -->
                     <div class="col-lg-6">
-                        <div class="details_image">
-                            <div class="image_selected">
-                                <img src="${object.image}" alt="">
-                            </div>
+                        <div class="canvas_container">
+                            <canvas id="canvas"></canvas>
                         </div>
                     </div>
 
@@ -349,5 +347,18 @@
             </div>
         </div>
     </div>
+
+
+    <!-- three js -->
+    <script src="https://unpkg.com/three@0.129.0/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- dat gui -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.js"
+            integrity="sha512-u+vtyZDzyd0zgAEffKfoNx2BnCahAOBBYvzGu6vma1B18zQ6lEGF3F6dAFvqaxDoIU/GZRxcXV5oq23OIrkQwg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="/static/js/object_three.js"></script>
 
 </@layout.base>
