@@ -3,6 +3,7 @@
 /out
 /build
 /uploads
+/resources/static/plugins/three
 *.iml
 *.ipr
 *.iws
