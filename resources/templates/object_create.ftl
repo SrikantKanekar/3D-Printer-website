@@ -38,4 +38,9 @@
             </div>
         </form>
     </div>
+
+<#--    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>-->
+<#--    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-storage.js"></script>-->
+<#--    <script src="/static/js/firebase_storage.js"></script>-->
+
 </@layout.base>

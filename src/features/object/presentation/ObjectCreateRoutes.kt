@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 
 /**
  * *User can create new objects without logging in...
- * 1) if user is not logged in, newly created objects will be stored in 'MY_OBJECTS_COOKIE'.
+ * 1) if user is not logged in, newly created objects will be stored in 'OBJECTS_COOKIE'.
  * 2) users will be prompted to login when user tried to add object to Cart.
  * 3) after logging in, all the cookie objects will be synced with account object.
  */
@@ -27,9 +27,7 @@ fun Route.getCreateObjectRoute() {
         call.respond(
             FreeMarkerContent(
                 "object_create.ftl",
-                mapOf(
-                    "user" to (principal?.email ?: "")
-                )
+                mapOf("user" to (principal?.email ?: ""))
             )
         )
     }

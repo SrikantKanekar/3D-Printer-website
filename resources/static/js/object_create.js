@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMsg = form.querySelector(".box_error span");
     const restart = form.querySelector(".box_restart");
     const progressBar = document.querySelector(".progress-bar");
-    let droppedFile = false;
+    let droppedFilename = false;
 
     // automatically submit the form on file select
     input.addEventListener("change", function (e) {
@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         form.addEventListener("drop", function (e) {
-            droppedFile = e.dataTransfer.files[0].name;
-            updateFilename(droppedFile);
+            droppedFilename = e.dataTransfer.files[0].name;
+            updateFilename(droppedFilename);
             submitForm();
         });
     }
@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             const formData = new FormData(form);
 
-            if (droppedFile) {
-                formData.append(input.getAttribute("name"), droppedFile);
+            if (droppedFilename) {
+                formData.append(input.getAttribute("name"), droppedFilename);
             }
 
             const request = new XMLHttpRequest();
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function clearPage() {
         form.reset();
-        droppedFile = false;
+        droppedFilename = false;
     }
 
     restart.addEventListener("click", function (e) {
