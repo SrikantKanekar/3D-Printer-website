@@ -19,6 +19,12 @@ scene.background = new THREE.Color(0xdddddd);
 camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 1000);
 camera.position.set(2, 2, 2);
 
+// OrbitControls
+let controls = new THREE.OrbitControls(camera, canvas);
+controls.update();
+controls.addEventListener('change', () => renderer.render(scene, camera));
+
+
 // renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -54,26 +60,10 @@ loader.load('/static/images/skull_downloadable/scene.gltf', function (gltf) {
         }
     });
     scene.add(gltf.scene);
-    animate();
+    renderer.render(scene, camera);
 }, undefined, function (error) {
     console.error(error);
 });
-
-// OrbitControls
-let controls = new THREE.OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.update();
-
-function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    spotLight.position.set(
-        camera.position.x + 10,
-        camera.position.y + 10,
-        camera.position.z + 10,
-    );
-    renderer.render(scene, camera);
-}
 
 // browser resize
 window.addEventListener('resize', () => {
@@ -90,6 +80,12 @@ window.addEventListener('resize', () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
+// render
+function render() {
+    renderer.render(scene, camera);
+    controls.update();
+}
+
 // Gui Controller
 const gui = new dat.GUI({autoPlace: false});
 gui.close();
@@ -97,6 +93,6 @@ gui.domElement.id = "gui";
 canvasContainer.appendChild(gui.domElement);
 
 const cameraFolder = gui.addFolder("Camera")
-cameraFolder.add(camera.position, "x", 0, 10, 0.01).listen()
-cameraFolder.add(camera.position, "y", 0, 10, 0.01).listen()
-cameraFolder.add(camera.position, "z", 0, 10, 0.01).listen()
+cameraFolder.add(camera.position, "x", 0, 10, 0.01).onChange(render).listen()
+cameraFolder.add(camera.position, "y", 0, 10, 0.01).onChange(render).listen()
+cameraFolder.add(camera.position, "z", 0, 10, 0.01).onChange(render).listen()
