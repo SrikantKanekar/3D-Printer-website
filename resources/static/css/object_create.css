@@ -143,7 +143,7 @@
     color: var(--on-surface);
 }
 
-.js .box_input {
+.box_input {
     width: 1px;
     height: 1px;
     opacity: 0;
@@ -152,7 +152,7 @@
     z-index: -1;
 }
 
-.js .box_input + label {
+.box_input + label {
     max-width: 80%;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -161,32 +161,15 @@
     overflow: hidden;
 }
 
-.js .box_input + label:hover strong,
+.box_input + label:hover strong,
 .box_input:focus + label strong,
 .box_input.has_focus + label strong {
     color: var(--on-surface);
 }
 
-.js .box_input:focus + label,
-.js .box_input.has_focus + label {
+.box_input:focus + label,
+.box_input.has_focus + label {
     outline: 1px dotted var(--on-surface);
-}
-
-.no-js .box_input + label {
-    display: none;
-}
-
-.box_button {
-    font-weight: 700;
-    color: var(--on-surface);
-    background-color: var(--surface);
-    display: none;
-    padding: 8px 16px;
-    margin: 40px auto 0;
-}
-
-.no-js .box_button {
-    display: block;
 }
 
 .progress_container {

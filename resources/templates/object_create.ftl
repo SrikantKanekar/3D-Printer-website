@@ -20,8 +20,6 @@
                     <strong>Choose a file</strong>
                     <span class="box_dragndrop"> or drag it here</span>.
                 </label>
-
-                <button class="box_button" type="submit">Upload</button>
             </div>
 
             <div class="box_uploading">Uploading <span></span> …</div>

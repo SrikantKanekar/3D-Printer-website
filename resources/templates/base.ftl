@@ -1,7 +1,7 @@
 <#import "footer.ftl" as footer />
 <#macro base css js title="3d printer website">
     <!doctype html>
-    <html lang="en" class="no-js">
+    <html lang="en">
 
         <head>
             <title>${title}</title>
@@ -29,15 +29,10 @@
             <!--custom-->
             <link rel="stylesheet" type="text/css" href=${css}>
 
+            <!--theme-->
             <script>
-                const root = document.documentElement;
-
-                <!--check if js is enabled for drag and drop feature-->
-                root.className = root.className.replace(/(^|\s)no-js(\s|$)/, "$1js$2");
-
-                <!--theme-->
                 if (localStorage.getItem("theme") === "light_theme") {
-                    root.classList.add("light_theme");
+                    document.documentElement.classList.add("light_theme");
                 }
             </script>
         </head>
