@@ -10,15 +10,12 @@
     background-color: var(--surface);
     text-align: center;
     padding: 100px 20px;
+    outline: 2px dashed var(--on-surface);
+    outline-offset: -10px;
     -webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
-}
-
-.box.has_advanced_upload {
-    outline: 2px dashed var(--on-surface);
-    outline-offset: -10px;
 }
 
 .box.is_dragover {
@@ -27,16 +24,11 @@
     background-color: var(--surface);
 }
 
-.box_dragndrop,
-.box_icon {
-    display: none;
-}
-
-.box.has_advanced_upload .box_dragndrop {
+.box_dragndrop {
     display: inline;
 }
 
-.box.has_advanced_upload .box_icon {
+.box_icon {
     width: 100%;
     height: 80px;
     fill: var(--on-surface);
@@ -136,11 +128,11 @@
 
 .box_restart {
     font-weight: 700;
+    color: var(--on-surface);
 }
 
-.box_restart:focus,
 .box_restart:hover {
-    color: var(--on-surface);
+    color: var(--on-background);
 }
 
 .box_input {
@@ -149,6 +141,10 @@
     opacity: 0;
     overflow: hidden;
     position: absolute;
+    z-index: -1;
+}
+
+.alert-validate{
     z-index: -1;
 }
 
@@ -161,15 +157,8 @@
     overflow: hidden;
 }
 
-.box_input + label:hover strong,
-.box_input:focus + label strong,
-.box_input.has_focus + label strong {
-    color: var(--on-surface);
-}
-
-.box_input:focus + label,
-.box_input.has_focus + label {
-    outline: 1px dotted var(--on-surface);
+.box_input + label:hover strong {
+    color: var(--on-background);
 }
 
 .progress_container {
@@ -203,7 +192,7 @@
         padding: 35px 15px;
     }
 
-    .box.has_advanced_upload .box_icon {
+    .box_icon {
         height: 50px;
         margin-top: 20px;
         margin-bottom: 20px;
