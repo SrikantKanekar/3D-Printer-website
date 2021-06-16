@@ -10,12 +10,14 @@ firebase.initializeApp(firebaseConfig);
 
 var storageRef = firebase.storage().ref();
 
-function uploadFileFirebase(file, filename) {
-    var uploadTask = storageRef.child('uploads/' + filename).put(file);
+function uploadFirebaseFile(file, filename, id, progress, downloadURL) {
+    var uploadTask = storageRef.child(id + '/' + filename).put(file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+            progress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED:
                     console.log('Upload is paused');
@@ -39,8 +41,46 @@ function uploadFileFirebase(file, filename) {
             }
         },
         () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                console.log('File available at', downloadURL);
+            uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                downloadURL(url)
+            });
+        }
+    );
+}
+
+function uploadFirebaseImage(image, id, progress, downloadURL) {
+    var uploadTask = storageRef.child(id + '/image').putString(image);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+
+            progress((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED:
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING:
+                    console.log('Upload is running');
+                    break;
+            }
+        },
+        (error) => {
+            switch (error.code) {
+                case 'storage/unauthorized':
+                    console.log('User doesn\'t have permission to access the object');
+                    break;
+                case 'storage/canceled':
+                    console.log('User canceled the upload');
+                    break;
+                case 'storage/unknown':
+                    console.log('Unknown error occurred, inspect error.serverResponse');
+                    break;
+            }
+        },
+        () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                downloadURL(url)
             });
         }
     );

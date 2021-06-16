@@ -51,7 +51,7 @@ scene.add(spotLight);
 let loader = new THREE.GLTFLoader();
 let gltfScene;
 
-function showModel(url, error) {
+function showModel(url, error, sizeError) {
     updateCanvas();
     loader.load(url, function (gltf) {
         gltfScene = gltf.scene;
@@ -64,6 +64,8 @@ function showModel(url, error) {
         });
         scene.add(gltf.scene);
         renderer.render(scene, camera);
+        const verified = verifyModel();
+        sizeError(verified);
     }, undefined, function (e) {
         error(e);
     });
@@ -71,7 +73,7 @@ function showModel(url, error) {
 
 function showModelFake() {
     updateCanvas();
-    loader.load('/static/images/scene.gltf', function (gltf) {
+    loader.load('/static/images/scene.glb', function (gltf) {
         gltfScene = gltf.scene;
         gltf.scene.children[0].traverse(n => {
             if (n.isMesh) {
@@ -127,3 +129,12 @@ const cameraFolder = gui.addFolder("Camera")
 cameraFolder.add(camera.position, "x", 0, 10, 0.01).onChange(render).listen()
 cameraFolder.add(camera.position, "y", 0, 10, 0.01).onChange(render).listen()
 cameraFolder.add(camera.position, "z", 0, 10, 0.01).onChange(render).listen()
+
+
+function verifyModel() {
+    return true;
+}
+
+function takeSnapshot() {
+    return "This is image";
+}

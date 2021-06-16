@@ -55,10 +55,6 @@
         </div>
     </div>
 
-<#--    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>-->
-<#--    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-storage.js"></script>-->
-<#--    <script src="/static/js/firebase_storage.js"></script>-->
-
     <!-- three js -->
     <script src="https://unpkg.com/three@0.129.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -70,5 +66,9 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="/static/js/object_three.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-storage.js"></script>
+    <script src="/static/js/firebase_storage.js"></script>
 
 </@layout.base>
