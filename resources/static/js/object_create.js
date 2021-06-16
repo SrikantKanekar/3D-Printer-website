@@ -147,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = URL.createObjectURL(file);
         showModel(url, function (error) {
             if (error) {
+                console.log(error);
                 canvasError.style.display = "block";
                 canvasError.textContent = "Error";
             }
