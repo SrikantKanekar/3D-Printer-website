@@ -10,8 +10,8 @@
             }
 
             .canvas_container {
-                margin: auto;
-                width: 800px;
+                padding: 20px;
+                width: 600px;
             }
 
             #gui {
@@ -34,7 +34,6 @@
         <div class="canvas_container">
             <canvas id="canvas"></canvas>
         </div>
-
         <script>
 
             // Canvas
@@ -88,20 +87,30 @@
 
             // GLTF loader
             let loader = new THREE.GLTFLoader();
-            loader.load('images/skull_downloadable/scene.gltf', function (gltf) {
-                const model = gltf.scene.children[0];
-                model.traverse(n => {
-                    if (n.isMesh) {
-                        n.castShadow = true;
-                        n.receiveShadow = true;
-                        if (n.material.map) n.material.map.anisotropy = 1;
-                    }
+            let gltfScene;
+
+            showModel();
+            function showModel() {
+                loader.load('images/skull_downloadable/scene.gltf', function (gltf) {
+                    gltfScene = gltf.scene;
+                    gltf.scene.children[0].traverse(n => {
+                        if (n.isMesh) {
+                            n.castShadow = true;
+                            n.receiveShadow = true;
+                            if (n.material.map) n.material.map.anisotropy = 1;
+                        }
+                    });
+                    scene.add(gltf.scene);
+                    renderer.render(scene, camera);
+                }, undefined, function (error) {
+                    console.error(error);
                 });
-                scene.add(gltf.scene);
+            }
+
+            function removeModel() {
+                scene.remove(gltfScene);
                 renderer.render(scene, camera);
-            }, undefined, function (error) {
-                console.error(error);
-            });
+            }
 
             // browser resize
             window.addEventListener('resize', () => {

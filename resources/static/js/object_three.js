@@ -4,7 +4,7 @@ const canvas = document.querySelector('#canvas');
 
 const sizes = {
     width: canvasContainer.clientWidth,
-    height: 0.8 * canvasContainer.clientWidth
+    height: canvasContainer.clientHeight
 }
 
 // scene
@@ -23,7 +23,6 @@ camera.position.set(2, 2, 2);
 let controls = new THREE.OrbitControls(camera, canvas);
 controls.update();
 controls.addEventListener('change', () => renderer.render(scene, camera));
-
 
 // renderer
 const renderer = new THREE.WebGLRenderer({
@@ -50,26 +49,58 @@ scene.add(spotLight);
 
 // GLTF loader
 let loader = new THREE.GLTFLoader();
-loader.load('/static/images/skull_downloadable/scene.gltf', function (gltf) {
-    const model = gltf.scene.children[0];
-    model.traverse(n => {
-        if (n.isMesh) {
-            n.castShadow = true;
-            n.receiveShadow = true;
-            if (n.material.map) n.material.map.anisotropy = 1;
-        }
+let gltfScene;
+
+function showModel(url, error) {
+    updateCanvas();
+    loader.load(url, function (gltf) {
+        gltfScene = gltf.scene;
+        gltf.scene.children[0].traverse(n => {
+            if (n.isMesh) {
+                n.castShadow = true;
+                n.receiveShadow = true;
+                if (n.material.map) n.material.map.anisotropy = 1;
+            }
+        });
+        scene.add(gltf.scene);
+        renderer.render(scene, camera);
+    }, undefined, function (e) {
+        error(e);
     });
-    scene.add(gltf.scene);
+}
+
+function showModelFake() {
+    updateCanvas();
+    loader.load('/static/images/skull_downloadable/scene.gltf', function (gltf) {
+        gltfScene = gltf.scene;
+        gltf.scene.children[0].traverse(n => {
+            if (n.isMesh) {
+                n.castShadow = true;
+                n.receiveShadow = true;
+                if (n.material.map) n.material.map.anisotropy = 1;
+            }
+        });
+        scene.add(gltf.scene);
+        renderer.render(scene, camera);
+    }, undefined, function (error) {
+        console.error(error);
+    });
+}
+
+function removeModel() {
+    scene.remove(gltfScene);
     renderer.render(scene, camera);
-}, undefined, function (error) {
-    console.error(error);
-});
+}
 
 // browser resize
 window.addEventListener('resize', () => {
+    updateCanvas();
+});
+
+function updateCanvas() {
     // Update sizes
     sizes.width = canvasContainer.clientWidth;
-    sizes.height = 0.8 * canvasContainer.clientWidth;
+    sizes.height = canvasContainer.clientHeight;
 
     // Update camera
     camera.aspect = sizes.width / sizes.height;
@@ -78,7 +109,7 @@ window.addEventListener('resize', () => {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-});
+}
 
 // render
 function render() {

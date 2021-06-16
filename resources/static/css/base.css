@@ -845,7 +845,7 @@ input[type=number]{
 /* form error */
 .form_message {
     font-weight: 450;
-    color: var(--primary);
+    color: var(--error);
     margin-left: 5px;
 }
 

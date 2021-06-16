@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
+    showModelFake();
+
     const object = $(".object")
     const id = object.data("id");
     const status = object.data("status");

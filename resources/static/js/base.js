@@ -161,8 +161,10 @@ $(".alert").on("close.bs.alert", function (e) {
  * 6. Form
  */
 function showValidate(input) {
-    const field = $(input).parent();
-    $(field).addClass("alert-validate");
+    if (input.name !== "file"){
+        const field = $(input).parent();
+        $(field).addClass("alert-validate");
+    }
 }
 
 function hideValidate(input) {

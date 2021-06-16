@@ -4,6 +4,7 @@
 
 .canvas_container {
     width: 100%;
+    height: calc(100vh - 180px);;
 }
 
 .canvas_container canvas {
