@@ -71,7 +71,7 @@ function showModel(url, error) {
 
 function showModelFake() {
     updateCanvas();
-    loader.load('/static/images/skull_downloadable/scene.gltf', function (gltf) {
+    loader.load('/static/images/scene.gltf', function (gltf) {
         gltfScene = gltf.scene;
         gltf.scene.children[0].traverse(n => {
             if (n.isMesh) {
