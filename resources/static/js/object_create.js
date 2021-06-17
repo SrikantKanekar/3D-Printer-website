@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-    const form = document.querySelector(".box");
-    const input = form.querySelector('input[type="file"]');
-    const filename = form.querySelector(".box_uploading span");
-    const errorMsg = form.querySelector(".box_error span");
-    const restart = form.querySelector(".box_restart");
+    const box = document.querySelector(".box");
+    const input = box.querySelector('input[type="file"]');
+    const filename = box.querySelector(".box_uploading_file span");
+    const errorMsg = box.querySelector(".box_error span");
+    const restart = box.querySelector(".box_restart");
     const progressBar = document.querySelector(".progress-bar");
 
     const canvas = document.querySelector(".canvas");
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const changeButton = document.querySelector("#change_button");
 
     let file;
+    let uploading;
 
     [
         "drag",
@@ -25,27 +26,31 @@ document.addEventListener('DOMContentLoaded', function () {
         "dragleave",
         "drop",
     ].forEach(function (event) {
-        form.addEventListener(event, function (e) {
+        box.addEventListener(event, function (e) {
             e.preventDefault();
             e.stopPropagation();
         });
     });
 
     ["dragover", "dragenter"].forEach(function (event) {
-        form.addEventListener(event, function () {
-            form.classList.add("is_dragover");
+        box.addEventListener(event, function () {
+            if (!uploading) {
+                box.classList.add("is_dragover");
+            }
         });
     });
 
     ["dragleave", "dragend", "drop"].forEach(function (event) {
-        form.addEventListener(event, function () {
-            form.classList.remove("is_dragover");
+        box.addEventListener(event, function () {
+            box.classList.remove("is_dragover");
         });
     });
 
-    form.addEventListener("drop", function (e) {
-        file = e.dataTransfer.files[0];
-        showCanvas();
+    box.addEventListener("drop", function (e) {
+        if (!uploading) {
+            file = e.dataTransfer.files[0];
+            showCanvas();
+        }
     });
 
     // automatically submit the form on file select
@@ -56,20 +61,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     restart.addEventListener("click", function (e) {
         e.preventDefault();
-        form.classList.remove("is_error", "is_success");
+        box.classList.remove("is_error", "is_done");
     });
 
-    function uploadStart() {
-        form.classList.add("is_uploading");
-        form.classList.remove("is_error");
+    function uploadingFile() {
+        uploading = true;
+        filename.textContent = canvasName.textContent;
+        box.classList.add("is_uploading_file");
+        box.classList.remove("is_error");
     }
 
-    function handleProgress(e) {
-        if (e.lengthComputable) {
-            const progress = (e.loaded / e.total) * 100;
-            updateProgress(progress)
-            if (progress === 100) scanningStart();
-        }
+    function uploadingImage() {
+        box.classList.remove("is_uploading_file");
+        box.classList.add("is_uploading_img");
+    }
+
+    function uploadingDone() {
+        box.classList.remove("is_uploading_img");
+        box.classList.add("is_done");
     }
 
     function updateProgress(progress) {
@@ -77,39 +86,17 @@ document.addEventListener('DOMContentLoaded', function () {
         progressBar.setAttribute("style", "width:" + progress + "%");
     }
 
-    function scanningStart() {
-        form.classList.remove("is_uploading");
-        form.classList.add("is_scanning");
-    }
-
-    function handleSuccess(data) {
-        creatingObject(data);
-        if (data.success === "true") {
-            window.location.href = "/object/" + data.id;
-            form.reset();
-        }
-    }
-
-    function creatingObject(data) {
-        form.classList.remove("is_scanning");
-        if (data.success === "true") {
-            form.classList.add("is_success");
-        } else {
-            form.classList.add("is_error");
-            errorMsg.textContent = "Error creating object";
-        }
-    }
-
-    function handleError(errorMessage) {
-        form.classList.remove("is_uploading");
-        form.classList.remove("is_scanning");
-        form.classList.add("is_error");
+    function showError(errorMessage) {
+        uploading = false;
+        box.classList.remove("is_uploading_file");
+        box.classList.remove("is_uploading_img");
+        box.classList.add("is_error");
         errorMsg.textContent = errorMessage;
     }
 
     function showCanvas() {
         canvasName.textContent = file.name;
-        form.style.display = "none";
+        box.style.display = "none";
         canvas.style.display = "block";
 
         const url = URL.createObjectURL(file);
@@ -131,9 +118,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function hideCanvas() {
         canvas.style.display = "none";
-        form.style.display = "block";
+        box.style.display = "block";
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-        form.reset();
+        box.reset();
         removeModel();
         createButton.parentElement.style.display = "block";
         canvasError.style.display = "none";
@@ -146,63 +133,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
     createButton.addEventListener('click', function (e) {
         e.preventDefault();
-        hideCanvas();
 
+        uploadingFile();
+        const image = takeSnapshot();
+        hideCanvas();
         const id = generateId();
 
         uploadFirebaseFile(file, file.name, id, function (progress) {
             updateProgress(progress);
-        }, function (downloadUrl) {
-            const fileUrl = downloadUrl;
-            const image = takeSnapshot();
+        }, function (fileUrl) {
+            uploadingImage();
             uploadFirebaseImage(image, id, function (progress) {
                 updateProgress(progress);
-            }, function (downloadUrl) {
-                const imageUrl = downloadUrl;
+            }, function (imageUrl) {
+                uploadingDone();
+                uploadObject(id, canvasName.textContent, fileUrl, imageUrl);
             });
         });
-
-
-        //uploadObject();
     });
 
     function generateId() {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    function uploadObject() {
-        // preventing the duplicate submissions if the current one is in progress
-        if (form.classList.contains("is_uploading")) return false;
-
-        uploadStart();
-
-        const formData = new FormData();
-        formData.append("file", file);
-        filename.textContent = file.name;
-
-        const request = new XMLHttpRequest();
-        request.open(
-            form.getAttribute("method"),
+    function uploadObject(id, name, fileUrl, imageUrl) {
+        $.post(
             "/object/create",
-            true
-        );
-        request.upload.addEventListener(
-            "progress",
-            function (e) {
-                handleProgress(e);
+            {
+                id: id,
+                name: name,
+                fileUrl: fileUrl,
+                imageUrl: imageUrl
             },
-            false
-        );
-        request.onreadystatechange = function () {
-            if (request.readyState === 4) {
-                if (request.status === 200) {
-                    let data = JSON.parse(request.responseText);
-                    handleSuccess(data);
+            function (data) {
+                uploading = false;
+                if (data === true) {
+                    window.location.href = "/object/" + data.id;
+                    box.reset();
                 } else {
-                    handleError(request.responseText);
+                    showError("Error creating object");
                 }
             }
-        };
-        request.send(formData);
+        );
     }
 });

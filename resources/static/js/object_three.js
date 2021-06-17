@@ -27,7 +27,8 @@ controls.addEventListener('change', () => renderer.render(scene, camera));
 // renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true
+    antialias: true,
+    preserveDrawingBuffer: true
 });
 renderer.toneMapping = THREE.ReinhardToneMapping;
 renderer.toneMappingExposure = 2.3;
@@ -136,5 +137,11 @@ function verifyModel() {
 }
 
 function takeSnapshot() {
-    return "This is image";
+    try {
+        let imgData = canvas.toDataURL("image/png");
+        console.log(imgData)
+        return imgData;
+    } catch (e) {
+        console.log(e);
+    }
 }

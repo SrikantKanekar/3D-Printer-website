@@ -11,6 +11,10 @@ firebase.initializeApp(firebaseConfig);
 var storageRef = firebase.storage().ref();
 
 function uploadFirebaseFile(file, filename, id, progress, downloadURL) {
+    var metadata = {
+        contentType: 'image/jpeg'
+    };
+
     var uploadTask = storageRef.child(id + '/' + filename).put(file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
@@ -49,7 +53,7 @@ function uploadFirebaseFile(file, filename, id, progress, downloadURL) {
 }
 
 function uploadFirebaseImage(image, id, progress, downloadURL) {
-    var uploadTask = storageRef.child(id + '/image').putString(image);
+    var uploadTask = storageRef.child(id + '/image').putString(image, 'data_url');
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {

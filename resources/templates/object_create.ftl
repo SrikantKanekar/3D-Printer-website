@@ -5,7 +5,7 @@
     <@header.header user="${user}" title="Create" />
 
     <div class="container">
-        <form class="box" method="POST" action="#" enctype="multipart/form-data">
+        <form class="box" action="#">
 
             <div class="box_upload">
 
@@ -22,9 +22,9 @@
                 </label>
             </div>
 
-            <div class="box_uploading">Uploading <span></span> …</div>
-            <div class="box_scanning">Scanning File…</div>
-            <div class="box_success">Creating New Object…</div>
+            <div class="box_uploading_file">Uploading <span></span> …</div>
+            <div class="box_uploading_img">Uploading Image…</div>
+            <div class="box_done">Almost Done!</div>
             <div class="box_error">
                 <span></span>. <a href="" class="box_restart" role="button">Try again!</a>
             </div>
