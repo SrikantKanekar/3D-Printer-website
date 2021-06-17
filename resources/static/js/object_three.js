@@ -94,6 +94,7 @@ function updateCanvas() {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.render(scene, camera)
 }
 
 // render
@@ -118,12 +119,38 @@ function verifyModel() {
     return true;
 }
 
+// function takeSnapshot(q) {
+//
+//     const temporaryCanvas = document.createElement('canvas');
+//     let context = temporaryCanvas.getContext('2d');
+//
+//     let cWidth = canvas.width;
+//     let cHeight = canvas.height;
+//     let smaller;
+//     let larger;
+//
+//     if (cWidth < cHeight) {
+//         smaller = cWidth;
+//         larger = cHeight;
+//     } else {
+//         smaller = cHeight;
+//         larger = cWidth;
+//     }
+//
+//     let newSize = smaller / q;
+//     temporaryCanvas.width = newSize;
+//     temporaryCanvas.height = newSize;
+//
+//     let x = larger / 2 - smaller / 2;
+//
+//     if (cWidth < cHeight) {
+//         context.drawImage(canvas, 0, x, smaller, smaller, 0, 0, newSize, newSize);
+//     } else {
+//         context.drawImage(canvas, x, 0, smaller, smaller, 0, 0, newSize, newSize);
+//     }
+//     return temporaryCanvas.toDataURL("image/png");
+// }
+
 function takeSnapshot() {
-    try {
-        let imgData = canvas.toDataURL("image/png");
-        console.log(imgData)
-        return imgData;
-    } catch (e) {
-        console.log(e);
-    }
+    return canvas.toDataURL("image/png");
 }
