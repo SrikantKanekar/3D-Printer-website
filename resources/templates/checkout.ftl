@@ -111,7 +111,7 @@
                             <ul class="order_list">
                                 <#list objects as object>
                                     <li class="list_item object">
-                                        <div class="list_title">${object.filename}</div>
+                                        <div class="list_title">${object.name}</div>
                                         <div class="list_details">
                                             <div class="list_quantity">X<span>${object.quantity}</span></div>
                                             <div class="list_price">

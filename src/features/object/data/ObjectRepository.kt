@@ -1,16 +1,19 @@
 package com.example.features.`object`.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.*
-import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.`object`.domain.Object
+import com.example.features.`object`.domain.ObjectStatus.CART
+import com.example.features.`object`.domain.ObjectStatus.NONE
+import com.example.features.`object`.domain.Setting
+import com.example.features.`object`.domain.SlicingDetails
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 class ObjectRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun createNewObject(fileName: String): Object {
-        return userDataSource.createNewObject(fileName)
+    suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String): Object {
+        return userDataSource.createObject(id, name, fileUrl, imageUrl)
     }
 
     suspend fun addUserObject(email: String, obj: Object): Boolean {
@@ -92,7 +95,7 @@ class ObjectRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .find { it.id == id }
-            ?.let { it.filename = fileName } ?: return false
+            ?.let { it.name = fileName } ?: return false
         return userDataSource.updateUser(user)
     }
 

@@ -7,7 +7,7 @@ import data.Constants.TEST_CREATED_OBJECT
 
 class FakeUserDataSourceImpl(
     private val users: HashMap<String, User>
-): UserDataSource {
+) : UserDataSource {
 
     override suspend fun insertUser(user: User): Boolean {
         users[user.email] = user
@@ -27,7 +27,7 @@ class FakeUserDataSourceImpl(
         return true
     }
 
-    override suspend fun createNewObject(fileName: String): Object {
-        return Object(id = TEST_CREATED_OBJECT, filename = fileName)
+    override suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String): Object {
+        return Object(id = TEST_CREATED_OBJECT, name = name, fileUrl = fileUrl, imageUrl = imageUrl)
     }
 }

@@ -4,7 +4,7 @@
 
     <@header.header user="${user}" title="Object" />
 
-    <div class="object" data-id="${object.id}" data-status="${object.status}">
+    <div class="object" data-id="${object.id}" data-status="${object.status}" data-file="${object.fileUrl}">
         <div class="container">
 
             <#if object.status == "NONE" || object.status == "CART">
@@ -21,7 +21,7 @@
                     <div class="col-lg-6">
                         <div class="object_content">
 
-                            <div class="object_name">${object.filename}</div>
+                            <div class="object_name">${object.name}</div>
 
                             <div class="upto_date" data-value="${object.slicingDetails.uptoDate?c}">
                                 Slicing details are not upto date
@@ -78,7 +78,7 @@
                     <!-- Details -->
                     <div class="col-lg-6">
                         <div class="object_content">
-                            <div class="object_name">${object.filename}</div>
+                            <div class="object_name">${object.name}</div>
                             <div class="object_description">
                                 <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
                                 <div class="">Printing status : ${object.printingStatus}</div>
@@ -100,7 +100,7 @@
                     <!-- Details -->
                     <div class="col-lg-6">
                         <div class="object_content">
-                            <div class="object_name">${object.filename}</div>
+                            <div class="object_name">${object.name}</div>
                             <div class="object_description">
                                 <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
                                 <div class="">Printing status : ${object.printingStatus}</div>

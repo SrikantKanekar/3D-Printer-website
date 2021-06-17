@@ -55,12 +55,12 @@
                         <#list objects as object>
                             <div class="product" data-id="${object.id}" data-status="${object.printingStatus}">
                                 <div class="product_image">
-                                    <img src="${object.image}" alt="">
+                                    <img src="${object.imageUrl}" alt="">
                                 </div>
 
                                 <div class="product_content">
                                     <div class="product_title">
-                                        <a href="/object/${object.id}">${object.filename}</a>
+                                        <a href="/object/${object.id}">${object.name}</a>
                                     </div>
                                     <div class="product_status">${object.printingStatus}</div>
 

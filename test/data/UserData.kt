@@ -11,14 +11,13 @@ import data.Constants.TEST_COMPLETED_OBJECT
 import data.Constants.TEST_NOTIFICATION
 import data.Constants.TEST_OBJECT_IMAGE_LINK
 import data.Constants.TEST_PROCESSING_ORDER
-import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_ADDRESS
 import data.Constants.TEST_USER_EMAIL
 import data.Constants.TEST_USER_HASHED_PASSWORD
+import data.Constants.TEST_USER_OBJECT
 import data.Constants.TEST_USER_USERNAME
 import java.util.*
-import kotlin.collections.ArrayList
 
 val testUser = User(
     email = TEST_USER_EMAIL,
@@ -35,32 +34,37 @@ val testUser = User(
         listOf(
             Object(
                 id = TEST_USER_OBJECT,
-                filename = UUID.randomUUID().toString(),
-                image = TEST_OBJECT_IMAGE_LINK,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = NONE,
             ),
             Object(
                 id = TEST_CART_OBJECT1,
-                filename = UUID.randomUUID().toString(),
-                image = TEST_OBJECT_IMAGE_LINK,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = CART
             ),
             Object(
                 id = TEST_CART_OBJECT2,
-                filename = UUID.randomUUID().toString(),
-                image = TEST_OBJECT_IMAGE_LINK,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = CART
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
-                filename = UUID.randomUUID().toString(),
-                image = TEST_OBJECT_IMAGE_LINK,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
-                filename = UUID.randomUUID().toString(),
-                image = TEST_OBJECT_IMAGE_LINK,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = COMPLETED
             )
         )
@@ -94,8 +98,10 @@ val testUsers = List(10) {
         objects = ArrayList(
             List(3) {
                 Object(
-                    filename = UUID.randomUUID().toString(),
-                    image = UUID.randomUUID().toString()
+                    id = UUID.randomUUID().toString(),
+                    name = UUID.randomUUID().toString(),
+                    fileUrl = "",
+                    imageUrl = UUID.randomUUID().toString()
                 )
             }
         )

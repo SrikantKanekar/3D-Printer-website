@@ -32,12 +32,12 @@
                                     <div class="item_object">
 
                                         <div class="item_image">
-                                            <img src="${object.image}" alt=""/>
+                                            <img src="${object.imageUrl}" alt=""/>
                                         </div>
 
                                         <div class="item_name_container">
                                             <div class="item_name">
-                                                <a href="/object/${object.id}">${object.filename}</a>
+                                                <a href="/object/${object.id}">${object.name}</a>
                                             </div>
                                             <div class="item_remove">
                                                 <a href="/cart/remove">remove</a>
@@ -107,7 +107,7 @@
                                     <li class="total_grid">
                                         <#list objects as object>
                                             <div class="total_item grid" data-id="${object.id}">
-                                                <div class="total_title">${object.filename}</div>
+                                                <div class="total_title">${object.name}</div>
                                                 <div class="total_details">
                                                     <div class="total_quantity">
                                                         X<span>${object.quantity}</span>

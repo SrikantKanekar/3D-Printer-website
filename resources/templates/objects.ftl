@@ -48,11 +48,11 @@
                             <!-- Product -->
                             <div class="product" data-id="${object.id}" data-status="${object.status}">
                                 <div class="product_image">
-                                    <img src="${object.image}" alt="">
+                                    <img src="${object.imageUrl}" alt="">
                                 </div>
                                 <div class="product_content">
                                     <div class="product_title">
-                                        <a href="/object/${object.id}">${object.filename}</a>
+                                        <a href="/object/${object.id}">${object.name}</a>
                                     </div>
 
                                     <div class="slicing_pending" data-uptoDate="${object.slicingDetails.uptoDate?c}">
@@ -62,7 +62,7 @@
                                         <div class="add_to_cart">
                                             <a href="/objects/add-to-cart">
                                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     x="0px" y="0px"
                                                      viewBox="0 0 489 489"
                                                      style="enable-background: new 00 489 489;"
                                                      xml:space="preserve">

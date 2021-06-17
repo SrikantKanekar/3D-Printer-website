@@ -13,5 +13,10 @@ interface UserDataSource {
 
     suspend fun updateUser(user: User): Boolean
 
-    suspend fun createNewObject(fileName: String): Object
+    suspend fun createObject(
+        id: String,
+        name: String,
+        fileUrl: String,
+        imageUrl: String
+    ): Object
 }

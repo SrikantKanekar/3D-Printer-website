@@ -162,16 +162,16 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 id: id,
                 name: name,
-                fileUrl: fileUrl,
-                imageUrl: imageUrl
+                file_url: fileUrl,
+                image_url: imageUrl
             },
             function (data) {
                 uploading = false;
-                if (data === true) {
-                    window.location.href = "/object/" + data.id;
-                    box.reset();
-                } else {
+                if (data === "error") {
                     showError("Error creating object");
+                } else {
+                    window.location.href = "/object/" + data;
+                    box.reset();
                 }
             }
         );

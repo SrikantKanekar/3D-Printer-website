@@ -72,24 +72,6 @@ function showModel(url, error, sizeError) {
     });
 }
 
-function showModelFake() {
-    updateCanvas();
-    loader.load('/static/images/scene.glb', function (gltf) {
-        gltfScene = gltf.scene;
-        gltf.scene.children[0].traverse(n => {
-            if (n.isMesh) {
-                n.castShadow = true;
-                n.receiveShadow = true;
-                if (n.material.map) n.material.map.anisotropy = 1;
-            }
-        });
-        scene.add(gltf.scene);
-        renderer.render(scene, camera);
-    }, undefined, function (error) {
-        console.error(error);
-    });
-}
-
 function removeModel() {
     scene.remove(gltfScene);
     renderer.render(scene, camera);

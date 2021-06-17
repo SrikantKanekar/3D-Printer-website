@@ -1,17 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-    showModelFake();
 
     const object = $(".object")
     const id = object.data("id");
     const status = object.data("status");
+    const fileUrl = object.data("file");
     const inputs = $("input");
 
     // status
     const statusNone = document.querySelector(".status_none");
     const statusTracking = document.querySelector(".status_tracking");
     const statusCompleted = document.querySelector(".status_completed");
+
+    showModel(fileUrl, function (error) {
+    }, function (sizeError) {
+    });
 
     /**
      * Handle Status

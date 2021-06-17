@@ -3,17 +3,13 @@ package com.example.features.`object`.presentation
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
-import com.example.util.FileHandler.createFile
-import com.example.util.FileHandler.deleteFile
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import kotlinx.coroutines.delay
 
 /**
  * *User can create new objects without logging in...
@@ -34,63 +30,43 @@ fun Route.getCreateObjectRoute() {
 }
 
 /**
- * * As soon as user uploads file...
- * 1) the file will be stored inside project root folder 'uploads'.
- * 2) the file is named as its unique generated Id.
- * 3) After file is uploaded, the software(octo-print or any other) will scan the design.
- * 4) If the design cannot be printed on our printer, it will show error
- * 5) If any error occurs during file upload or by the software, the uploaded file will be deleted.
+ * * all steps happen on client side except the last line.
+    User Uploads
+    1) display object in editor
+    2) check dimensions of object
+    3) if any error...(shoe error message + retry button)
+    4) else show create button
+
+    User clicks Create button
+    1) take snapshot of object
+    2) generate unique ID
+    3) upload file to firebase (design/Id)
+    4) upload image to firebase (image/Id)
+    5) send Id, filename, file link, image link here to server
  */
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {
-        val multipartData = call.receiveMultipart()
-        val partData = multipartData.readAllParts().first()
-        if (partData is PartData.FileItem) {
-            val filename = partData.originalFileName!!
-            val obj = objectRepository.createNewObject(filename)
-            try {
+        val params = call.receiveParameters()
+        val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val name = params["name"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val fileUrl = params["file_url"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val imageUrl = params["image_url"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-//                val file = createFile(obj.id)
-                // uncomment to mock file upload error
-                //throw Exception()
-//                partData.streamProvider().use { inputStream ->
-//                    file.outputStream().buffered().use { outputStream ->
-//                        inputStream.copyTo(outputStream)
-//                        partData.dispose.invoke()
-//                    }
-//                }
+        val obj = objectRepository.createObject(id, name, fileUrl, imageUrl)
 
-                // check file using octoPrint or any software
-                try {
-                    delay(1500)
-                    // uncomment to mock error from software
-                    //throw Exception()
-
-                    //get the image of the file
-                    obj.apply {
-                        image = "/static/images/3d-image.jpg"
-                    }
-
-                    //save object to user or cookie
-                    val success: Boolean
-                    val principal = call.sessions.get<UserPrincipal>()
-                    if (principal != null) {
-                        success = objectRepository.addUserObject(principal.email, obj)
-                    } else {
-                        val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                        success = cookie.objects.add(obj)
-                        call.sessions.set(cookie)
-                    }
-                    call.respond(mapOf("success" to success.toString(), "id" to obj.id))
-                    if (!success) deleteFile(obj.id)
-                } catch (e: Exception) {
-                    deleteFile(obj.id)
-                    call.respond(HttpStatusCode.InternalServerError, "Slicing error")
-                }
-            } catch (e: Exception) {
-                deleteFile(obj.id)
-                call.respond(HttpStatusCode.Conflict, "File upload not successful")
+        val success: Boolean
+        when (val principal = call.sessions.get<UserPrincipal>()) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                success = cookie.objects.add(obj)
+                call.sessions.set(cookie)
             }
+            else -> success = objectRepository.addUserObject(principal.email, obj)
+        }
+        if (success) {
+            call.respondText(obj.id)
+        } else {
+            call.respondText("error")
         }
     }
 }
