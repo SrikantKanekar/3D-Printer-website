@@ -60,36 +60,61 @@ manager.onError = function (url) {
     errorContainer.firstElementChild.textContent = "Error loading " + url;
 }
 
-// GLTF loader
-let loader = new THREE.GLTFLoader(manager);
-let gltfScene;
+let currentModel;
 
 function showModel(url, extension, error, sizeError) {
-    console.log(extension)
     updateCanvas();
-    loader.load(url, function (gltf) {
-        gltfScene = gltf.scene;
-        gltf.scene.children[0].traverse(n => {
-            if (n.isMesh) {
-                n.castShadow = true;
-                n.receiveShadow = true;
-                if (n.material.map) n.material.map.anisotropy = 1;
-            }
+
+    if (extension === "glb") {
+        new THREE.GLTFLoader(manager).load(url, function (gltf) {
+            currentModel = gltf.scene;
+            gltf.scene.children[0].traverse(n => {
+                if (n.isMesh) {
+                    n.castShadow = true;
+                    n.receiveShadow = true;
+                    if (n.material.map) n.material.map.anisotropy = 1;
+                }
+            });
+            scene.add(gltf.scene);
+            renderer.render(scene, camera);
+            const verified = verifyModel();
+            sizeError(verified);
+        }, undefined, function (e) {
+            error(e);
+            const errorContainer = document.querySelector('.canvas_error_container');
+            errorContainer.style.display = "flex";
+            errorContainer.firstElementChild.textContent = e.message;
         });
-        scene.add(gltf.scene);
-        renderer.render(scene, camera);
-        const verified = verifyModel();
-        sizeError(verified);
-    }, undefined, function (e) {
-        error(e);
-        const errorContainer = document.querySelector('.canvas_error_container');
-        errorContainer.style.display = "flex";
-        errorContainer.firstElementChild.textContent = e.message;
-    });
+    } else if (extension === "obj") {
+        new THREE.OBJLoader(manager).load(url, function (object) {
+                scene.add(object);
+            }, undefined, function (error) {
+                console.log(error);
+            }
+        );
+    } else if (extension === "STL") {
+        new THREE.STLLoader(manager).load(url, function (geometry) {
+                const material = new THREE.MeshPhysicalMaterial({
+                    color: 0xb2ffc8,
+                    metalness: .25,
+                    roughness: 0.1,
+                    transparent: true,
+                    transmission: 1.0,
+                    side: THREE.DoubleSide,
+                    clearcoat: 1.0,
+                    clearcoatRoughness: .25
+                });
+                const mesh = new THREE.Mesh(geometry, material)
+                scene.add(mesh)
+            }, undefined, (error) => {
+                console.log(error);
+            }
+        );
+    }
 }
 
 function removeModel() {
-    scene.remove(gltfScene);
+    scene.remove(currentModel);
     renderer.render(scene, camera);
 }
 

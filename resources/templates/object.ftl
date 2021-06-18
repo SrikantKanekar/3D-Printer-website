@@ -368,6 +368,8 @@
     <!-- three js -->
     <script src="https://unpkg.com/three@0.129.0/build/three.js"></script>
     <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/STLLoader.js"></script>
     <script src="https://unpkg.com/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
 
     <!-- dat gui -->
