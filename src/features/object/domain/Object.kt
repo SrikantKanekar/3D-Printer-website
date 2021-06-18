@@ -9,8 +9,9 @@ import kotlinx.serialization.Serializable
 data class Object(
     val id: String,
     var name: String,
-    var fileUrl: String,
-    var imageUrl: String,
+    val fileUrl: String,
+    val fileExtension: String,
+    val imageUrl: String,
     var quantity: Int = 1,
     var status: ObjectStatus = NONE,
     var printingStatus: PrintingStatus = PENDING,

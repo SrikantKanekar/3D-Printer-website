@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
-
     const object = $(".object")
     const id = object.data("id");
     const status = object.data("status");
     const fileUrl = object.data("file");
+    const fileExtension = object.data("extension");
     const inputs = $("input");
 
     // status
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusTracking = document.querySelector(".status_tracking");
     const statusCompleted = document.querySelector(".status_completed");
 
-    showModel(fileUrl,
+    showModel(fileUrl, fileExtension,
         function (error) {
             //Nothing
         }, function (sizeError) {

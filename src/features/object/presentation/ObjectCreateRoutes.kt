@@ -51,8 +51,9 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
         val name = params["name"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val fileUrl = params["file_url"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val imageUrl = params["image_url"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+        val fileExtension = params["file_extension"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-        val obj = objectRepository.createObject(id, name, fileUrl, imageUrl)
+        val obj = objectRepository.createObject(id, name, fileUrl, imageUrl, fileExtension)
 
         val success: Boolean
         when (val principal = call.sessions.get<UserPrincipal>()) {

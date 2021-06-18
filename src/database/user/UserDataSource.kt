@@ -17,6 +17,7 @@ interface UserDataSource {
         id: String,
         name: String,
         fileUrl: String,
-        imageUrl: String
+        imageUrl: String,
+        fileExtension: String
     ): Object
 }

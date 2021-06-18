@@ -25,7 +25,13 @@ class UserDataSourceImpl(
         return users.updateOne(User::email eq user.email, user).wasAcknowledged()
     }
 
-    override suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String): Object {
-        return Object(id = id, name = name, fileUrl = fileUrl, imageUrl = imageUrl)
+    override suspend fun createObject(
+        id: String,
+        name: String,
+        fileUrl: String,
+        imageUrl: String,
+        fileExtension: String
+    ): Object {
+        return Object(id = id, name = name, fileUrl = fileUrl, fileExtension = fileExtension, imageUrl = imageUrl)
     }
 }

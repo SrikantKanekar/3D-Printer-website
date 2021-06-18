@@ -4,7 +4,7 @@
 
     <@header.header user="${user}" title="Object" />
 
-    <div class="object" data-id="${object.id}" data-status="${object.status}" data-file="${object.fileUrl}">
+    <div class="object" data-id="${object.id}" data-status="${object.status}" data-file="${object.fileUrl}" data-extension="${object.fileExtension}">
         <div class="container">
 
             <#if object.status == "NONE" || object.status == "CART">

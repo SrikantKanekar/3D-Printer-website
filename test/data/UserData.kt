@@ -36,6 +36,7 @@ val testUser = User(
                 id = TEST_USER_OBJECT,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
+                fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = NONE,
             ),
@@ -43,6 +44,7 @@ val testUser = User(
                 id = TEST_CART_OBJECT1,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
+                fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = CART
             ),
@@ -50,6 +52,7 @@ val testUser = User(
                 id = TEST_CART_OBJECT2,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
+                fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = CART
             ),
@@ -57,6 +60,7 @@ val testUser = User(
                 id = TEST_TRACKING_OBJECT,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
+                fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = TRACKING
             ),
@@ -64,6 +68,7 @@ val testUser = User(
                 id = TEST_COMPLETED_OBJECT,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
+                fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = COMPLETED
             )
@@ -101,6 +106,7 @@ val testUsers = List(10) {
                     id = UUID.randomUUID().toString(),
                     name = UUID.randomUUID().toString(),
                     fileUrl = "",
+                    fileExtension = "",
                     imageUrl = UUID.randomUUID().toString()
                 )
             }

@@ -12,8 +12,8 @@ import kotlin.random.Random
 class ObjectRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String): Object {
-        return userDataSource.createObject(id, name, fileUrl, imageUrl)
+    suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String, fileExtension: String): Object {
+        return userDataSource.createObject(id, name, fileUrl, imageUrl, fileExtension)
     }
 
     suspend fun addUserObject(email: String, obj: Object): Boolean {

@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.style.display = "block";
 
         const url = URL.createObjectURL(file);
-        showModel(url,
+        showModel(url, getFileExtension(),
             function (error) {
                 createButton.parentElement.style.display = "none";
             }, function (sizeError) {
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     createButton.addEventListener('click', function (e) {
         e.preventDefault();
 
-        if (canvasName.textContent !== ""){
+        if (canvasName.textContent !== "") {
             uploadingFile();
             const image = takeSnapshot();
             hideCanvas();
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     updateProgress(progress);
                 }, function (imageUrl) {
                     uploadingDone();
-                    uploadObject(id, canvasName.textContent, fileUrl, imageUrl);
+                    uploadObject(id, canvasName.textContent, fileUrl, imageUrl, getFileExtension());
                 });
             });
         } else {
@@ -158,14 +158,20 @@ document.addEventListener('DOMContentLoaded', function () {
         return Date.now().toString(36) + Math.random().toString(36).substr(2);
     }
 
-    function uploadObject(id, name, fileUrl, imageUrl) {
+    function getFileExtension() {
+        let lastDot = file.name.lastIndexOf('.');
+        return file.name.substring(lastDot + 1);
+    }
+
+    function uploadObject(id, name, fileUrl, imageUrl, fileExtension) {
         $.post(
             "/object/create",
             {
                 id: id,
                 name: name,
                 file_url: fileUrl,
-                image_url: imageUrl
+                image_url: imageUrl,
+                file_extension: fileExtension
             },
             function (data) {
                 uploading = false;

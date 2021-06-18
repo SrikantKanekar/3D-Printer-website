@@ -27,7 +27,7 @@ class FakeUserDataSourceImpl(
         return true
     }
 
-    override suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String): Object {
-        return Object(id = TEST_CREATED_OBJECT, name = name, fileUrl = fileUrl, imageUrl = imageUrl)
+    override suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String, fileExtension: String): Object {
+        return Object(id = TEST_CREATED_OBJECT, name = name, fileUrl = fileUrl, fileExtension = fileExtension, imageUrl = imageUrl)
     }
 }

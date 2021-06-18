@@ -64,7 +64,8 @@ manager.onError = function (url) {
 let loader = new THREE.GLTFLoader(manager);
 let gltfScene;
 
-function showModel(url, error, sizeError) {
+function showModel(url, extension, error, sizeError) {
+    console.log(extension)
     updateCanvas();
     loader.load(url, function (gltf) {
         gltfScene = gltf.scene;
