@@ -39,6 +39,11 @@
         <div class="canvas">
             <div class="canvas_container">
                 <canvas id="canvas"></canvas>
+                <div id="canvasLoader" class="canvas_overlay">
+                    <div class="spinner_container">
+                        <span class="spinner"></span>
+                    </div>
+                </div>
             </div>
             <div class="canvas_info">
                 <div class="canvas_name" contenteditable="true"></div>

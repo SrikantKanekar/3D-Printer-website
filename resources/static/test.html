@@ -6,23 +6,7 @@
         <style>
             body {
                 margin: 50px;
-                height: 100vh;
-            }
-
-            .canvas_container {
-                width: 100%;
-                height: calc(100vh - 180px);
-            }
-
-            .canvas_container canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #gui {
-                position: absolute;
-                top: 0;
-                right: 0;
+                min-height: 100vh;
             }
         </style>
         <!-- three js -->
@@ -34,10 +18,20 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.js"
                 integrity="sha512-u+vtyZDzyd0zgAEffKfoNx2BnCahAOBBYvzGu6vma1B18zQ6lEGF3F6dAFvqaxDoIU/GZRxcXV5oq23OIrkQwg=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script src="plugins/jquery/jquery-3.2.1.min.js"></script>
+        <link rel="stylesheet" href="css/base.css">
+        <link rel="stylesheet" href="css/canvas.css">
     </head>
     <body>
+
         <div class="canvas_container">
             <canvas id="canvas"></canvas>
+            <div id="canvasLoader" class="canvas_overlay">
+                <div class="spinner_container">
+                    <span class="spinner"></span>
+                </div>
+            </div>
         </div>
         <script>
 
@@ -70,7 +64,8 @@
             // renderer
             const renderer = new THREE.WebGLRenderer({
                 canvas: canvas,
-                antialias: true
+                antialias: true,
+                preserveDrawingBuffer: true
             });
             renderer.toneMapping = THREE.ReinhardToneMapping;
             renderer.toneMappingExposure = 2.3;
@@ -90,15 +85,26 @@
             spotLight.shadow.mapSize.height = 1024 * 4;
             scene.add(spotLight);
 
+            const manager = new THREE.LoadingManager();
+            manager.onLoad = function () {
+                $('#canvasLoader').delay(100).fadeOut('slow', function () {
+                    $(this).remove();
+                });
+            }
+
             // GLTF loader
-            let loader = new THREE.GLTFLoader();
+            let loader = new THREE.GLTFLoader(manager);
             let gltfScene;
 
-            showModel();
+            showModel('images/scene.glb', function (error) {
+                console.log(error);
+            }, function (sizeError) {
+                if (!sizeError) console.log("size is too large");
+            });
 
-            function showModel() {
+            function showModel(url, error, sizeError) {
                 updateCanvas();
-                loader.load('images/scene.glb', function (gltf) {
+                loader.load(url, function (gltf) {
                     gltfScene = gltf.scene;
                     gltf.scene.children[0].traverse(n => {
                         if (n.isMesh) {
@@ -109,8 +115,10 @@
                     });
                     scene.add(gltf.scene);
                     renderer.render(scene, camera);
-                }, undefined, function (error) {
-                    console.error(error);
+                    const verified = verifyModel();
+                    sizeError(verified);
+                }, undefined, function (e) {
+                    error(e);
                 });
             }
 
@@ -136,9 +144,10 @@
                 // Update renderer
                 renderer.setSize(sizes.width, sizes.height);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.render(scene, camera)
             }
 
-
+            // render
             function render() {
                 renderer.render(scene, camera);
                 controls.update();
@@ -155,6 +164,45 @@
             cameraFolder.add(camera.position, "y", 0, 10, 0.01).onChange(render).listen()
             cameraFolder.add(camera.position, "z", 0, 10, 0.01).onChange(render).listen()
 
+
+            function verifyModel() {
+                return true;
+            }
+
+            // function takeSnapshot(q) {
+            //     const temporaryCanvas = document.createElement('canvas');
+            //     let context = temporaryCanvas.getContext('2d');
+            //
+            //     let cWidth = canvas.width;
+            //     let cHeight = canvas.height;
+            //     let smaller;
+            //     let larger;
+            //
+            //     if (cWidth < cHeight) {
+            //         smaller = cWidth;
+            //         larger = cHeight;
+            //     } else {
+            //         smaller = cHeight;
+            //         larger = cWidth;
+            //     }
+            //
+            //     let newSize = smaller / q;
+            //     temporaryCanvas.width = newSize;
+            //     temporaryCanvas.height = newSize;
+            //
+            //     let x = larger / 2 - smaller / 2;
+            //
+            //     if (cWidth < cHeight) {
+            //         context.drawImage(canvas, 0, x, smaller, smaller, 0, 0, newSize, newSize);
+            //     } else {
+            //         context.drawImage(canvas, x, 0, smaller, smaller, 0, 0, newSize, newSize);
+            //     }
+            //     return temporaryCanvas.toDataURL("image/png");
+            // }
+
+            function takeSnapshot() {
+                return canvas.toDataURL("image/png");
+            }
         </script>
     </body>
 </html>

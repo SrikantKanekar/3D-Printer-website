@@ -48,8 +48,15 @@ spotLight.shadow.mapSize.width = 1024 * 4;
 spotLight.shadow.mapSize.height = 1024 * 4;
 scene.add(spotLight);
 
+const manager = new THREE.LoadingManager();
+manager.onLoad = function () {
+    $('#canvasLoader').delay(100).fadeOut('slow', function () {
+        $(this).remove();
+    });
+}
+
 // GLTF loader
-let loader = new THREE.GLTFLoader();
+            let loader = new THREE.GLTFLoader(manager);
 let gltfScene;
 
 function showModel(url, error, sizeError) {

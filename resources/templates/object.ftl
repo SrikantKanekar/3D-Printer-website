@@ -14,6 +14,11 @@
                     <div class="col-lg-6">
                         <div class="canvas_container">
                             <canvas id="canvas"></canvas>
+                            <div id="canvasLoader" class="canvas_overlay">
+                                <div class="spinner_container">
+                                    <span class="spinner"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -94,6 +99,11 @@
                     <div class="col-lg-6">
                         <div class="canvas_container">
                             <canvas id="canvas"></canvas>
+                            <div id="canvasLoader" class="canvas_overlay">
+                                <div class="spinner_container">
+                                    <span class="spinner"></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

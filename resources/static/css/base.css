@@ -616,6 +616,14 @@ section {
     background: var(--background);
 }
 
+.canvas_overlay {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+}
+
 .spinner_overlay {
     position: fixed;
     top: 0;

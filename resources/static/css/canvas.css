@@ -1,0 +1,25 @@
+.canvas_container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 180px);
+}
+
+.canvas_container canvas {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.canvas_overlay {
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+}
+
+#gui{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
