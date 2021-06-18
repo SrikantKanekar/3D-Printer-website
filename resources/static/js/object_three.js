@@ -87,6 +87,7 @@ function showModel(url, extension, error, sizeError) {
         });
     } else if (extension === "obj") {
         new THREE.OBJLoader(manager).load(url, function (object) {
+                currentModel = object;
                 scene.add(object);
             }, undefined, function (error) {
                 console.log(error);
@@ -105,6 +106,7 @@ function showModel(url, extension, error, sizeError) {
                     clearcoatRoughness: .25
                 });
                 const mesh = new THREE.Mesh(geometry, material)
+                currentModel = mesh;
                 scene.add(mesh)
             }, undefined, (error) => {
                 console.log(error);
