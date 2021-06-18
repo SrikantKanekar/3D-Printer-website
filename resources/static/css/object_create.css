@@ -208,7 +208,7 @@
     outline: 0 solid transparent;
 }
 
-.canvas_error {
+.canvas_size_error {
     display: none;
     font-weight: 450;
     color: var(--error);

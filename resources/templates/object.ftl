@@ -19,6 +19,9 @@
                                     <span class="spinner"></span>
                                 </div>
                             </div>
+                            <div class="canvas_error_container">
+                                <div></div>
+                            </div>
                         </div>
                     </div>
 
@@ -103,6 +106,9 @@
                                 <div class="spinner_container">
                                     <span class="spinner"></span>
                                 </div>
+                            </div>
+                            <div class="canvas_error_container">
+                                <div></div>
                             </div>
                         </div>
                     </div>

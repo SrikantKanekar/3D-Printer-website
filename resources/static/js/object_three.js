@@ -54,9 +54,14 @@ manager.onLoad = function () {
         $(this).remove();
     });
 }
+manager.onError = function (url) {
+    const errorContainer = document.querySelector('.canvas_error_container');
+    errorContainer.style.display = "flex";
+    errorContainer.firstElementChild.textContent = "Error loading " + url;
+}
 
 // GLTF loader
-            let loader = new THREE.GLTFLoader(manager);
+let loader = new THREE.GLTFLoader(manager);
 let gltfScene;
 
 function showModel(url, error, sizeError) {
@@ -76,6 +81,9 @@ function showModel(url, error, sizeError) {
         sizeError(verified);
     }, undefined, function (e) {
         error(e);
+        const errorContainer = document.querySelector('.canvas_error_container');
+        errorContainer.style.display = "flex";
+        errorContainer.firstElementChild.textContent = e.message;
     });
 }
 

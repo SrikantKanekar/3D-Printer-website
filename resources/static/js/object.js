@@ -13,9 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusTracking = document.querySelector(".status_tracking");
     const statusCompleted = document.querySelector(".status_completed");
 
-    showModel(fileUrl, function (error) {
-    }, function (sizeError) {
-    });
+    showModel(fileUrl,
+        function (error) {
+            //Nothing
+        }, function (sizeError) {
+            //Nothing
+        }
+    );
 
     /**
      * Handle Status

@@ -44,10 +44,13 @@
                         <span class="spinner"></span>
                     </div>
                 </div>
+                <div class="canvas_error_container">
+                    <div></div>
+                </div>
             </div>
             <div class="canvas_info">
                 <div class="canvas_name" contenteditable="true"></div>
-                <div class="canvas_error"></div>
+                <div class="canvas_size_error"></div>
             </div>
             <div class="canvas_buttons">
                 <div class="button">

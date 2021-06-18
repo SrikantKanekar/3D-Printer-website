@@ -32,6 +32,9 @@
                     <span class="spinner"></span>
                 </div>
             </div>
+            <div class="canvas_error_container">
+                <div>Error</div>
+            </div>
         </div>
         <script>
 
@@ -91,6 +94,11 @@
                     $(this).remove();
                 });
             }
+            manager.onError = function (url) {
+                const errorContainer = document.querySelector('.canvas_error_container');
+                errorContainer.style.display = "flex";
+                errorContainer.firstElementChild.textContent = "Error loading " + url;
+            }
 
             // GLTF loader
             let loader = new THREE.GLTFLoader(manager);
@@ -119,6 +127,9 @@
                     sizeError(verified);
                 }, undefined, function (e) {
                     error(e);
+                    const errorContainer = document.querySelector('.canvas_error_container');
+                    errorContainer.style.display = "flex";
+                    errorContainer.firstElementChild.textContent = e.message;
                 });
             }
 

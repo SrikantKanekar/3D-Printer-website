@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const canvas = document.querySelector(".canvas");
     const canvasName = document.querySelector(".canvas_name");
-    const canvasError = document.querySelector(".canvas_error");
+    const canvasSizeError = document.querySelector(".canvas_size_error");
     const createButton = document.querySelector("#create_button");
     const changeButton = document.querySelector("#change_button");
 
@@ -102,15 +102,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = URL.createObjectURL(file);
         showModel(url,
             function (error) {
-                console.log(error);
                 createButton.parentElement.style.display = "none";
-                canvasError.style.display = "block";
-                canvasError.textContent = "Error";
             }, function (sizeError) {
                 if (!sizeError) {
                     createButton.parentElement.style.display = "none";
-                    canvasError.style.display = "block";
-                    canvasError.textContent = "Model size is too large";
+                    canvasSizeError.style.display = "block";
+                    canvasSizeError.textContent = "Model size is too large";
                 }
             });
         URL.revokeObjectURL(url);
@@ -123,7 +120,8 @@ document.addEventListener('DOMContentLoaded', function () {
         box.reset();
         removeModel();
         createButton.parentElement.style.display = "block";
-        canvasError.style.display = "none";
+        canvasSizeError.style.display = "none";
+        document.querySelector('.canvas_error_container').style.display = "none";
     }
 
     changeButton.addEventListener('click', function (e) {
