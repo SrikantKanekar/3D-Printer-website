@@ -46,7 +46,7 @@
 
                 <@footer.footer/>
 
-                <div class="spinner_overlay">
+                <div id="spinner" class="spinner_overlay">
                     <div class="spinner_container">
                         <span class="spinner"></span>
                     </div>

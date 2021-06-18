@@ -41,7 +41,7 @@
                 <canvas id="canvas"></canvas>
             </div>
             <div class="canvas_info">
-                <div class="canvas_name"></div>
+                <div class="canvas_name" contenteditable="true"></div>
                 <div class="canvas_error"></div>
             </div>
             <div class="canvas_buttons">

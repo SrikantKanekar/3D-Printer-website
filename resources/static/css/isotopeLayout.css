@@ -132,7 +132,6 @@
     font-size: 18px;
     font-weight: 500;
     color: var(--on-background);
-    line-height: 1.1;
 }
 
 .product_title a:hover {

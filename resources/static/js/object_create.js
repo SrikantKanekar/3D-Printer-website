@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function uploadingFile() {
         uploading = true;
-        filename.textContent = canvasName.textContent;
+        filename.textContent = file.name;
         box.classList.add("is_uploading_file");
         box.classList.remove("is_error");
     }
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function showCanvas() {
-        canvasName.textContent = file.name;
+        canvasName.textContent = file.name.replace(/\.[^/.]+$/, "");
         box.style.display = "none";
         canvas.style.display = "block";
 
@@ -134,22 +134,26 @@ document.addEventListener('DOMContentLoaded', function () {
     createButton.addEventListener('click', function (e) {
         e.preventDefault();
 
-        uploadingFile();
-        const image = takeSnapshot();
-        hideCanvas();
-        const id = generateId();
+        if (canvasName.textContent !== ""){
+            uploadingFile();
+            const image = takeSnapshot();
+            hideCanvas();
+            const id = generateId();
 
-        uploadFirebaseFile(file, file.name, id, function (progress) {
-            updateProgress(progress);
-        }, function (fileUrl) {
-            uploadingImage();
-            uploadFirebaseImage(image, id, function (progress) {
+            uploadFirebaseFile(file, file.name, id, function (progress) {
                 updateProgress(progress);
-            }, function (imageUrl) {
-                uploadingDone();
-                uploadObject(id, canvasName.textContent, fileUrl, imageUrl);
+            }, function (fileUrl) {
+                uploadingImage();
+                uploadFirebaseImage(image, id, function (progress) {
+                    updateProgress(progress);
+                }, function (imageUrl) {
+                    uploadingDone();
+                    uploadObject(id, canvasName.textContent, fileUrl, imageUrl);
+                });
             });
-        });
+        } else {
+            showAlert("Name cannot be enpty", "alert-danger");
+        }
     });
 
     function generateId() {

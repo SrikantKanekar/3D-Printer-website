@@ -605,8 +605,17 @@ section {
 }
 
 /*********************************
-6. Spinner
+6. Preloader and Spinner
 *********************************/
+.preloader_overlay {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background: var(--background);
+}
+
 .spinner_overlay {
     position: fixed;
     top: 0;

@@ -119,17 +119,27 @@ document.addEventListener('DOMContentLoaded', function () {
      * 4. Ajax call spinner
      */
     $(document).ajaxSend(function () {
-        $(".spinner_overlay").fadeIn(300);
+        $("#spinner").fadeIn(300);
     });
 
     $(document).ajaxComplete(function () {
-        $(".spinner_overlay").fadeOut(300);
+        $("#spinner").fadeOut(300);
     });
 
     $(document).ajaxError(function (event, xhr, setting, error) {
         showAlert("an error occurred", "alert-danger");
         console.log(error);
     });
+});
+
+// Preloader
+$(window).on('load', function() {
+    const preloader = document.querySelector('#preloader');
+    if (document.body.contains(preloader)) {
+        $(preloader).delay(100).fadeOut('slow', function() {
+            $(this).remove();
+        });
+    }
 });
 
 /**

@@ -120,7 +120,6 @@ function verifyModel() {
 }
 
 // function takeSnapshot(q) {
-//
 //     const temporaryCanvas = document.createElement('canvas');
 //     let context = temporaryCanvas.getContext('2d');
 //
