@@ -44,3 +44,8 @@
     top: 0;
     right: 0;
 }
+
+#gui input {
+    height: 100%;
+    padding-left: 0;
+}
