@@ -46,12 +46,24 @@ function uploadFirebaseImage(image, id, progress, downloadURL) {
     );
 }
 
-function deleteFirebaseFolder(id) {
-    // firebase dont allow to delete folder
-    // const deleteTask = storageRef.child(id);
-    // deleteTask.delete().then(() => {
-    //     console.log("deleted")
-    // }).catch((error) => {
-    //     console.log(error)
-    // });
+function deleteFirebaseFolder(id, proceed) {
+    let deletedOne = false;
+
+    const deleteTask = storageRef.child(id);
+    deleteTask.listAll().then(dir => {
+        dir.items.forEach(fileRef => {
+            const dirRef = firebase.storage().ref(fileRef.fullPath);
+            dirRef.getDownloadURL().then(function(url) {
+                const imgRef = firebase.storage().refFromURL(url);
+                imgRef.delete().then(function() {
+                    if (deletedOne) proceed();
+                    deletedOne = true;
+                }).catch(function(error) {
+                    proceed()
+                });
+            });
+        });
+    }).catch(error => {
+        proceed()
+    });
 }

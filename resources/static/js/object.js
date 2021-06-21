@@ -152,9 +152,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const url = "/object/delete";
             $.post(url, {id: id}, function (data) {
                 if (data === true) {
-                    window.location.href = "/objects";
                     showAlert("Deleted Object", "alert-success");
-                    deleteFirebaseFolder(id);
+                    deleteFirebaseFolder(id, function () {
+                        window.location.href = "/objects";
+                    });
                 } else {
                     showAlert("Error in deleting object", "alert-danger");
                 }
