@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const statusCompleted = document.querySelector(".status_completed");
 
     showModel(fileUrl, fileExtension,
-        function (error) {
+        function () {
             //Nothing
-        }, function (sizeError) {
+        }, function () {
             //Nothing
         }
     );

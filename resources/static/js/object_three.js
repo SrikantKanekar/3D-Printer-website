@@ -77,10 +77,10 @@ function showModel(url, extension, error, sizeError) {
     updateCanvasDimension();
     if (extension === "glb") {
         new THREE.GLTFLoader(manager).load(url, function (gltf) {
-            setObject(gltf.scene)
-            sizeError(verifyModel());
+            let boxError = setObject(gltf.scene)
+            if (boxError) sizeError();
         }, undefined, function (e) {
-            error(e);
+            error();
             showCanvasError(e.message)
         });
     } else if (extension === "obj") {
@@ -88,20 +88,20 @@ function showModel(url, extension, error, sizeError) {
                 object.traverse(function (child) {
                     if (child instanceof THREE.Mesh) child.material = material
                 });
-                setObject(object)
-                sizeError(verifyModel());
+                let boxError = setObject(object)
+                if (boxError) sizeError();
             }, undefined, function (e) {
-                error(e);
+                error();
                 showCanvasError(e.message)
             }
         );
     } else if (extension === "stl") {
         new THREE.STLLoader(manager).load(url, function (geometry) {
                 const mesh = new THREE.Mesh(geometry, material)
-                setObject(mesh);
-                sizeError(verifyModel());
+                let boxError = setObject(mesh);
+                if (boxError) sizeError();
             }, undefined, (e) => {
-                error(e);
+                error();
                 showCanvasError(e.message)
             }
         );
@@ -111,7 +111,6 @@ function showModel(url, extension, error, sizeError) {
 function setObject(object) {
     currentModel = object;
     const box = new THREE.Box3().setFromObject(object);
-    console.log(box.getSize())
 
     // zoom camera according to object size
     const cameraPosition = Math.max(
@@ -131,6 +130,10 @@ function setObject(object) {
 
     scene.add(object);
     renderer.render(scene, camera);
+
+    // check dimensions of object
+    const boxSize = box.getSize();
+    if (boxSize.x > 200 || boxSize.y > 200 || boxSize.z > 250) return true
 }
 
 function removeModel() {
@@ -192,12 +195,6 @@ function initGui() {
         material.color.setHex(Number(data.materialColor.toString().replace('#', '0x')))
         render()
     });
-}
-
-// verify if the model dimensions can be printed our printer
-function verifyModel() {
-    // TODO()
-    return true;
 }
 
 function takeSnapshot() {

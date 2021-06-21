@@ -101,14 +101,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const url = URL.createObjectURL(file);
         showModel(url, getFileExtension(),
-            function (error) {
+            function () {
                 createButton.parentElement.style.display = "none";
-            }, function (sizeError) {
-                if (!sizeError) {
-                    createButton.parentElement.style.display = "none";
-                    canvasSizeError.style.display = "block";
-                    canvasSizeError.textContent = "Model size is too large";
-                }
+            }, function () {
+                createButton.parentElement.style.display = "none";
+                canvasSizeError.style.display = "block";
+                canvasSizeError.textContent = "Maximum dimension should be less than 200x200x250 mm";
             });
         URL.revokeObjectURL(url);
     }
