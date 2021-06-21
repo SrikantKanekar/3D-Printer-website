@@ -1,4 +1,4 @@
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyBTDlOidvCChxu7jqKPUOop-blmW-NJXJU",
     authDomain: "design-server-312705.firebaseapp.com",
     projectId: "design-server-312705",
@@ -8,14 +8,10 @@ var firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-var storageRef = firebase.storage().ref();
+const storageRef = firebase.storage().ref();
 
 function uploadFirebaseFile(file, filename, id, progress, downloadURL) {
-    var metadata = {
-        contentType: 'image/jpeg'
-    };
-
-    var uploadTask = storageRef.child(id + '/' + filename).put(file);
+    const uploadTask = storageRef.child(id + '/' + filename).put(file);
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
@@ -53,7 +49,7 @@ function uploadFirebaseFile(file, filename, id, progress, downloadURL) {
 }
 
 function uploadFirebaseImage(image, id, progress, downloadURL) {
-    var uploadTask = storageRef.child(id + '/image').putString(image, 'data_url');
+    const uploadTask = storageRef.child(id + '/image').putString(image, 'data_url');
 
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
         (snapshot) => {
@@ -88,4 +84,14 @@ function uploadFirebaseImage(image, id, progress, downloadURL) {
             });
         }
     );
+}
+
+function deleteFirebaseFolder(id) {
+    // firebase dont allow to delete folder
+    // const deleteTask = storageRef.child(id);
+    // deleteTask.delete().then(() => {
+    //     console.log("deleted")
+    // }).catch((error) => {
+    //     console.log(error)
+    // });
 }

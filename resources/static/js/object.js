@@ -154,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data === true) {
                     window.location.href = "/objects";
                     showAlert("Deleted Object", "alert-success");
+                    deleteFirebaseFolder(id);
                 } else {
                     showAlert("Error in deleting object", "alert-danger");
                 }
