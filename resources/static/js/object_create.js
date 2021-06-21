@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function getFileExtension() {
         let lastDot = file.name.lastIndexOf('.');
-        return file.name.substring(lastDot + 1);
+        return file.name.substring(lastDot + 1).toLowerCase();
     }
 
     function uploadObject(id, name, fileUrl, imageUrl, fileExtension) {

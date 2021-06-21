@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const id = object.data("id");
     const status = object.data("status");
     const fileUrl = object.data("file");
-    const fileExtension = object.data("extension");
+    const fileExtension = object.data("extension").toLowerCase();
     const inputs = $("input");
 
     // status

@@ -95,7 +95,7 @@ function showModel(url, extension, error, sizeError) {
                 showCanvasError(e.message)
             }
         );
-    } else if (extension === "STL") {
+    } else if (extension === "stl") {
         new THREE.STLLoader(manager).load(url, function (geometry) {
                 const mesh = new THREE.Mesh(geometry, material)
                 setObject(mesh);
