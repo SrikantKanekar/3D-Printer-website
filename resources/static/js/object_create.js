@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         } else {
-            showAlert("Name cannot be enpty", "alert-danger");
+            showAlert("Name cannot be empty", "alert-danger");
         }
     });
 

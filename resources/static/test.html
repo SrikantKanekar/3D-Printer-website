@@ -159,6 +159,7 @@
             function setObject(object) {
                 currentModel = object;
                 const box = new THREE.Box3().setFromObject(object);
+                console.log(box.getSize())
 
                 // zoom camera according to object size
                 const cameraPosition = Math.max(
@@ -248,40 +249,25 @@
             }
 
             function takeSnapshot() {
-                return canvas.toDataURL("image/png");
-            }
+                const temporaryCanvas = document.createElement('canvas');
+                let context = temporaryCanvas.getContext('2d');
 
-            // not working for some reason
-            // function takeSnapshot(q) {
-            //     const temporaryCanvas = document.createElement('canvas');
-            //     let context = temporaryCanvas.getContext('2d');
-            //
-            //     let cWidth = canvas.width;
-            //     let cHeight = canvas.height;
-            //     let smaller;
-            //     let larger;
-            //
-            //     if (cWidth < cHeight) {
-            //         smaller = cWidth;
-            //         larger = cHeight;
-            //     } else {
-            //         smaller = cHeight;
-            //         larger = cWidth;
-            //     }
-            //
-            //     let newSize = smaller / q;
-            //     temporaryCanvas.width = newSize;
-            //     temporaryCanvas.height = newSize;
-            //
-            //     let x = larger / 2 - smaller / 2;
-            //
-            //     if (cWidth < cHeight) {
-            //         context.drawImage(canvas, 0, x, smaller, smaller, 0, 0, newSize, newSize);
-            //     } else {
-            //         context.drawImage(canvas, x, 0, smaller, smaller, 0, 0, newSize, newSize);
-            //     }
-            //     return temporaryCanvas.toDataURL("image/png");
-            // }
+                let cWidth = canvas.width;
+                let cHeight = canvas.height;
+
+                if (cWidth < cHeight) {
+                    temporaryCanvas.width = cWidth;
+                    temporaryCanvas.height = cWidth;
+                    let x = cHeight / 2 - cWidth / 2;
+                    context.drawImage(canvas, 0, x, cWidth, cWidth, 0, 0, cWidth, cWidth);
+                } else {
+                    temporaryCanvas.width = cHeight;
+                    temporaryCanvas.height = cHeight;
+                    let x = cWidth / 2 - cHeight / 2;
+                    context.drawImage(canvas, x, 0, cHeight, cHeight, 0, 0, cHeight, cHeight);
+                }
+                return temporaryCanvas.toDataURL("image/png");
+            }
         </script>
     </body>
 </html>
