@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = "/objects";
                     showAlert("Deleted Object", "alert-success");
                 } else {
-                    showAlert("error in deleting object", "alert-danger");
+                    showAlert("Error in deleting object", "alert-danger");
                 }
             });
         });

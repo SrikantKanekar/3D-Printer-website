@@ -46,7 +46,6 @@ class ObjectsRouteTest : KoinTest {
                     runBlocking {
                         val cookie = response.call.sessions.get<ObjectsCookie>()!!
                         assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
-                        assertFileNull(TEST_CREATED_OBJECT)
                         assertEquals(HttpStatusCode.Found, response.status())
                     }
                 }
@@ -63,7 +62,6 @@ class ObjectsRouteTest : KoinTest {
                     runBlocking {
                         val obj = objectRepository.getUserObject(TEST_USER_EMAIL, TEST_CREATED_OBJECT)
                         assertNull(obj)
-                        assertFileNull(TEST_CREATED_OBJECT)
                         assertEquals(HttpStatusCode.Found, response.status())
                     }
                 }

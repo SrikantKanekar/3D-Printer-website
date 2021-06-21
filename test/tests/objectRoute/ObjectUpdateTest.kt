@@ -30,8 +30,6 @@ class ObjectUpdateTest : KoinTest {
                 `create object before user login`()
                 handleRequest(HttpMethod.Get, "/object/$TEST_CREATED_OBJECT").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
-                    assertTrue(readFileContent(TEST_CREATED_OBJECT).contentEquals(Constants.TEST_UPLOAD_FILE_CONTENT))
-                    assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
                 }
                 handleRequest(HttpMethod.Get, "/object/invalid-object-id").apply {
                     assertEquals(HttpStatusCode.NotFound, response.status())

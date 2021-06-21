@@ -6,7 +6,6 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.data.ObjectsRepository
 import com.example.features.objects.domain.ObjectsCookie
-import com.example.util.FileHandler
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
@@ -116,22 +115,19 @@ fun Route.deleteObject(objectRepository: ObjectRepository) {
         val param = call.receiveParameters()
         val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
 
-        var deleteFileResult = false
-
+        var deleted: Boolean
         val principal = call.sessions.get<UserPrincipal>()
         when (principal) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                val deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
+                deleted = cookie.objects.removeIf { it.id == id && it.status == NONE }
                 call.sessions.set(cookie)
-                if (deleted) deleteFileResult = FileHandler.deleteFile(id)
             }
             else -> {
-                val deleted = objectRepository.deleteUserObject(principal.email, id)
-                if (deleted) deleteFileResult = FileHandler.deleteFile(id)
+                deleted = objectRepository.deleteUserObject(principal.email, id)
             }
         }
-        call.respond(deleteFileResult)
+        call.respond(deleted)
     }
 }
 

@@ -73,7 +73,6 @@ class AuthRouteTest : KoinTest {
                         .objects
                         .find { it.id == TEST_CREATED_OBJECT }!!
                     assertEquals(TEST_FILE_UPLOAD_NAME, obj.name)
-                    assertFileNotNullAndDelete(obj.id)
                 }
             }
         }

@@ -14,8 +14,8 @@ import io.ktor.sessions.*
 /**
  * *User can create new objects without logging in...
  * 1) if user is not logged in, newly created objects will be stored in 'OBJECTS_COOKIE'.
- * 2) users will be prompted to login when user tried to add object to Cart.
- * 3) after logging in, all the cookie objects will be synced with account object.
+ * 2) users will be prompted to login when user tries to add object to the Cart.
+ * 3) after logging in, all the cookie objects will be synced with account objects.
  */
 fun Route.getCreateObjectRoute() {
     get("/object/create") {
@@ -30,19 +30,19 @@ fun Route.getCreateObjectRoute() {
 }
 
 /**
- * * all steps happen on client side except the last line.
-    User Uploads
-    1) display object in editor
-    2) check dimensions of object
-    3) if any error...(shoe error message + retry button)
+ * * All steps happens on the client side except the last one
+    User Uploads object...
+    1) display object in the editor
+    2) check dimensions of object TODO()
+    3) if any error...(show error message and retry button)
     4) else show create button
 
     User clicks Create button
-    1) take snapshot of object
-    2) generate unique ID
-    3) upload file to firebase (design/Id)
-    4) upload image to firebase (image/Id)
-    5) send Id, filename, file link, image link here to server
+    1) takes snapshot of object
+    2) generate unique ID for object
+    3) upload file to firebase (Id/filename)
+    4) upload image to firebase (Id/image.png)
+    5) send Id, filename, extension, file link, image link here to the server
  */
 fun Route.createObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {

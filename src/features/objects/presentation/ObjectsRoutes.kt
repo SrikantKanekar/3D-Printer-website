@@ -4,7 +4,6 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.data.ObjectsRepository
 import com.example.features.objects.domain.ObjectsCookie
-import com.example.util.FileHandler.deleteFile
 import io.ktor.application.*
 import io.ktor.freemarker.*
 import io.ktor.http.*

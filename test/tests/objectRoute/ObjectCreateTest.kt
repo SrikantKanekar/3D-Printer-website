@@ -2,17 +2,16 @@ package tests.objectRoute
 
 import com.example.features.account.data.AccountRepository
 import com.example.module
-import data.Constants.TEST_CREATED_OBJECT
-import data.Constants.TEST_UPLOAD_FILE_CONTENT
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.*
+import tests.`create object after user login`
+import tests.`create object before user login`
+import tests.runWithTestUser
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class ObjectCreateTest : KoinTest {
 
@@ -36,7 +35,6 @@ class ObjectCreateTest : KoinTest {
     fun `create object before login Test`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             `create object before user login`()
-            assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
         }
     }
 
@@ -45,8 +43,6 @@ class ObjectCreateTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 `create object after user login`(accountRepository)
-                assertTrue(readFileContent(TEST_CREATED_OBJECT).contentEquals(TEST_UPLOAD_FILE_CONTENT))
-                assertFileNotNullAndDelete(TEST_CREATED_OBJECT)
             }
         }
     }

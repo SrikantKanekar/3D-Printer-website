@@ -6,9 +6,6 @@ import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
-import com.example.util.FileHandler.deleteFile
-import com.example.util.FileHandler.fileExists
-import com.example.util.FileHandler.readFileByteArray
 import data.Constants.TEST_CREATED_OBJECT
 import data.Constants.TEST_FILE_UPLOAD_NAME
 import data.Constants.TEST_UPLOAD_FILE_CONTENT
@@ -38,20 +35,6 @@ val formUrlEncoded = ContentType.Application.FormUrlEncoded.toString()
 val multiPart = ContentType.MultiPart.FormData
     .withParameter("boundary", "boundary")
     .toString()
-
-fun readFileContent(id: String): ByteArray {
-    return readFileByteArray(id)
-}
-
-fun assertFileNotNullAndDelete(id: String) {
-    assertTrue { fileExists(id) }
-    deleteFile(id)
-    assertFalse { fileExists(id) }
-}
-
-fun assertFileNull(id: String) {
-    assertFalse { fileExists(id) }
-}
 
 fun TestApplicationEngine.testUserLogin() {
     handleRequest(HttpMethod.Post, "/auth/login") {

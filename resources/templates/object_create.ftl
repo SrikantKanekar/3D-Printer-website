@@ -70,7 +70,6 @@
     <script src="https://unpkg.com/three@0.129.0/examples/js/loaders/STLLoader.js"></script>
     <script src="https://unpkg.com/three@0.129.0/examples/js/controls/OrbitControls.js"></script>
 
-
     <!-- dat gui -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.js"
             integrity="sha512-u+vtyZDzyd0zgAEffKfoNx2BnCahAOBBYvzGu6vma1B18zQ6lEGF3F6dAFvqaxDoIU/GZRxcXV5oq23OIrkQwg=="
