@@ -32,38 +32,42 @@
 
 :root {
     --primary: #de4648;
-    --primary-variant: #3700B3;
+    --primary-variant: #e53436;
     --background: #121212;
     --surface: rgb(29, 29, 29);
+    --surface-hover: rgba(29, 29, 29, 0.64);
     --error: #CF6679;
-    --success: #7cde6b;
+    --success: #18d26e;
 
     --on-primary: #000000;
-    --on-secondary: #000000;
     --on-background: rgba(255, 255, 255, 0.87);
     --on-surface: rgba(255, 255, 255, 0.6);
+    --on-surface-hover: rgba(255, 255, 255, 0.8);
     --on-error: #000000;
 
     --menu-background: #282828;
-    --surface-hover: rgba(29, 29, 29, 0.64);
+    --border-light: rgba(255, 255, 255, 0.5);
+    --border-dark: rgba(255, 255, 255, 0.15);
 }
 
 .light_theme {
     --primary: #e23f41;
-    --primary-variant: #3700B3;
+    --primary-variant: #e53436;
     --background: #FFFFFF;
-    --surface: #f2f4f8;
+    --surface: rgb(246, 246, 246);
+    --surface-hover: rgba(242, 244, 248, 0.66);
     --error: #B00020;
     --success: #61de4a;
 
     --on-primary: #FFFFFF;
-    --on-secondary: #1b1b1b;
     --on-background: #1b1b1b;
     --on-surface: #767676;
+    --on-surface-hover: #5f5e5e;
     --on-error: #FFFFFF;
 
     --menu-background: #e4e4e4;
-    --surface-hover: rgba(242, 244, 248, 0.66);
+    --border-light: #d0d0d0;
+    --border-dark: rgba(0, 0, 0, 0.2);
 }
 
 body {
@@ -716,6 +720,15 @@ section {
     border: none;
     outline: none;
     padding-left: 15px;
+}
+
+.textarea {
+    width: 100%;
+    background: var(--surface);
+    color: var(--on-surface);
+    border: none;
+    outline: none;
+    padding: 15px;
 }
 
 .dropdown_item_select {

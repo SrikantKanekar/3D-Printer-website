@@ -184,7 +184,7 @@
                     consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.</p>
             </div>
 
-            <div class="row">
+            <div class="row align-items-center">
 
                 <div class="col-lg-6">
 
@@ -215,33 +215,37 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <form action="" method="post" class="php-email-form">
+                    <form action="#" method="post" class="form" id="contact_form">
                         <div class="row">
-                            <div class="col form-group">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name"
-                                       required>
+                            <div class="col-xl-6">
+                                <label for="name">Your Name*</label>
+                                <div data-validate="Enter Name">
+                                    <input name="name" type="text" id="name" class="input">
+                                </div>
                             </div>
-                            <div class="col form-group">
-                                <input type="email" class="form-control" name="email" id="email"
-                                       placeholder="Your Email" required>
+                            <div class="col-xl-6">
+                                <label for="email">Email*</label>
+                                <div data-validate="Invalid">
+                                    <input name="email" type="email" id="email" class="input">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject"
-                                   required>
+                        <label for="subject">Subject*</label>
+                        <div data-validate="Please fill">
+                            <input name="subject" type="text" id="subject" class="input">
                         </div>
-                        <div class="form-group">
-                            <textarea class="form-control" name="message" rows="5" placeholder="Message"
-                                      required></textarea>
+
+                        <label for="message">Message*</label>
+                        <div data-validate="Please fill">
+                            <textarea name="message" rows="7" id="message" class="textarea"></textarea>
                         </div>
-                        <div class="my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                        <div class="form_message"></div>
+
+                        <div id="send_button" class="button form_submit_button">
+                            <a href="#">Send</a>
                         </div>
-                        <div class="text-center">
-                            <button type="submit">Send Message</button>
-                        </div>
+
                     </form>
                 </div>
 

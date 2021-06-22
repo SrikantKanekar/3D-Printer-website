@@ -23,7 +23,9 @@
                     </div>
                     <div class="form_message"></div>
 
-                    <div id="update_button" class="button form_submit_button"><a href="#">Update</a></div>
+                    <div id="update_button" class="button form_submit_button">
+                        <a href="#">Update</a>
+                    </div>
                 </form>
             </div>
         </div>
