@@ -34,7 +34,7 @@
     --primary: #de4648;
     --primary-variant: #e53436;
     --background: #121212;
-    --surface: rgb(29, 29, 29);
+    --surface: #1b1b1b;
     --surface-hover: rgba(29, 29, 29, 0.64);
     --error: #CF6679;
     --success: #18d26e;
@@ -596,11 +596,11 @@ section {
 
 .footer_social ul li a i {
     font-size: 17px;
-    color: var(--on-background);
+    color: var(--on-surface);
 }
 
 .footer_social ul li a i:hover {
-    color: var(--surface);
+    color: var(--on-surface-hover);
 }
 
 /*********************************
