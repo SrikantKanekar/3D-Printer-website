@@ -445,7 +445,7 @@ section {
 }
 
 .menu_nav > li {
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    border-bottom: solid 1px var(--border-dark);
 }
 
 .menu_item {
@@ -456,7 +456,7 @@ section {
 
 .menu_item > a {
     display: block;
-    color: var(--on-background);
+    color: var(--on-surface);
     font-weight: 700;
     line-height: 50px;
     height: 50px;
@@ -464,7 +464,7 @@ section {
 }
 
 .menu_item > a:hover {
-    color: #c3c1cc;
+    color: var(--on-surface-hover);
 }
 
 .menu_item a i {
@@ -495,13 +495,13 @@ section {
 
 .menu_selection li a {
     display: block;
-    color: var(--on-background);
-    border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+    color: var(--on-surface);
+    border-bottom: solid 1px var(--border-dark);
     font-size: 14px;
 }
 
 .menu_selection li a:hover {
-    color: #c3c1cc;
+    color: var(--on-surface-hover);
 }
 
 .menu_selection li:last-child a {
@@ -524,12 +524,12 @@ section {
 
 .menu_social ul li a i {
     font-size: 16px;
-    color: #b5b5b5;
+    color: var(--on-surface);
     padding: 5px;
 }
 
 .menu_social ul li a i:hover {
-    color: var(--on-background);
+    color: var(--on-surface-hover);
 }
 
 .menu_close {
