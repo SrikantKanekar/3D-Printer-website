@@ -13,7 +13,7 @@
 								justify-content-center
 							">
                         <div class="footer_logo">
-                            <a href="/">3Design</a>
+                            <a href="/">3D Printing</a>
                         </div>
                         <div class="copyright ml-auto mr-auto">
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

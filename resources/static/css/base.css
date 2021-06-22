@@ -30,12 +30,9 @@
     transition: all 300ms ease;
 }
 
-/* Default dark theme */
 :root {
     --primary: #de4648;
     --primary-variant: #3700B3;
-    --secondary: #03DAC6;
-    --secondary-variant: #03DAC6;
     --background: #121212;
     --surface: rgb(29, 29, 29);
     --error: #CF6679;
@@ -54,8 +51,6 @@
 .light_theme {
     --primary: #e23f41;
     --primary-variant: #3700B3;
-    --secondary: #03DAC6;
-    --secondary-variant: #018786;
     --background: #FFFFFF;
     --surface: #f2f4f8;
     --error: #B00020;
