@@ -3,6 +3,16 @@ window.addEventListener('load', function () {
 
     $("#login_button").on('click', function (e) {
         e.preventDefault();
+        submitForm()
+    });
+
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter'){
+            submitForm()
+        }
+    })
+
+    function submitForm(){
         const form = document.querySelector("#auth_form");
         const url = form.getAttribute("action");
         const inputs = form.querySelectorAll(".input");
@@ -18,5 +28,5 @@ window.addEventListener('load', function () {
                 }
             });
         }
-    });
+    }
 });
