@@ -40,6 +40,12 @@
         <body>
             <div class="super_container">
 
+                <div id="preloader" class="preloader_overlay">
+                    <div class="spinner_container">
+                        <span class="spinner"></span>
+                    </div>
+                </div>
+
                 <div class="main_container">
                     <#nested/>
                 </div>

@@ -34,6 +34,12 @@ class OrderDataSourceImpl(
             .wasAcknowledged()
     }
 
+    override suspend fun updateOrderDelivery(orderId: String, date: String): Boolean {
+        return orders
+            .updateOne(Order::id eq orderId, setValue(Order::deliveredOn, date))
+            .wasAcknowledged()
+    }
+
     override suspend fun getAllActiveOrders(): List<Order> {
         return orders.find().filter(Order::status ne DELIVERED).toList().reversed()
     }

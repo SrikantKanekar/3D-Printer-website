@@ -8,6 +8,7 @@ import data.Constants.TEST_PLACED_ORDER
 import data.Constants.TEST_PROCESSING_ORDER
 import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_EMAIL
+import kotlinx.datetime.Clock
 import java.util.*
 import kotlin.random.Random
 
@@ -40,6 +41,6 @@ val testOrderData = List(15) {
             )
         },
         price = Random.nextInt(1000, 10000),
-        deliveredOn =  UUID.randomUUID().toString()
+        deliveredOn = Clock.System.now().toString()
     )
 }.shuffled()

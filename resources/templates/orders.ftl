@@ -1,6 +1,6 @@
 <#import "base.ftl" as layout />
 <#import "header.ftl" as header />
-<@layout.base title="Orders" css="/static/css/orders.css" js="">
+<@layout.base title="Orders" css="/static/css/orders.css" js="/static/js/orders.js">
 
     <@header.header user="${user}" title="Orders" />
 
@@ -21,8 +21,8 @@
                         <div class="info_col_price">
                             Price
                         </div>
-                        <div class="info_col_delivery">
-                            Delivery
+                        <div class="info_col_delivered">
+                            Delivered
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             <#list orders as order>
                 <div class="row">
                     <div class="col">
-                        <div class="item">
+                        <div class="order" data-date="${order.deliveredOn!''}">
 
                             <!-- Order -->
                             <div class="item_order">
@@ -55,7 +55,7 @@
                             <div class="item_price"><i class="fa fa-inr"></i>${order.price}</div>
 
                             <!-- delivery -->
-                            <div class="item_delivery">${order.deliveredOn!'--'}</div>
+                            <div class="item_delivered"></div>
                         </div>
                     </div>
                 </div>
@@ -66,4 +66,5 @@
         </#if>
 
     </div>
+
 </@layout.base>

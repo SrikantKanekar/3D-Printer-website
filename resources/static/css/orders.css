@@ -28,7 +28,7 @@
     text-align: center;
 }
 
-.info_col_delivery {
+.info_col_delivered {
     width: 15%;
     text-align: right;
 }
@@ -36,7 +36,7 @@
 /*********************************
 1. Item
 *********************************/
-.item {
+.order {
     padding-top: 33px;
     display: flex;
     flex-direction: row;
@@ -106,7 +106,7 @@
     color: var(--on-background);
 }
 
-.item_delivery {
+.item_delivered {
     width: 15%;
     text-align: right;
     font-size: 14px;
@@ -149,7 +149,7 @@
         font-size: 13px;
     }
 
-    .item_delivery {
+    .item_delivered {
         font-size: 13px;
     }
 }
@@ -189,7 +189,7 @@
         font-size: 10px;
     }
 
-    .item_delivery {
+    .item_delivered {
         font-size: 10px;
     }
 }

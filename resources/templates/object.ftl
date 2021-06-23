@@ -76,12 +76,14 @@
                 <div class="row status_tracking">
 
                     <!-- Video streaming -->
-                    <div class="col-lg-6">
+                    <div class="col-12">
                         <video class="video_container" controls>
                             <source src="/static/images/3D printed Eiffel tower time lapse.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
+                    </div>
 
+                    <div class="col-lg-6">
                         <div class="canvas_container">
                             <canvas id="canvas"></canvas>
                             <div id="canvasLoader" class="canvas_overlay">

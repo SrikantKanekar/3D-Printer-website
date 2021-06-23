@@ -3,7 +3,7 @@
 <@layout.base title="Cart" css="/static/css/cart.css" js="/static/js/cart.js">
 
     <@header.header user="${user}" title="Cart" />
-
+    
     <div class="container">
 
         <#if objects?has_content>

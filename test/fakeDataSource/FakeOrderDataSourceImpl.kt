@@ -36,6 +36,12 @@ class FakeOrderDataSourceImpl(
         return true
     }
 
+    override suspend fun updateOrderDelivery(orderId: String, date: String): Boolean {
+        val order = orders[orderId]?.copy(deliveredOn = date) ?: return false
+        orders[orderId] = order
+        return true
+    }
+
     override suspend fun getAllActiveOrders(): List<Order> {
         return orders.values.filter { it.status != DELIVERED }
     }

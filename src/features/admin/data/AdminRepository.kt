@@ -2,13 +2,15 @@ package com.example.features.admin.data
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.`object`.domain.ObjectStatus.COMPLETED
+import com.example.features.`object`.domain.ObjectStatus.TRACKING
 import com.example.features.notification.data.NotificationRepository
 import com.example.features.notification.domain.NotificationType
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
 import com.example.features.order.domain.OrderStatus.*
-import com.example.features.order.domain.PrintingStatus.*
+import com.example.features.order.domain.PrintingStatus.PRINTED
+import com.example.util.now
 
 class AdminRepository(
     private val userDataSource: UserDataSource,
@@ -56,6 +58,7 @@ class AdminRepository(
                 .filter { it.status == TRACKING }
                 .filter { order.objectIds.contains(it.id) }
                 .forEach { it.status = COMPLETED }
+            orderDataSource.updateOrderDelivery(orderId, now())
             notificationRepository.sendNotification(NotificationType.DELIVERED, user, order)
             return userDataSource.updateUser(user)
         }

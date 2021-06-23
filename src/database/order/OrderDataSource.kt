@@ -15,5 +15,7 @@ interface OrderDataSource {
 
     suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean
 
+    suspend fun updateOrderDelivery(orderId: String, date: String): Boolean
+
     suspend fun getAllActiveOrders(): List<Order>
 }

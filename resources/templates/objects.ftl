@@ -4,12 +4,6 @@
 
     <@header.header user="${user}" title="My objects" />
 
-    <div id="preloader" class="preloader_overlay">
-        <div class="spinner_container">
-            <span class="spinner"></span>
-        </div>
-    </div>
-
     <div class="container">
         <div class="row">
             <div class="col">
