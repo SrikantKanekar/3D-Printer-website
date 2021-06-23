@@ -14,7 +14,7 @@
 
                             <nav class="main_nav">
                                 <ul>
-                                    <li class="active"><a href="/">Home</a></li>
+                                    <li><a href="/">Home</a></li>
                                     <li><a href="/object/create">Create</a></li>
                                     <li><a href="/objects">My Objects</a></li>
 
@@ -62,7 +62,7 @@
                                             <div>Cart</div>
                                         </a>
                                     <#else>
-                                        <a href="/auth/login">
+                                        <a class="auth" href="/auth/login">
                                             <div>SignIn</div>
                                         </a>
                                     </#if>

@@ -359,22 +359,26 @@ section {
     width: 20px;
     height: 20px;
     vertical-align: middle;
-    fill: var(--on-background);
+    fill: var(--on-surface);
 }
 
 .shopping_cart a:hover svg,
 .shopping_cart a:hover div {
-    fill: var(--primary);
-    color: var(--primary);
+    fill: var(--on-background);
+    color: var(--on-background);
 }
 
 .shopping_cart a div {
     display: inline-block;
     vertical-align: middle;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--on-background);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--on-surface);
     margin-left: 13px;
+}
+
+.shopping_cart .auth {
+    visibility: hidden;
 }
 
 .theme_icon {
@@ -389,7 +393,7 @@ section {
 }
 
 .theme_icon i:hover {
-    color: var(--primary);
+    color: var(--on-background);
 }
 
 .hamburger {

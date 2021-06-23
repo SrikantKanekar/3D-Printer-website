@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setHeader();
     });
 
-    initMenu();
-
     /**
      * 2. Set Header
      */
@@ -39,10 +37,25 @@ document.addEventListener('DOMContentLoaded', function () {
             header.classList.remove("scrolled");
         }
     }
+    const currentUrl = window.location.href;
+
+    // hide signIn link on auth screens
+    if (currentUrl.indexOf("auth") === -1) {
+        document.querySelector(".auth").style.visibility = "visible";
+    }
+
+    // set active link
+    $(".header_content").find("a").each(function () {
+        if (currentUrl === this.href){
+            $(this).closest("li").addClass("active");
+        }
+    });
 
     /**
      * 3. Init Menu
      */
+    initMenu();
+
     function initMenu() {
         $(".hamburger").on("click", function (e) {
             e.stopPropagation();

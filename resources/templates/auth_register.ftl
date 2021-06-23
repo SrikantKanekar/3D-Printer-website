@@ -10,26 +10,23 @@
         <div class="form_container">
             <form class="form" action="/auth/register" method="POST" id="auth_form">
 
-                <div data-validate="Please enter Username">
-                    <input name="username" type="text" id="username" class="input" placeholder="Username"
-                           required="required">
+                <div data-validate="Please enter email: example@abc.xyz">
+                    <input name="email" type="email" id="email" class="input" placeholder="Email">
                 </div>
 
-                <div data-validate="Please enter email: example@abc.xyz">
-                    <input name="email" type="email" id="email" class="input" placeholder="Email" required="required">
+                <div data-validate="Please enter Username">
+                    <input name="username" type="text" id="username" class="input" placeholder="Username">
                 </div>
 
                 <div data-validate="Please enter password">
 					<span class="btn-show-pass">
 						<i class="fa fa fa-eye"></i>
 					</span>
-                    <input name="password1" type="password" id="password1" class="input" placeholder="Password"
-                           required="required">
+                    <input name="password1" type="password" id="password1" class="input" placeholder="Password">
                 </div>
 
                 <div data-validate="Please enter password">
-                    <input name="password2" type="password" id="password2" class="input" placeholder="Confirm password"
-                           required="required">
+                    <input name="password2" type="password" id="password2" class="input" placeholder="Confirm password">
                 </div>
 
                 <div class="form_message"></div>
