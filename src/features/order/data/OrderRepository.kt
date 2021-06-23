@@ -3,14 +3,14 @@ package com.example.features.order.data
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.`object`.domain.ObjectStatus.TRACKING
 import com.example.features.notification.data.NotificationRepository
 import com.example.features.notification.domain.NotificationType
 import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus.*
+import com.example.features.order.domain.OrderStatus.PROCESSING
 import com.example.features.order.domain.PrintingStatus
-import com.example.features.order.domain.PrintingStatus.*
-import kotlinx.datetime.Clock
+import com.example.features.order.domain.PrintingStatus.PRINTING
+import com.example.util.now
 
 class OrderRepository(
     private val userDataSource: UserDataSource,
@@ -64,11 +64,11 @@ class OrderRepository(
             if (printingStatus == PRINTING) {
                 user.objects
                     .find { it.id == objectId }
-                    ?.let { it.trackingDetails.started_at = Clock.System.now().toString() }
+                    ?.let { it.trackingDetails.started_at = now() }
             } else {
                 user.objects
                     .find { it.id == objectId }
-                    ?.let { it.trackingDetails.completed_at = Clock.System.now().toString() }
+                    ?.let { it.trackingDetails.completed_at = now() }
             }
 
             val updated = userDataSource.updateUser(user)

@@ -104,8 +104,7 @@
                             <div class="object_description">
                                 <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
                                 <div class="">Printing status : ${object.printingStatus}</div>
-                                <div class="">Started at : ${object.trackingDetails.started_at!"--"}</div>
-                                <div class="">Expected to be completed by <span>5:34 pm</span></div>
+                                <div class="started_at" data-value="${object.trackingDetails.started_at!''}">Started at : <span></span></div>
                             </div>
                         </div>
                     </div>
@@ -134,8 +133,8 @@
                             <div class="object_description">
                                 <div class=""><i class="fa fa-inr"></i>${object.slicingDetails.totalPrice!}</div>
                                 <div class="">Printing status : ${object.printingStatus}</div>
-                                <div class="">Completed at ${object.trackingDetails.completed_at!"--"}</div>
-                                <div class="">Printing duration : 2:32 hr</div>
+                                <div class="completed_at" data-value="${object.trackingDetails.completed_at}">Completed on : <span></span></div>
+                                <div class="duration" data-value="${object.trackingDetails.started_at}">Printing duration : <span></span></div>
                             </div>
                         </div>
                     </div>

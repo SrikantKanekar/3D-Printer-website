@@ -6,14 +6,6 @@ fun now(): String {
     return Clock.System.now().toString()
 }
 
-fun toLocalDate(date: Double): LocalDateTime {
-    return Instant.fromEpochMilliseconds(date.toLong()).toLocalDateTime(TimeZone.UTC)
-}
-
-fun toEpochMilliseconds(date: LocalDateTime): Double {
-    return date.toInstant(TimeZone.UTC).toEpochMilliseconds().toDouble()
-}
-
 fun humanizeDatetime(date: LocalDateTime?): String {
     val sb = StringBuilder()
     date?.run {

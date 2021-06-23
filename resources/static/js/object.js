@@ -74,13 +74,6 @@ window.addEventListener('load', function () {
             }
         }
 
-        function millisToTime(duration) {
-            let minutes = Math.floor((duration / (1000 * 60)) % 60);
-            let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-            return hours + ":" + minutes + " hrs";
-        }
-
         function updateSlicingDetails(data) {
             slicingDetails.querySelector(".time").setAttribute("data-value", data.time);
             slicingDetails.querySelector(".material_weight").setAttribute("data-value", data.materialWeight);
@@ -201,8 +194,24 @@ window.addEventListener('load', function () {
 
     } else if (document.body.contains(statusTracking)) {
         disableSettings();
+
+        const started_at = document.querySelector(".started_at")
+        setTime(started_at)
+
     } else if (document.body.contains(statusCompleted)) {
         disableSettings();
+
+        const completed_at = document.querySelector(".completed_at")
+        setTime(completed_at)
+
+        setDuration()
+        function setDuration() {
+            const duration = document.querySelector(".duration")
+            const started = duration.getAttribute("data-value")
+            const completed = completed_at.getAttribute("data-value")
+            let difference = Math.abs(new Date(completed) - new Date(started))
+            duration.querySelector("span").textContent = millisToTime(difference)
+        }
     }
 
     /**
@@ -268,5 +277,18 @@ window.addEventListener('load', function () {
             return false;
         });
         $(".form_submit_button").hide();
+    }
+
+    function setTime(element) {
+        const value = element.getAttribute("data-value");
+        let text = value !== '' ? new Date(value).toLocaleString() : "-";
+        element.querySelector("span").textContent = text;
+    }
+
+    function millisToTime(duration) {
+        let minutes = Math.floor((duration / (1000 * 60)) % 60);
+        let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        return hours + ":" + minutes + " hrs";
     }
 });
