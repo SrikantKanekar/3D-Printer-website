@@ -63,12 +63,22 @@ window.addEventListener('load', function () {
                 slicingDetails.style.display = "block";
                 const children = slicingDetails.children;
                 $(children).each(function () {
-                    let value = $(this).data("value");
+                    let value = this.getAttribute("data-value");
+                    if (this.className === "time") {
+                        value = millisToTime(parseFloat(value))
+                    }
                     if (value) $(this).find("span").text(value);
                 });
             } else {
                 uptoDate.style.display = "block";
             }
+        }
+
+        function millisToTime(duration) {
+            let minutes = Math.floor((duration / (1000 * 60)) % 60);
+            let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            return hours + ":" + minutes + " hrs";
         }
 
         function updateSlicingDetails(data) {
@@ -99,7 +109,7 @@ window.addEventListener('load', function () {
                     showAlert("Slicing Done", "alert-success");
                     updateSlicingDetails(data);
                 } else {
-                    showAlert("error, please try again", "alert-danger");
+                    showAlert("Error", "alert-danger");
                 }
             });
         });

@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="slicing_details">
-                                <div class="time" data-value="${(object.slicingDetails.time)!}">
+                                <div class="time" data-value="${(object.slicingDetails.time?string.computer)!}">
                                     Time <span></span>
                                 </div>
                                 <div class="material_weight"

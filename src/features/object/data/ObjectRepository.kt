@@ -32,7 +32,7 @@ class ObjectRepository(
      */
     suspend fun slice(objectId: String): SlicingDetails? {
         delay(3000)
-        val time = "7hr 37min"
+        val time = Random.nextLong(2000000, 40000000)
         val materialWeight = Random.nextInt(10, 100)
         val materialCost = Random.nextInt(500, 1500)
         val electricityCost = Random.nextInt(100, 300)

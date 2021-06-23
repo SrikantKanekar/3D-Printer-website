@@ -42,10 +42,5 @@ fun humanizeDatetime(date: LocalDateTime?): String {
 fun main() {
     val instant = Clock.System.now()
     val local = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-    println("instant   -> $instant")
-    println("local     -> $local")
-    println("humanized -> ${humanizeDatetime(local)}")
-
-    val epochMilli = instant.toEpochMilliseconds()
-    println("duration     -> $epochMilli")
+    println("instant   -> $local")
 }
