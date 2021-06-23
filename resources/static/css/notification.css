@@ -25,7 +25,6 @@
     font-size: 26px;
     font-weight: 550;
     color: var(--on-background);
-    line-height: 1.1;
 }
 
 .notification_title a:hover {
@@ -48,7 +47,7 @@
     font-weight: 450;
     color: var(--on-surface);
     margin-top: 5px;
-    text-align: right;
+    text-align: center;
 }
 
 .divider {

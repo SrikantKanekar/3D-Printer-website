@@ -20,7 +20,6 @@ fun Application.registerCheckoutRoute() {
     routing {
         authenticate(USER_SESSION_AUTH) {
             getCheckoutRoute(checkoutRepository)
-            removeFromCheckout(checkoutRepository)
             proceedToPay(checkoutRepository)
         }
     }
@@ -40,22 +39,6 @@ private fun Route.getCheckoutRoute(checkoutRepository: CheckoutRepository) {
                 )
             )
         )
-    }
-}
-
-private fun Route.removeFromCheckout(checkoutRepository: CheckoutRepository) {
-    get("/checkout/{id}/remove") {
-        val id = call.parameters["id"] ?: return@get call.respondText(
-            text = "Missing or malformed id",
-            status = HttpStatusCode.BadRequest
-        )
-        val principal = call.principal<UserPrincipal>()!!
-        val result = checkoutRepository.removeObjectFromCart(principal.email, id)
-        if (result) {
-            call.respondRedirect("/checkout")
-        } else {
-            call.respond(HttpStatusCode.NotAcceptable, "Invalid object ID")
-        }
     }
 }
 

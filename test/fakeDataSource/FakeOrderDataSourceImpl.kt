@@ -3,19 +3,17 @@ package fakeDataSource
 import com.example.database.order.OrderDataSource
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.*
+import com.example.features.order.domain.OrderStatus.DELIVERED
 import data.Constants.TEST_CREATED_ORDER
 
 class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
 ): OrderDataSource {
 
-    override suspend fun creteNewOrder(userEmail: String, price: Int, deliveryDays: Int): Order {
+    override suspend fun creteNewOrder(userEmail: String): Order {
         return Order(
             id = TEST_CREATED_ORDER,
-            userEmail = userEmail,
-            price = price,
-            deliveryDays = deliveryDays
+            userEmail = userEmail
         )
     }
 

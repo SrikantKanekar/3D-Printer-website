@@ -9,7 +9,6 @@ import data.Constants.TEST_PROCESSING_ORDER
 import data.Constants.TEST_TRACKING_OBJECT
 import data.Constants.TEST_USER_EMAIL
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 val testOrderData = List(15) {
@@ -41,6 +40,6 @@ val testOrderData = List(15) {
             )
         },
         price = Random.nextInt(1000, 10000),
-        deliveryDays = Random.nextInt(4, 15)
+        deliveredOn =  UUID.randomUUID().toString()
     )
 }.shuffled()

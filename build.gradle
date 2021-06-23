@@ -62,7 +62,7 @@ dependencies {
     implementation 'org.litote.kmongo:kmongo:4.2.5'
     implementation 'org.litote.kmongo:kmongo-coroutine:4.2.5'
 
-    // Html
+    // Freemarker
     implementation "io.ktor:ktor-freemarker:$ktor_version"
 
     // Serialization
@@ -70,8 +70,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0"
     implementation "io.ktor:ktor-gson:$ktor_version"
 
-    // Security
+    // Password hash
     implementation 'commons-codec:commons-codec:1.14'
+
+    // Kotlin date time
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.0'
 
     // Koin Dependency injection

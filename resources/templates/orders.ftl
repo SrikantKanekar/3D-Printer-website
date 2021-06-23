@@ -55,7 +55,7 @@
                             <div class="item_price"><i class="fa fa-inr"></i>${order.price}</div>
 
                             <!-- delivery -->
-                            <div class="item_delivery">${order.deliveryDays} June</div>
+                            <div class="item_delivery">${order.deliveredOn!'--'}</div>
                         </div>
                     </div>
                 </div>

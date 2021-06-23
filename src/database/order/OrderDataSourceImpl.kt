@@ -12,12 +12,8 @@ class OrderDataSourceImpl(
     private val orders: CoroutineCollection<Order>
 ) : OrderDataSource {
 
-    override suspend fun creteNewOrder(userEmail: String, price: Int, deliveryDays: Int): Order {
-        return Order(
-            userEmail = userEmail,
-            price = price,
-            deliveryDays = deliveryDays
-        )
+    override suspend fun creteNewOrder(userEmail: String): Order {
+        return Order(userEmail = userEmail)
     }
 
     override suspend fun insertOrder(order: Order): Boolean {
