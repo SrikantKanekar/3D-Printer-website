@@ -10,7 +10,7 @@
                 ${notification.title}
             </div>
             <div class="notification_detail_message">${notification.message}</div>
-            <div class="notification_detail_date">${notification.posted_at}</div>
+            <div class="notification_detail_date" data-value="${notification.posted_at}"></div>
         </div>
     </div>
 </@layout.base>

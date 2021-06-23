@@ -36,4 +36,23 @@ window.addEventListener('load', function () {
             grid.isotope(option);
         });
     });
+
+    const notification = document.querySelector(".notification_grid")
+
+    if (document.body.contains(notification)){
+        const dates = $(".notification_date")
+        dates.each(function () {
+             setDate(this)
+        });
+    } else {
+        // detail screen
+        const detailDate = document.querySelector(".notification_detail_date")
+        setDate(detailDate)
+    }
+
+    function setDate(element) {
+        const value = element.getAttribute("data-value");
+        let text = value !== '' ? new Date(value).toLocaleString() : "-";
+        element.textContent = text;
+    }
 });

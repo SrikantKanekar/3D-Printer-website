@@ -47,7 +47,7 @@
     font-weight: 450;
     color: var(--on-surface);
     margin-top: 5px;
-    text-align: center;
+    text-align: right;
 }
 
 .divider {

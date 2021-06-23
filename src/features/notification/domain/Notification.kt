@@ -1,6 +1,6 @@
 package com.example.features.notification.domain
 
-import kotlinx.datetime.Clock
+import com.example.util.now
 import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
@@ -9,7 +9,7 @@ import org.bson.types.ObjectId
 data class Notification(
     val title: String,
     val message: String,
-    val posted_at: String = Clock.System.now().toString(),
+    val posted_at: String = now(),
     @BsonId
     val id: String = ObjectId().toString()
 )

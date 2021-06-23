@@ -47,7 +47,7 @@
                                         <a href="/notification/${notification.id}">${notification.title}</a>
                                     </div>
                                     <div class="notification_message">${notification.message}</div>
-                                    <div class="notification_date">${notification.posted_at}</div>
+                                    <div class="notification_date" data-value="${notification.posted_at}"></div>
                                 </div>
                                 <hr class="divider">
                             </div>
