@@ -325,7 +325,7 @@ section {
 
 .contact .form input,
 .contact .form textarea{
-    border: 2px solid var(--on-surface);
+    border: 2px solid var(--border-dark);
 }
 
 /************

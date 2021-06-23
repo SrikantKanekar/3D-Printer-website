@@ -47,7 +47,7 @@
     float: right;
     line-height: 32px;
     font-size: 10px;
-    color: var(--border-dark);
+    color: var(--border-light);
 }
 
 .sorting li ul {
@@ -81,7 +81,7 @@
     display: block;
     height: 36px;
     line-height: 36px;
-    border-bottom: solid 1px var(--border-dark);
+    border-bottom: solid 1px var(--border-light);
     color: var(--on-surface);
     text-align: right;
     padding-right: 5px;

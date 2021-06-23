@@ -67,7 +67,8 @@
 
     --menu-background: #e4e4e4;
     --border-light: #d0d0d0;
-    --border-dark: rgba(0, 0, 0, 0.2);
+    /*rgba(0, 0, 0, 0.2)*/
+    --border-dark: #1b1b1b;
 }
 
 body {
@@ -171,7 +172,7 @@ section {
     height: 61px;
     background: none;
     text-align: center;
-    border: solid 2px var(--on-background);
+    border: solid 2px var(--border-dark);
     overflow: hidden;
     cursor: pointer;
 }
@@ -445,7 +446,7 @@ section {
 }
 
 .menu_nav > li {
-    border-bottom: solid 1px var(--border-dark);
+    border-bottom: solid 1px var(--border-light);
 }
 
 .menu_item {
@@ -496,7 +497,7 @@ section {
 .menu_selection li a {
     display: block;
     color: var(--on-surface);
-    border-bottom: solid 1px var(--border-dark);
+    border-bottom: solid 1px var(--border-light);
     font-size: 14px;
 }
 
@@ -780,7 +781,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-input[type=number]{
+input[type=number] {
     -moz-appearance: textfield;
 }
 

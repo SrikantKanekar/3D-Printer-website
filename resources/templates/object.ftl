@@ -81,6 +81,18 @@
                             <source src="/static/images/3D printed Eiffel tower time lapse.mp4" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
+
+                        <div class="canvas_container">
+                            <canvas id="canvas"></canvas>
+                            <div id="canvasLoader" class="canvas_overlay">
+                                <div class="spinner_container">
+                                    <span class="spinner"></span>
+                                </div>
+                            </div>
+                            <div class="canvas_error_container">
+                                <div></div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Details -->

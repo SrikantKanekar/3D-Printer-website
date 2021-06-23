@@ -112,7 +112,7 @@
     display: inline-block;
     width: 147px;
     height: 61px;
-    border: solid 2px var(--border-light);
+    border: solid 2px var(--border-dark);
     overflow: hidden;
     padding-left: 70px;
     vertical-align: middle;
