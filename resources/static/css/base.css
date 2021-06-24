@@ -1059,6 +1059,6 @@ input[type=number] {
     }
 
     .input {
-        
+        height: 45px;
     }
 }
