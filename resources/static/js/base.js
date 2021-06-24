@@ -39,9 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     const currentUrl = window.location.href;
 
+    const authLink = document.querySelector(".auth");
     // hide signIn link on auth screens
-    if (currentUrl.indexOf("auth") === -1) {
-        document.querySelector(".auth").style.visibility = "visible";
+    if (document.body.contains(authLink)){
+        if (currentUrl.indexOf("auth") === -1) {
+            authLink.style.visibility = "visible";
+        }
     }
 
     // set active link
