@@ -26,77 +26,102 @@ window.addEventListener('load', function () {
      */
     if (document.body.contains(statusNone)) {
 
-        const cartButtons = document.querySelector(".cart_buttons");
-        const removeButton = document.querySelector(".remove_cart_button");
+        const sliceButton = document.querySelector("#slice_button");
+        const cartButton = document.querySelector("#cart_button");
+        const removeCartButton = document.querySelector("#remove_cart_button");
         const deleteButton = document.querySelector(".delete_object");
 
+        const slicingPending = statusNone.querySelector(".slicing_pending_text");
+        const slicingDetails = statusNone.querySelector(".slicing_details");
+
+        const settingMessage = document.querySelector(".form_message");
+
         if (status === "NONE") {
-            addedToCart(false);
+            let slicingDone = slicingPending.getAttribute("data-value");
+            if (slicingDone === "true") {
+                setSlicingDetails();
+                showCartButton();
+            } else {
+                showSliceButton()
+            }
         } else if (status === "CART") {
-            addedToCart(true);
+            setSlicingDetails();
+            showRemoveCartButton();
         }
 
-        function addedToCart(boolean) {
-            if (boolean) {
-                cartButtons.style.display = "none";
-                removeButton.style.display = "block";
-                deleteButton.style.display = "none";
-                disableSettings();
-            } else {
-                cartButtons.style.display = "block";
-                removeButton.style.display = "none";
-                deleteButton.style.display = "block";
-                enableSettings();
-            }
+        function showSliceButton() {
+            hideAllButtons();
+            sliceButton.style.display = "block";
+            deleteButton.style.display = "block";
+        }
+
+        function showCartButton() {
+            hideAllButtons();
+            cartButton.style.display = "block";
+            deleteButton.style.display = "block";
+            enableSettings();
+        }
+
+        function showRemoveCartButton() {
+            hideAllButtons();
+            removeCartButton.style.display = "block";
+            disableSettings();
+        }
+
+        function hideAllButtons() {
+            sliceButton.style.display = "none"
+            cartButton.style.display = "none";
+            removeCartButton.style.display = "none";
+            deleteButton.style.display = "none";
         }
 
         /**
          *  Slicing
          */
-        const uptoDate = statusNone.querySelector(".upto_date");
-        const slicingDetails = statusNone.querySelector(".slicing_details");
-        setSlicingDetails();
-
         function setSlicingDetails() {
-            let uptoDateValue = uptoDate.getAttribute("data-value");
-            if (uptoDateValue === "true") {
-                slicingDetails.style.display = "block";
-                const children = slicingDetails.children;
-                $(children).each(function () {
-                    let value = this.getAttribute("data-value");
-                    if (this.className === "time") {
-                        value = millisToTime(parseFloat(value))
-                    }
-                    if (value) $(this).find("span").text(value);
-                });
-            } else {
-                uptoDate.style.display = "block";
-            }
+            const children = slicingDetails.children;
+            $(children).each(function () {
+                let value = this.getAttribute("data-value");
+                if (this.className === "time") {
+                    value = millisToTime(parseFloat(value))
+                }
+                if (value) $(this).find("span").text(value);
+            });
+            showSlicingDetails();
         }
 
         function updateSlicingDetails(data) {
-            slicingDetails.querySelector(".time").setAttribute("data-value", data.time);
-            slicingDetails.querySelector(".material_weight").setAttribute("data-value", data.materialWeight);
-            slicingDetails.querySelector(".material_cost").setAttribute("data-value", data.materialCost);
-            slicingDetails.querySelector(".electricity_cost").setAttribute("data-value", data.electricityCost);
-            slicingDetails.querySelector(".total_price").setAttribute("data-value", data.totalPrice);
+            slicingDetails.querySelector(".time span").textContent = millisToTime(parseFloat(data.time));
+            slicingDetails.querySelector(".material_weight span").textContent = data.materialWeight;
+            slicingDetails.querySelector(".material_cost span").textContent = data.materialCost;
+            slicingDetails.querySelector(".electricity_cost span").textContent = data.electricityCost;
+            slicingDetails.querySelector(".total_price span").textContent = data.totalPrice;
 
-            uptoDate.setAttribute("data-value", "true");
-            uptoDate.style.display = "none";
-            slicingDetails.style.display = "none";
-            setSlicingDetails();
+            showCartButton();
+            showSlicingDetails();
         }
 
         function removeSlicingDetails() {
-            uptoDate.setAttribute("data-value", "false");
-            uptoDate.style.display = "none";
-            slicingDetails.style.display = "none";
-            setSlicingDetails();
+            hideSlicingDetails()
+            showSliceButton();
         }
 
-        $(".slice a").on('click', function (e) {
+        function showSlicingDetails() {
+            slicingDetails.style.display = "block";
+            slicingPending.style.display = "none";
+        }
+
+        function hideSlicingDetails() {
+            slicingDetails.style.display = "none";
+            slicingPending.style.display = "block";
+        }
+
+        $("#slice_button a").on('click', function (e) {
             e.preventDefault();
+
+            hideSettingMessage();
             const url = $(this).attr("href");
+
             $.post(url, {id: id}, function (data) {
                 if (data !== "null") {
                     showAlert("Slicing Done", "alert-success");
@@ -110,39 +135,35 @@ window.addEventListener('load', function () {
         /**
          *  Add to cart
          */
-        $(".add_to_cart a").on('click', function (e) {
+        $("#cart_button a").on('click', function (e) {
             e.preventDefault();
 
-            let uptoDateValue = uptoDate.getAttribute("data-value");
-            if (uptoDateValue === "true") {
-                const url = $(this).attr("href");
-                $.post(url, {id: id}, function (data) {
-                    if (data.startsWith("/")) {
-                        window.location.href = data;
-                    } else if (data === "true") {
-                        addedToCart(true);
-                        showAlert("Done", "alert-success");
-                    } else {
-                        showAlert("error, please try again", "alert-danger");
-                    }
-                });
-            } else {
-                showAlert("Please complete slicing", "alert-danger");
-            }
+            const url = $(this).attr("href");
+            $.post(url, {id: id}, function (data) {
+                if (data.startsWith("/")) {
+                    window.location.href = data;
+                } else if (data === "true") {
+                    showRemoveCartButton();
+                    showAlert("Added to Cart", "alert-success");
+                } else {
+                    showAlert("Error", "alert-danger");
+                }
+            });
         });
 
         /**
          *  Remove from cart
          */
-        $(".remove_from_cart a").on('click', function (e) {
+        $("#remove_cart_button a").on('click', function (e) {
             e.preventDefault();
+
             const url = $(this).attr("href");
             $.post(url, {id: id}, function (data) {
                 if (data === true) {
-                    addedToCart(false);
-                    showAlert("Done", "alert-success");
+                    showCartButton();
+                    showAlert("Removed from Cart", "alert-success");
                 } else {
-                    showAlert("error, please try again", "alert-danger");
+                    showAlert("Error", "alert-danger");
                 }
             });
         });
@@ -155,12 +176,12 @@ window.addEventListener('load', function () {
             const url = "/object/delete";
             $.post(url, {id: id}, function (data) {
                 if (data === true) {
-                    showAlert("Deleted Object", "alert-success");
+                    showAlert("Successfully Deleted", "alert-success");
                     deleteFirebaseFolder(id, function () {
                         window.location.href = "/objects";
                     });
                 } else {
-                    showAlert("Error in deleting object", "alert-danger");
+                    showAlert("Error", "alert-danger");
                 }
             });
         });
@@ -173,24 +194,27 @@ window.addEventListener('load', function () {
             const form = document.querySelector("#setting_form");
             const url = form.getAttribute("action");
             const inputs = form.querySelectorAll(".input");
-            const message = form.querySelector(".form_message");
 
             const check = checkValidation(inputs);
             if (check) {
                 $.post(url, $(form).serialize() + "&id=" + id, function (data) {
                     if (data === true) {
-                        message.classList.add("success");
-                        message.textContent = "successfully updated";
+                        settingMessage.classList.add("success");
+                        settingMessage.textContent = "successfully updated";
                         removeSlicingDetails();
                     } else {
-                        message.classList.remove("success");
-                        message.textContent = "error";
+                        settingMessage.classList.remove("success");
+                        settingMessage.textContent = "Error";
                     }
                 });
             } else {
-                showAlert("Form has errors", "alert-danger");
+                showAlert("Please Correct the Errors", "alert-danger");
             }
         });
+
+        function hideSettingMessage() {
+            settingMessage.style.display = "none";
+        }
 
     } else if (document.body.contains(statusTracking)) {
         disableSettings();
@@ -205,6 +229,7 @@ window.addEventListener('load', function () {
         setTime(completed_at)
 
         setDuration()
+
         function setDuration() {
             const duration = document.querySelector(".duration")
             const started = duration.getAttribute("data-value")

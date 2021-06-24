@@ -18,8 +18,7 @@
     margin-bottom: 12px;
 }
 
-.upto_date {
-    display: none;
+.slicing_pending_text {
     font-size: 16px;
     font-weight: 500;
     color: var(--on-surface);
@@ -37,15 +36,11 @@
     word-spacing: 3px;
 }
 
-.object_content .button {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 13px;
+.button_container {
+    margin-top: 48px;
 }
 
-.cart_buttons,
-.remove_cart_button {
-    margin-top: 48px;
+.button_container > div {
     display: none;
 }
 
@@ -213,13 +208,8 @@
         font-weight: 500;
     }
 
-    .cart_buttons,
-    .remove_cart_button {
+    .button_container {
         margin-top: 30px;
-    }
-
-    .cart_buttons .button {
-        max-width: 40%;
     }
 
     .setting {

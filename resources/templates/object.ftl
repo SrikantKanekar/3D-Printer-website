@@ -4,7 +4,12 @@
 
     <@header.header user="${user}" title="Object" />
 
-    <div class="object" data-id="${object.id}" data-status="${object.status}" data-file="${object.fileUrl}" data-extension="${object.fileExtension}">
+    <div class="object"
+         data-id="${object.id}"
+         data-status="${object.status}"
+         data-file="${object.fileUrl}"
+         data-extension="${object.fileExtension}">
+
         <div class="container">
 
             <#if object.status == "NONE" || object.status == "CART">
@@ -31,7 +36,7 @@
 
                             <div class="object_name">${object.name}</div>
 
-                            <div class="upto_date" data-value="${object.slicingDetails.uptoDate?c}">
+                            <div class="slicing_pending_text" data-value="${object.slicingDetails.uptoDate?c}">
                                 Slicing details are not upto date
                             </div>
 
@@ -55,17 +60,14 @@
                                 </div>
                             </div>
 
-                            <div class="cart_buttons">
-                                <div class="button slice">
+                            <div class="button_container">
+                                <div id="slice_button" class="button">
                                     <a href="/object/slice">Slice</a>
                                 </div>
-                                <div class="button add_to_cart">
+                                <div id="cart_button" class="button">
                                     <a href="/object/add-to-cart">Add to cart</a>
                                 </div>
-                            </div>
-
-                            <div class="remove_cart_button">
-                                <div class="button remove_from_cart">
+                                <div id="remove_cart_button" class="button">
                                     <a href="/object/remove-from-cart">Remove from cart</a>
                                 </div>
                             </div>
