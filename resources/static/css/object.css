@@ -52,11 +52,8 @@
     margin-top: 90px;
 }
 
-.setting_title {
-    font-size: 30px;
-    font-weight: 550;
-    color: var(--on-background);
-    margin-bottom: 40px;
+#setting_form{
+    margin-top: 40px;
 }
 
 .basic_container,
@@ -141,15 +138,12 @@
 /************
  Delete Object
 ************/
-.delete_object {
+.delete_button_container {
     display: none;
     margin-top: 50px;
-    font-size: 30px;
-    font-weight: 550;
-    color: var(--on-background);
 }
 
-.delete_button {
+#delete_button {
     margin-top: 30px;
 }
 
@@ -214,11 +208,5 @@
 
     .setting {
         margin-top: 50px;
-    }
-
-    .delete_object,
-    .setting_title {
-        font-size: 22px;
-        font-weight: 550;
     }
 }

@@ -29,7 +29,7 @@ window.addEventListener('load', function () {
         const sliceButton = document.querySelector("#slice_button");
         const cartButton = document.querySelector("#cart_button");
         const removeCartButton = document.querySelector("#remove_cart_button");
-        const deleteButton = document.querySelector(".delete_object");
+        const deleteButton = document.querySelector(".delete_button_container");
 
         const slicingPending = statusNone.querySelector(".slicing_pending_text");
         const slicingDetails = statusNone.querySelector(".slicing_details");
@@ -171,7 +171,7 @@ window.addEventListener('load', function () {
         /**
          *  Delete Object
          */
-        $(".delete_button a").on('click', function (e) {
+        $("#delete_button a").on('click', function (e) {
             e.preventDefault();
             const url = "/object/delete";
             $.post(url, {id: id}, function (data) {

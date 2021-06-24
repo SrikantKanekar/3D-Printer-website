@@ -200,23 +200,10 @@
 }
 
 /*********************************
-4. Coupon section
+4. Coupon
 *********************************/
 .row_extra {
     margin-top: 50px;
-}
-
-.section_title {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--on-background);
-}
-
-.section_subtitle {
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--on-surface);
-    margin-top: 3px;
 }
 
 .coupon_form_container {

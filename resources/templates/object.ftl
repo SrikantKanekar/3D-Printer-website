@@ -147,7 +147,7 @@
             <div class="row setting">
                 <div class="col">
 
-                    <div class="setting_title">Settings</div>
+                    <div class="section_title">Settings</div>
 
                     <form class="form" action="/object/update-setting" id="setting_form">
 
@@ -370,10 +370,10 @@
             </div>
 
             <!--delete button-->
-            <div class="delete_object">
-                <div>Delete</div>
-                <div class="button delete_button">
-                    <a href="#">Delete</a>
+            <div class="delete_button_container">
+                <div class="section_title">Delete</div>
+                <div id="delete_button" class="button">
+                    <a href="/delete">Delete</a>
                 </div>
             </div>
         </div>
