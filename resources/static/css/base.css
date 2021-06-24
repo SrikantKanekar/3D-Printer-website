@@ -850,9 +850,13 @@ input[type=number] {
 }
 
 .alert-validate::before {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     content: attr(data-validate);
     position: absolute;
-    z-index: 1000;
+    z-index: 1;
     max-width: 70%;
     background-color: var(--surface);
     border: 1px solid var(--primary);
@@ -879,7 +883,7 @@ input[type=number] {
     font-family: "FontAwesome", sans-serif;
     display: block;
     position: absolute;
-    z-index: 1100;
+    z-index: 1;
     color: var(--primary);
     font-size: 16px;
     top: 50%;
@@ -1052,5 +1056,9 @@ input[type=number] {
 
     .footer_logo a {
         font-size: 24px;
+    }
+
+    .input {
+        
     }
 }

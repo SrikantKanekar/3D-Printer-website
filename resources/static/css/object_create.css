@@ -257,4 +257,9 @@
         font-size: 22px;
         font-weight: 500;
     }
+
+    .canvas_size_error {
+        font-weight: 400;
+        font-size: xx-small;
+    }
 }
