@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let backToTop = document.querySelector('.back_to_top')
     if (backToTop) {
         const toggleBackToTop = () => {
-            if (window.scrollY > 100) {
+            if (window.scrollY > 500) {
                 backToTop.classList.add('active')
             } else {
                 backToTop.classList.remove('active')

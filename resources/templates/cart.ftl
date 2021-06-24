@@ -103,6 +103,13 @@
                             <div class="section_title">Cart total</div>
                             <div class="section_subtitle">Final info</div>
                             <div class="total_container">
+                                <div class="list_bar">
+                                    <div class="list_title">Object</div>
+                                    <div class="list_details">
+                                        <div class="list_quantity">Qty</div>
+                                        <div class="list_price">Price</div>
+                                    </div>
+                                </div>
                                 <ul>
                                     <li class="total_grid">
                                         <#list objects as object>
@@ -110,7 +117,7 @@
                                                 <div class="total_title">${object.name}</div>
                                                 <div class="total_details">
                                                     <div class="total_quantity">
-                                                        X<span>${object.quantity}</span>
+                                                        x<span>${object.quantity}</span>
                                                     </div>
                                                     <div class="total_value">
                                                         <i class="fa fa-inr"></i>

@@ -139,8 +139,6 @@
                             </ul>
                         </div>
 
-                        <!-- Order Text -->
-                        <div class="order_text">some text....</div>
                         <div class="button order_button"><a href="#">Place Order</a></div>
                     </div>
                 </div>
