@@ -20,6 +20,10 @@
             <!--bootstrap-->
             <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap/css/bootstrap.min.css">
 
+            <!--icons-->
+            <link rel="stylesheet" type="text/css" href="/static/plugins/boxicons/css/boxicons.min.css">
+            <link rel="stylesheet" type="text/css" href="/static/plugins/bootstrap-icons/bootstrap-icons.css">
+
             <!--font-awesome-->
             <link rel="stylesheet" type="text/css" href="/static/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
 
@@ -61,6 +65,10 @@
                 <div class="alert_container">
                     <div class="alert alert-dismissible fade show" role="alert"></div>
                 </div>
+
+                <a href="#" class="back_to_top">
+                    <i class="bi bi-arrow-up-short"></i>
+                </a>
             </div>
 
             <!--jquery-->

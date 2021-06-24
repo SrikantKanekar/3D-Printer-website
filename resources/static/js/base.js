@@ -146,6 +146,30 @@ document.addEventListener('DOMContentLoaded', function () {
         showAlert("an error occurred", "alert-danger");
         console.log(error);
     });
+
+    /**
+     * Back to top button
+     */
+    let backToTop = document.querySelector('.back_to_top')
+    if (backToTop) {
+        const toggleBackToTop = () => {
+            if (window.scrollY > 100) {
+                backToTop.classList.add('active')
+            } else {
+                backToTop.classList.remove('active')
+            }
+        }
+        window.addEventListener('load', toggleBackToTop)
+        document.addEventListener('scroll', toggleBackToTop)
+
+        backToTop.addEventListener('click', function (e) {
+            e.preventDefault()
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })
+        })
+    }
 });
 
 // Preloader
