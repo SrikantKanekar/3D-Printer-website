@@ -146,24 +146,6 @@ window.addEventListener('load', function () {
     }
 
     /**
-     * clear cart
-     */
-    $(".clear_cart_button").on('click', function (e) {
-        e.preventDefault();
-
-        const url = "/cart/clear";
-
-        $.post(url, {}, function (data) {
-            if (data === true) {
-                cart.style.display = 'none';
-                showAlert("Cleared cart", "alert-success");
-            } else {
-                showAlert("unknown error", "alert-danger");
-            }
-        });
-    });
-
-    /**
      * Coupon form
      */
     $(".coupon_button").on('click', function (e) {

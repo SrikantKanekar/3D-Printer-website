@@ -20,7 +20,6 @@ fun Application.registerCartRoute() {
         authenticate(USER_SESSION_AUTH) {
             getCartRoute(cartRepository)
             removeFromCart(cartRepository)
-            clearCart(cartRepository)
             updateQuantity(cartRepository)
         }
     }
@@ -46,14 +45,6 @@ private fun Route.removeFromCart(cartRepository: CartRepository) {
 
         val principal = call.principal<UserPrincipal>()!!
         val result = cartRepository.removeCartObject(principal.email, id)
-        call.respond(result)
-    }
-}
-
-private fun Route.clearCart(cartRepository: CartRepository) {
-    post("/cart/clear") {
-        val principal = call.principal<UserPrincipal>()!!
-        val result = cartRepository.clearCart(principal.email)
         call.respond(result)
     }
 }

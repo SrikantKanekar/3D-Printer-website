@@ -200,19 +200,6 @@
 }
 
 /*********************************
-3. Cart Buttons
-*********************************/
-.button_container {
-    width: 100%;
-    margin-top: 50px;
-    padding-right: 40px;
-}
-
-.clear_cart_button {
-    float: right;
-}
-
-/*********************************
 4. Coupon section
 *********************************/
 .row_extra {
@@ -457,12 +444,6 @@
     .item_price {
         font-size: 10px;
     }
-
-    .button_container {
-        margin-top: 40px;
-        padding-right: 20px;
-    }
-
 
     .quantity {
         max-width: 60px;

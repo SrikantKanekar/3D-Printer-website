@@ -72,15 +72,6 @@
                     </div>
                 </div>
 
-                <!--  clear button  -->
-                <div class="row">
-                    <div class="col button_container">
-                        <div class="button clear_cart_button">
-                            <a href="#">Clear cart</a>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row row_extra">
 
                     <!-- Coupon Code -->
