@@ -287,21 +287,21 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 59px;
+    height: 48px;
 }
 
 .list_title {
     font-size: 14px;
     font-weight: 400;
     color: var(--on-background);
-    width: 70%;
+    width: 68%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .list_details {
-    width: 30%;
+    width: 32%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -507,10 +507,6 @@
     .total_quantity,
     .total_value {
         font-size: 10px;
-    }
-
-    .list_bar {
-        margin-bottom: 30px;
     }
 
     .list_title {
