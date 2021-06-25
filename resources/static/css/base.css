@@ -46,7 +46,7 @@
 }
 
 .light_theme {
-    --primary: #d42c2e;
+    --primary: #d6383a;
     --primary-variant: #da0000;
     --background: #FFFFFF;
     --surface: rgb(246, 246, 246);
@@ -846,7 +846,7 @@ input[type=number] {
 }
 
 .btn-show-pass:hover {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 .btn-show-pass.active {
@@ -1016,6 +1016,16 @@ input[type=number] {
 @media only screen and (max-width: 600px) {
     p {
         font-size: 13px;
+    }
+
+    .section_title {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .section_subtitle {
+        font-size: 12px;
+        font-weight: 400;
     }
 
     .menu {

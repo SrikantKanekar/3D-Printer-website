@@ -203,7 +203,7 @@
 4. Coupon
 *********************************/
 .row_extra {
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
 .coupon_form_container {
@@ -489,5 +489,26 @@
 
     .list_details {
         width: 32%;
+    }
+
+    .row_extra {
+        margin-top: 50px;
+    }
+
+    .coupon_input {
+        height: 45px;
+    }
+
+    .coupon_button {
+        height: 45px;
+    }
+
+    .coupon_button span {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .coupon_button:hover span {
+        color: var(--surface);
     }
 }
