@@ -15,7 +15,7 @@
                         <div class="info_column clearfix">
                             <div class="info_object">Object</div>
                             <div class="info_price">Price</div>
-                            <div class="info_quantity">Qty</div>
+                            <div class="info_quantity">Qty.</div>
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                                 <div class="list_bar">
                                     <div class="list_title">Object</div>
                                     <div class="list_details">
-                                        <div class="list_quantity">Qty</div>
+                                        <div class="list_quantity">Qty.</div>
                                         <div class="list_price">Price</div>
                                     </div>
                                 </div>

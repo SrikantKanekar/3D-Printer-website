@@ -63,7 +63,7 @@
                                         </a>
                                     <#else>
                                         <a class="auth" href="/auth/login">
-                                            <div>SignIn</div>
+                                            <div>Sign In</div>
                                         </a>
                                     </#if>
                                 </div>

@@ -28,8 +28,8 @@
 }
 
 .list_title {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     color: var(--on-background);
     width: 80%;
     white-space: nowrap;
@@ -39,8 +39,8 @@
 
 .list_quantity,
 .list_price {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--on-background);
 }
 
@@ -121,13 +121,13 @@
     }
 
     .list_title {
-        font-size: 12px;
+        font-size: 13px;
         width: 60%;
     }
 
     .list_quantity,
     .list_price {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .list_details {

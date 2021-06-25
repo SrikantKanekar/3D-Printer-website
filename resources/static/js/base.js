@@ -152,9 +152,14 @@ document.addEventListener('DOMContentLoaded', function () {
      */
     let backToTop = document.querySelector('.back_to_top')
     if (backToTop) {
+        let timeoutHandler;
         const toggleBackToTop = () => {
             if (window.scrollY > 500) {
-                backToTop.classList.add('active')
+                backToTop.classList.add('active');
+                clearTimeout(timeoutHandler);
+                timeoutHandler = window.setTimeout(function () {
+                    backToTop.classList.remove('active')
+                }, 3000);
             } else {
                 backToTop.classList.remove('active')
             }

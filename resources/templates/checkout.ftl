@@ -104,7 +104,7 @@
                             <div class="list_bar">
                                 <div class="list_title">Object</div>
                                 <div class="list_details">
-                                    <div class="list_quantity">Qty</div>
+                                    <div class="list_quantity">Qty.</div>
                                     <div class="list_price">Price</div>
                                 </div>
                             </div>
