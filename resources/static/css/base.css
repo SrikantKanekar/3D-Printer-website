@@ -577,7 +577,7 @@ section {
 }
 
 .footer_logo a {
-    font-size: 30px;
+    font-size: 28px;
     line-height: 0.75;
     color: var(--on-background);
     font-weight: 700;
@@ -586,13 +586,13 @@ section {
 .copyright {
     width: 40%;
     text-align: center;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 400;
     color: var(--on-background);
 }
 
 .copyright a {
-    font-weight: 550;
+    font-weight: 450;
     color: var(--on-background);
 }
 
@@ -1054,8 +1054,8 @@ input[type=number] {
     }
 
     .button {
-        width: 158px;
-        height: 55px;
+        width: 134px;
+        height: 52px;
     }
 
     .button a {
@@ -1064,11 +1064,11 @@ input[type=number] {
     }
 
     .copyright {
-        font-size: 13px;
+        font-size: 10px;
     }
 
     .footer_logo a {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .input {

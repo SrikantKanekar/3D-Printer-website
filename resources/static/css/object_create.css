@@ -11,7 +11,7 @@
     font-size: 1.25rem;
     background-color: var(--surface);
     text-align: center;
-    padding: 100px 20px;
+    padding: 120px 20px 100px 20px;
     outline: 2px dashed var(--on-surface);
     outline-offset: -10px;
     -webkit-transition: all 300ms ease;
@@ -35,7 +35,7 @@
     height: 80px;
     fill: var(--on-surface);
     display: block;
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 .box.is_uploading_file .box_upload,
@@ -233,7 +233,7 @@
 @media only screen and (max-width: 992px) {
     .box {
         font-size: 1rem;
-        padding: 60px 20px;
+        padding: 90px 20px 55px 20px;
     }
 }
 
@@ -244,12 +244,12 @@
 @media only screen and (max-width: 600px) {
     .box {
         font-size: 0.9rem;
-        padding: 35px 15px;
+        padding: 55px 15px 20px 15px;
+        outline: 1px dashed var(--on-surface);
     }
 
     .box_icon {
-        height: 50px;
-        margin-top: 20px;
+        height: 40px;
         margin-bottom: 20px;
     }
 
