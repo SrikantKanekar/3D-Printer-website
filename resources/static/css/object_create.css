@@ -156,7 +156,7 @@
 }
 
 .box_input + label:hover strong {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 .progress_container {

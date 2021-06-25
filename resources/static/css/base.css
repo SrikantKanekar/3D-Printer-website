@@ -28,43 +28,38 @@
 }
 
 :root {
-    --primary: #de4648;
-    --primary-variant: #e53436;
+    --primary: #e86363;
+    --primary-variant: #e85051;
     --background: #121212;
     --surface: #1b1b1b;
     --surface-hover: rgba(29, 29, 29, 0.64);
     --error: #CF6679;
     --success: #18d26e;
-
     --on-primary: #000000;
     --on-background: rgba(255, 255, 255, 0.87);
     --on-surface: rgba(255, 255, 255, 0.6);
     --on-surface-hover: rgba(255, 255, 255, 0.8);
     --on-error: #000000;
-
     --menu-background: #282828;
     --border-light: rgba(255, 255, 255, 0.5);
     --border-dark: rgba(255, 255, 255, 0.15);
 }
 
 .light_theme {
-    --primary: #e23f41;
-    --primary-variant: #e53436;
+    --primary: #d42c2e;
+    --primary-variant: #da0000;
     --background: #FFFFFF;
     --surface: rgb(246, 246, 246);
     --surface-hover: rgba(242, 244, 248, 0.66);
     --error: #B00020;
     --success: #61de4a;
-
     --on-primary: #FFFFFF;
     --on-background: #1b1b1b;
     --on-surface: #767676;
     --on-surface-hover: #5f5e5e;
     --on-error: #FFFFFF;
-
     --menu-background: #e4e4e4;
     --border-light: #d0d0d0;
-    /*rgba(0, 0, 0, 0.2)*/
     --border-dark: #1b1b1b;
 }
 
@@ -298,12 +293,12 @@ section {
 .main_nav > ul > li > a {
     font-size: 16px;
     font-weight: 600;
-    color: var(--on-surface);
+    color: var(--on-background);
 }
 
 .main_nav > ul > li > a:hover,
 .main_nav > ul > li.active > a {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 .main_nav ul li.hassubs::after {
@@ -313,7 +308,7 @@ section {
     font-family: "FontAwesome", sans-serif;
     font-size: 10px;
     content: "\f078";
-    color: var(--on-surface);
+    color: var(--on-background);
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
@@ -323,7 +318,7 @@ section {
 
 .main_nav ul li:hover::after,
 .main_nav ul li.active::after {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 .hassubs ul {
@@ -350,14 +345,11 @@ section {
 .hassubs ul li a {
     font-size: 14px;
     font-weight: 600;
-    color: var(--on-surface);
-}
-
-.hassubs ul li a:hover {
     color: var(--on-background);
 }
 
-.header_extra {
+.hassubs ul li a:hover {
+    color: var(--primary);
 }
 
 .shopping_cart {
@@ -369,13 +361,13 @@ section {
     width: 20px;
     height: 20px;
     vertical-align: middle;
-    fill: var(--on-surface);
+    fill: var(--on-background);
 }
 
 .shopping_cart a:hover svg,
 .shopping_cart a:hover div {
-    fill: var(--on-background);
-    color: var(--on-background);
+    fill: var(--primary);
+    color: var(--primary);
 }
 
 .shopping_cart a div {
@@ -383,7 +375,7 @@ section {
     vertical-align: middle;
     font-size: 15px;
     font-weight: 600;
-    color: var(--on-surface);
+    color: var(--on-background);
     margin-left: 13px;
 }
 
@@ -403,7 +395,7 @@ section {
 }
 
 .theme_icon i:hover {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 .hamburger {
@@ -583,6 +575,10 @@ section {
     font-weight: 700;
 }
 
+.footer_logo a:hover {
+    color: var(--primary);
+}
+
 .copyright {
     width: 40%;
     text-align: center;
@@ -611,11 +607,11 @@ section {
 
 .footer_social ul li a i {
     font-size: 17px;
-    color: var(--on-surface);
+    color: var(--on-background);
 }
 
 .footer_social ul li a i:hover {
-    color: var(--on-surface-hover);
+    color: var(--primary);
 }
 
 /*********************************
