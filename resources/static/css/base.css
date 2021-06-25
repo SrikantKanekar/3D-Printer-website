@@ -230,6 +230,10 @@ section {
     transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 
+.button:hover {
+    border: solid 2px var(--surface);
+}
+
 .button:hover a {
     color: var(--surface);
 }

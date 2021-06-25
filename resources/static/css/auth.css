@@ -11,15 +11,14 @@
 
 .txt3 {
     font-size: 16px;
-    color: var(--on-surface);
+    color: var(--on-background);
     line-height: 1.2;
     font-weight: 600;
-    vertical-align: text-bottom;
     text-transform: uppercase;
 }
 
 .txt3:hover {
-    color: var(--on-background);
+    color: var(--primary);
 }
 
 /************
