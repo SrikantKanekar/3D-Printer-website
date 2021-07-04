@@ -3,7 +3,7 @@ package tests
 import com.example.features.`object`.domain.ObjectStatus.NONE
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.domain.AdminPrincipal
-import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
@@ -62,9 +62,7 @@ fun TestApplicationEngine.userLogin() {
     ) {
         val userPrincipal = response.call.sessions.get<UserPrincipal>()!!
         assertEquals(TEST_USER_EMAIL, userPrincipal.email)
-
         assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
-        assertEquals(HttpStatusCode.OK, response.status())
     }
 }
 

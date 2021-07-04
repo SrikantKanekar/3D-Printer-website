@@ -13,6 +13,11 @@ class TestRepository(
         return userDataSource.getUser(email)
     }
 
+    suspend fun doesUserExist(email: String): Boolean {
+        val user = userDataSource.getUserOrNull(email)
+        return user != null
+    }
+
     suspend fun getUserObject(email: String, id: String): Object? {
         val user = userDataSource.getUser(email)
         return user.objects.find { it.id == id }
