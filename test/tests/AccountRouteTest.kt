@@ -1,40 +1,37 @@
 package tests
 
-import com.example.features.account.domain.Constants
 import com.example.features.account.domain.Constants.INCORRECT_PASSWORD
+import com.example.features.account.domain.Constants.PASSWORD_DO_NOT_MATCH
 import com.example.features.auth.domain.checkHashForPassword
-import com.example.module
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
-import di.testModules
+import data.TestConstants.UPDATED_USERNAME
 import fakeDataSource.TestRepository
 import io.ktor.http.*
-import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
-import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class AccountRouteTest : KoinTest {
 
     @Test
-    fun `trial test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-
+    fun `should return unauthorised if user is not logged`() {
+        runTest {
+            handleGetRequest("/account") {
+                assertEquals(HttpStatusCode.Unauthorized, response.status())
+            }
         }
     }
 
     @Test
-    fun `get account route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/account").apply {
-                assertEquals(HttpStatusCode.Unauthorized, response.status())
-            }
-            runWithTestUser {
-                handleRequest(HttpMethod.Get, "/account").apply {
+    fun `should return ok if user is logged`() {
+        runTest {
+            runWithLoggedUser {
+                handleGetRequest("/account") {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
@@ -42,23 +39,17 @@ class AccountRouteTest : KoinTest {
     }
 
     @Test
-    fun `update username success`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Post, "/account/update") {
-                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
-                    setBody(
-                        listOf(
-                            "username" to "UPDATED_USERNAME"
-                        ).formUrlEncode()
-                    )
-                }.apply {
+    fun `should return updated username`() {
+        runTest {
+            runWithLoggedUser {
+                handlePostRequest(
+                    "/account/update",
+                    listOf("username" to UPDATED_USERNAME)
+                ) {
                     runBlocking {
-                        assertEquals(HttpStatusCode.OK, response.status())
-
                         val testRepository by inject<TestRepository>()
                         val user = testRepository.getUser(TEST_USER_EMAIL)
-                        assertEquals("UPDATED_USERNAME", user.username)
+                        assertEquals(UPDATED_USERNAME, user.username)
                     }
                 }
             }
@@ -66,39 +57,35 @@ class AccountRouteTest : KoinTest {
     }
 
     @Test
-    fun `reset password failure password don't match`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Post, "/account/reset-password") {
-                    addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
-                    setBody(
-                        listOf(
-                            "old_password" to TEST_USER_PASSWORD,
-                            "new_password" to "abcd",
-                            "confirm_password" to "1234",
-                        ).formUrlEncode()
+    fun `should return error if passwords don't match`() {
+        runTest {
+            runWithLoggedUser {
+                handlePostRequest(
+                    "/account/reset-password",
+                    listOf(
+                        "old_password" to TEST_USER_PASSWORD,
+                        "new_password" to "1111",
+                        "confirm_password" to "2222",
                     )
-                }.apply {
-                    assertEquals(Constants.PASSWORD_DO_NOT_MATCH, response.content)
+                ) {
+                    assertEquals(PASSWORD_DO_NOT_MATCH, response.content)
                 }
             }
         }
     }
 
     @Test
-    fun `reset password failure old password incorrect`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Post, "/account/reset-password") {
-                    addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
-                    setBody(
-                        listOf(
-                            "old_password" to "Invalid password",
-                            "new_password" to "abcd",
-                            "confirm_password" to "abcd",
-                        ).formUrlEncode()
+    fun `should return error if old password is incorrect`() {
+        runTest {
+            runWithLoggedUser {
+                handlePostRequest(
+                    "/account/reset-password",
+                    listOf(
+                        "old_password" to "Invalid password",
+                        "new_password" to "1111",
+                        "confirm_password" to "1111"
                     )
-                }.apply {
+                ) {
                     assertEquals(INCORRECT_PASSWORD, response.content)
                 }
             }
@@ -106,36 +93,33 @@ class AccountRouteTest : KoinTest {
     }
 
     @Test
-    fun `reset password success`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Post, "/account/reset-password") {
-                    addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
-                    setBody(
-                        listOf(
-                            "old_password" to TEST_USER_PASSWORD,
-                            "new_password" to "abcd",
-                            "confirm_password" to "abcd",
-                        ).formUrlEncode()
+    fun `should return updated password if reset is successful`() {
+        runTest {
+            runWithLoggedUser {
+                handlePostRequest(
+                    "/account/reset-password",
+                    listOf(
+                        "old_password" to TEST_USER_PASSWORD,
+                        "new_password" to "1111",
+                        "confirm_password" to "1111"
                     )
-                }.apply {
-                    assertEquals(HttpStatusCode.OK, response.status())
+                ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val user = testRepository.getUser(TEST_USER_EMAIL)
-                        assertFalse(checkHashForPassword(TEST_USER_PASSWORD, user.password))
+                        assertTrue(checkHashForPassword("1111", user.password))
                     }
                 }
-                assertFails { testUserLogin() }
+                assertFails { userLogin() }
             }
         }
     }
 
     @Test
-    fun `logout success`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
-                handleRequest(HttpMethod.Get, "/account/logout").apply {
+    fun `should redirect if logout is successful`() {
+        runTest {
+            runWithLoggedUser {
+                handleGetRequest("/account/logout") {
                     assertEquals(HttpStatusCode.Found, response.status())
                 }
             }

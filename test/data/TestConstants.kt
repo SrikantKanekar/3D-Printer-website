@@ -2,11 +2,13 @@ package data
 
 object TestConstants {
 
-    const val TEST_USER_USERNAME = "TEST_USER_USERNAME"
     const val TEST_USER_EMAIL = "TEST_USER_EMAIL"
     const val TEST_USER_PASSWORD = "TEST_USER_PASSWORD"
     const val TEST_USER_HASHED_PASSWORD = "c7b05e42bc0a4777fc6699ca2e1a5c2b42404c520fd05dddb602a2f4cf2561e1:88c855955c858b31c36500cc34e77218c83b5005e5b1585b0a2a7eabfd440781"
+    const val TEST_USER_USERNAME = "TEST_USER_USERNAME"
     const val TEST_USER_ADDRESS = "TEST_USER_ADDRESS"
+
+    const val UPDATED_USERNAME = "UPDATED_USERNAME"
 
     const val TEST_USER_OBJECT = "TEST_USER_OBJECT"
     const val TEST_CART_OBJECT1 = "TEST_CART_OBJECT1"
@@ -26,5 +28,4 @@ object TestConstants {
     const val TEST_FILE_UPLOAD_NAME = "TEST_FILE_UPLOAD_NAME"
 
     const val TEST_OBJECT_IMAGE_LINK = "/static/images/3d-image.jpg"
-    val TEST_UPLOAD_FILE_CONTENT = byteArrayOf(1, 2, 3)
 }

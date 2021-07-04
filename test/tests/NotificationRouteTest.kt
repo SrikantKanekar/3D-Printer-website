@@ -16,7 +16,7 @@ class NotificationRouteTest {
             handleRequest(HttpMethod.Get, "/notification").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/notification").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -27,7 +27,7 @@ class NotificationRouteTest {
     @Test
     fun `get notification success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/notification/$TEST_NOTIFICATION").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -38,7 +38,7 @@ class NotificationRouteTest {
     @Test
     fun `get notification invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/notification/invalid-id").apply {
                     assertEquals(HttpStatusCode.NotFound, response.status())
                 }

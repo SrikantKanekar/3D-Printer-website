@@ -28,7 +28,7 @@ class CheckoutRouteTest : KoinTest {
             handleRequest(HttpMethod.Get, "/checkout").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/checkout").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -56,7 +56,7 @@ class CheckoutRouteTest : KoinTest {
     @Test
     fun `remove from checkout invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/checkout/invalid-object-id/remove").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
@@ -67,7 +67,7 @@ class CheckoutRouteTest : KoinTest {
     @Test
     fun `proceed to pay success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/checkout/pay") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(

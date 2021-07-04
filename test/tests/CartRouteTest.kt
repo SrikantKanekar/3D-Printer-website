@@ -25,7 +25,7 @@ class CartRouteTest : KoinTest {
             handleRequest(HttpMethod.Get, "/cart").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/cart").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -36,7 +36,7 @@ class CartRouteTest : KoinTest {
     @Test
     fun `remove from cart success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/cart/remove"){
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("id" to TEST_CART_OBJECT1).formUrlEncode())

@@ -26,7 +26,7 @@ class OrderRouteTest: KoinTest {
             handleRequest(HttpMethod.Get, "/order/$TEST_PLACED_ORDER").apply {
                 assertEquals(HttpStatusCode.NotFound, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/order/$TEST_PROCESSING_ORDER").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -45,7 +45,7 @@ class OrderRouteTest: KoinTest {
             handleRequest(HttpMethod.Get, "/order/invalid-order-id").apply {
                 assertEquals(HttpStatusCode.NotFound, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/order/invalid-order-id").apply {
                     assertEquals(HttpStatusCode.NotFound, response.status())
                 }

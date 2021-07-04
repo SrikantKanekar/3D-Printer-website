@@ -10,7 +10,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.`create object after user login`
 import tests.`create object before user login`
-import tests.runWithTestUser
+import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
 class ObjectCreateTest : KoinTest {
@@ -23,7 +23,7 @@ class ObjectCreateTest : KoinTest {
             handleRequest(HttpMethod.Get, "/object/create").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/object/create").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -41,7 +41,7 @@ class ObjectCreateTest : KoinTest {
     @Test
     fun `create object after user login Test`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 `create object after user login`(accountRepository)
             }
         }

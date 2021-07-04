@@ -6,48 +6,60 @@ import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
+import com.example.module
 import data.TestConstants.TEST_CREATED_OBJECT
-import data.TestConstants.TEST_FILE_UPLOAD_NAME
-import data.TestConstants.TEST_UPLOAD_FILE_CONTENT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
+import di.testModules
 import io.ktor.http.*
-import io.ktor.http.content.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
-import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
-val testUploadFile = PartData.FileItem(
-    { TEST_UPLOAD_FILE_CONTENT.inputStream().asInput() },
-    { },
-    headersOf(
-        HttpHeaders.ContentDisposition,
-        ContentDisposition.Inline
-            .withParameter(ContentDisposition.Parameters.FileName, TEST_FILE_UPLOAD_NAME)
-            .toString()
-    )
-)
-
 val formUrlEncoded = ContentType.Application.FormUrlEncoded.toString()
 
-val multiPart = ContentType.MultiPart.FormData
-    .withParameter("boundary", "boundary")
-    .toString()
+fun runTest(test: TestApplicationEngine.() -> Unit) {
+    withTestApplication({ module(testing = true, koinModules = testModules) }) {
+        test()
+    }
+}
 
-fun TestApplicationEngine.testUserLogin() {
-    handleRequest(HttpMethod.Post, "/auth/login") {
-        addHeader(HttpHeaders.ContentType, formUrlEncoded)
-        setBody(
-            listOf(
-                "Email" to TEST_USER_EMAIL,
-                "Password" to TEST_USER_PASSWORD
-            ).formUrlEncode()
+fun TestApplicationEngine.handleGetRequest(
+    uri: String,
+    assert: TestApplicationCall.() -> Unit
+) {
+    handleRequest(HttpMethod.Get, uri).apply {
+        assert()
+    }
+}
+
+fun TestApplicationEngine.handlePostRequest(
+    uri: String,
+    body: List<Pair<String, String?>> = listOf(),
+    assert: TestApplicationCall.() -> Unit
+) {
+    handleRequest(HttpMethod.Post, uri) {
+        addHeader(
+            HttpHeaders.ContentType,
+            ContentType.Application.FormUrlEncoded.toString()
         )
+        setBody(body.formUrlEncode())
     }.apply {
+        assert()
+    }
+}
+
+fun TestApplicationEngine.userLogin() {
+    handlePostRequest(
+        "/auth/login",
+        listOf(
+            "Email" to TEST_USER_EMAIL,
+            "Password" to TEST_USER_PASSWORD
+        )
+    ) {
         val userPrincipal = response.call.sessions.get<UserPrincipal>()!!
         assertEquals(TEST_USER_EMAIL, userPrincipal.email)
 
@@ -57,24 +69,22 @@ fun TestApplicationEngine.testUserLogin() {
 }
 
 fun TestApplicationEngine.adminLogin() {
-    handleRequest(HttpMethod.Post, "/admin/login") {
-        addHeader(HttpHeaders.ContentType, formUrlEncoded)
-        setBody(
-            listOf(
-                "name" to "admin",
-                "Password" to "password"
-            ).formUrlEncode()
+    handlePostRequest(
+        "/admin/login",
+        listOf(
+            "name" to "admin",
+            "Password" to "password"
         )
-    }.apply {
+    ) {
         val adminPrincipal = response.call.sessions.get<AdminPrincipal>()!!
         assertEquals("admin", adminPrincipal.name)
         assertEquals(HttpStatusCode.OK, response.status())
     }
 }
 
-fun TestApplicationEngine.runWithTestUser(test: TestApplicationEngine.() -> Unit) {
+fun TestApplicationEngine.runWithLoggedUser(test: TestApplicationEngine.() -> Unit) {
     cookiesSession {
-        testUserLogin()
+        userLogin()
         test()
     }
 }
@@ -88,8 +98,7 @@ fun TestApplicationEngine.runWithAdminUser(test: TestApplicationEngine.() -> Uni
 
 fun TestApplicationEngine.`create object before user login`() {
     handleRequest(HttpMethod.Post, "/object/create") {
-        addHeader(HttpHeaders.ContentType, multiPart)
-        setBody("boundary", listOf(testUploadFile))
+        addHeader(HttpHeaders.ContentType, formUrlEncoded)
     }.apply {
         runBlocking {
             val cookie = response.call.sessions.get<ObjectsCookie>()!!
@@ -104,8 +113,7 @@ fun TestApplicationEngine.`create object after user login`(
     accountRepository: AccountRepository
 ) {
     handleRequest(HttpMethod.Post, "/object/create") {
-        addHeader(HttpHeaders.ContentType, multiPart)
-        setBody("boundary", listOf(testUploadFile))
+        addHeader(HttpHeaders.ContentType, formUrlEncoded)
     }.apply {
         runBlocking {
             val obj = accountRepository.getUser(TEST_USER_EMAIL).objects

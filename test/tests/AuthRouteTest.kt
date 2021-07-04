@@ -41,7 +41,7 @@ class AuthRouteTest : KoinTest {
     @Test
     fun `login success with valid credentials`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            testUserLogin()
+            userLogin()
         }
     }
 
@@ -67,7 +67,7 @@ class AuthRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             cookiesSession {
                 `create object before user login`()
-                testUserLogin()
+                userLogin()
                 runBlocking {
                     val obj = accountRepository.getUser(TEST_USER_EMAIL)
                         .objects

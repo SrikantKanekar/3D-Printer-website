@@ -12,7 +12,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.`create object before user login`
 import tests.formUrlEncoded
-import tests.runWithTestUser
+import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
 class ObjectUpdateTest : KoinTest {
@@ -37,7 +37,7 @@ class ObjectUpdateTest : KoinTest {
     @Test
     fun `get update object route after login`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/object/$TEST_USER_OBJECT").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -99,7 +99,7 @@ class ObjectUpdateTest : KoinTest {
     @Test
     fun `update basic settings after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/object/invalid-object-id/basic") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("size" to "100").formUrlEncode())
@@ -161,7 +161,7 @@ class ObjectUpdateTest : KoinTest {
     @Test
     fun `update advanced settings after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/object/invalid-object-id/advanced") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("weight" to "100").formUrlEncode())

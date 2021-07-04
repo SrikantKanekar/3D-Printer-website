@@ -15,7 +15,7 @@ class OrdersRouteTest {
             handleRequest(HttpMethod.Get, "/orders").apply {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/orders").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }

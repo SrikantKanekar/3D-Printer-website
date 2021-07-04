@@ -31,7 +31,7 @@ class ObjectsRouteTest : KoinTest {
             handleRequest(HttpMethod.Get, "/objects").apply {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/objects").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
@@ -58,7 +58,7 @@ class ObjectsRouteTest : KoinTest {
     @Test
     fun `delete user object after login success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 `create object after user login`(accountRepository)
                 handleRequest(HttpMethod.Get, "/objects/$TEST_CREATED_OBJECT/delete").apply {
                     runBlocking {
@@ -83,7 +83,7 @@ class ObjectsRouteTest : KoinTest {
     @Test
     fun `delete user object after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Get, "/objects/invalid-object-id/delete").apply {
                     assertEquals(HttpStatusCode.NotAcceptable, response.status())
                 }
@@ -106,7 +106,7 @@ class ObjectsRouteTest : KoinTest {
     @Test
     fun `add to cart after login success`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/objects/add-to-cart") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
@@ -125,7 +125,7 @@ class ObjectsRouteTest : KoinTest {
     @Test
     fun `add to cart after login invalid ID`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            runWithTestUser {
+            runWithLoggedUser {
                 handleRequest(HttpMethod.Post, "/objects/add-to-cart") {
                     addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(listOf("id" to TEST_USER_OBJECT).formUrlEncode())
