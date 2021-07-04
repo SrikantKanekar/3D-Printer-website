@@ -3,10 +3,10 @@ package tests
 import com.example.features.`object`.domain.ObjectStatus.TRACKING
 import com.example.features.account.data.AccountRepository
 import com.example.features.admin.data.AdminRepository
-import com.example.features.order.domain.OrderStatus.*
+import com.example.features.order.domain.OrderStatus.PLACED
 import com.example.module
-import data.Constants.TEST_CREATED_ORDER
-import data.Constants.TEST_USER_EMAIL
+import data.TestConstants.TEST_CREATED_ORDER
+import data.TestConstants.TEST_USER_EMAIL
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

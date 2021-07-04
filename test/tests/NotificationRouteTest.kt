@@ -1,7 +1,7 @@
 package tests
 
 import com.example.module
-import data.Constants.TEST_NOTIFICATION
+import data.TestConstants.TEST_NOTIFICATION
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

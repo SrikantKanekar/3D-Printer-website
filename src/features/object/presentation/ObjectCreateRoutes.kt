@@ -33,7 +33,7 @@ fun Route.getCreateObjectRoute() {
  * * All steps happens on the client side except the last one
     User Uploads object...
     1) display object in the editor
-    2) check dimensions of object TODO()
+    2) check dimensions of object
     3) if any error...(show error message and retry button)
     4) else show create button
 

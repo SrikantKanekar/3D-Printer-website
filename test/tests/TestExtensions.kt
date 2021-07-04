@@ -6,18 +6,20 @@ import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
-import data.Constants.TEST_CREATED_OBJECT
-import data.Constants.TEST_FILE_UPLOAD_NAME
-import data.Constants.TEST_UPLOAD_FILE_CONTENT
-import data.Constants.TEST_USER_EMAIL
-import data.Constants.TEST_USER_PASSWORD
+import data.TestConstants.TEST_CREATED_OBJECT
+import data.TestConstants.TEST_FILE_UPLOAD_NAME
+import data.TestConstants.TEST_UPLOAD_FILE_CONTENT
+import data.TestConstants.TEST_USER_EMAIL
+import data.TestConstants.TEST_USER_PASSWORD
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.runBlocking
-import kotlin.test.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 
 val testUploadFile = PartData.FileItem(
     { TEST_UPLOAD_FILE_CONTENT.inputStream().asInput() },

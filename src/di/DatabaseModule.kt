@@ -11,7 +11,7 @@ import com.example.database.users
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val dataModule = module {
+val databaseModule = module {
 
     single(named(COLLECTION_USER)) { users }
     single(named(COLLECTION_ORDER)) { orders }

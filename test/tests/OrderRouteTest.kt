@@ -2,10 +2,10 @@ package tests
 
 import com.example.features.account.data.AccountRepository
 import com.example.module
-import data.Constants.TEST_PLACED_ORDER
-import data.Constants.TEST_PROCESSING_ORDER
-import data.Constants.TEST_TRACKING_OBJECT
-import data.Constants.TEST_USER_EMAIL
+import data.TestConstants.TEST_PLACED_ORDER
+import data.TestConstants.TEST_PROCESSING_ORDER
+import data.TestConstants.TEST_TRACKING_OBJECT
+import data.TestConstants.TEST_USER_EMAIL
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

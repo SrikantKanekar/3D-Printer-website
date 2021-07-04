@@ -1,23 +1,19 @@
 package tests.objectRoute
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
-import data.Constants
-import data.Constants.TEST_CREATED_OBJECT
-import data.Constants.TEST_USER_EMAIL
-import data.Constants.TEST_USER_OBJECT
+import data.TestConstants.TEST_CREATED_OBJECT
+import data.TestConstants.TEST_USER_OBJECT
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import io.ktor.sessions.*
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.*
+import tests.`create object before user login`
+import tests.formUrlEncoded
+import tests.runWithTestUser
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class ObjectUpdateTest : KoinTest {
 

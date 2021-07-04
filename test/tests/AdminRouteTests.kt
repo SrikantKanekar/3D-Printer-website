@@ -2,7 +2,7 @@ package tests
 
 import com.example.features.account.data.AccountRepository
 import com.example.module
-import data.Constants.TEST_PLACED_ORDER
+import data.TestConstants.TEST_PLACED_ORDER
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

@@ -2,4 +2,4 @@ package di
 
 import com.example.di.repositoryModule
 
-val testModules = listOf(testDataModule, repositoryModule)
+val testModules = listOf(fakeDatabaseModule, repositoryModule)

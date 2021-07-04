@@ -3,7 +3,7 @@ package fakeDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.Object
 import com.example.features.account.domain.User
-import data.Constants.TEST_CREATED_OBJECT
+import data.TestConstants.TEST_CREATED_OBJECT
 
 class FakeUserDataSourceImpl(
     private val users: HashMap<String, User>

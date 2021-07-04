@@ -2,12 +2,12 @@ package data
 
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus.*
-import data.Constants.TEST_DELIVERED_ORDER
-import data.Constants.TEST_DELIVERING_ORDER
-import data.Constants.TEST_PLACED_ORDER
-import data.Constants.TEST_PROCESSING_ORDER
-import data.Constants.TEST_TRACKING_OBJECT
-import data.Constants.TEST_USER_EMAIL
+import data.TestConstants.TEST_DELIVERED_ORDER
+import data.TestConstants.TEST_DELIVERING_ORDER
+import data.TestConstants.TEST_PLACED_ORDER
+import data.TestConstants.TEST_PROCESSING_ORDER
+import data.TestConstants.TEST_TRACKING_OBJECT
+import data.TestConstants.TEST_USER_EMAIL
 import kotlinx.datetime.Clock
 import java.util.*
 import kotlin.random.Random

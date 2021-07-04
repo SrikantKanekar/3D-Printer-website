@@ -1,11 +1,10 @@
 package tests
 
-import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.`object`.domain.ObjectStatus.NONE
 import com.example.features.account.data.AccountRepository
 import com.example.module
-import data.Constants
-import data.Constants.TEST_CART_OBJECT1
-import data.Constants.TEST_USER_EMAIL
+import data.TestConstants.TEST_CART_OBJECT1
+import data.TestConstants.TEST_USER_EMAIL
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

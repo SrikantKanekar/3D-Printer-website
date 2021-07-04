@@ -1,3 +1,3 @@
 package com.example.di
 
-val productionModules = listOf(dataModule, repositoryModule)
+val productionModules = listOf(databaseModule, repositoryModule)

@@ -5,18 +5,18 @@ import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import com.example.features.notification.domain.Notification
-import data.Constants.TEST_CART_OBJECT1
-import data.Constants.TEST_CART_OBJECT2
-import data.Constants.TEST_COMPLETED_OBJECT
-import data.Constants.TEST_NOTIFICATION
-import data.Constants.TEST_OBJECT_IMAGE_LINK
-import data.Constants.TEST_PROCESSING_ORDER
-import data.Constants.TEST_TRACKING_OBJECT
-import data.Constants.TEST_USER_ADDRESS
-import data.Constants.TEST_USER_EMAIL
-import data.Constants.TEST_USER_HASHED_PASSWORD
-import data.Constants.TEST_USER_OBJECT
-import data.Constants.TEST_USER_USERNAME
+import data.TestConstants.TEST_CART_OBJECT1
+import data.TestConstants.TEST_CART_OBJECT2
+import data.TestConstants.TEST_COMPLETED_OBJECT
+import data.TestConstants.TEST_NOTIFICATION
+import data.TestConstants.TEST_OBJECT_IMAGE_LINK
+import data.TestConstants.TEST_PROCESSING_ORDER
+import data.TestConstants.TEST_TRACKING_OBJECT
+import data.TestConstants.TEST_USER_ADDRESS
+import data.TestConstants.TEST_USER_EMAIL
+import data.TestConstants.TEST_USER_HASHED_PASSWORD
+import data.TestConstants.TEST_USER_OBJECT
+import data.TestConstants.TEST_USER_USERNAME
 import java.util.*
 
 val testUser = User(

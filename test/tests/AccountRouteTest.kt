@@ -1,13 +1,13 @@
 package tests
 
-import com.example.features.account.data.AccountRepository
 import com.example.features.account.domain.Constants
 import com.example.features.account.domain.Constants.INCORRECT_PASSWORD
-import com.example.module
 import com.example.features.auth.domain.checkHashForPassword
-import data.Constants.TEST_USER_EMAIL
-import data.Constants.TEST_USER_PASSWORD
+import com.example.module
+import data.TestConstants.TEST_USER_EMAIL
+import data.TestConstants.TEST_USER_PASSWORD
 import di.testModules
+import fakeDataSource.TestRepository
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
@@ -20,7 +20,12 @@ import kotlin.test.assertFalse
 
 class AccountRouteTest : KoinTest {
 
-    private val accountRepository by inject<AccountRepository>()
+    @Test
+    fun `trial test`() {
+        withTestApplication({ module(testing = true, koinModules = testModules) }) {
+
+        }
+    }
 
     @Test
     fun `get account route test`() {
@@ -41,7 +46,7 @@ class AccountRouteTest : KoinTest {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithTestUser {
                 handleRequest(HttpMethod.Post, "/account/update") {
-                    addHeader(HttpHeaders.ContentType, ContentType.Application.FormUrlEncoded.toString())
+                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
                     setBody(
                         listOf(
                             "username" to "UPDATED_USERNAME"
@@ -50,7 +55,10 @@ class AccountRouteTest : KoinTest {
                 }.apply {
                     runBlocking {
                         assertEquals(HttpStatusCode.OK, response.status())
-                        assertEquals("UPDATED_USERNAME", accountRepository.getUser(TEST_USER_EMAIL).username)
+
+                        val testRepository by inject<TestRepository>()
+                        val user = testRepository.getUser(TEST_USER_EMAIL)
+                        assertEquals("UPDATED_USERNAME", user.username)
                     }
                 }
             }
@@ -113,12 +121,9 @@ class AccountRouteTest : KoinTest {
                 }.apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                     runBlocking {
-                        assertFalse(
-                            checkHashForPassword(
-                                TEST_USER_PASSWORD,
-                                accountRepository.getUser(TEST_USER_EMAIL).password
-                            )
-                        )
+                        val testRepository by inject<TestRepository>()
+                        val user = testRepository.getUser(TEST_USER_EMAIL)
+                        assertFalse(checkHashForPassword(TEST_USER_PASSWORD, user.password))
                     }
                 }
                 assertFails { testUserLogin() }

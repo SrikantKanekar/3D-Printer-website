@@ -7,11 +7,11 @@ import com.example.features.auth.domain.Constants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.Constants.PASSWORDS_DO_NOT_MATCH
 import com.example.features.auth.domain.UserPrincipal
 import com.example.module
-import data.Constants.TEST_CREATED_OBJECT
-import data.Constants.TEST_FILE_UPLOAD_NAME
-import data.Constants.TEST_USER_EMAIL
-import data.Constants.TEST_USER_PASSWORD
-import data.Constants.TEST_USER_USERNAME
+import data.TestConstants.TEST_CREATED_OBJECT
+import data.TestConstants.TEST_FILE_UPLOAD_NAME
+import data.TestConstants.TEST_USER_EMAIL
+import data.TestConstants.TEST_USER_PASSWORD
+import data.TestConstants.TEST_USER_USERNAME
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*

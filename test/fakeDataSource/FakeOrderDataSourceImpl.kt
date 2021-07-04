@@ -4,7 +4,7 @@ import com.example.database.order.OrderDataSource
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
 import com.example.features.order.domain.OrderStatus.DELIVERED
-import data.Constants.TEST_CREATED_ORDER
+import data.TestConstants.TEST_CREATED_ORDER
 
 class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
