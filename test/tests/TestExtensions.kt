@@ -1,7 +1,5 @@
 package tests
 
-import com.example.features.`object`.domain.ObjectStatus.NONE
-import com.example.features.account.data.AccountRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
@@ -14,7 +12,6 @@ import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
-import kotlinx.coroutines.runBlocking
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
@@ -105,27 +102,10 @@ fun TestApplicationEngine.`create object before user login`() {
             "file_extension" to "stl",
         )
     ) {
-        runBlocking {
-            val cookie = response.call.sessions.get<ObjectsCookie>()!!
-            assertNotNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
-            assertEquals(TEST_CREATED_OBJECT, response.content)
-        }
-    }
-}
+        val cookie = response.call.sessions.get<ObjectsCookie>()!!
+        val cookieObject = cookie.objects.find { it.id == TEST_CREATED_OBJECT }
+        assertNotNull(cookieObject)
 
-// must be called inside runWithTestUser
-fun TestApplicationEngine.`create object after user login`(
-    accountRepository: AccountRepository
-) {
-    handleRequest(HttpMethod.Post, "/object/create") {
-        addHeader(HttpHeaders.ContentType, formUrlEncoded)
-    }.apply {
-        runBlocking {
-            val obj = accountRepository.getUser(TEST_USER_EMAIL).objects
-                .filter { it.status == NONE }
-                .find { it.id == TEST_CREATED_OBJECT }
-            assertNotNull(obj)
-            assertEquals(HttpStatusCode.OK, response.status())
-        }
+        assertEquals(TEST_CREATED_OBJECT, response.content)
     }
 }

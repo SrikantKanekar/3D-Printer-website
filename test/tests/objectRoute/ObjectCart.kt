@@ -1,4 +1,4 @@
-package tests.objectsRoute
+package tests.objectRoute
 
 import com.example.features.`object`.domain.ObjectStatus.CART
 import data.TestConstants.TEST_INVALID_ID
@@ -18,13 +18,13 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class ObjectsCartTest : KoinTest {
+class ObjectCart : KoinTest {
 
     @Test
     fun `should redirect if user not logged`() {
         runTest {
             handlePostRequest(
-                "/objects/add-to-cart",
+                "/object/add-to-cart",
                 listOf("id" to TEST_SLICED_OBJECT)
             ) {
                 assertNotEquals("true", response.content)
@@ -37,7 +37,7 @@ class ObjectsCartTest : KoinTest {
         runTest {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/objects/add-to-cart",
+                    "/object/add-to-cart",
                     listOf("id" to TEST_INVALID_ID)
                 ) {
                     runBlocking {
@@ -60,7 +60,7 @@ class ObjectsCartTest : KoinTest {
         runTest {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/objects/add-to-cart",
+                    "/object/add-to-cart",
                     listOf("id" to TEST_UNSLICED_OBJECT)
                 ) {
                     runBlocking {
@@ -83,7 +83,7 @@ class ObjectsCartTest : KoinTest {
         runTest {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/objects/add-to-cart",
+                    "/object/add-to-cart",
                     listOf("id" to TEST_SLICED_OBJECT)
                 ) {
                     runBlocking {

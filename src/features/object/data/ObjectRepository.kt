@@ -30,7 +30,7 @@ class ObjectRepository(
     /**
      * use object ID value to get the object file, slice the file in octoPrint
      */
-    suspend fun slice(objectId: String): SlicingDetails? {
+    suspend fun slice(fileUrl: String): SlicingDetails? {
         delay(3000)
         val time = Random.nextLong(2000000, 40000000)
         val materialWeight = Random.nextInt(10, 100)
@@ -47,23 +47,29 @@ class ObjectRepository(
     }
 
     suspend fun sliceUserObject(email: String, objectId: String): SlicingDetails? {
-        val result = slice(objectId)
-        result?.let {
-            val user = userDataSource.getUser(email)
-            user.objects
-                .filter { it.status == NONE }
-                .find { it.id == objectId }
-                ?.apply {
-                    slicingDetails.uptoDate = true
-                    slicingDetails.time = result.time
-                    slicingDetails.materialWeight = result.materialWeight
-                    slicingDetails.materialCost = result.materialCost
-                    slicingDetails.electricityCost = result.electricityCost
-                    slicingDetails.totalPrice = result.totalPrice
-                }
-            userDataSource.updateUser(user)
+        val user = userDataSource.getUser(email)
+        val obj = user.objects
+            .filter { it.status == NONE && !it.slicingDetails.uptoDate }
+            .find { it.id == objectId }
+
+        if (obj != null){
+            val result = slice(obj.fileUrl)
+            result?.let {
+                user.objects
+                    .find { it.id == objectId }
+                    ?.apply {
+                        slicingDetails.uptoDate = true
+                        slicingDetails.time = result.time
+                        slicingDetails.materialWeight = result.materialWeight
+                        slicingDetails.materialCost = result.materialCost
+                        slicingDetails.electricityCost = result.electricityCost
+                        slicingDetails.totalPrice = result.totalPrice
+                    }
+                userDataSource.updateUser(user)
+            }
+            return result
         }
-        return result
+        return null
     }
 
     suspend fun addToCart(email: String, objectId: String): Boolean {
@@ -87,7 +93,8 @@ class ObjectRepository(
     suspend fun deleteUserObject(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
-        return userDataSource.updateUser(user) and deleted
+        if (deleted) return userDataSource.updateUser(user)
+        return false
     }
 
 
