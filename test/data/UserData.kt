@@ -2,6 +2,7 @@ package data
 
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.features.`object`.domain.SlicingDetails
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import com.example.features.notification.domain.Notification
@@ -11,11 +12,12 @@ import data.TestConstants.TEST_COMPLETED_OBJECT
 import data.TestConstants.TEST_NOTIFICATION
 import data.TestConstants.TEST_OBJECT_IMAGE_LINK
 import data.TestConstants.TEST_PROCESSING_ORDER
+import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
 import data.TestConstants.TEST_USER_ADDRESS
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_HASHED_PASSWORD
-import data.TestConstants.TEST_USER_OBJECT
+import data.TestConstants.TEST_UNSLICED_OBJECT
 import data.TestConstants.TEST_USER_USERNAME
 import java.util.*
 
@@ -33,12 +35,21 @@ val testUser = User(
     objects = ArrayList(
         listOf(
             Object(
-                id = TEST_USER_OBJECT,
+                id = TEST_UNSLICED_OBJECT,
                 name = UUID.randomUUID().toString(),
                 fileUrl = "",
                 fileExtension = "",
                 imageUrl = TEST_OBJECT_IMAGE_LINK,
                 status = NONE,
+            ),
+            Object(
+                id = TEST_SLICED_OBJECT,
+                name = UUID.randomUUID().toString(),
+                fileUrl = "",
+                fileExtension = "",
+                imageUrl = TEST_OBJECT_IMAGE_LINK,
+                status = NONE,
+                slicingDetails = SlicingDetails(uptoDate = true)
             ),
             Object(
                 id = TEST_CART_OBJECT1,

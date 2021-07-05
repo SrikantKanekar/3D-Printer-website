@@ -20,7 +20,7 @@ import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class RegisterRouteTest : KoinTest {
+class RegisterTest : KoinTest {
 
     @Test
     fun `should return ok if user is not logged`() {

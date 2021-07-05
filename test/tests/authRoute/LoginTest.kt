@@ -1,11 +1,8 @@
 package tests.authRoute
 
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
-import com.example.module
 import data.TestConstants.TEST_CREATED_OBJECT
-import data.TestConstants.TEST_FILE_UPLOAD_NAME
 import data.TestConstants.TEST_USER_EMAIL
-import di.testModules
 import fakeDataSource.TestRepository
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -15,8 +12,9 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
-class LoginRouteTest : KoinTest {
+class LoginTest : KoinTest {
 
     @Test
     fun `should return ok if user is not logged`() {
@@ -55,7 +53,7 @@ class LoginRouteTest : KoinTest {
 
     @Test
     fun `objects cookie sync success`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
+        runTest {
             cookiesSession {
                 `create object before user login`()
                 userLogin()
@@ -63,8 +61,8 @@ class LoginRouteTest : KoinTest {
                     val testRepository by inject<TestRepository>()
                     val obj = testRepository.getUser(TEST_USER_EMAIL)
                         .objects
-                        .find { it.id == TEST_CREATED_OBJECT }!!
-                    assertEquals(TEST_FILE_UPLOAD_NAME, obj.name)
+                        .find { it.id == TEST_CREATED_OBJECT }
+                    assertNotNull(obj)
                 }
             }
         }

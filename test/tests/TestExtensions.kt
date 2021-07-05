@@ -95,13 +95,20 @@ fun TestApplicationEngine.runWithAdminUser(test: TestApplicationEngine.() -> Uni
 }
 
 fun TestApplicationEngine.`create object before user login`() {
-    handleRequest(HttpMethod.Post, "/object/create") {
-        addHeader(HttpHeaders.ContentType, formUrlEncoded)
-    }.apply {
+    handlePostRequest(
+        "/object/create",
+        listOf(
+            "id" to TEST_CREATED_OBJECT,
+            "name" to "name",
+            "file_url" to "file_url",
+            "image_url" to "image_url",
+            "file_extension" to "stl",
+        )
+    ) {
         runBlocking {
             val cookie = response.call.sessions.get<ObjectsCookie>()!!
             assertNotNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
-            assertEquals(HttpStatusCode.OK, response.status())
+            assertEquals(TEST_CREATED_OBJECT, response.content)
         }
     }
 }

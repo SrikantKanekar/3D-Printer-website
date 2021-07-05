@@ -44,7 +44,7 @@ fun Route.getCreateObjectRoute() {
     4) upload image to firebase (Id/image.png)
     5) send Id, filename, extension, file link, image link here to the server
  */
-fun Route.createObjectRoute(objectRepository: ObjectRepository) {
+fun Route.postCreateObjectRoute(objectRepository: ObjectRepository) {
     post("/object/create") {
         val params = call.receiveParameters()
         val id = params["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
@@ -56,7 +56,8 @@ fun Route.createObjectRoute(objectRepository: ObjectRepository) {
         val obj = objectRepository.createObject(id, name, fileUrl, imageUrl, fileExtension)
 
         val success: Boolean
-        when (val principal = call.sessions.get<UserPrincipal>()) {
+        val principal = call.sessions.get<UserPrincipal>()
+        when (principal) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
                 success = cookie.objects.add(obj)

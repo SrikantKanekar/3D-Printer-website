@@ -3,7 +3,7 @@ package tests.objectRoute
 import com.example.features.`object`.data.ObjectRepository
 import com.example.module
 import data.TestConstants.TEST_CREATED_OBJECT
-import data.TestConstants.TEST_USER_OBJECT
+import data.TestConstants.TEST_UNSLICED_OBJECT
 import di.testModules
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -38,7 +38,7 @@ class ObjectUpdateTest : KoinTest {
     fun `get update object route after login`() {
         withTestApplication({ module(testing = true, koinModules = testModules) }) {
             runWithLoggedUser {
-                handleRequest(HttpMethod.Get, "/object/$TEST_USER_OBJECT").apply {
+                handleRequest(HttpMethod.Get, "/object/$TEST_UNSLICED_OBJECT").apply {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
                 handleRequest(HttpMethod.Get, "/object/invalid-object-id").apply {

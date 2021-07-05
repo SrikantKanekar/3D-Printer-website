@@ -1,6 +1,5 @@
 package com.example.features.objects.presentation
 
-import com.example.features.`object`.domain.ObjectStatus.*
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.data.ObjectsRepository
 import com.example.features.objects.domain.ObjectsCookie
@@ -31,7 +30,7 @@ private fun Route.getObjectsRoute(objectsRepository: ObjectsRepository) {
             objectsRepository.getUserObjects(principal.email)
         } else {
             val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-            ArrayList(cookie.objects.filter { it.status == NONE })
+            ArrayList(cookie.objects)
         }
         call.respond(
             FreeMarkerContent(
