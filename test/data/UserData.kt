@@ -101,7 +101,7 @@ val testUser = User(
     )
 )
 
-val testUsers = List(4) {
+val testUsers = List(2) {
     User(
         email = UUID.randomUUID().toString(),
         password = UUID.randomUUID().toString(),

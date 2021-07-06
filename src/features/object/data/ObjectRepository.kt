@@ -6,7 +6,6 @@ import com.example.features.`object`.domain.ObjectStatus.CART
 import com.example.features.`object`.domain.ObjectStatus.NONE
 import com.example.features.`object`.domain.Setting
 import com.example.features.`object`.domain.SlicingDetails
-import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 class ObjectRepository(
@@ -31,7 +30,6 @@ class ObjectRepository(
      * use object ID value to get the object file, slice the file in octoPrint
      */
     suspend fun slice(fileUrl: String): SlicingDetails? {
-        delay(3000)
         val time = Random.nextLong(2000000, 40000000)
         val materialWeight = Random.nextInt(10, 100)
         val materialCost = Random.nextInt(500, 1500)

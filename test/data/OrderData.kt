@@ -12,7 +12,7 @@ import kotlinx.datetime.Clock
 import java.util.*
 import kotlin.random.Random
 
-val testOrderData = List(15) {
+val testOrderData = List(8) {
     Order(
         id = when (it) {
             0 -> TEST_PLACED_ORDER
