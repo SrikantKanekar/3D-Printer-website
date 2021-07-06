@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectRouteTests
 
 import com.example.features.objects.domain.ObjectsCookie
 import data.TestConstants.TEST_CART_OBJECT1
@@ -15,7 +15,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.`create object before user login`
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -25,7 +25,7 @@ class ObjectDelete : KoinTest {
 
     @Test
     fun `should return false if invalid Id before login`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "/object/delete",
                 listOf("id" to TEST_INVALID_ID)
@@ -37,7 +37,7 @@ class ObjectDelete : KoinTest {
 
     @Test
     fun `should return false if invalid Id after login`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
@@ -51,7 +51,7 @@ class ObjectDelete : KoinTest {
 
     @Test
     fun `should return true if object deleted before login`() {
-        runTest {
+        runServer {
             cookiesSession {
                 `create object before user login`()
                 handlePostRequest(
@@ -68,7 +68,7 @@ class ObjectDelete : KoinTest {
 
     @Test
     fun `should return true if object deleted after login`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
@@ -88,7 +88,7 @@ class ObjectDelete : KoinTest {
 
     @Test
     fun `should return false if cart object is deleted`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",

@@ -1,10 +1,10 @@
-package tests.accountRoute
+package tests.accountRouteTests
 
 import io.ktor.http.*
 import org.junit.Test
 import org.koin.test.KoinTest
 import tests.handleGetRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
@@ -12,7 +12,7 @@ class AccountRoute : KoinTest {
 
     @Test
     fun `should return unauthorised if user is not logged`() {
-        runTest {
+        runServer {
             handleGetRequest("/account") {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -21,7 +21,7 @@ class AccountRoute : KoinTest {
 
     @Test
     fun `should return ok if user is logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/account") {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -32,7 +32,7 @@ class AccountRoute : KoinTest {
 
     @Test
     fun `should redirect if logout is successful`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/account/logout") {
                     assertEquals(HttpStatusCode.Found, response.status())

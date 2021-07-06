@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectRouteTests
 
 import data.TestConstants.TEST_CART_OBJECT1
 import data.TestConstants.TEST_CREATED_OBJECT
@@ -10,7 +10,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import tests.`create object before user login`
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -19,7 +19,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return null for invalid Id if not logged`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "object/slice",
                 listOf("id" to TEST_INVALID_ID)
@@ -31,7 +31,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return null for invalid Id if logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
@@ -45,7 +45,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return slicing details if not logged`() {
-        runTest {
+        runServer {
             cookiesSession {
                 `create object before user login`()
                 handlePostRequest(
@@ -60,7 +60,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return null for sliced object if not logged`() {
-        runTest {
+        runServer {
             cookiesSession {
                 `create object before user login`()
                 handlePostRequest(
@@ -81,7 +81,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return null for sliced object if logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
@@ -95,7 +95,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return null for cart object if logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
@@ -109,7 +109,7 @@ class ObjectSlice : KoinTest {
 
     @Test
     fun `should return slicing details if logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",

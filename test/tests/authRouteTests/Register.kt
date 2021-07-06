@@ -1,4 +1,4 @@
-package tests.authRoute
+package tests.authRouteTests
 
 import com.example.features.auth.domain.AuthConstants.EMAIL_ALREADY_TAKEN
 import com.example.features.auth.domain.AuthConstants.PASSWORDS_DO_NOT_MATCH
@@ -15,16 +15,16 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.handleGetRequest
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class RegisterTest : KoinTest {
+class Register : KoinTest {
 
     @Test
     fun `should return ok if user is not logged`() {
-        runTest {
+        runServer {
             handleGetRequest("/auth/register") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -33,7 +33,7 @@ class RegisterTest : KoinTest {
 
     @Test
     fun `should redirect if user is logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/auth/register") {
                     assertEquals(HttpStatusCode.Found, response.status())
@@ -44,7 +44,7 @@ class RegisterTest : KoinTest {
 
     @Test
     fun `should return error if passwords don't match`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "/auth/register",
                 listOf(
@@ -61,7 +61,7 @@ class RegisterTest : KoinTest {
 
     @Test
     fun `should return error if email already exist`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "/auth/register",
                 listOf(
@@ -78,7 +78,7 @@ class RegisterTest : KoinTest {
 
     @Test
     fun `should return registered email upon success`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "/auth/register",
                 listOf(

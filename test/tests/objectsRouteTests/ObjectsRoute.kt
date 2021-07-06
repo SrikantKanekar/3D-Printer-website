@@ -1,18 +1,18 @@
-package tests.objectsRoute
+package tests.objectsRouteTests
 
 import io.ktor.http.*
 import org.junit.Test
 import org.koin.test.KoinTest
 import tests.handleGetRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
-class ObjectsRouteTest : KoinTest {
+class ObjectsRoute : KoinTest {
 
     @Test
     fun `should return ok if user not logged`() {
-        runTest {
+        runServer {
             handleGetRequest("/objects") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -21,7 +21,7 @@ class ObjectsRouteTest : KoinTest {
 
     @Test
     fun `should return ok if user logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/objects") {
                     assertEquals(HttpStatusCode.OK, response.status())

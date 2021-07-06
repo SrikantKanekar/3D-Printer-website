@@ -1,4 +1,4 @@
-package tests.accountRoute
+package tests.accountRouteTests
 
 import com.example.features.account.domain.AccountConstants.INCORRECT_PASSWORD
 import com.example.features.account.domain.AccountConstants.PASSWORD_DO_NOT_MATCH
@@ -11,7 +11,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import tests.userLogin
 import kotlin.test.assertEquals
@@ -22,7 +22,7 @@ class ResetPassword : KoinTest {
 
     @Test
     fun `should return error if passwords don't match`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",
@@ -40,7 +40,7 @@ class ResetPassword : KoinTest {
 
     @Test
     fun `should return error if old password is incorrect`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",
@@ -58,7 +58,7 @@ class ResetPassword : KoinTest {
 
     @Test
     fun `should return updated password if reset is successful`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",

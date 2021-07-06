@@ -18,7 +18,7 @@ import kotlin.test.assertNotNull
 
 val formUrlEncoded = ContentType.Application.FormUrlEncoded.toString()
 
-fun runTest(test: TestApplicationEngine.() -> Unit) {
+fun runServer(test: TestApplicationEngine.() -> Unit) {
     withTestApplication({ module(testing = true, koinModules = testModules) }) {
         test()
     }

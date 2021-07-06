@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectsRouteTests
 
 import com.example.features.`object`.domain.ObjectStatus.CART
 import data.TestConstants.TEST_INVALID_ID
@@ -11,20 +11,20 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-class ObjectCart : KoinTest {
+class ObjectsCart : KoinTest {
 
     @Test
     fun `should redirect if user not logged`() {
-        runTest {
+        runServer {
             handlePostRequest(
-                "/object/add-to-cart",
+                "/objects/add-to-cart",
                 listOf("id" to TEST_SLICED_OBJECT)
             ) {
                 assertNotEquals("true", response.content)
@@ -34,10 +34,10 @@ class ObjectCart : KoinTest {
 
     @Test
     fun `should return false for invalid object ID`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/object/add-to-cart",
+                    "/objects/add-to-cart",
                     listOf("id" to TEST_INVALID_ID)
                 ) {
                     runBlocking {
@@ -56,11 +56,11 @@ class ObjectCart : KoinTest {
     }
 
     @Test
-    fun `should return false for unsliced object`() {
-        runTest {
+    fun `should return false for object without slicing`() {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/object/add-to-cart",
+                    "/objects/add-to-cart",
                     listOf("id" to TEST_UNSLICED_OBJECT)
                 ) {
                     runBlocking {
@@ -79,11 +79,11 @@ class ObjectCart : KoinTest {
     }
 
     @Test
-    fun `should return true for sliced object`() {
-        runTest {
+    fun `should return true for object after slicing`() {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
-                    "/object/add-to-cart",
+                    "/objects/add-to-cart",
                     listOf("id" to TEST_SLICED_OBJECT)
                 ) {
                     runBlocking {

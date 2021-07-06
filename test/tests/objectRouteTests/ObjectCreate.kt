@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectRouteTests
 
 import data.TestConstants
 import data.TestConstants.TEST_CREATED_OBJECT
@@ -16,7 +16,7 @@ class ObjectCreate : KoinTest {
 
     @Test
     fun `should return ok if user is not logged`() {
-        runTest {
+        runServer {
             handleGetRequest("/object/create") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -25,7 +25,7 @@ class ObjectCreate : KoinTest {
 
     @Test
     fun `should return ok if user is logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/object/create") {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -36,14 +36,14 @@ class ObjectCreate : KoinTest {
 
     @Test
     fun `should return object Id if user is not logged`() {
-        runTest {
+        runServer {
             `create object before user login`()
         }
     }
 
     @Test
     fun `should return object Id if user is logged`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/create",

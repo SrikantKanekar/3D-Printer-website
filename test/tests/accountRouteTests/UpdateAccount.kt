@@ -1,4 +1,4 @@
-package tests.accountRoute
+package tests.accountRouteTests
 
 import data.TestConstants
 import fakeDataSource.TestRepository
@@ -7,7 +7,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.handlePostRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
@@ -15,7 +15,7 @@ class UpdateAccount: KoinTest {
 
     @Test
     fun `should return updated username`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/update",

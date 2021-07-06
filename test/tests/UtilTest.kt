@@ -8,7 +8,7 @@ class UtilTest {
 
     @Test
     fun `should return ok for home page`() {
-        runTest {
+        runServer {
             handleGetRequest("/") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }

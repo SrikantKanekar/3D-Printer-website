@@ -1,4 +1,4 @@
-package tests.authRoute
+package tests.authRouteTests
 
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_CREATED_OBJECT
@@ -14,11 +14,11 @@ import tests.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class LoginTest : KoinTest {
+class Login : KoinTest {
 
     @Test
     fun `should return ok if user is not logged`() {
-        runTest {
+        runServer {
             handleGetRequest("/auth/login") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
@@ -26,8 +26,8 @@ class LoginTest : KoinTest {
     }
 
     @Test
-    fun `should redirect if user is logged`() {
-        runTest {
+    fun `should redirect if user is already logged`() {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/auth/login") {
                     assertEquals(HttpStatusCode.Found, response.status())
@@ -38,7 +38,7 @@ class LoginTest : KoinTest {
 
     @Test
     fun `should return error for invalid credentials`() {
-        runTest {
+        runServer {
             handlePostRequest(
                 "/auth/login",
                 listOf(
@@ -52,8 +52,8 @@ class LoginTest : KoinTest {
     }
 
     @Test
-    fun `objects cookie sync success`() {
-        runTest {
+    fun `should sync cookie objects to account after login`() {
+        runServer {
             cookiesSession {
                 `create object before user login`()
                 userLogin()

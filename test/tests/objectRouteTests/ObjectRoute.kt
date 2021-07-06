@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectRouteTests
 
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID
@@ -9,7 +9,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import tests.`create object before user login`
 import tests.handleGetRequest
-import tests.runTest
+import tests.runServer
 import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
@@ -17,7 +17,7 @@ class ObjectRoute : KoinTest {
 
     @Test
     fun `should return ok if object found before login`() {
-        runTest {
+        runServer {
             cookiesSession {
                 `create object before user login`()
                 handleGetRequest("/object/$TEST_CREATED_OBJECT") {
@@ -29,7 +29,7 @@ class ObjectRoute : KoinTest {
 
     @Test
     fun `should return Not found if invalid Id before login`() {
-        runTest {
+        runServer {
             handleGetRequest("/object/$TEST_INVALID_ID") {
                 assertEquals(HttpStatusCode.NotFound, response.status())
             }
@@ -38,7 +38,7 @@ class ObjectRoute : KoinTest {
 
     @Test
     fun `should return ok if object found after login`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/object/$TEST_UNSLICED_OBJECT") {
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -49,7 +49,7 @@ class ObjectRoute : KoinTest {
 
     @Test
     fun `should return Not found if invalid Id after login`() {
-        runTest {
+        runServer {
             runWithLoggedUser {
                 handleGetRequest("/object/$TEST_INVALID_ID") {
                     assertEquals(HttpStatusCode.NotFound, response.status())

@@ -1,4 +1,4 @@
-package tests.objectRoute
+package tests.objectRouteTests
 
 import org.koin.test.KoinTest
 

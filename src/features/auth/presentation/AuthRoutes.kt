@@ -6,13 +6,16 @@ import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
 fun Application.registerAuthRoutes() {
+
     val authRepository by inject<AuthRepository>()
 
     routing {
         getLoginRoute()
         postLoginRoute(authRepository)
+
         getRegisterRoute()
         postRegisterRoute(authRepository)
+
         loginProvider()
     }
 }
