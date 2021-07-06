@@ -1,7 +1,7 @@
 package tests.accountRoute
 
-import com.example.features.account.domain.Constants.INCORRECT_PASSWORD
-import com.example.features.account.domain.Constants.PASSWORD_DO_NOT_MATCH
+import com.example.features.account.domain.AccountConstants.INCORRECT_PASSWORD
+import com.example.features.account.domain.AccountConstants.PASSWORD_DO_NOT_MATCH
 import com.example.features.auth.domain.checkHashForPassword
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertTrue
 
-class ResetPasswordTest : KoinTest {
+class ResetPassword : KoinTest {
 
     @Test
     fun `should return error if passwords don't match`() {
