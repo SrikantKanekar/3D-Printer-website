@@ -14,10 +14,10 @@ import data.TestConstants.TEST_OBJECT_IMAGE_LINK
 import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
+import data.TestConstants.TEST_UNSLICED_OBJECT
 import data.TestConstants.TEST_USER_ADDRESS
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_HASHED_PASSWORD
-import data.TestConstants.TEST_UNSLICED_OBJECT
 import data.TestConstants.TEST_USER_USERNAME
 import java.util.*
 
@@ -101,7 +101,7 @@ val testUser = User(
     )
 )
 
-val testUsers = List(10) {
+val testUsers = List(4) {
     User(
         email = UUID.randomUUID().toString(),
         password = UUID.randomUUID().toString(),
@@ -112,7 +112,7 @@ val testUsers = List(10) {
             country = UUID.randomUUID().toString()
         ),
         objects = ArrayList(
-            List(3) {
+            List(2) {
                 Object(
                     id = UUID.randomUUID().toString(),
                     name = UUID.randomUUID().toString(),

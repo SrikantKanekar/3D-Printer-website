@@ -56,7 +56,7 @@ class ObjectCart : KoinTest {
     }
 
     @Test
-    fun `should return false for object without slicing`() {
+    fun `should return false for unsliced object`() {
         runTest {
             runWithLoggedUser {
                 handlePostRequest(
@@ -79,7 +79,7 @@ class ObjectCart : KoinTest {
     }
 
     @Test
-    fun `should return true for object after slicing`() {
+    fun `should return true for sliced object`() {
         runTest {
             runWithLoggedUser {
                 handlePostRequest(
