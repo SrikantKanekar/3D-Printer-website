@@ -1,7 +1,7 @@
 package tests.objectRouteTests
 
 import com.example.features.objects.domain.ObjectsCookie
-import data.TestConstants.TEST_CART_OBJECT1
+import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_SLICED_OBJECT
@@ -92,11 +92,11 @@ class ObjectDelete : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
-                    listOf("id" to TEST_CART_OBJECT1)
+                    listOf("id" to TEST_CART_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
-                        val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_CART_OBJECT1)
+                        val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_CART_OBJECT)
                         assertNotNull(obj)
 
                         assertEquals("false", response.content)

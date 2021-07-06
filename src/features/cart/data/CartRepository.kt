@@ -8,9 +8,19 @@ import com.example.features.`object`.domain.ObjectStatus.NONE
 class CartRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun getUserCartObjects(email: String): ArrayList<Object> {
+    suspend fun getCartObjects(email: String): ArrayList<Object> {
         val user = userDataSource.getUser(email)
         return ArrayList(user.objects.filter { it.status == CART })
+    }
+
+    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
+        if (quantity < 1) return false
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == CART }
+            .find { it.id == objectId }
+            ?.let { it.quantity = quantity } ?: return false
+        return userDataSource.updateUser(user)
     }
 
     suspend fun removeCartObject(email: String, objectId: String): Boolean {
@@ -19,16 +29,6 @@ class CartRepository(
             .filter { it.status == CART }
             .find { it.id == objectId }
             ?.let { it.status = NONE } ?: return false
-        return userDataSource.updateUser(user)
-    }
-
-    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
-        val user = userDataSource.getUser(email)
-        if (quantity < 1) return false
-        user.objects
-            .filter { it.status == CART }
-            .find { it.id == objectId }
-            ?.let { it.quantity = quantity } ?: return false
         return userDataSource.updateUser(user)
     }
 }

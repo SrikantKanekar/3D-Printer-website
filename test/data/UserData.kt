@@ -6,11 +6,13 @@ import com.example.features.`object`.domain.SlicingDetails
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import com.example.features.notification.domain.Notification
-import data.TestConstants.TEST_CART_OBJECT1
-import data.TestConstants.TEST_CART_OBJECT2
+import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_COMPLETED_OBJECT
 import data.TestConstants.TEST_NOTIFICATION
-import data.TestConstants.TEST_OBJECT_IMAGE_LINK
+import data.TestConstants.TEST_OBJECT_EXTENSION
+import data.TestConstants.TEST_OBJECT_FILE_URL
+import data.TestConstants.TEST_OBJECT_IMAGE_URL
+import data.TestConstants.TEST_OBJECT_NAME
 import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
@@ -36,51 +38,51 @@ val testUser = User(
         listOf(
             Object(
                 id = TEST_UNSLICED_OBJECT,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
             ),
             Object(
                 id = TEST_SLICED_OBJECT,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
                 slicingDetails = SlicingDetails(uptoDate = true)
             ),
             Object(
-                id = TEST_CART_OBJECT1,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
-                status = CART
-            ),
-            Object(
-                id = TEST_CART_OBJECT2,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
-                status = CART
+                id = TEST_CART_OBJECT,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
+                status = CART,
+                slicingDetails = SlicingDetails(
+                    uptoDate = true,
+                    time = 1,
+                    materialWeight = 1,
+                    materialCost = 1,
+                    electricityCost = 1,
+                    totalPrice = 2
+                )
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
-                name = UUID.randomUUID().toString(),
-                fileUrl = "",
-                fileExtension = "",
-                imageUrl = TEST_OBJECT_IMAGE_LINK,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = COMPLETED
             )
         )
@@ -115,10 +117,10 @@ val testUsers = List(2) {
             List(2) {
                 Object(
                     id = UUID.randomUUID().toString(),
-                    name = UUID.randomUUID().toString(),
-                    fileUrl = "",
-                    fileExtension = "",
-                    imageUrl = UUID.randomUUID().toString()
+                    name = TEST_OBJECT_NAME,
+                    fileUrl = TEST_OBJECT_FILE_URL,
+                    fileExtension = TEST_OBJECT_EXTENSION,
+                    imageUrl = TEST_OBJECT_IMAGE_URL
                 )
             }
         )

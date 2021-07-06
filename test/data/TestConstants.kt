@@ -12,15 +12,17 @@ object TestConstants {
     const val UPDATED_USERNAME = "UPDATED_USERNAME"
 
     // Object
+    const val TEST_CREATED_OBJECT = "TEST_CREATED_OBJECT"
     const val TEST_UNSLICED_OBJECT = "TEST_UNSLICED_OBJECT"
     const val TEST_SLICED_OBJECT = "TEST_SLICED_OBJECT"
-    const val TEST_CART_OBJECT1 = "TEST_CART_OBJECT1"
-    const val TEST_CART_OBJECT2 = "TEST_CART_OBJECT2"
+    const val TEST_CART_OBJECT = "TEST_CART_OBJECT1"
     const val TEST_TRACKING_OBJECT = "TEST_TRACKING_OBJECT"
     const val TEST_COMPLETED_OBJECT = "TEST_COMPLETED_OBJECT"
 
-    const val TEST_CREATED_OBJECT = "TEST_CREATED_OBJECT"
-    const val TEST_OBJECT_IMAGE_LINK = "/static/images/3d-image.jpg"
+    const val TEST_OBJECT_NAME = "TEST_OBJECT_NAME"
+    const val TEST_OBJECT_FILE_URL = "/static/images/scene.glb"
+    const val TEST_OBJECT_EXTENSION = "glb"
+    const val TEST_OBJECT_IMAGE_URL = "/static/images/3d-image.jpg"
 
     // Order
     const val TEST_PLACED_ORDER = "TEST_PLACED_ORDER"

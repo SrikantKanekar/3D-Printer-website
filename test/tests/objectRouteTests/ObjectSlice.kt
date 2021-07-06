@@ -1,6 +1,6 @@
 package tests.objectRouteTests
 
-import data.TestConstants.TEST_CART_OBJECT1
+import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_SLICED_OBJECT
@@ -99,7 +99,7 @@ class ObjectSlice : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_CART_OBJECT1)
+                    listOf("id" to TEST_CART_OBJECT)
                 ) {
                     assertEquals("null", response.content)
                 }
