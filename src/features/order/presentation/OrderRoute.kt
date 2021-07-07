@@ -39,7 +39,6 @@ fun Route.getOrderRoute(orderRepository: OrderRepository) {
         val adminPrincipal = call.sessions.get<AdminPrincipal>()
         val userPrincipal = call.sessions.get<UserPrincipal>()
 
-        //val order = orderRepository.getOrderForAdmin(id)
         val order = when {
             adminPrincipal != null -> {
                 orderRepository.getOrderForAdmin(id)

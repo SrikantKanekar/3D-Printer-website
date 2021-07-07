@@ -1,10 +1,13 @@
-package tests
+package tests.ordersRouteTests
 
 import io.ktor.http.*
 import org.junit.Test
+import tests.handleGetRequest
+import tests.runServer
+import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 
-class OrdersRouteTests {
+class OrdersRoute {
 
     @Test
     fun `should return Unauthorised if not logged`() {
