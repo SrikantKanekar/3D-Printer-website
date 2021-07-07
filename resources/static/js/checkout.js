@@ -23,20 +23,42 @@ window.addEventListener('load', function () {
     $(".order_button").on('click', function (e) {
         e.preventDefault();
 
+        // Update Address
         const form = document.querySelector("#checkout_form");
-
         const url = form.getAttribute("action");
         const inputs = form.querySelectorAll(".input");
 
         const check = checkValidation(inputs);
         if (check) {
             $.post(url, $(form).serialize(), function (data) {
-                if (data.startsWith("/")) {
-                    window.location.href = data;
+                if (data === true) {
+                    startPayment();
                 } else {
-                    showAlert(data, "alert-danger");
+                    showAlert("error updating address", "alert-danger");
                 }
             });
         }
     });
+
+    function startPayment() {
+        paymentSucceed();
+    }
+
+    function paymentSucceed() {
+        $.post(
+            "/checkout/success",
+            {
+                success: true
+            },
+            function (data) {
+                if (data === true) {
+                    window.location.href = "/orders";
+                } else if(data === false) {
+                    showAlert("Error creating order", "alert-danger");
+                } else {
+                    showAlert("Payment is not completed", "alert-danger");
+                }
+            }
+        );
+    }
 });

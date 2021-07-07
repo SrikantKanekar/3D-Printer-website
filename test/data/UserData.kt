@@ -17,7 +17,6 @@ import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
 import data.TestConstants.TEST_UNSLICED_OBJECT
-import data.TestConstants.TEST_USER_ADDRESS
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_HASHED_PASSWORD
 import data.TestConstants.TEST_USER_USERNAME
@@ -28,10 +27,13 @@ val testUser = User(
     password = TEST_USER_HASHED_PASSWORD,
     username = TEST_USER_USERNAME,
     address = Address(
-        city = TEST_USER_ADDRESS,
-        state = TEST_USER_ADDRESS,
-        country = TEST_USER_ADDRESS,
-        phoneNumber = 1234567899,
+        firstname = "firstname",
+        lastname = "lastname",
+        phoneNumber = 1234567890,
+        address = "address",
+        city = "city",
+        state = "state",
+        country = "country",
         pinCode = 123456
     ),
     objects = ArrayList(
@@ -60,6 +62,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = CART,
+                quantity = 2,
                 slicingDetails = SlicingDetails(
                     uptoDate = true,
                     time = 1,

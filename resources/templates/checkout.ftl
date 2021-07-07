@@ -14,7 +14,7 @@
                         <div class="form_title">Billing Address</div>
                         <div class="form_subtitle">Enter your address info</div>
                         <div class="form_container">
-                            <form class="form" action="/checkout/pay" method="POST" id="checkout_form">
+                            <form class="form" action="/checkout/address" method="POST" id="checkout_form">
 
                                 <div class="row">
 
@@ -139,7 +139,9 @@
                             </ul>
                         </div>
 
-                        <div class="button order_button"><a href="#">Place Order</a></div>
+                        <div class="button order_button">
+                            <a href="#">Place Order</a>
+                        </div>
                     </div>
                 </div>
 

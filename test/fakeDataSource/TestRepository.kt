@@ -4,6 +4,8 @@ import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.Object
 import com.example.features.account.domain.User
+import com.example.features.order.domain.Order
+import com.example.features.order.domain.OrderStatus
 
 class TestRepository(
     private val userDataSource: UserDataSource,
@@ -22,4 +24,13 @@ class TestRepository(
         val user = userDataSource.getUser(email)
         return user.objects.find { it.id == id }
     }
+
+    suspend fun getActiveOrder(orderId: String): Order? {
+        return orderDataSource
+            .getOrderById(orderId)
+            ?.takeUnless {
+                it.status == OrderStatus.DELIVERED
+            }
+    }
+
 }

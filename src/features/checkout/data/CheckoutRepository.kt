@@ -14,7 +14,7 @@ class CheckoutRepository(
     private val orderDataSource: OrderDataSource,
     private val notificationRepository: NotificationRepository
 ) {
-    suspend fun getUserCartObjects(email: String): ArrayList<Object> {
+    suspend fun getCartObjects(email: String): ArrayList<Object> {
         return ArrayList(userDataSource.getUser(email).objects.filter { it.status == CART })
     }
 
@@ -28,7 +28,7 @@ class CheckoutRepository(
         return userDataSource.updateUser(user)
     }
 
-    suspend fun checkoutSuccess(email: String): Boolean {
+    suspend fun placeOrder(email: String): Boolean {
         val user = userDataSource.getUser(email)
         val order = orderDataSource.creteNewOrder(userEmail = email)
 
