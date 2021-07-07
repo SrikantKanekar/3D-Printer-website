@@ -11,7 +11,7 @@ interface OrderDataSource {
 
     suspend fun getOrderById(orderId: String): Order?
 
-    suspend fun getOrdersByUser(userEmail: String): List<Order>
+    suspend fun getOrdersOfUser(userEmail: String): List<Order>
 
     suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean
 

@@ -24,7 +24,7 @@ class OrderDataSourceImpl(
         return orders.findOne(Order::id eq orderId)
     }
 
-    override suspend fun getOrdersByUser(userEmail: String): List<Order> {
+    override suspend fun getOrdersOfUser(userEmail: String): List<Order> {
         return orders.find(Order::userEmail eq userEmail).toList().reversed()
     }
 

@@ -26,7 +26,7 @@ class FakeOrderDataSourceImpl(
         return orders[orderId]
     }
 
-    override suspend fun getOrdersByUser(userEmail: String): List<Order> {
+    override suspend fun getOrdersOfUser(userEmail: String): List<Order> {
         return orders.values.filter { it.userEmail == userEmail }
     }
 
