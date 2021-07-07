@@ -3,13 +3,11 @@ package com.example.features.order.presentation
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.order.data.OrderRepository
-import com.example.features.order.domain.PrintingStatus
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
@@ -61,33 +59,6 @@ fun Route.getOrderRoute(orderRepository: OrderRepository) {
                     )
                 )
             )
-        }
-    }
-}
-
-fun Route.updatePrintingStatus(objectRepository: OrderRepository) {
-    post("/order/update/printing-status") {
-        val params = call.receiveParameters()
-        val orderId = params["orderId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val objectId = params["objectId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val status = params["printing_status"]?.toInt() ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val printingStatus = PrintingStatus.values()[status]
-
-        val updated = objectRepository.updatePrintingStatus(orderId, objectId, printingStatus)
-        call.respond(updated)
-    }
-}
-
-private fun Route.sendCustomMessage(orderRepository: OrderRepository) {
-    post("/order/send-message") {
-        val params = call.receiveParameters()
-        val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val title = params["title"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val message = params["message"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-
-        when (orderRepository.sendCustomNotification(email, title, message)) {
-            true -> call.respondText("Notification sent")
-            false -> call.respondText("Not successful")
         }
     }
 }

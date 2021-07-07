@@ -149,7 +149,11 @@ window.addEventListener('load', function () {
                     message: $("[name='message']").val(),
                 },
                 function (data) {
-                    showAlert(data, "alert-success");
+                    if (data === true) {
+                        showAlert("Notification sent", "alert-success");
+                    } else {
+                        showAlert("Notification not sent", "alert-danger");
+                    }
                 }
             );
         }

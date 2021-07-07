@@ -19,12 +19,12 @@ class UpdateAccount: KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/update",
-                    listOf("username" to TestConstants.UPDATED_USERNAME)
+                    listOf("username" to "username1")
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val user = testRepository.getUser(TestConstants.TEST_USER_EMAIL)
-                        assertEquals(TestConstants.UPDATED_USERNAME, user.username)
+                        assertEquals("username1", user.username)
                     }
                 }
             }

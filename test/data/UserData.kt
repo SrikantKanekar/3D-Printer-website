@@ -6,13 +6,21 @@ import com.example.features.`object`.domain.SlicingDetails
 import com.example.features.account.domain.User
 import com.example.features.checkout.domain.Address
 import com.example.features.notification.domain.Notification
+import com.example.features.order.domain.PrintingStatus.*
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_COMPLETED_OBJECT
+import data.TestConstants.TEST_CONFIRMED_ORDER
+import data.TestConstants.TEST_DELIVERED_ORDER
+import data.TestConstants.TEST_DELIVERING_ORDER
 import data.TestConstants.TEST_NOTIFICATION
 import data.TestConstants.TEST_OBJECT_EXTENSION
 import data.TestConstants.TEST_OBJECT_FILE_URL
 import data.TestConstants.TEST_OBJECT_IMAGE_URL
 import data.TestConstants.TEST_OBJECT_NAME
+import data.TestConstants.TEST_PENDING_OBJECT
+import data.TestConstants.TEST_PLACED_ORDER
+import data.TestConstants.TEST_PRINTED_OBJECT
+import data.TestConstants.TEST_PRINTING_OBJECT
 import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
@@ -86,13 +94,45 @@ val testUser = User(
                 fileUrl = TEST_OBJECT_FILE_URL,
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
-                status = COMPLETED
+                status = COMPLETED,
+                printingStatus = PRINTED
+            ),
+            Object(
+                id = TEST_PENDING_OBJECT,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
+                status = TRACKING,
+                printingStatus = PENDING
+            ),
+            Object(
+                id = TEST_PRINTING_OBJECT,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
+                status = TRACKING,
+                printingStatus = PRINTING
+            ),
+            Object(
+                id = TEST_PRINTED_OBJECT,
+                name = TEST_OBJECT_NAME,
+                fileUrl = TEST_OBJECT_FILE_URL,
+                fileExtension = TEST_OBJECT_EXTENSION,
+                imageUrl = TEST_OBJECT_IMAGE_URL,
+                status = TRACKING,
+                printingStatus = PRINTED
             )
         )
     ),
     orderIds = ArrayList(
         listOf(
-            TEST_PROCESSING_ORDER
+            TEST_PLACED_ORDER,
+            TEST_CONFIRMED_ORDER,
+            TEST_PROCESSING_ORDER,
+            TEST_DELIVERING_ORDER,
+            TEST_DELIVERED_ORDER
         )
     ),
     notification = ArrayList(

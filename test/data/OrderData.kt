@@ -2,45 +2,62 @@ package data
 
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus.*
+import data.TestConstants.TEST_COMPLETED_OBJECT
+import data.TestConstants.TEST_CONFIRMED_ORDER
 import data.TestConstants.TEST_DELIVERED_ORDER
 import data.TestConstants.TEST_DELIVERING_ORDER
+import data.TestConstants.TEST_PENDING_OBJECT
 import data.TestConstants.TEST_PLACED_ORDER
+import data.TestConstants.TEST_PRINTED_OBJECT
+import data.TestConstants.TEST_PRINTING_OBJECT
 import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_TRACKING_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
-import kotlinx.datetime.Clock
-import java.util.*
-import kotlin.random.Random
 
-val testOrderData = List(8) {
+val testOrderData = listOf(
     Order(
-        id = when (it) {
-            0 -> TEST_PLACED_ORDER
-            1 -> TEST_PROCESSING_ORDER
-            2 -> TEST_DELIVERING_ORDER
-            3 -> TEST_DELIVERED_ORDER
-            else -> UUID.randomUUID().toString()
-        },
-        userEmail = when {
-            it < 5 -> TEST_USER_EMAIL
-            else -> UUID.randomUUID().toString()
-        },
-        status = when (it) {
-            0 -> PLACED
-            1 -> PROCESSING
-            2 -> DELIVERING
-            3 -> DELIVERED
-            else -> DELIVERED
-        },
-        objectIds = when(it){
-            1 -> ArrayList(listOf(TEST_TRACKING_OBJECT))
-            else -> ArrayList(
-                List(Random.nextInt(2, 5)) {
-                    UUID.randomUUID().toString()
-                }
-            )
-        },
-        price = Random.nextInt(1000, 10000),
-        deliveredOn = Clock.System.now().toString()
+        userEmail = TEST_USER_EMAIL,
+        status = PLACED,
+        objectIds = ArrayList(listOf(TEST_TRACKING_OBJECT, TEST_PENDING_OBJECT)),
+        price = 100,
+        deliveredOn = "10 May",
+        id = TEST_PLACED_ORDER
+    ),
+    Order(
+        userEmail = TEST_USER_EMAIL,
+        status = CONFIRMED,
+        objectIds = ArrayList(listOf(TEST_TRACKING_OBJECT, TEST_PENDING_OBJECT)),
+        price = 100,
+        deliveredOn = "10 May",
+        id = TEST_CONFIRMED_ORDER
+    ),
+    Order(
+        userEmail = TEST_USER_EMAIL,
+        status = PROCESSING,
+        objectIds = ArrayList(listOf(
+            TEST_TRACKING_OBJECT,
+            TEST_PENDING_OBJECT,
+            TEST_PRINTING_OBJECT,
+            TEST_PRINTED_OBJECT
+        )),
+        price = 100,
+        deliveredOn = "10 May",
+        id = TEST_PROCESSING_ORDER
+    ),
+    Order(
+        userEmail = TEST_USER_EMAIL,
+        status = DELIVERING,
+        objectIds = ArrayList(listOf(TEST_PRINTED_OBJECT)),
+        price = 100,
+        deliveredOn = "10 May",
+        id = TEST_DELIVERING_ORDER
+    ),
+    Order(
+        userEmail = TEST_USER_EMAIL,
+        status = DELIVERED,
+        objectIds = ArrayList(listOf(TEST_COMPLETED_OBJECT, TEST_PRINTED_OBJECT)),
+        price = 100,
+        deliveredOn = "10 May",
+        id = TEST_DELIVERED_ORDER
     )
-}.shuffled()
+).shuffled()

@@ -43,7 +43,10 @@ class OrderRepository(
     }
 
     /**
-     * Update individual objects printing status by the admin
+     * * Update individual objects printing status by the admin
+     * 1) Order must be in processing state
+     * 2) Update Object's printing status and tracking details
+     * 3) Send notification to user if Object printing is started.
      */
     suspend fun updatePrintingStatus(orderId: String, objectId: String, printingStatus: PrintingStatus): Boolean {
         val order = orderDataSource.getOrderById(orderId) ?: return false
@@ -73,7 +76,7 @@ class OrderRepository(
 
             val updated = userDataSource.updateUser(user)
 
-            // sends notification after order completion
+            // sends notification when printing starts
             if (updated && printingStatus == PRINTING) {
                 notificationRepository.sendNotification(NotificationType.PRINTING, user, order, objectId)
             }
