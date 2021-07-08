@@ -33,4 +33,10 @@ class TestRepository(
             }
     }
 
+    suspend fun getCompletedOrder(orderId: String): Order? {
+        return orderDataSource.getOrderById(orderId)
+            ?.takeIf {
+                it.status == OrderStatus.DELIVERED
+            }
+    }
 }

@@ -1,43 +1,31 @@
 package tests.adminRouteTests
 
-import com.example.module
-import data.TestConstants.TEST_PLACED_ORDER
-import di.testModules
+import com.example.features.admin.domain.AdminPrincipal
+import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import io.ktor.http.*
-import io.ktor.server.testing.*
+import io.ktor.sessions.*
 import org.junit.Test
 import org.koin.test.KoinTest
-import tests.adminLogin
-import tests.formUrlEncoded
-import tests.runWithAdminUser
+import tests.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class Login : KoinTest {
 
     @Test
-    fun `get admin login route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/admin/login").apply {
+    fun `should return Ok if not logged`() {
+        runServer {
+            handleGetRequest("/admin/login") {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
         }
     }
 
     @Test
-    fun `post admin login route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            adminLogin()
-        }
-    }
-
-    @Test
-    fun `get admin route test`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
-            handleRequest(HttpMethod.Get, "/admin").apply {
-                assertEquals(HttpStatusCode.Unauthorized, response.status())
-            }
-            runWithAdminUser {
-                handleRequest(HttpMethod.Get, "/admin").apply {
+    fun `should return ok if not admin user`() {
+        runServer {
+            runWithLoggedUser {
+                handleGetRequest("/admin/login") {
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }
@@ -45,21 +33,38 @@ class Login : KoinTest {
     }
 
     @Test
-    fun `update order status`() {
-        withTestApplication({ module(testing = true, koinModules = testModules) }) {
+    fun `should redirect if admin user`() {
+        runServer {
             runWithAdminUser {
-                handleRequest(HttpMethod.Post, "/admin/update/order-status") {
-                    addHeader(HttpHeaders.ContentType, formUrlEncoded)
-                    setBody(
-                        listOf(
-                            "id" to TEST_PLACED_ORDER,
-                            "order_status" to "1"
-                        ).formUrlEncode()
-                    )
-                }.apply {
-                    assertEquals("true", response.content)
+                handleGetRequest("/admin/login") {
+                    assertEquals(HttpStatusCode.Found, response.status())
                 }
             }
+        }
+    }
+
+    @Test
+    fun `should return error if invalid credentials`() {
+        runServer {
+            handlePostRequest(
+                "/admin/login",
+                listOf(
+                    "name" to "1111",
+                    "Password" to "1111"
+                )
+            ) {
+                val adminPrincipal = response.call.sessions.get<AdminPrincipal>()
+                assertNull(adminPrincipal)
+
+                assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
+            }
+        }
+    }
+
+    @Test
+    fun `should have adminPrincipal id success`() {
+        runServer {
+            adminLogin()
         }
     }
 }

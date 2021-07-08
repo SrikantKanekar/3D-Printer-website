@@ -73,7 +73,7 @@ fun TestApplicationEngine.adminLogin() {
     ) {
         val adminPrincipal = response.call.sessions.get<AdminPrincipal>()!!
         assertEquals("admin", adminPrincipal.name)
-        assertEquals(HttpStatusCode.OK, response.status())
+        assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
     }
 }
 

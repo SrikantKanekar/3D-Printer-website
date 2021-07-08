@@ -1,7 +1,7 @@
 package com.example.features.admin.presentation
 
 import com.example.features.admin.domain.AdminPrincipal
-import com.example.features.auth.domain.AuthConstants
+import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import io.ktor.application.*
 import io.ktor.freemarker.*
@@ -42,7 +42,7 @@ fun Route.postAdminLoginRoute() {
             call.sessions.set(AdminPrincipal(name))
             call.respondText("/admin")
         } else {
-            call.respondText(AuthConstants.EMAIL_PASSWORD_INCORRECT)
+            call.respondText(EMAIL_PASSWORD_INCORRECT)
         }
     }
 }

@@ -43,33 +43,33 @@ class AdminRepository(
             orderDataSource.updateOrderStatus(orderId, status)
         } else false
 
-        // send notification to user when delivery starts
         if (updated) {
-            if (status == CONFIRMED){
-                val notification = generateNotification(NotificationType.CONFIRMED, user, order)
-                NotificationManager.sendNotification(notification, user.email)
-                user.notification.add(notification)
-            } else if (status == DELIVERING) {
-                val notification = generateNotification(NotificationType.DELIVERING, user, order)
-                NotificationManager.sendNotification(notification, user.email)
-                user.notification.add(notification)
+            when (status) {
+                CONFIRMED -> {
+                    val notification = generateNotification(NotificationType.CONFIRMED, user, order)
+                    NotificationManager.sendNotification(notification, user.email)
+                    user.notification.add(notification)
+                }
+                DELIVERING -> {
+                    val notification = generateNotification(NotificationType.DELIVERING, user, order)
+                    NotificationManager.sendNotification(notification, user.email)
+                    user.notification.add(notification)
+                }
+                DELIVERED -> {
+                    user.objects
+                        .filter { it.status == TRACKING }
+                        .filter { order.objectIds.contains(it.id) }
+                        .forEach { it.status = COMPLETED }
+                    orderDataSource.updateOrderDelivery(orderId, now())
+
+                    val notification = generateNotification(NotificationType.DELIVERED, user, order)
+                    NotificationManager.sendNotification(notification, user.email)
+                    user.notification.add(notification)
+                }
+                else -> {}
             }
-        }
-
-        // update status of all individual objects and send notification
-        if (status == DELIVERED && updated) {
-            user.objects
-                .filter { it.status == TRACKING }
-                .filter { order.objectIds.contains(it.id) }
-                .forEach { it.status = COMPLETED }
-            orderDataSource.updateOrderDelivery(orderId, now())
-
-            val notification = generateNotification(NotificationType.DELIVERED, user, order)
-            NotificationManager.sendNotification(notification, user.email)
-            user.notification.add(notification)
-
             return userDataSource.updateUser(user)
         }
-        return updated
+        return false
     }
 }

@@ -23,6 +23,7 @@ import data.TestConstants.TEST_PENDING_OBJECT
 import data.TestConstants.TEST_PLACED_ORDER
 import data.TestConstants.TEST_PRINTED_OBJECT
 import data.TestConstants.TEST_PRINTING_OBJECT
+import data.TestConstants.TEST_PROCESSED_ORDER
 import data.TestConstants.TEST_PROCESSING_ORDER
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_TRACKING_OBJECT
@@ -133,6 +134,7 @@ val testUser = User(
             TEST_PLACED_ORDER,
             TEST_CONFIRMED_ORDER,
             TEST_PROCESSING_ORDER,
+            TEST_PROCESSED_ORDER,
             TEST_DELIVERING_ORDER,
             TEST_DELIVERED_ORDER
         )
