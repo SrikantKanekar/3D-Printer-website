@@ -12,7 +12,9 @@ import data.TestConstants.TEST_COMPLETED_OBJECT
 import data.TestConstants.TEST_CONFIRMED_ORDER
 import data.TestConstants.TEST_DELIVERED_ORDER
 import data.TestConstants.TEST_DELIVERING_ORDER
-import data.TestConstants.TEST_NOTIFICATION
+import data.TestConstants.TEST_NOTIFICATION_ID
+import data.TestConstants.TEST_NOTIFICATION_MESSAGE
+import data.TestConstants.TEST_NOTIFICATION_TITLE
 import data.TestConstants.TEST_OBJECT_EXTENSION
 import data.TestConstants.TEST_OBJECT_FILE_URL
 import data.TestConstants.TEST_OBJECT_IMAGE_URL
@@ -138,9 +140,9 @@ val testUser = User(
     notification = ArrayList(
         listOf(
             Notification(
-                title = "TEST_NOTIFICATION_TITLE",
-                message = "TEST_NOTIFICATION_MESSAGE",
-                id = TEST_NOTIFICATION
+                title = TEST_NOTIFICATION_TITLE,
+                message = TEST_NOTIFICATION_MESSAGE,
+                id = TEST_NOTIFICATION_ID
             )
         )
     )

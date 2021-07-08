@@ -4,8 +4,10 @@ import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.Object
 import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.notification.data.NotificationRepository
+import com.example.features.notification.domain.Notification
+import com.example.features.notification.domain.NotificationManager.sendNotification
 import com.example.features.notification.domain.NotificationType
+import com.example.features.notification.domain.generateNotification
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus.PROCESSING
 import com.example.features.order.domain.PrintingStatus
@@ -15,7 +17,6 @@ import com.example.util.now
 class OrderRepository(
     private val userDataSource: UserDataSource,
     private val orderDataSource: OrderDataSource,
-    private val notificationRepository: NotificationRepository
 ) {
 
     suspend fun getOrderForAdmin(orderId: String): Order? {
@@ -74,13 +75,15 @@ class OrderRepository(
                     ?.let { it.trackingDetails.completed_at = now() }
             }
 
-            val updated = userDataSource.updateUser(user)
 
             // sends notification when printing starts
-            if (updated && printingStatus == PRINTING) {
-                notificationRepository.sendNotification(NotificationType.PRINTING, user, order, objectId)
+            if (printingStatus == PRINTING) {
+                val notification = generateNotification(NotificationType.PRINTING, user, order, objectId)
+                sendNotification(notification, user.email)
+                user.notification.add(notification)
             }
-            return updated
+
+            return userDataSource.updateUser(user)
         }
         return false
     }
@@ -88,8 +91,21 @@ class OrderRepository(
     /**
      * Custom Notification can be sent by admin to the user
      */
-    suspend fun sendCustomNotification(email: String, title: String, message: String): Boolean {
-        val user = userDataSource.getUser(email)
-        return notificationRepository.sendCustomNotification(user, title, message)
+    suspend fun sendCustomNotification(
+        email: String,
+        title: String,
+        message: String
+    ): Boolean {
+        val notification = Notification(
+            title = title,
+            message = message
+        )
+        val result = sendNotification(notification, email)
+        if (result){
+            val user = userDataSource.getUser(email)
+            user.notification.add(notification)
+            return userDataSource.updateUser(user)
+        }
+        return false
     }
 }

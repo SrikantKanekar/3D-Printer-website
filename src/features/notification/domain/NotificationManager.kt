@@ -1,8 +1,11 @@
 package com.example.features.notification.domain
 
-object EmailNotification {
+import kotlinx.coroutines.delay
 
-    fun send(notification: Notification, email: String): Boolean {
+object NotificationManager {
+
+    suspend fun sendNotification(notification: Notification, email: String): Boolean {
+        delay(1)
         println("---------------Email Notification-------------")
         println("To: $email")
         println("Title: ${notification.title}")

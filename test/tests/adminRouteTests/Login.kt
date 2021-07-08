@@ -1,6 +1,5 @@
-package tests
+package tests.adminRouteTests
 
-import com.example.features.account.data.AccountRepository
 import com.example.module
 import data.TestConstants.TEST_PLACED_ORDER
 import di.testModules
@@ -8,12 +7,12 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import org.junit.Test
 import org.koin.test.KoinTest
-import org.koin.test.inject
+import tests.adminLogin
+import tests.formUrlEncoded
+import tests.runWithAdminUser
 import kotlin.test.assertEquals
 
-class AdminRouteTests : KoinTest {
-
-    val accountRepository by inject<AccountRepository>()
+class Login : KoinTest {
 
     @Test
     fun `get admin login route test`() {

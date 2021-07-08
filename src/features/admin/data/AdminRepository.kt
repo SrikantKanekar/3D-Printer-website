@@ -4,8 +4,9 @@ import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.domain.ObjectStatus.COMPLETED
 import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.notification.data.NotificationRepository
+import com.example.features.notification.domain.NotificationManager
 import com.example.features.notification.domain.NotificationType
+import com.example.features.notification.domain.generateNotification
 import com.example.features.order.domain.Order
 import com.example.features.order.domain.OrderStatus
 import com.example.features.order.domain.OrderStatus.*
@@ -15,7 +16,6 @@ import com.example.util.now
 class AdminRepository(
     private val userDataSource: UserDataSource,
     private val orderDataSource: OrderDataSource,
-    private val notificationRepository: NotificationRepository
 ) {
     suspend fun getAllActiveOrders(): List<Order> {
         return orderDataSource.getAllActiveOrders()
@@ -46,9 +46,13 @@ class AdminRepository(
         // send notification to user when delivery starts
         if (updated) {
             if (status == CONFIRMED){
-                notificationRepository.sendNotification(NotificationType.CONFIRMED, user, order)
+                val notification = generateNotification(NotificationType.CONFIRMED, user, order)
+                NotificationManager.sendNotification(notification, user.email)
+                user.notification.add(notification)
             } else if (status == DELIVERING) {
-                notificationRepository.sendNotification(NotificationType.DELIVERING, user, order)
+                val notification = generateNotification(NotificationType.DELIVERING, user, order)
+                NotificationManager.sendNotification(notification, user.email)
+                user.notification.add(notification)
             }
         }
 
@@ -59,7 +63,11 @@ class AdminRepository(
                 .filter { order.objectIds.contains(it.id) }
                 .forEach { it.status = COMPLETED }
             orderDataSource.updateOrderDelivery(orderId, now())
-            notificationRepository.sendNotification(NotificationType.DELIVERED, user, order)
+
+            val notification = generateNotification(NotificationType.DELIVERED, user, order)
+            NotificationManager.sendNotification(notification, user.email)
+            user.notification.add(notification)
+
             return userDataSource.updateUser(user)
         }
         return updated

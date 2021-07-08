@@ -1,7 +1,9 @@
-package tests
+package tests.utilTests
 
 import io.ktor.http.*
 import org.junit.Test
+import tests.handleGetRequest
+import tests.runServer
 import kotlin.test.assertEquals
 
 class UtilTest {
