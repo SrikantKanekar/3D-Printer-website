@@ -8,7 +8,7 @@ class NotificationRepository(
 ) {
     suspend fun getAllNotifications(email: String): List<Notification> {
         val user = userDataSource.getUser(email)
-        return user.notification
+        return user.notification.reversed()
     }
 
     suspend fun getNotificationById(email: String, id: String): Notification? {

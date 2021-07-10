@@ -4,10 +4,10 @@ import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
 import java.security.SecureRandom
 
-fun getHashWithSalt(stringToHash: String, saltLength: Int = 32): String {
+fun getHashWithSalt(password: String, saltLength: Int = 32): String {
     val salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLength)
     val saltAsHex = Hex.encodeHexString(salt)
-    val hash = DigestUtils.sha256Hex("$saltAsHex$stringToHash")
+    val hash = DigestUtils.sha256Hex("$saltAsHex$password")
     return "$saltAsHex:$hash"
 }
 
