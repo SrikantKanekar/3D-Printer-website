@@ -1,5 +1,8 @@
 package com.example.features.auth.presentation
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
+import com.example.config.JWTConfig
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
@@ -24,9 +27,10 @@ fun Route.getLoginRoute() {
     }
 }
 
-fun Route.postLoginRoute(authRepository: AuthRepository) {
+fun Route.postLoginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
     post("/auth/login") {
         val params = call.receiveParameters()
+
         val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val password = params["password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
         val returnUrl = params["returnUrl"] ?: "/"
@@ -37,6 +41,15 @@ fun Route.postLoginRoute(authRepository: AuthRepository) {
             val cookie = call.sessions.get<ObjectsCookie>()
             authRepository.syncCookieObjects(email, cookie)
             call.sessions.clear<ObjectsCookie>()
+
+            val token = JWT.create()
+                .withIssuer(jwt.issuer)
+                .withAudience(jwt.audience)
+                .withClaim("username", "username")
+                .withClaim("email", email)
+                .sign(Algorithm.HMAC256(jwt.secret))
+
+            call.response.header("x-token", token)
             call.respondText(returnUrl)
         } else {
             call.respondText(EMAIL_PASSWORD_INCORRECT)

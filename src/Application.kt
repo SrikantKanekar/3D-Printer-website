@@ -2,6 +2,8 @@ package com.example
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.example.config.AppConfig
+import com.example.config.setupConfig
 import com.example.di.productionModules
 import com.example.features.`object`.presentation.registerObjectRoute
 import com.example.features.account.presentation.registerAccountRoute
@@ -59,6 +61,8 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
         modules(koinModules)
     }
 
+    setupConfig()
+
     install(ContentNegotiation) {
         json()
     }
@@ -98,28 +102,19 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
             }
         }
 
-        val secret = environment.config.property("ktor.jwt.secret").getString()
-        val issuer = environment.config.property("ktor.jwt.issuer").getString()
-        val audience = environment.config.property("ktor.jwt.audience").getString()
-        val myRealm = environment.config.property("ktor.jwt.realm").getString()
-
-        val token = JWT.create()
-            .withIssuer(issuer)
-            .withAudience(audience)
-            .withClaim("username", "username")
-            .withClaim("email", "email@email.com")
-            .sign(Algorithm.HMAC256(secret))
+        val appConfig by inject<AppConfig>()
+        val jwt = appConfig.jwtConfig
 
         jwt(JWT_AUTH) {
-            realm = myRealm
+            realm = jwt.realm
             verifier(
-                JWT.require(Algorithm.HMAC256(secret))
-                    .withIssuer(issuer)
-                    .withAudience(audience)
+                JWT.require(Algorithm.HMAC256(jwt.secret))
+                    .withIssuer(jwt.issuer)
+                    .withAudience(jwt.audience)
                     .build()
             )
             validate { credential ->
-                if (credential.payload.audience.contains(audience)) {
+                if (credential.payload.audience.contains(jwt.audience)) {
                     JWTPrincipal(credential.payload)
                 } else {
                     null
