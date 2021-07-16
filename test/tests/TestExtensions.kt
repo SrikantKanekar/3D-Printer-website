@@ -9,6 +9,7 @@ import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import di.testModules
+import io.ktor.config.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
@@ -16,10 +17,20 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
-val formUrlEncoded = ContentType.Application.FormUrlEncoded.toString()
+fun MapApplicationConfig.configForTesting() {
+    put("ktor.jwt.secret", "123456")
+    put("ktor.jwt.issuer", "3D printing api")
+    put("ktor.jwt.audience", "printer audience")
+    put("ktor.jwt.realm", "3D printing api")
+}
 
 fun runServer(test: TestApplicationEngine.() -> Unit) {
-    withTestApplication({ module(testing = true, koinModules = testModules) }) {
+    withTestApplication({
+        (environment.config as MapApplicationConfig).apply {
+            configForTesting()
+        }
+        module(testing = true, koinModules = testModules)
+    }) {
         test()
     }
 }
