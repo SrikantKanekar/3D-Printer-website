@@ -5,9 +5,11 @@ import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
+import data.TestConstants.TEST_ADMIN_TOKEN
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
+import data.TestConstants.TEST_USER_TOKEN
 import di.testModules
 import io.ktor.config.*
 import io.ktor.http.*
@@ -37,9 +39,14 @@ fun runServer(test: TestApplicationEngine.() -> Unit) {
 
 fun TestApplicationEngine.handleGetRequest(
     uri: String,
+    logged: Boolean = false,
+    admin: Boolean = false,
     assert: TestApplicationCall.() -> Unit
 ) {
-    handleRequest(HttpMethod.Get, uri).apply {
+    handleRequest(HttpMethod.Get, uri){
+        if (logged) addHeader(HttpHeaders.Authorization, "Bearer $TEST_USER_TOKEN")
+        if (admin) addHeader(HttpHeaders.Authorization, "Bearer $TEST_ADMIN_TOKEN")
+    }.apply {
         assert()
     }
 }
@@ -47,6 +54,8 @@ fun TestApplicationEngine.handleGetRequest(
 fun TestApplicationEngine.handlePostRequest(
     uri: String,
     body: List<Pair<String, String?>> = listOf(),
+    logged: Boolean = false,
+    admin: Boolean = false,
     assert: TestApplicationCall.() -> Unit
 ) {
     handleRequest(HttpMethod.Post, uri) {
@@ -55,6 +64,8 @@ fun TestApplicationEngine.handlePostRequest(
             ContentType.Application.FormUrlEncoded.toString()
         )
         setBody(body.formUrlEncode())
+        if (logged) addHeader(HttpHeaders.Authorization, "Bearer $TEST_USER_TOKEN")
+        if (admin) addHeader(HttpHeaders.Authorization, "Bearer $TEST_ADMIN_TOKEN")
     }.apply {
         assert()
     }

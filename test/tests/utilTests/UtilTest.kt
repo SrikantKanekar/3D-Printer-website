@@ -11,7 +11,7 @@ class UtilTest {
     @Test
     fun `should return ok for home page`() {
         runServer {
-            handleGetRequest("/") {
+            handleGetRequest(uri = "/", logged = true) {
                 assertEquals(HttpStatusCode.OK, response.status())
             }
         }

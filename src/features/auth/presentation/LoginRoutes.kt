@@ -49,8 +49,7 @@ fun Route.postLoginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
                 .withClaim("email", email)
                 .sign(Algorithm.HMAC256(jwt.secret))
 
-            call.response.header("x-token", token)
-            call.respondText(returnUrl)
+            call.respond(token)
         } else {
             call.respondText(EMAIL_PASSWORD_INCORRECT)
         }

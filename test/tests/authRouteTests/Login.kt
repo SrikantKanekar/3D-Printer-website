@@ -1,8 +1,10 @@
 package tests.authRouteTests
 
+import com.auth0.jwt.JWT
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
+import data.TestConstants.TEST_USER_PASSWORD
 import fakeDataSource.TestRepository
 import io.ktor.http.*
 import io.ktor.server.testing.*
@@ -12,6 +14,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.*
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class Login : KoinTest {
@@ -47,6 +50,28 @@ class Login : KoinTest {
                 )
             ) {
                 assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
+            }
+        }
+    }
+
+    @Test
+    fun `should return token for Jwt login`() {
+        runServer {
+            handlePostRequest(
+                "/auth/login",
+                listOf(
+                    "Email" to TEST_USER_EMAIL,
+                    "Password" to TEST_USER_PASSWORD
+                )
+            ) {
+                assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
+
+                val token = response.content!!
+                println(token)
+                val decodedJWT = JWT.decode(token)
+                assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9", decodedJWT.header)
+                assertEquals(TEST_USER_EMAIL, decodedJWT.getClaim("email").asString())
+                //assertEquals(TEST_USER_USERNAME, decodedJWT.getClaim("username").asString())
             }
         }
     }
