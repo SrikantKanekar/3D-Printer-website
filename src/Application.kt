@@ -1,26 +1,29 @@
 package com.example
 
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import com.example.di.productionModules
-import com.example.features.objects.domain.ObjectsCookie
+import com.example.features.`object`.presentation.registerObjectRoute
 import com.example.features.account.presentation.registerAccountRoute
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
+import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoute
 import com.example.features.checkout.presentation.registerCheckoutRoute
-import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.notification.presentation.registerNotificationRoutes
-import com.example.features.`object`.presentation.registerObjectRoute
-import com.example.features.auth.data.AuthRepository
+import com.example.features.objects.domain.ObjectCookieSerializer
+import com.example.features.objects.domain.ObjectsCookie
+import com.example.features.objects.presentation.registerObjectsRoute
 import com.example.features.order.presentation.registerOrderRoute
 import com.example.features.orders.presentation.registerOrdersRoute
-import com.example.features.objects.presentation.registerObjectsRoute
+import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.util.presentation.registerStatusRoutes
-import com.example.features.objects.domain.ObjectCookieSerializer
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
+import com.example.util.AUTH.JWT_AUTH
 import com.example.util.AUTH.OAUTH
 import com.example.util.AUTH.USER_SESSION_AUTH
 import com.example.util.COOKIES.ADMIN_AUTH_COOKIE
@@ -29,13 +32,13 @@ import com.example.util.COOKIES.OBJECTS_COOKIE
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.auth.jwt.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
 import io.ktor.http.content.*
 import io.ktor.locations.*
-import io.ktor.locations.url
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
@@ -92,6 +95,35 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
             }
             validate { principal ->
                 principal
+            }
+        }
+
+        val secret = environment.config.property("ktor.jwt.secret").getString()
+        val issuer = environment.config.property("ktor.jwt.issuer").getString()
+        val audience = environment.config.property("ktor.jwt.audience").getString()
+        val myRealm = environment.config.property("ktor.jwt.realm").getString()
+
+        val token = JWT.create()
+            .withIssuer(issuer)
+            .withAudience(audience)
+            .withClaim("username", "username")
+            .withClaim("email", "email@email.com")
+            .sign(Algorithm.HMAC256(secret))
+
+        jwt(JWT_AUTH) {
+            realm = myRealm
+            verifier(
+                JWT.require(Algorithm.HMAC256(secret))
+                    .withIssuer(issuer)
+                    .withAudience(audience)
+                    .build()
+            )
+            validate { credential ->
+                if (credential.payload.audience.contains(audience)) {
+                    JWTPrincipal(credential.payload)
+                } else {
+                    null
+                }
             }
         }
     }

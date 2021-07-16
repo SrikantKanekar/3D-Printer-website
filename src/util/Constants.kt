@@ -4,6 +4,7 @@ object AUTH {
     const val USER_SESSION_AUTH = "USER_SESSION_AUTH"
     const val ADMIN_SESSION_AUTH = "ADMIN_SESSION_AUTH"
     const val OAUTH = "OAUTH"
+    const val JWT_AUTH = "JWT_AUTH"
 }
 
 object COOKIES {

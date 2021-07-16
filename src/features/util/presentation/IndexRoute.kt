@@ -1,7 +1,9 @@
 package com.example.features.util.presentation
 
 import com.example.features.auth.domain.UserPrincipal
+import com.example.util.AUTH.JWT_AUTH
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.freemarker.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -10,7 +12,9 @@ import io.ktor.sessions.*
 fun Application.registerIndexRoute() {
 
     routing {
-        getIndexRoute()
+        authenticate(JWT_AUTH) {
+            getIndexRoute()
+        }
     }
 }
 
