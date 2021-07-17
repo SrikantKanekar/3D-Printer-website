@@ -12,3 +12,5 @@ object COOKIES {
     const val ADMIN_AUTH_COOKIE = "ADMIN_AUTH_COOKIE"
     const val OBJECTS_COOKIE = "OBJECTS_COOKIE"
 }
+
+const val JWT_SECRET = "JWT_SECRET"

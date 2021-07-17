@@ -15,8 +15,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-// after jwt
-
 fun Route.getLoginRoute() {
     get("/auth/login") {
         val principal = call.sessions.get<UserPrincipal>()
