@@ -5,11 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.example.config.JWTConfig
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.LoginRequest
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
 import io.ktor.application.*
 import io.ktor.freemarker.*
-import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -27,13 +27,10 @@ fun Route.getLoginRoute() {
     }
 }
 
+// after jwt
 fun Route.postLoginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
     post("/auth/login") {
-        val params = call.receiveParameters()
-
-        val email = params["email"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val password = params["password"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-        val returnUrl = params["returnUrl"] ?: "/"
+        val (email, password) = call.receive<LoginRequest>()
 
         val isPasswordCorrect = authRepository.login(email, password)
         if (isPasswordCorrect) {

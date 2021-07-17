@@ -39,6 +39,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
+import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.locations.*
 import io.ktor.routing.*
@@ -65,6 +66,16 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
 
     install(ContentNegotiation) {
         json()
+    }
+
+    install(CORS){
+        method(HttpMethod.Options)
+        method(HttpMethod.Put)
+        method(HttpMethod.Patch)
+        method(HttpMethod.Delete)
+        header(HttpHeaders.Authorization)
+        header(HttpHeaders.ContentType)
+        host("localhost:3000")
     }
 
     install(FreeMarker) {
