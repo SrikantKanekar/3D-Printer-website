@@ -27,7 +27,6 @@ fun Route.getLoginRoute() {
     }
 }
 
-// after jwt
 fun Route.postLoginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
     post("/auth/login") {
         val (email, password) = call.receive<LoginRequest>()
