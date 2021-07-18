@@ -19,7 +19,7 @@ class UpdateAccount: KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/update",
-                    listOf("username" to "username1")
+                    mapOf("username" to "username1")
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()

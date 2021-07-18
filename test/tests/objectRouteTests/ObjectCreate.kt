@@ -47,7 +47,7 @@ class ObjectCreate : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/create",
-                    listOf(
+                    mapOf(
                         "id" to TEST_CREATED_OBJECT,
                         "name" to "name",
                         "file_url" to "file_url",

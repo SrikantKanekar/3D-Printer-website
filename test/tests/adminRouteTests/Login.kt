@@ -48,7 +48,7 @@ class Login : KoinTest {
         runServer {
             handlePostRequest(
                 "/admin/login",
-                listOf(
+                mapOf(
                     "name" to "1111",
                     "Password" to "1111"
                 )

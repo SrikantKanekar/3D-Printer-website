@@ -25,7 +25,7 @@ class PaymentSucceed : KoinTest {
         runServer {
             handlePostRequest(
                 "/checkout/success",
-                listOf("success" to "true")
+                mapOf("success" to "true")
             ) {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -38,7 +38,7 @@ class PaymentSucceed : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/checkout/success",
-                    listOf("success" to "false")
+                    mapOf("success" to "false")
                 ) {
                     assertNotEquals("true", response.content)
                 }
@@ -52,7 +52,7 @@ class PaymentSucceed : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/checkout/success",
-                    listOf("success" to "true")
+                    mapOf("success" to "true")
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()

@@ -26,7 +26,7 @@ class ResetPassword : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",
-                    listOf(
+                    mapOf(
                         "old_password" to TEST_USER_PASSWORD,
                         "new_password" to "1111",
                         "confirm_password" to "2222",
@@ -44,7 +44,7 @@ class ResetPassword : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",
-                    listOf(
+                    mapOf(
                         "old_password" to "Invalid password",
                         "new_password" to "1111",
                         "confirm_password" to "1111"
@@ -62,7 +62,7 @@ class ResetPassword : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/account/reset-password",
-                    listOf(
+                    mapOf(
                         "old_password" to TEST_USER_PASSWORD,
                         "new_password" to "1111",
                         "confirm_password" to "1111"

@@ -25,7 +25,7 @@ class ObjectCart : KoinTest {
         runServer {
             handlePostRequest(
                 "/object/add-to-cart",
-                listOf("id" to TEST_SLICED_OBJECT)
+                mapOf("id" to TEST_SLICED_OBJECT)
             ) {
                 assertNotEquals("true", response.content)
             }
@@ -38,7 +38,7 @@ class ObjectCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/add-to-cart",
-                    listOf("id" to TEST_INVALID_ID)
+                    mapOf("id" to TEST_INVALID_ID)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
@@ -61,7 +61,7 @@ class ObjectCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/add-to-cart",
-                    listOf("id" to TEST_UNSLICED_OBJECT)
+                    mapOf("id" to TEST_UNSLICED_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
@@ -84,7 +84,7 @@ class ObjectCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/add-to-cart",
-                    listOf("id" to TEST_SLICED_OBJECT)
+                    mapOf("id" to TEST_SLICED_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()

@@ -62,7 +62,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
         modules(koinModules)
     }
 
-    setupConfig()
+    setupConfig(testing)
 
     install(ContentNegotiation) {
         json()

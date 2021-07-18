@@ -47,7 +47,7 @@ class Register : KoinTest {
         runServer {
             handlePostRequest(
                 "/auth/register",
-                listOf(
+                mapOf(
                     "username" to "NEW_USERNAME",
                     "email" to "NEW_EMAIL",
                     "password1" to "1111",
@@ -64,7 +64,7 @@ class Register : KoinTest {
         runServer {
             handlePostRequest(
                 "/auth/register",
-                listOf(
+                mapOf(
                     "username" to TEST_USER_USERNAME,
                     "email" to TEST_USER_EMAIL,
                     "password1" to TEST_USER_PASSWORD,
@@ -81,7 +81,7 @@ class Register : KoinTest {
         runServer {
             handlePostRequest(
                 "/auth/register",
-                listOf(
+                mapOf(
                     "username" to "NEW_USERNAME",
                     "email" to "NEW_EMAIL",
                     "password1" to "NEW_PASSWORD",

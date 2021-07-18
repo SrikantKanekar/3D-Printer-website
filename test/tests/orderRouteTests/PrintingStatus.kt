@@ -29,7 +29,7 @@ class PrintingStatus : KoinTest {
         runServer {
             handlePostRequest(
                 "/order/update/printing-status",
-                listOf(
+                mapOf(
                     "orderId" to TEST_PROCESSING_ORDER,
                     "objectId" to TEST_PENDING_OBJECT,
                     "printing_status" to "1"
@@ -46,7 +46,7 @@ class PrintingStatus : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_PROCESSING_ORDER,
                         "objectId" to TEST_PENDING_OBJECT,
                         "printing_status" to "1"
@@ -64,7 +64,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_INVALID_ID,
                         "objectId" to TEST_PENDING_OBJECT,
                         "printing_status" to "1"
@@ -82,7 +82,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_CONFIRMED_ORDER,
                         "objectId" to TEST_PENDING_OBJECT,
                         "printing_status" to "1"
@@ -100,7 +100,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_PROCESSING_ORDER,
                         "objectId" to TEST_INVALID_ID,
                         "printing_status" to "1"
@@ -118,7 +118,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_PROCESSING_ORDER,
                         "objectId" to TEST_PENDING_OBJECT,
                         "printing_status" to "2"
@@ -136,7 +136,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_PROCESSING_ORDER,
                         "objectId" to TEST_PENDING_OBJECT,
                         "printing_status" to "1"
@@ -166,7 +166,7 @@ class PrintingStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/update/printing-status",
-                    listOf(
+                    mapOf(
                         "orderId" to TEST_PROCESSING_ORDER,
                         "objectId" to TEST_PRINTING_OBJECT,
                         "printing_status" to "2"

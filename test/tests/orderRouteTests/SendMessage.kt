@@ -21,7 +21,7 @@ class SendMessage : KoinTest {
         runServer {
             handlePostRequest(
                 "/order/send-message",
-                listOf(
+                mapOf(
                     "email" to TEST_USER_EMAIL,
                     "title" to "title1234",
                     "message" to "message1234"
@@ -38,7 +38,7 @@ class SendMessage : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/order/send-message",
-                    listOf(
+                    mapOf(
                         "email" to TEST_USER_EMAIL,
                         "title" to "title1234",
                         "message" to "message1234"
@@ -56,7 +56,7 @@ class SendMessage : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/order/send-message",
-                    listOf(
+                    mapOf(
                         "email" to TEST_USER_EMAIL,
                         "title" to "title1234",
                         "message" to "message1234"

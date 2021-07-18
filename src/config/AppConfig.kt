@@ -1,5 +1,6 @@
 package com.example.config
 
-class AppConfig{
+class AppConfig {
+    var testing: Boolean = false
     lateinit var jwtConfig: JWTConfig
 }

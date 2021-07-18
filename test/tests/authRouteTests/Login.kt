@@ -2,6 +2,7 @@ package tests.authRouteTests
 
 import com.auth0.jwt.JWT
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.LoginRequest
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
@@ -44,10 +45,7 @@ class Login : KoinTest {
         runServer {
             handlePostRequest(
                 "/auth/login",
-                listOf(
-                    "email" to "INVALID_EMAIL",
-                    "password" to "INVALID_PASSWORD"
-                )
+                LoginRequest("INVALID_EMAIL", "INVALID_PASSWORD")
             ) {
                 assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
             }
@@ -59,10 +57,7 @@ class Login : KoinTest {
         runServer {
             handlePostRequest(
                 "/auth/login",
-                listOf(
-                    "Email" to TEST_USER_EMAIL,
-                    "Password" to TEST_USER_PASSWORD
-                )
+                LoginRequest(TEST_USER_EMAIL, TEST_USER_PASSWORD)
             ) {
                 assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
 

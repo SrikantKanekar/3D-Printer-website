@@ -20,7 +20,7 @@ class UpdateAddress : KoinTest {
         runServer {
             handlePostRequest(
                 "/checkout/address",
-                listOf(
+                mapOf(
                     "firstname" to "firstname1",
                     "lastname" to "lastname1",
                     "phoneNumber" to "1111111111",
@@ -42,7 +42,7 @@ class UpdateAddress : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/checkout/address",
-                    listOf(
+                    mapOf(
                         "firstname" to "firstname1",
                         "lastname" to "lastname1",
                         "phoneNumber" to "1111111111",

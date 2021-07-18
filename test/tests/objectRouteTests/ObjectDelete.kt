@@ -28,7 +28,7 @@ class ObjectDelete : KoinTest {
         runServer {
             handlePostRequest(
                 "/object/delete",
-                listOf("id" to TEST_INVALID_ID)
+                mapOf("id" to TEST_INVALID_ID)
             ) {
                 assertEquals("false", response.content)
             }
@@ -41,7 +41,7 @@ class ObjectDelete : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
-                    listOf("id" to TEST_INVALID_ID)
+                    mapOf("id" to TEST_INVALID_ID)
                 ) {
                     assertEquals("false", response.content)
                 }
@@ -56,7 +56,7 @@ class ObjectDelete : KoinTest {
                 `create object before user login`()
                 handlePostRequest(
                     "/object/delete",
-                    listOf("id" to TEST_CREATED_OBJECT)
+                    mapOf("id" to TEST_CREATED_OBJECT)
                 ) {
                     val cookie = response.call.sessions.get<ObjectsCookie>()!!
                     assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
@@ -72,7 +72,7 @@ class ObjectDelete : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
-                    listOf("id" to TEST_SLICED_OBJECT)
+                    mapOf("id" to TEST_SLICED_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
@@ -92,7 +92,7 @@ class ObjectDelete : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/object/delete",
-                    listOf("id" to TEST_CART_OBJECT)
+                    mapOf("id" to TEST_CART_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()

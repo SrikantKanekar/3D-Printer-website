@@ -30,7 +30,7 @@ class UpdateStatus : KoinTest {
         runServer {
             handlePostRequest(
                 "/admin/update/order-status",
-                listOf(
+                mapOf(
                     "id" to TEST_PLACED_ORDER,
                     "order_status" to "1"
                 )
@@ -46,7 +46,7 @@ class UpdateStatus : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_PLACED_ORDER,
                         "order_status" to "1"
                     )
@@ -63,7 +63,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_INVALID_ID,
                         "order_status" to "1"
                     )
@@ -80,7 +80,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_PLACED_ORDER,
                         "order_status" to "2"
                     )
@@ -97,7 +97,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_PROCESSING_ORDER,
                         "order_status" to "3"
                     )
@@ -114,7 +114,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_PLACED_ORDER,
                         "order_status" to "1"
                     )
@@ -140,7 +140,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_CONFIRMED_ORDER,
                         "order_status" to "2"
                     )
@@ -163,7 +163,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_PROCESSED_ORDER,
                         "order_status" to "3"
                     )
@@ -189,7 +189,7 @@ class UpdateStatus : KoinTest {
             runWithAdminUser {
                 handlePostRequest(
                     "/admin/update/order-status",
-                    listOf(
+                    mapOf(
                         "id" to TEST_DELIVERING_ORDER,
                         "order_status" to "4"
                     )

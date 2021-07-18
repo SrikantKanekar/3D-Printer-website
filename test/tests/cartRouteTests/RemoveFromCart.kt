@@ -25,7 +25,7 @@ class RemoveFromCart : KoinTest {
         runServer {
             handlePostRequest(
                 "/cart/remove",
-                listOf("id" to TEST_CART_OBJECT)
+                mapOf("id" to TEST_CART_OBJECT)
             ) {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
             }
@@ -38,7 +38,7 @@ class RemoveFromCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/remove",
-                    listOf("id" to TEST_INVALID_ID)
+                    mapOf("id" to TEST_INVALID_ID)
                 ) {
                     assertEquals("false", response.content)
                 }
@@ -52,7 +52,7 @@ class RemoveFromCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/remove",
-                    listOf("id" to TEST_TRACKING_OBJECT)
+                    mapOf("id" to TEST_TRACKING_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
@@ -75,7 +75,7 @@ class RemoveFromCart : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/remove",
-                    listOf("id" to TEST_CART_OBJECT)
+                    mapOf("id" to TEST_CART_OBJECT)
                 ) {
                     runBlocking {
                         val testRepository by inject<TestRepository>()

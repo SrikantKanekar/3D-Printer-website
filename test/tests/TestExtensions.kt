@@ -2,6 +2,7 @@ package tests
 
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.auth.domain.LoginRequest
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.objects.domain.ObjectsCookie
 import com.example.module
@@ -15,12 +16,13 @@ import io.ktor.config.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 fun MapApplicationConfig.configForTesting() {
-    put("ktor.jwt.secret", "123456")
     put("ktor.jwt.issuer", "3D printing api")
     put("ktor.jwt.audience", "printer audience")
     put("ktor.jwt.realm", "3D printing api")
@@ -51,9 +53,9 @@ fun TestApplicationEngine.handleGetRequest(
     }
 }
 
-fun TestApplicationEngine.handlePostRequest(
+inline fun <reified T> TestApplicationEngine.handlePostRequest(
     uri: String,
-    body: List<Pair<String, String?>> = listOf(),
+    body: T,
     logged: Boolean = false,
     admin: Boolean = false,
     assert: TestApplicationCall.() -> Unit
@@ -61,9 +63,10 @@ fun TestApplicationEngine.handlePostRequest(
     handleRequest(HttpMethod.Post, uri) {
         addHeader(
             HttpHeaders.ContentType,
-            ContentType.Application.FormUrlEncoded.toString()
+            ContentType.Application.Json.toString()
         )
-        setBody(body.formUrlEncode())
+        val jsonBody = Json.encodeToString(body)
+        setBody(jsonBody)
         if (logged) addHeader(HttpHeaders.Authorization, "Bearer $TEST_USER_TOKEN")
         if (admin) addHeader(HttpHeaders.Authorization, "Bearer $TEST_ADMIN_TOKEN")
     }.apply {
@@ -74,10 +77,7 @@ fun TestApplicationEngine.handlePostRequest(
 fun TestApplicationEngine.userLogin() {
     handlePostRequest(
         "/auth/login",
-        listOf(
-            "Email" to TEST_USER_EMAIL,
-            "Password" to TEST_USER_PASSWORD
-        )
+        LoginRequest(TEST_USER_EMAIL, TEST_USER_PASSWORD)
     ) {
         val userPrincipal = response.call.sessions.get<UserPrincipal>()!!
         assertEquals(TEST_USER_EMAIL, userPrincipal.email)
@@ -88,7 +88,7 @@ fun TestApplicationEngine.userLogin() {
 fun TestApplicationEngine.adminLogin() {
     handlePostRequest(
         "/admin/login",
-        listOf(
+        mapOf(
             "name" to "admin",
             "Password" to "password"
         )
@@ -116,7 +116,7 @@ fun TestApplicationEngine.runWithAdminUser(test: TestApplicationEngine.() -> Uni
 fun TestApplicationEngine.`create object before user login`() {
     handlePostRequest(
         "/object/create",
-        listOf(
+        mapOf(
             "id" to TEST_CREATED_OBJECT,
             "name" to "name",
             "file_url" to "file_url",

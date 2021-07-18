@@ -22,7 +22,7 @@ class ObjectSlice : KoinTest {
         runServer {
             handlePostRequest(
                 "object/slice",
-                listOf("id" to TEST_INVALID_ID)
+                mapOf("id" to TEST_INVALID_ID)
             ) {
                 assertEquals("null", response.content)
             }
@@ -35,7 +35,7 @@ class ObjectSlice : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_INVALID_ID)
+                    mapOf("id" to TEST_INVALID_ID)
                 ) {
                     assertEquals("null", response.content)
                 }
@@ -50,7 +50,7 @@ class ObjectSlice : KoinTest {
                 `create object before user login`()
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_CREATED_OBJECT)
+                    mapOf("id" to TEST_CREATED_OBJECT)
                 ) {
                     assertNotEquals("null", response.content)
                 }
@@ -65,13 +65,13 @@ class ObjectSlice : KoinTest {
                 `create object before user login`()
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_CREATED_OBJECT)
+                    mapOf("id" to TEST_CREATED_OBJECT)
                 ) {
                     assertNotEquals("null", response.content)
                 }
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_CREATED_OBJECT)
+                    mapOf("id" to TEST_CREATED_OBJECT)
                 ) {
                     assertEquals("null", response.content)
                 }
@@ -85,7 +85,7 @@ class ObjectSlice : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_SLICED_OBJECT)
+                    mapOf("id" to TEST_SLICED_OBJECT)
                 ) {
                     assertEquals("null", response.content)
                 }
@@ -99,7 +99,7 @@ class ObjectSlice : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_CART_OBJECT)
+                    mapOf("id" to TEST_CART_OBJECT)
                 ) {
                     assertEquals("null", response.content)
                 }
@@ -113,7 +113,7 @@ class ObjectSlice : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "object/slice",
-                    listOf("id" to TEST_UNSLICED_OBJECT)
+                    mapOf("id" to TEST_UNSLICED_OBJECT)
                 ) {
                     assertNotEquals("null", response.content)
                 }

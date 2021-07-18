@@ -25,7 +25,7 @@ class UpdateQuantity : KoinTest {
         runServer {
             handlePostRequest(
                 "/cart/quantity",
-                listOf(
+                mapOf(
                     "id" to TEST_CART_OBJECT,
                     "quantity" to "2"
                 )
@@ -41,7 +41,7 @@ class UpdateQuantity : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/quantity",
-                    listOf(
+                    mapOf(
                         "id" to TEST_INVALID_ID,
                         "quantity" to "2"
                     )
@@ -58,7 +58,7 @@ class UpdateQuantity : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/quantity",
-                    listOf(
+                    mapOf(
                         "id" to TEST_CART_OBJECT,
                         "quantity" to "0"
                     )
@@ -84,7 +84,7 @@ class UpdateQuantity : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/quantity",
-                    listOf(
+                    mapOf(
                         "id" to TEST_TRACKING_OBJECT,
                         "quantity" to "2"
                     )
@@ -110,7 +110,7 @@ class UpdateQuantity : KoinTest {
             runWithLoggedUser {
                 handlePostRequest(
                     "/cart/quantity",
-                    listOf(
+                    mapOf(
                         "id" to TEST_CART_OBJECT,
                         "quantity" to "2"
                     )
