@@ -3,7 +3,7 @@ package com.example.features.admin.presentation
 import com.example.features.admin.data.AdminRepository
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.UserPrincipal
-import com.example.util.AUTH.ADMIN_SESSION_AUTH
+import com.example.util.AUTH.ADMIN_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -20,7 +20,7 @@ fun Application.registerAdminRoutes() {
         getAdminLoginRoute()
         postAdminLoginRoute()
 
-        authenticate(ADMIN_SESSION_AUTH) {
+        authenticate(ADMIN_AUTH) {
             getAdminRoute(adminRepository)
             updateOrderStatus(adminRepository)
         }

@@ -2,7 +2,7 @@ package com.example.features.checkout.presentation
 
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.checkout.data.CheckoutRepository
-import com.example.util.AUTH.USER_SESSION_AUTH
+import com.example.util.AUTH.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -15,7 +15,7 @@ fun Application.registerCheckoutRoute() {
     val checkoutRepository by inject<CheckoutRepository>()
 
     routing {
-        authenticate(USER_SESSION_AUTH) {
+        authenticate(USER_AUTH) {
             getCheckoutRoute(checkoutRepository)
             updateAddress(checkoutRepository)
             paymentSucceed(checkoutRepository)

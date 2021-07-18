@@ -10,6 +10,7 @@ data class User(
     val email: String,
     val password: String,
     var username: String,
+    val isAdmin: Boolean = false,
     var address: Address = Address(),
     val objects: ArrayList<Object> = ArrayList(),
     val orderIds: ArrayList<String> = ArrayList(),

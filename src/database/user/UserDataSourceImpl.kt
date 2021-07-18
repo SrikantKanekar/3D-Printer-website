@@ -2,6 +2,7 @@ package com.example.database.user
 
 import com.example.features.`object`.domain.Object
 import com.example.features.account.domain.User
+import com.example.util.DatabaseException
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
@@ -22,7 +23,9 @@ class UserDataSourceImpl(
     }
 
     override suspend fun updateUser(user: User): Boolean {
-        return users.updateOne(User::email eq user.email, user).wasAcknowledged()
+        val updated = users.updateOne(User::email eq user.email, user).wasAcknowledged()
+        if (!updated) throw DatabaseException("error updating user")
+        return true
     }
 
     override suspend fun createObject(

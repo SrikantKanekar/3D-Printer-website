@@ -14,9 +14,9 @@ class AccountRepository(
         return userDataSource.updateUser(user)
     }
 
-    suspend fun updateUsername(email: String, username: String): Boolean {
+    suspend fun updateUsername(email: String, username: String) {
         val user = userDataSource.getUser(email)
         user.username = username
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
     }
 }

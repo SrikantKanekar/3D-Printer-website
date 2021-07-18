@@ -63,6 +63,9 @@ dependencies {
     // Password hash
     implementation 'commons-codec:commons-codec:1.14'
 
+    // konform data validation
+    implementation "io.konform:konform:0.3.0"
+
     // Kotlin date time
     implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.0'
 

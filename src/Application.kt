@@ -7,7 +7,6 @@ import com.example.config.setupConfig
 import com.example.di.productionModules
 import com.example.features.`object`.presentation.registerObjectRoute
 import com.example.features.account.presentation.registerAccountRoute
-import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
 import com.example.features.auth.data.AuthRepository
 import com.example.features.auth.domain.UserPrincipal
@@ -22,11 +21,8 @@ import com.example.features.order.presentation.registerOrderRoute
 import com.example.features.orders.presentation.registerOrdersRoute
 import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.util.presentation.registerStatusRoutes
-import com.example.util.AUTH.ADMIN_SESSION_AUTH
-import com.example.util.AUTH.JWT_AUTH
-import com.example.util.AUTH.USER_SESSION_AUTH
-import com.example.util.COOKIES.ADMIN_AUTH_COOKIE
-import com.example.util.COOKIES.AUTH_COOKIE
+import com.example.util.AUTH.ADMIN_AUTH
+import com.example.util.AUTH.USER_AUTH
 import com.example.util.COOKIES.OBJECTS_COOKIE
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
@@ -43,7 +39,6 @@ import org.koin.core.module.Module
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
 import org.koin.logger.SLF4JLogger
-import javax.naming.AuthenticationException
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -69,7 +64,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
         method(HttpMethod.Delete)
         header(HttpHeaders.Authorization)
         header(HttpHeaders.ContentType)
-        host("localhost:3000")
+        anyHost()
     }
 
     install(FreeMarker) {
@@ -80,29 +75,10 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
     }
 
     install(Authentication) {
-        session<UserPrincipal>(USER_SESSION_AUTH) {
-            challenge {
-                throw AuthenticationException()
-            }
-            validate { principal ->
-                val authRepository by inject<AuthRepository>()
-                val exists = authRepository.doesUserExist(principal.email)
-                if (exists) principal else null
-            }
-        }
-        session<AdminPrincipal>(ADMIN_SESSION_AUTH) {
-            challenge {
-                throw AuthenticationException()
-            }
-            validate { principal ->
-                principal
-            }
-        }
-
         val appConfig by inject<AppConfig>()
         val jwt = appConfig.jwtConfig
 
-        jwt(JWT_AUTH) {
+        jwt(USER_AUTH) {
             realm = jwt.realm
             verifier(
                 JWT.require(Algorithm.HMAC256(jwt.secret))
@@ -112,7 +88,36 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
             )
             validate { credential ->
                 if (credential.payload.audience.contains(jwt.audience)) {
-                    JWTPrincipal(credential.payload)
+                    val email = credential.payload.getClaim("email").asString()
+                    val username = credential.payload.getClaim("username").asString()
+
+                    val authRepository by inject<AuthRepository>()
+                    val exists = authRepository.doesUserExist(email)
+                    if (exists) UserPrincipal(email, username) else null
+                } else {
+                    null
+                }
+            }
+        }
+
+        jwt(ADMIN_AUTH) {
+            realm = jwt.realm
+            verifier(
+                JWT.require(Algorithm.HMAC256(jwt.secret))
+                    .withIssuer(jwt.issuer)
+                    .withAudience(jwt.audience)
+                    .build()
+            )
+            validate { credential ->
+                if (credential.payload.audience.contains(jwt.audience)) {
+                    val isAdmin = credential.payload.getClaim("is_admin").asBoolean()
+                    if (!isAdmin) return@validate null
+                    val email = credential.payload.getClaim("email").asString()
+                    val username = credential.payload.getClaim("username").asString()
+
+                    val authRepository by inject<AuthRepository>()
+                    val exists = authRepository.doesUserExist(email)
+                    if (exists) UserPrincipal(email, username) else null
                 } else {
                     null
                 }
@@ -121,14 +126,6 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
     }
 
     install(Sessions) {
-        cookie<UserPrincipal>(
-            name = AUTH_COOKIE,
-            storage = SessionStorageMemory()
-        )
-        cookie<AdminPrincipal>(
-            name = ADMIN_AUTH_COOKIE,
-            storage = SessionStorageMemory()
-        )
         cookie<ObjectsCookie>(
             name = OBJECTS_COOKIE,
             storage = SessionStorageMemory()

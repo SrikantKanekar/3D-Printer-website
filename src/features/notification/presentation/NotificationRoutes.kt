@@ -2,7 +2,7 @@ package com.example.features.notification.presentation
 
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.notification.data.NotificationRepository
-import com.example.util.AUTH.USER_SESSION_AUTH
+import com.example.util.AUTH.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -16,7 +16,7 @@ fun Application.registerNotificationRoutes() {
     val notificationRepository by inject<NotificationRepository>()
 
     routing {
-        authenticate(USER_SESSION_AUTH) {
+        authenticate(USER_AUTH) {
             getAllNotificationsRoute(notificationRepository)
             getNotificationRoute(notificationRepository)
         }

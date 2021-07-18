@@ -43,6 +43,7 @@ fun Route.postLoginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
                 .withAudience(jwt.audience)
                 .withClaim("username", "username")
                 .withClaim("email", email)
+                .withClaim("is_admin", true)
                 .sign(Algorithm.HMAC256(jwt.secret))
 
             call.respond(token)

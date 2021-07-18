@@ -2,7 +2,7 @@ package com.example.features.orders.presentation
 
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.orders.data.OrdersRepository
-import com.example.util.AUTH.USER_SESSION_AUTH
+import com.example.util.AUTH.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -15,7 +15,7 @@ fun Application.registerOrdersRoute() {
     val ordersRepository by inject<OrdersRepository>()
 
     routing {
-        authenticate(USER_SESSION_AUTH) {
+        authenticate(USER_AUTH) {
             getOrdersRoute(ordersRepository)
         }
     }

@@ -3,7 +3,7 @@ package com.example.features.order.presentation
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.auth.domain.UserPrincipal
 import com.example.features.order.data.OrderRepository
-import com.example.util.AUTH.ADMIN_SESSION_AUTH
+import com.example.util.AUTH.ADMIN_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -19,7 +19,7 @@ fun Application.registerOrderRoute() {
 
     routing {
         getOrderRoute(orderRepository)
-        authenticate(ADMIN_SESSION_AUTH) {
+        authenticate(ADMIN_AUTH) {
             updatePrintingStatus(orderRepository)
             sendCustomMessage(orderRepository)
         }

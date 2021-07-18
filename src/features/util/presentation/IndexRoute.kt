@@ -1,7 +1,6 @@
 package com.example.features.util.presentation
 
 import com.example.features.auth.domain.UserPrincipal
-import com.example.util.AUTH.JWT_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -12,14 +11,13 @@ import io.ktor.sessions.*
 fun Application.registerIndexRoute() {
 
     routing {
-        authenticate(JWT_AUTH) {
-            getIndexRoute()
-        }
+        getIndexRoute()
     }
 }
 
 fun Route.getIndexRoute() {
     get("/") {
+        val aa = call.principal<UserPrincipal>()
         val principal = call.sessions.get<UserPrincipal>()
         call.respond(FreeMarkerContent("index.ftl", mapOf("user" to (principal?.email ?: ""))))
     }
