@@ -23,6 +23,7 @@ import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.util.presentation.registerStatusRoutes
 import com.example.util.AUTH.ADMIN_AUTH
 import com.example.util.AUTH.USER_AUTH
+import com.example.util.AuthorizationException
 import com.example.util.COOKIES.OBJECTS_COOKIE
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
@@ -111,7 +112,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
             validate { credential ->
                 if (credential.payload.audience.contains(jwt.audience)) {
                     val isAdmin = credential.payload.getClaim("is_admin").asBoolean()
-                    if (!isAdmin) return@validate null
+                    if (!isAdmin) throw AuthorizationException()
                     val email = credential.payload.getClaim("email").asString()
                     val username = credential.payload.getClaim("username").asString()
 

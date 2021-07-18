@@ -1,5 +1,6 @@
 package com.example.features.util.presentation
 
+import com.example.util.AuthorizationException
 import com.example.util.DatabaseException
 import com.example.util.ValidationException
 import com.mongodb.MongoTimeoutException
@@ -40,6 +41,11 @@ fun Route.statusRoutes() {
         exception<DatabaseException> { e ->
             println("Mongo read write exception: ${e.message}")
             call.respond(HttpStatusCode.InternalServerError)
+        }
+
+        // Authorization
+        exception<AuthorizationException> {
+            call.respond(HttpStatusCode.Forbidden)
         }
     }
 }

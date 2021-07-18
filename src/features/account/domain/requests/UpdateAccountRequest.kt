@@ -1,4 +1,4 @@
-package com.example.features.account.domain
+package com.example.features.account.domain.requests
 
 import com.example.util.validateAndThrowOnFailure
 import io.konform.validation.Validation

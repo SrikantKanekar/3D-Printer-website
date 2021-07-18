@@ -10,8 +10,8 @@ class AccountRepository(
         return userDataSource.getUser(email)
     }
 
-    suspend fun updateUser(user: User): Boolean {
-        return userDataSource.updateUser(user)
+    suspend fun updateUser(user: User) {
+        userDataSource.updateUser(user)
     }
 
     suspend fun updateUsername(email: String, username: String) {
