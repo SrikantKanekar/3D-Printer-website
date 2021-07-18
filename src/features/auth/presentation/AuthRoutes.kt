@@ -17,7 +17,5 @@ fun Application.registerAuthRoutes() {
 
         getRegisterRoute()
         postRegisterRoute(authRepository)
-
-        loginProvider()
     }
 }

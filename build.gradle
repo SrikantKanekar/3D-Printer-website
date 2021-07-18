@@ -48,9 +48,6 @@ dependencies {
     // Sessions
     implementation "io.ktor:ktor-server-sessions:$ktor_version"
 
-    // Locations
-    implementation "io.ktor:ktor-locations:$ktor_version"
-
     // MongoDb Database
     implementation 'org.litote.kmongo:kmongo:4.2.8'
     implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'

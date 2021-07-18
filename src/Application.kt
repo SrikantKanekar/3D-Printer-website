@@ -10,9 +10,7 @@ import com.example.features.account.presentation.registerAccountRoute
 import com.example.features.admin.domain.AdminPrincipal
 import com.example.features.admin.presentation.registerAdminRoutes
 import com.example.features.auth.data.AuthRepository
-import com.example.features.auth.domain.Login
 import com.example.features.auth.domain.UserPrincipal
-import com.example.features.auth.domain.loginProviders
 import com.example.features.auth.presentation.registerAuthRoutes
 import com.example.features.cart.presentation.registerCartRoute
 import com.example.features.checkout.presentation.registerCheckoutRoute
@@ -26,7 +24,6 @@ import com.example.features.util.presentation.registerIndexRoute
 import com.example.features.util.presentation.registerStatusRoutes
 import com.example.util.AUTH.ADMIN_SESSION_AUTH
 import com.example.util.AUTH.JWT_AUTH
-import com.example.util.AUTH.OAUTH
 import com.example.util.AUTH.USER_SESSION_AUTH
 import com.example.util.COOKIES.ADMIN_AUTH_COOKIE
 import com.example.util.COOKIES.AUTH_COOKIE
@@ -35,13 +32,10 @@ import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
-import io.ktor.client.*
-import io.ktor.client.engine.apache.*
 import io.ktor.features.*
 import io.ktor.freemarker.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.locations.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import io.ktor.sessions.*
@@ -85,15 +79,7 @@ fun Application.module(testing: Boolean = false, koinModules: List<Module> = pro
         )
     }
 
-    install(Locations)
-
     install(Authentication) {
-        oauth(OAUTH) {
-            client = HttpClient(Apache)
-            providerLookup = { loginProviders[application.locations.resolve<Login>(Login::class, this).type] }
-            urlProvider = { url(Login(it.name)) }
-        }
-
         session<UserPrincipal>(USER_SESSION_AUTH) {
             challenge {
                 throw AuthenticationException()
