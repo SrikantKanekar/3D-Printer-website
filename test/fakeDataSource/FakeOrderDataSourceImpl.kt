@@ -1,9 +1,8 @@
 package fakeDataSource
 
 import com.example.database.order.OrderDataSource
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.DELIVERED
+import com.example.model.Order
+import com.example.util.enums.OrderStatus
 import data.TestConstants.TEST_CREATED_ORDER
 
 class FakeOrderDataSourceImpl(
@@ -43,6 +42,6 @@ class FakeOrderDataSourceImpl(
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {
-        return orders.values.filter { it.status != DELIVERED }
+        return orders.values.filter { it.status != OrderStatus.DELIVERED }
     }
 }

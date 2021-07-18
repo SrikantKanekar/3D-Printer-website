@@ -1,6 +1,6 @@
 package tests.accountRouteTests
 
-import com.example.features.auth.domain.UserPrincipal
+import com.example.model.UserPrincipal
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_USERNAME
 import io.ktor.http.*

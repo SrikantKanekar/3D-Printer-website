@@ -1,11 +1,11 @@
 package com.example.features.`object`.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.CART
-import com.example.features.`object`.domain.ObjectStatus.NONE
-import com.example.features.`object`.domain.Setting
-import com.example.features.`object`.domain.SlicingDetails
+import com.example.model.Object
+import com.example.model.Setting
+import com.example.model.SlicingDetails
+import com.example.util.enums.ObjectStatus.CART
+import com.example.util.enums.ObjectStatus.NONE
 import kotlin.random.Random
 
 class ObjectRepository(

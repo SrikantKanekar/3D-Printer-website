@@ -1,6 +1,6 @@
 package tests.objectRouteTests
 
-import com.example.features.`object`.domain.ObjectStatus.CART
+import com.example.util.enums.ObjectStatus.CART
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_UNSLICED_OBJECT

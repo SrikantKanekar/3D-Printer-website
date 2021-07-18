@@ -1,7 +1,7 @@
 package data
 
-import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.model.Order
+import com.example.model.User
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

@@ -1,7 +1,7 @@
 package com.example.database.user
 
-import com.example.features.`object`.domain.Object
-import com.example.features.account.domain.User
+import com.example.model.Object
+import com.example.model.User
 
 interface UserDataSource {
 

@@ -1,7 +1,7 @@
 package com.example.database.order
 
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus
+import com.example.model.Order
+import com.example.util.enums.OrderStatus
 
 interface OrderDataSource {
 

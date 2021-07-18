@@ -1,9 +1,9 @@
 package com.example.features.cart.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.CART
-import com.example.features.`object`.domain.ObjectStatus.NONE
+import com.example.model.Object
+import com.example.util.enums.ObjectStatus.CART
+import com.example.util.enums.ObjectStatus.NONE
 
 class CartRepository(
     private val userDataSource: UserDataSource

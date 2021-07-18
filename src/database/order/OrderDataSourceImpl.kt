@@ -1,8 +1,7 @@
 package com.example.database.order
 
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.DELIVERED
+import com.example.model.Order
+import com.example.util.enums.OrderStatus
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 import org.litote.kmongo.ne
@@ -41,6 +40,6 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {
-        return orders.find().filter(Order::status ne DELIVERED).toList().reversed()
+        return orders.find().filter(Order::status ne OrderStatus.DELIVERED).toList().reversed()
     }
 }

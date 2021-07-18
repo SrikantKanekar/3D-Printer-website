@@ -1,7 +1,7 @@
 package tests.adminRouteTests
 
-import com.example.features.`object`.domain.ObjectStatus.COMPLETED
-import com.example.features.order.domain.OrderStatus.*
+import com.example.util.enums.ObjectStatus.COMPLETED
+import com.example.util.enums.OrderStatus
 import data.TestConstants.TEST_CONFIRMED_ORDER
 import data.TestConstants.TEST_DELIVERING_ORDER
 import data.TestConstants.TEST_INVALID_ID
@@ -122,7 +122,7 @@ class UpdateStatus : KoinTest {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val order = testRepository.getActiveOrder(TEST_PLACED_ORDER)!!
-                        assertEquals(CONFIRMED, order.status)
+                        assertEquals(OrderStatus.CONFIRMED, order.status)
 
                         val notification = testRepository.getUser(TEST_USER_EMAIL).notification[1]
                         assertTrue { notification.title.contains("Confirmed") }
@@ -148,7 +148,7 @@ class UpdateStatus : KoinTest {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val order = testRepository.getActiveOrder(TEST_CONFIRMED_ORDER)!!
-                        assertEquals(PROCESSING, order.status)
+                        assertEquals(OrderStatus.PROCESSING, order.status)
 
                         assertEquals("true", response.content)
                     }
@@ -171,7 +171,7 @@ class UpdateStatus : KoinTest {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val order = testRepository.getActiveOrder(TEST_PROCESSED_ORDER)!!
-                        assertEquals(DELIVERING, order.status)
+                        assertEquals(OrderStatus.DELIVERING, order.status)
 
                         val notification = testRepository.getUser(TEST_USER_EMAIL).notification[1]
                         assertTrue { notification.title.contains("delivery") }
@@ -197,7 +197,7 @@ class UpdateStatus : KoinTest {
                     runBlocking {
                         val testRepository by inject<TestRepository>()
                         val order = testRepository.getCompletedOrder(TEST_DELIVERING_ORDER)!!
-                        assertEquals(DELIVERED, order.status)
+                        assertEquals(OrderStatus.DELIVERED, order.status)
 
                         val user = testRepository.getUser(TEST_USER_EMAIL)
                         val notification = user.notification[1]

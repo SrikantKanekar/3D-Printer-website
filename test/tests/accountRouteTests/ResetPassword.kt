@@ -1,10 +1,10 @@
 package tests.accountRouteTests
 
-import com.example.features.account.domain.AccountConstants.INCORRECT_PASSWORD
-import com.example.features.account.domain.AccountConstants.PASSWORD_DO_NOT_MATCH
-import com.example.features.account.domain.AccountConstants.RESET_SUCCESSFUL
 import com.example.features.account.domain.requests.ResetPasswordRequest
-import com.example.features.auth.domain.checkHashForPassword
+import com.example.util.checkHashForPassword
+import com.example.util.constants.Account.INCORRECT_PASSWORD
+import com.example.util.constants.Account.PASSWORD_DO_NOT_MATCH
+import com.example.util.constants.Account.RESET_SUCCESSFUL
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD

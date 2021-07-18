@@ -1,9 +1,9 @@
 package com.example.features.auth.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.objects.domain.ObjectsCookie
-import com.example.features.account.domain.User
-import com.example.features.auth.domain.checkHashForPassword
+import com.example.model.ObjectsCookie
+import com.example.model.User
+import com.example.util.checkHashForPassword
 
 class AuthRepository(
     private val userDataSource: UserDataSource

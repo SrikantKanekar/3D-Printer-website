@@ -1,8 +1,8 @@
 package com.example.features.objects.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.*
+import com.example.model.Object
+import com.example.util.enums.ObjectStatus.*
 
 class ObjectsRepository(
     private val userDataSource: UserDataSource

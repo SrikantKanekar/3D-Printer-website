@@ -1,7 +1,7 @@
 package tests.adminRouteTests
 
-import com.example.features.admin.domain.AdminPrincipal
-import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.admin.data.AdminPrincipal
+import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import io.ktor.http.*
 import io.ktor.sessions.*
 import org.junit.Test

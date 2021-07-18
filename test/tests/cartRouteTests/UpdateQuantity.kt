@@ -1,7 +1,7 @@
 package tests.cartRouteTests
 
-import com.example.features.`object`.domain.ObjectStatus.CART
-import com.example.features.`object`.domain.ObjectStatus.TRACKING
+import com.example.util.enums.ObjectStatus.CART
+import com.example.util.enums.ObjectStatus.TRACKING
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_TRACKING_OBJECT

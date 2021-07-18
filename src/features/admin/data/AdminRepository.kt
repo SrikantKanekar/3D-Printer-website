@@ -2,15 +2,14 @@ package com.example.features.admin.data
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.ObjectStatus.COMPLETED
-import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.notification.domain.NotificationManager
-import com.example.features.notification.domain.NotificationType
-import com.example.features.notification.domain.generateNotification
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus
-import com.example.features.order.domain.OrderStatus.*
-import com.example.features.order.domain.PrintingStatus.PRINTED
+import com.example.features.notification.data.NotificationManager
+import com.example.features.notification.data.generateNotification
+import com.example.model.Order
+import com.example.util.enums.NotificationType
+import com.example.util.enums.ObjectStatus.COMPLETED
+import com.example.util.enums.ObjectStatus.TRACKING
+import com.example.util.enums.OrderStatus
+import com.example.util.enums.PrintingStatus
 import com.example.util.now
 
 class AdminRepository(
@@ -22,7 +21,7 @@ class AdminRepository(
     }
 
     suspend fun getActiveOrder(orderId: String): Order? {
-        return orderDataSource.getOrderById(orderId)?.takeUnless { it.status == DELIVERED }
+        return orderDataSource.getOrderById(orderId)?.takeUnless { it.status == OrderStatus.DELIVERED }
     }
 
     suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {
@@ -30,11 +29,11 @@ class AdminRepository(
         val user = userDataSource.getUser(order.userEmail)
 
         // check if all objects are printed before delivering
-        if (status == DELIVERING) {
+        if (status == OrderStatus.DELIVERING) {
             val allPrinted = user.objects
                 .filter { it.status == TRACKING }
                 .filter { order.objectIds.contains(it.id) }
-                .all { it.printingStatus == PRINTED }
+                .all { it.printingStatus == PrintingStatus.PRINTED }
             if (!allPrinted) return false
         }
 
@@ -45,17 +44,17 @@ class AdminRepository(
 
         if (updated) {
             when (status) {
-                CONFIRMED -> {
+                OrderStatus.CONFIRMED -> {
                     val notification = generateNotification(NotificationType.CONFIRMED, user, order)
                     NotificationManager.sendNotification(notification, user.email)
                     user.notification.add(notification)
                 }
-                DELIVERING -> {
+                OrderStatus.DELIVERING -> {
                     val notification = generateNotification(NotificationType.DELIVERING, user, order)
                     NotificationManager.sendNotification(notification, user.email)
                     user.notification.add(notification)
                 }
-                DELIVERED -> {
+                OrderStatus.DELIVERED -> {
                     user.objects
                         .filter { it.status == TRACKING }
                         .filter { order.objectIds.contains(it.id) }

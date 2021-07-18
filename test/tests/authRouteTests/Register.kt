@@ -1,8 +1,8 @@
 package tests.authRouteTests
 
-import com.example.features.auth.domain.AuthConstants.EMAIL_ALREADY_TAKEN
-import com.example.features.auth.domain.AuthConstants.PASSWORDS_DO_NOT_MATCH
-import com.example.features.auth.domain.UserPrincipal
+import com.example.util.constants.Auth.EMAIL_ALREADY_TAKEN
+import com.example.util.constants.Auth.PASSWORDS_DO_NOT_MATCH
+import com.example.model.UserPrincipal
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import data.TestConstants.TEST_USER_USERNAME

@@ -1,6 +1,6 @@
 package tests.objectRouteTests
 
-import com.example.features.objects.domain.ObjectsCookie
+import com.example.model.ObjectsCookie
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID

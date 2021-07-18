@@ -2,10 +2,10 @@ package fakeDataSource
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus
+import com.example.model.Object
+import com.example.model.User
+import com.example.model.Order
+import com.example.util.enums.OrderStatus
 
 class TestRepository(
     private val userDataSource: UserDataSource,

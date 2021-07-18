@@ -1,7 +1,7 @@
 package com.example.features.orders.data
 
 import com.example.database.order.OrderDataSource
-import com.example.features.order.domain.Order
+import com.example.model.Order
 
 class OrdersRepository(
     private val orderDataSource: OrderDataSource

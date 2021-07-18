@@ -1,12 +1,12 @@
 package data
 
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.*
-import com.example.features.`object`.domain.SlicingDetails
-import com.example.features.account.domain.User
-import com.example.features.checkout.domain.Address
-import com.example.features.notification.domain.Notification
-import com.example.features.order.domain.PrintingStatus.*
+import com.example.model.Object
+import com.example.model.Address
+import com.example.model.Notification
+import com.example.model.SlicingDetails
+import com.example.model.User
+import com.example.util.enums.ObjectStatus.*
+import com.example.util.enums.PrintingStatus
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_COMPLETED_OBJECT
 import data.TestConstants.TEST_CONFIRMED_ORDER
@@ -98,7 +98,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = COMPLETED,
-                printingStatus = PRINTED
+                printingStatus = PrintingStatus.PRINTED
             ),
             Object(
                 id = TEST_PENDING_OBJECT,
@@ -107,7 +107,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PENDING
+                printingStatus = PrintingStatus.PENDING
             ),
             Object(
                 id = TEST_PRINTING_OBJECT,
@@ -116,7 +116,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PRINTING
+                printingStatus = PrintingStatus.PRINTING
             ),
             Object(
                 id = TEST_PRINTED_OBJECT,
@@ -125,7 +125,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PRINTED
+                printingStatus = PrintingStatus.PRINTED
             )
         )
     ),

@@ -1,7 +1,7 @@
 package com.example.features.notification.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.notification.domain.Notification
+import com.example.model.Notification
 
 class NotificationRepository(
     private val userDataSource: UserDataSource

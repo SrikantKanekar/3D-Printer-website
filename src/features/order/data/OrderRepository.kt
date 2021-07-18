@@ -2,16 +2,15 @@ package com.example.features.order.data
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.notification.domain.Notification
-import com.example.features.notification.domain.NotificationManager.sendNotification
-import com.example.features.notification.domain.NotificationType
-import com.example.features.notification.domain.generateNotification
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus.PROCESSING
-import com.example.features.order.domain.PrintingStatus
-import com.example.features.order.domain.PrintingStatus.PRINTING
+import com.example.model.Object
+import com.example.features.notification.data.NotificationManager.sendNotification
+import com.example.features.notification.data.generateNotification
+import com.example.model.Notification
+import com.example.model.Order
+import com.example.util.enums.NotificationType
+import com.example.util.enums.ObjectStatus.TRACKING
+import com.example.util.enums.OrderStatus
+import com.example.util.enums.PrintingStatus
 import com.example.util.now
 
 class OrderRepository(
@@ -53,7 +52,7 @@ class OrderRepository(
         val order = orderDataSource.getOrderById(orderId) ?: return false
 
         // The order must be in processing state
-        if (order.status == PROCESSING) {
+        if (order.status == OrderStatus.PROCESSING) {
 
             val user = userDataSource.getUser(order.userEmail)
 
@@ -65,7 +64,7 @@ class OrderRepository(
                 ?.let { it.printingStatus = printingStatus } ?: return false
 
             // Update user object's tracking details
-            if (printingStatus == PRINTING) {
+            if (printingStatus == PrintingStatus.PRINTING) {
                 user.objects
                     .find { it.id == objectId }
                     ?.let { it.trackingDetails.started_at = now() }
@@ -77,7 +76,7 @@ class OrderRepository(
 
 
             // sends notification when printing starts
-            if (printingStatus == PRINTING) {
+            if (printingStatus == PrintingStatus.PRINTING) {
                 val notification = generateNotification(NotificationType.PRINTING, user, order, objectId)
                 sendNotification(notification, user.email)
                 user.notification.add(notification)

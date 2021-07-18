@@ -1,7 +1,7 @@
 package tests.checkoutRouteTests
 
-import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.order.domain.OrderStatus.PLACED
+import com.example.util.enums.ObjectStatus.TRACKING
+import com.example.util.enums.OrderStatus
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_ORDER
 import data.TestConstants.TEST_USER_EMAIL
@@ -58,7 +58,7 @@ class PaymentSucceed : KoinTest {
                         val testRepository by inject<TestRepository>()
 
                         val order = testRepository.getActiveOrder(TEST_CREATED_ORDER)!!
-                        assertEquals(PLACED, order.status)
+                        assertEquals(OrderStatus.PLACED, order.status)
                         assertEquals(TEST_USER_EMAIL, order.userEmail)
                         assertEquals(TEST_CART_OBJECT, order.objectIds[0])
                         assertEquals(4, order.price)

@@ -1,7 +1,7 @@
 package com.example.features.account.data
 
 import com.example.database.user.UserDataSource
-import com.example.features.account.domain.User
+import com.example.model.User
 
 class AccountRepository(
     private val userDataSource: UserDataSource

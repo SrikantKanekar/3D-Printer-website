@@ -1,7 +1,7 @@
 package com.example.database
 
-import com.example.features.account.domain.User
-import com.example.features.order.domain.Order
+import com.example.model.Order
+import com.example.model.User
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 

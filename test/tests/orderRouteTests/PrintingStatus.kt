@@ -1,7 +1,6 @@
 package tests.orderRouteTests
 
-import com.example.features.order.domain.PrintingStatus.PRINTED
-import com.example.features.order.domain.PrintingStatus.PRINTING
+import com.example.util.enums.PrintingStatus
 import data.TestConstants.TEST_CONFIRMED_ORDER
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_PENDING_OBJECT
@@ -147,7 +146,7 @@ class PrintingStatus : KoinTest {
                         val user = testRepository.getUser(TEST_USER_EMAIL)
 
                         val obj = user.objects.find { it.id == TEST_PENDING_OBJECT }!!
-                        assertEquals(obj.printingStatus, PRINTING)
+                        assertEquals(obj.printingStatus, PrintingStatus.PRINTING)
                         assertNotNull(obj.trackingDetails.started_at)
 
                         val notification = user.notification[1]
@@ -177,7 +176,7 @@ class PrintingStatus : KoinTest {
                         val user = testRepository.getUser(TEST_USER_EMAIL)
 
                         val obj = user.objects.find { it.id == TEST_PRINTING_OBJECT }!!
-                        assertEquals(obj.printingStatus, PRINTED)
+                        assertEquals(obj.printingStatus, PrintingStatus.PRINTED)
                         assertNotNull(obj.trackingDetails.completed_at)
 
                         assertEquals("true", response.content)

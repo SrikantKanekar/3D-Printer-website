@@ -1,10 +1,10 @@
 package tests
 
-import com.example.features.admin.domain.AdminPrincipal
-import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
+import com.example.features.admin.data.AdminPrincipal
+import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.LoginRequest
-import com.example.features.auth.domain.UserPrincipal
-import com.example.features.objects.domain.ObjectsCookie
+import com.example.model.ObjectsCookie
+import com.example.model.UserPrincipal
 import com.example.module
 import data.TestConstants.TEST_ADMIN_TOKEN
 import data.TestConstants.TEST_CREATED_OBJECT

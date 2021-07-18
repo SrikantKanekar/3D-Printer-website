@@ -1,8 +1,8 @@
 package tests.authRouteTests
 
 import com.auth0.jwt.JWT
-import com.example.features.auth.domain.AuthConstants.EMAIL_PASSWORD_INCORRECT
 import com.example.features.auth.domain.LoginRequest
+import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD

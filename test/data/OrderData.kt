@@ -1,7 +1,7 @@
 package data
 
-import com.example.features.order.domain.Order
-import com.example.features.order.domain.OrderStatus.*
+import com.example.model.Order
+import com.example.util.enums.OrderStatus
 import data.TestConstants.TEST_COMPLETED_OBJECT
 import data.TestConstants.TEST_CONFIRMED_ORDER
 import data.TestConstants.TEST_DELIVERED_ORDER
@@ -18,7 +18,7 @@ import data.TestConstants.TEST_USER_EMAIL
 val testOrderData = listOf(
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = PLACED,
+        status = OrderStatus.PLACED,
         objectIds = ArrayList(listOf(TEST_TRACKING_OBJECT, TEST_PENDING_OBJECT)),
         price = 100,
         deliveredOn = "10 May",
@@ -26,7 +26,7 @@ val testOrderData = listOf(
     ),
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = CONFIRMED,
+        status = OrderStatus.CONFIRMED,
         objectIds = ArrayList(listOf(TEST_TRACKING_OBJECT, TEST_PENDING_OBJECT)),
         price = 100,
         deliveredOn = "10 May",
@@ -34,7 +34,7 @@ val testOrderData = listOf(
     ),
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = PROCESSING,
+        status = OrderStatus.PROCESSING,
         objectIds = ArrayList(listOf(
             TEST_TRACKING_OBJECT,
             TEST_PENDING_OBJECT,
@@ -47,7 +47,7 @@ val testOrderData = listOf(
     ),
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = PROCESSING,
+        status = OrderStatus.PROCESSING,
         objectIds = ArrayList(listOf(
             TEST_PRINTED_OBJECT
         )),
@@ -57,7 +57,7 @@ val testOrderData = listOf(
     ),
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = DELIVERING,
+        status = OrderStatus.DELIVERING,
         objectIds = ArrayList(listOf(TEST_PRINTED_OBJECT)),
         price = 100,
         deliveredOn = "10 May",
@@ -65,7 +65,7 @@ val testOrderData = listOf(
     ),
     Order(
         userEmail = TEST_USER_EMAIL,
-        status = DELIVERED,
+        status = OrderStatus.DELIVERED,
         objectIds = ArrayList(listOf(TEST_COMPLETED_OBJECT, TEST_PRINTED_OBJECT)),
         price = 100,
         deliveredOn = "10 May",

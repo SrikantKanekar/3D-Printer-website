@@ -2,13 +2,13 @@ package com.example.features.checkout.data
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.`object`.domain.Object
-import com.example.features.`object`.domain.ObjectStatus.CART
-import com.example.features.`object`.domain.ObjectStatus.TRACKING
-import com.example.features.checkout.domain.Address
-import com.example.features.notification.domain.NotificationManager.sendNotification
-import com.example.features.notification.domain.NotificationType.PLACED
-import com.example.features.notification.domain.generateNotification
+import com.example.features.notification.data.NotificationManager.sendNotification
+import com.example.features.notification.data.generateNotification
+import com.example.model.Address
+import com.example.model.Object
+import com.example.util.enums.NotificationType.PLACED
+import com.example.util.enums.ObjectStatus.CART
+import com.example.util.enums.ObjectStatus.TRACKING
 
 class CheckoutRepository(
     private val userDataSource: UserDataSource,
