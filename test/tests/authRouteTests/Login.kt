@@ -2,50 +2,46 @@ package tests.authRouteTests
 
 import com.auth0.jwt.JWT
 import com.example.features.auth.domain.LoginRequest
+import com.example.util.ValidationException
+import com.example.util.constants.Auth.ADMIN_CLAIM
+import com.example.util.constants.Auth.EMAIL_CLAIM
 import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
+import com.example.util.constants.Auth.USERNAME_CLAIM
 import data.TestConstants.TEST_CREATED_OBJECT
+import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
+import data.TestConstants.TEST_USER_USERNAME
 import fakeDataSource.TestRepository
-import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.*
+import tests.`create object before user login`
+import tests.handlePostRequest
+import tests.runServer
+import tests.userLogin
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class Login : KoinTest {
 
     @Test
-    fun `should return ok if user is not logged`() {
-        runServer {
-            handleGetRequest("/auth/login") {
-                assertEquals(HttpStatusCode.OK, response.status())
-            }
+    fun `should fail if input is invalid`() {
+        assertFailsWith<ValidationException> {
+            LoginRequest("111111", "111")
         }
     }
 
     @Test
-    fun `should redirect if user is already logged`() {
-        runServer {
-            runWithLoggedUser {
-                handleGetRequest("/auth/login") {
-                    assertEquals(HttpStatusCode.Found, response.status())
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `should return error for invalid credentials`() {
+    fun `should return error for invalid login credentials`() {
         runServer {
             handlePostRequest(
                 "/auth/login",
-                LoginRequest("INVALID_EMAIL", "INVALID_PASSWORD")
+                LoginRequest(TEST_INVALID_ID, TEST_INVALID_ID)
             ) {
                 assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
             }
@@ -53,7 +49,7 @@ class Login : KoinTest {
     }
 
     @Test
-    fun `should return token for Jwt login`() {
+    fun `should return valid token after login`() {
         runServer {
             handlePostRequest(
                 "/auth/login",
@@ -62,17 +58,16 @@ class Login : KoinTest {
                 assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
 
                 val token = response.content!!
-                println(token)
                 val decodedJWT = JWT.decode(token)
-                assertEquals("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9", decodedJWT.header)
-                assertEquals(TEST_USER_EMAIL, decodedJWT.getClaim("email").asString())
-                //assertEquals(TEST_USER_USERNAME, decodedJWT.getClaim("username").asString())
+                assertEquals(TEST_USER_EMAIL, decodedJWT.getClaim(EMAIL_CLAIM).asString())
+                assertEquals(TEST_USER_USERNAME, decodedJWT.getClaim(USERNAME_CLAIM).asString())
+                assertEquals(false, decodedJWT.getClaim(ADMIN_CLAIM).asBoolean())
             }
         }
     }
 
     @Test
-    fun `should sync cookie objects to account after login`() {
+    fun `should sync cookie objects after login`() {
         runServer {
             cookiesSession {
                 `create object before user login`()

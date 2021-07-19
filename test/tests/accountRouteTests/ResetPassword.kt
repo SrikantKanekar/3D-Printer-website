@@ -1,7 +1,8 @@
 package tests.accountRouteTests
 
 import com.example.features.account.domain.requests.ResetPasswordRequest
-import com.example.util.checkHashForPassword
+import com.example.util.ValidationException
+import com.example.util.checkPassword
 import com.example.util.constants.Account.INCORRECT_PASSWORD
 import com.example.util.constants.Account.PASSWORD_DO_NOT_MATCH
 import com.example.util.constants.Account.RESET_SUCCESSFUL
@@ -19,6 +20,7 @@ import tests.runServer
 import tests.userLogin
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class ResetPassword : KoinTest {
@@ -41,7 +43,7 @@ class ResetPassword : KoinTest {
 
     @Test
     fun `should fail if input is invalid`() {
-        assertFails {
+        assertFailsWith<ValidationException> {
             ResetPasswordRequest(
                 TEST_USER_PASSWORD,
                 "111",
@@ -99,7 +101,7 @@ class ResetPassword : KoinTest {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
                     val user = testRepository.getUser(TEST_USER_EMAIL)
-                    assertTrue(checkHashForPassword("1111", user.password))
+                    assertTrue(checkPassword("1111", user.password))
 
                     assertEquals(RESET_SUCCESSFUL, response.content)
                 }

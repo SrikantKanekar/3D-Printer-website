@@ -1,6 +1,7 @@
 package tests.accountRouteTests
 
 import com.example.features.account.domain.requests.UpdateAccountRequest
+import com.example.util.ValidationException
 import data.TestConstants.TEST_USER_EMAIL
 import fakeDataSource.TestRepository
 import io.ktor.http.*
@@ -11,7 +12,7 @@ import org.koin.test.inject
 import tests.handlePostRequest
 import tests.runServer
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
 
 const val UPDATED_USERNAME = "UPDATED_USERNAME"
 const val SHORT_USERNAME = "AB"
@@ -33,8 +34,12 @@ class UpdateAccount : KoinTest {
 
     @Test
     fun `should fail if input is invalid`() {
-        assertFails { UpdateAccountRequest(SHORT_USERNAME) }
-        assertFails { UpdateAccountRequest(LONG_USERNAME) }
+        assertFailsWith<ValidationException> {
+            UpdateAccountRequest(SHORT_USERNAME)
+        }
+        assertFailsWith<ValidationException> {
+            UpdateAccountRequest(LONG_USERNAME)
+        }
     }
 
     @Test

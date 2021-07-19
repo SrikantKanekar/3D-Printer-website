@@ -12,10 +12,7 @@ fun Application.registerAuthRoutes() {
     val appConfig by inject<AppConfig>()
 
     routing {
-        getLoginRoute()
-        postLoginRoute(authRepository, appConfig.jwtConfig)
-
-        getRegisterRoute()
-        postRegisterRoute(authRepository)
+        loginRoute(authRepository, appConfig.jwtConfig)
+        registerRoute(authRepository, appConfig.jwtConfig)
     }
 }

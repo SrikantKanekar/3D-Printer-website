@@ -3,11 +3,11 @@ package com.example.features.account.presentation
 import com.example.features.account.data.AccountRepository
 import com.example.features.account.domain.requests.ResetPasswordRequest
 import com.example.model.UserPrincipal
-import com.example.util.checkHashForPassword
+import com.example.util.checkPassword
 import com.example.util.constants.Account.INCORRECT_PASSWORD
 import com.example.util.constants.Account.PASSWORD_DO_NOT_MATCH
 import com.example.util.constants.Account.RESET_SUCCESSFUL
-import com.example.util.getHashWithSalt
+import com.example.util.generateHash
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.request.*
@@ -21,10 +21,10 @@ fun Route.resetPasswordRoute(accountRepository: AccountRepository) {
         if (newPassword == confirmPassword) {
             val principal = call.principal<UserPrincipal>()!!
             val user = accountRepository.getUser(principal.email)
-            val isPasswordCorrect = checkHashForPassword(oldPassword, user.password)
+            val isPasswordCorrect = checkPassword(oldPassword, user.password)
 
             if (isPasswordCorrect) {
-                user.password = getHashWithSalt(newPassword)
+                user.password = generateHash(newPassword)
                 accountRepository.updateUser(user)
                 call.respondText(RESET_SUCCESSFUL)
             } else {

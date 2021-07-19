@@ -11,7 +11,9 @@ class UserDataSourceImpl(
 ) : UserDataSource {
 
     override suspend fun insertUser(user: User): Boolean {
-        return users.insertOne(user).wasAcknowledged()
+        val inserted = users.insertOne(user).wasAcknowledged()
+        if (!inserted) throw DatabaseException("error inserting user")
+        return true
     }
 
     override suspend fun getUserOrNull(email: String): User? {

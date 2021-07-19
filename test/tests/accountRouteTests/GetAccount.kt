@@ -13,7 +13,7 @@ import tests.handleGetRequest
 import tests.runServer
 import kotlin.test.assertEquals
 
-class AccountRoute : KoinTest {
+class GetAccount : KoinTest {
 
     @Test
     fun `should return unauthorised if user is not logged`() {

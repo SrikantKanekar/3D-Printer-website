@@ -6,9 +6,13 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.example.config.AppConfig
 import com.example.config.JWTConfig
 import com.example.features.auth.data.AuthRepository
+import com.example.model.User
 import com.example.model.UserPrincipal
 import com.example.util.AuthorizationException
 import com.example.util.constants.Auth.ADMIN_AUTH
+import com.example.util.constants.Auth.ADMIN_CLAIM
+import com.example.util.constants.Auth.EMAIL_CLAIM
+import com.example.util.constants.Auth.USERNAME_CLAIM
 import com.example.util.constants.Auth.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -56,23 +60,33 @@ suspend fun validateJwtToken(
 ): UserPrincipal? {
     return if (credential.payload.audience.contains(config.audience)) {
         if (admin) checkAdmin(credential)
-        userPrincipalOrNull(credential, authRepository)
+        checkUser(credential, authRepository)
     } else {
         null
     }
 }
 
-suspend fun userPrincipalOrNull(
+suspend fun checkUser(
     credential: JWTCredential,
     authRepository: AuthRepository
 ): UserPrincipal? {
-    val email = credential.payload.getClaim("email").asString()
-    val username = credential.payload.getClaim("username").asString()
+    val username = credential.payload.getClaim(USERNAME_CLAIM).asString()
+    val email = credential.payload.getClaim(EMAIL_CLAIM).asString()
     val exists = authRepository.doesUserExist(email)
     return if (exists) UserPrincipal(email, username) else null
 }
 
 fun checkAdmin(credential: JWTCredential) {
-    val isAdmin = credential.payload.getClaim("is_admin").asBoolean()
+    val isAdmin = credential.payload.getClaim(ADMIN_CLAIM).asBoolean()
     if (!isAdmin) throw AuthorizationException()
+}
+
+fun generateJwtToken(jwt: JWTConfig, user: User): String {
+    return JWT.create()
+        .withIssuer(jwt.issuer)
+        .withAudience(jwt.audience)
+        .withClaim(USERNAME_CLAIM, user.username)
+        .withClaim(EMAIL_CLAIM, user.email)
+        .withClaim(ADMIN_CLAIM, user.isAdmin)
+        .sign(Algorithm.HMAC256(jwt.secret))
 }

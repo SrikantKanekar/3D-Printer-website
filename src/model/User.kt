@@ -1,6 +1,5 @@
 package com.example.model
 
-import com.example.model.Object
 import kotlinx.serialization.Serializable
 
 @Serializable
