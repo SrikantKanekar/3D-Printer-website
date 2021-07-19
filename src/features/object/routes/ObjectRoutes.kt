@@ -1,16 +1,14 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.features.objects.routes.getObjects
-import com.example.model.ObjectsCookie
-import com.example.model.UserPrincipal
+import com.example.features.`object`.routes.objectGet
+import com.example.features.cart.presentation.objectUpdateQuantity
+import com.example.features.objects.routes.objectsGet
+import com.example.util.constants.Auth.USER_AUTH
 import com.example.util.enums.ObjectStatus.*
 import io.ktor.application.*
-import io.ktor.freemarker.*
-import io.ktor.http.*
-import io.ktor.response.*
+import io.ktor.auth.*
 import io.ktor.routing.*
-import io.ktor.sessions.*
 import org.koin.ktor.ext.inject
 
 /**
@@ -24,43 +22,17 @@ fun Application.registerObjectRoute() {
     val objectRepository by inject<ObjectRepository>()
 
     routing {
-        getCreateObjectRoute()
-        postCreateObjectRoute(objectRepository)
-
-        getObjects(objectRepository)
-        getUpdateObjectRoute(objectRepository)
-        slice(objectRepository)
-        addToCart(objectRepository)
-        removeFromCart(objectRepository)
-        updateSetting(objectRepository)
-        deleteObject(objectRepository)
-    }
-}
-
-fun Route.getUpdateObjectRoute(objectRepository: ObjectRepository) {
-    get("/object/{id}") {
-
-        val id = call.parameters["id"]!!
-        val principal = call.sessions.get<UserPrincipal>()
-
-        val obj = when (principal) {
-            null -> {
-                val cookieObjects = call.sessions.get<ObjectsCookie>()?.objects
-                cookieObjects?.find { it.id == id }
+        route("/objects") {
+            authenticate(USER_AUTH, optional = true) {
+                objectsGet(objectRepository)
+                objectGet(objectRepository)
+                objectCreate(objectRepository)
+                objectSlice(objectRepository)
+                objectUpdateSetting(objectRepository)
+                objectUpdateQuantity(objectRepository)
+                objectDelete(objectRepository)
             }
-            else -> objectRepository.getUserObject(principal.email, id)
-        }
-
-        when (obj) {
-            null -> call.respond(HttpStatusCode.NotFound)
-            else -> call.respond(
-                FreeMarkerContent(
-                    "object.ftl", mapOf(
-                        "object" to obj,
-                        "user" to (principal?.email ?: "")
-                    )
-                )
-            )
         }
     }
 }
+

@@ -1,25 +1,29 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.util.enums.ObjectStatus.*
-import com.example.model.UserPrincipal
 import com.example.model.ObjectsCookie
 import com.example.model.SlicingDetails
+import com.example.model.UserPrincipal
+import com.example.util.enums.ObjectStatus.NONE
 import io.ktor.application.*
-import io.ktor.freemarker.*
+import io.ktor.auth.*
 import io.ktor.http.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-fun Route.slice(objectRepository: ObjectRepository) {
-    post("/object/slice") {
-        val param = call.receiveParameters()
-        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
+fun Route.objectSlice(objectRepository: ObjectRepository) {
+    patch("/slice/{id}") {
 
-        val principal = call.sessions.get<UserPrincipal>()
+        val id = call.parameters["id"] ?: return@patch call.respond(
+            status = HttpStatusCode.BadRequest,
+            message = "Missing or malformed id"
+        )
+
+        val principal = call.principal<UserPrincipal>()
+
         var result: SlicingDetails? = null
+
         when (principal) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
@@ -51,7 +55,7 @@ fun Route.slice(objectRepository: ObjectRepository) {
         if (result != null){
             call.respond(result)
         } else {
-            call.respondText("null")
+            call.respond(HttpStatusCode.InternalServerError, "Slicing error")
         }
     }
 }

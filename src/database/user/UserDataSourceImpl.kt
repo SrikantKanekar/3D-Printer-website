@@ -1,5 +1,6 @@
 package com.example.database.user
 
+import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
 import com.example.model.User
 import com.example.util.DatabaseException
@@ -30,13 +31,13 @@ class UserDataSourceImpl(
         return true
     }
 
-    override suspend fun createObject(
-        id: String,
-        name: String,
-        fileUrl: String,
-        imageUrl: String,
-        fileExtension: String
-    ): Object {
-        return Object(id = id, name = name, fileUrl = fileUrl, fileExtension = fileExtension, imageUrl = imageUrl)
+    override suspend fun createObject(body: ObjectCreateRequest): Object {
+        return Object(
+            id = body.id,
+            name = body.name,
+            fileUrl = body.fileUrl,
+            fileExtension = body.fileExtension,
+            imageUrl = body.imageUrl
+        )
     }
 }

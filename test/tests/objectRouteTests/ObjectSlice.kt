@@ -1,44 +1,49 @@
 package tests.objectRouteTests
 
+import com.example.model.ObjectsCookie
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_SLICED_OBJECT
 import data.TestConstants.TEST_UNSLICED_OBJECT
+import data.TestConstants.TEST_USER_EMAIL
+import fakeDataSource.TestRepository
+import io.ktor.http.*
 import io.ktor.server.testing.*
+import io.ktor.sessions.*
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
+import org.koin.test.inject
 import tests.`create object before user login`
-import tests.handlePostRequest
+import tests.handlePatchRequest
 import tests.runServer
-import tests.runWithLoggedUser
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ObjectSlice : KoinTest {
 
     @Test
-    fun `should return null for invalid Id if not logged`() {
+    fun `should return error for invalid Id if not logged`() {
         runServer {
-            handlePostRequest(
-                "object/slice",
-                mapOf("id" to TEST_INVALID_ID)
+            handlePatchRequest(
+                uri = "objects/slice/$TEST_INVALID_ID",
+                body = Unit
             ) {
-                assertEquals("null", response.content)
+                assertEquals(HttpStatusCode.InternalServerError, response.status())
             }
         }
     }
 
     @Test
-    fun `should return null for invalid Id if logged`() {
+    fun `should return error for invalid Id if logged`() {
         runServer {
-            runWithLoggedUser {
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_INVALID_ID)
-                ) {
-                    assertEquals("null", response.content)
-                }
+            handlePatchRequest(
+                uri = "objects/slice/$TEST_INVALID_ID",
+                body = Unit,
+                logged = true
+            ) {
+                assertEquals(HttpStatusCode.InternalServerError, response.status())
             }
         }
     }
@@ -48,61 +53,61 @@ class ObjectSlice : KoinTest {
         runServer {
             cookiesSession {
                 `create object before user login`()
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_CREATED_OBJECT)
+                handlePatchRequest(
+                    uri = "objects/slice/$TEST_CREATED_OBJECT",
+                    body = Unit,
                 ) {
-                    assertNotEquals("null", response.content)
+                    val cookie = response.call.sessions.get<ObjectsCookie>()!!
+                    val obj = cookie.objects.find { it.id == TEST_CREATED_OBJECT }
+                    assertEquals(true, obj?.slicingDetails?.uptoDate)
                 }
             }
         }
     }
 
     @Test
-    fun `should return null for sliced object if not logged`() {
+    fun `should return error for sliced object if not logged`() {
         runServer {
             cookiesSession {
                 `create object before user login`()
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_CREATED_OBJECT)
+                handlePatchRequest(
+                    uri = "objects/slice/$TEST_CREATED_OBJECT",
+                    body = Unit
                 ) {
-                    assertNotEquals("null", response.content)
+                    assertNotEquals(HttpStatusCode.InternalServerError, response.status())
                 }
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_CREATED_OBJECT)
+                handlePatchRequest(
+                    uri = "objects/slice/$TEST_CREATED_OBJECT",
+                    body = Unit
                 ) {
-                    assertEquals("null", response.content)
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `should return null for sliced object if logged`() {
-        runServer {
-            runWithLoggedUser {
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_SLICED_OBJECT)
-                ) {
-                    assertEquals("null", response.content)
+                    assertEquals(HttpStatusCode.InternalServerError, response.status())
                 }
             }
         }
     }
 
     @Test
-    fun `should return null for cart object if logged`() {
+    fun `should return error for sliced object if logged`() {
         runServer {
-            runWithLoggedUser {
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_CART_OBJECT)
-                ) {
-                    assertEquals("null", response.content)
-                }
+            handlePatchRequest(
+                uri = "objects/slice/$TEST_SLICED_OBJECT",
+                body = Unit,
+                logged = true
+            ) {
+                assertEquals(HttpStatusCode.InternalServerError, response.status())
+            }
+        }
+    }
+
+    @Test
+    fun `should return error for cart object if logged`() {
+        runServer {
+            handlePatchRequest(
+                uri = "objects/slice/$TEST_CART_OBJECT",
+                body = Unit,
+                logged = true
+            ) {
+                assertEquals(HttpStatusCode.InternalServerError, response.status())
             }
         }
     }
@@ -110,12 +115,15 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return slicing details if logged`() {
         runServer {
-            runWithLoggedUser {
-                handlePostRequest(
-                    "object/slice",
-                    mapOf("id" to TEST_UNSLICED_OBJECT)
-                ) {
-                    assertNotEquals("null", response.content)
+            handlePatchRequest(
+                uri = "objects/slice/$TEST_UNSLICED_OBJECT",
+                body = Unit,
+                logged = true
+            ) {
+                runBlocking {
+                    val testRepository by inject<TestRepository>()
+                    val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
+                    assertEquals(true, obj?.slicingDetails?.uptoDate)
                 }
             }
         }

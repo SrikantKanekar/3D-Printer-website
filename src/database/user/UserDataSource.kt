@@ -1,5 +1,6 @@
 package com.example.database.user
 
+import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
 import com.example.model.User
 
@@ -13,11 +14,5 @@ interface UserDataSource {
 
     suspend fun updateUser(user: User): Boolean
 
-    suspend fun createObject(
-        id: String,
-        name: String,
-        fileUrl: String,
-        imageUrl: String,
-        fileExtension: String
-    ): Object
+    suspend fun createObject(body: ObjectCreateRequest): Object
 }

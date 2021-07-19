@@ -1,6 +1,6 @@
 package com.example.features.`object`.presentation
 
-import com.example.features.`object`.data.ObjectRepository
+import com.example.features.cart.data.CartRepository
 import com.example.model.UserPrincipal
 import io.ktor.application.*
 import io.ktor.http.*
@@ -9,7 +9,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-fun Route.addToCart(objectRepository: ObjectRepository) {
+fun Route.cartAdd(objectRepository: CartRepository) {
     post("/object/add-to-cart") {
         val param = call.receiveParameters()
         val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
@@ -22,16 +22,5 @@ fun Route.addToCart(objectRepository: ObjectRepository) {
                 call.respond(result.toString())
             }
         }
-    }
-}
-
-fun Route.removeFromCart(objectRepository: ObjectRepository) {
-    post("/object/remove-from-cart") {
-        val param = call.receiveParameters()
-        val id = param["id"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-
-        val principal = call.sessions.get<UserPrincipal>()!!
-        val result = objectRepository.removeFromCart(principal.email, id)
-        call.respond(result)
     }
 }

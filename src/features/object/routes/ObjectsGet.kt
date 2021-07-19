@@ -9,15 +9,17 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
-fun Route.getObjects(objectsRepository: ObjectRepository) {
-    get("/objects") {
+fun Route.objectsGet(objectsRepository: ObjectRepository) {
+    get {
 
         val principal = call.principal<UserPrincipal>()
-        val objs = if (principal != null) {
-            objectsRepository.getUserObjects(principal.email)
-        } else {
-            val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-            listOf(cookie.objects.reversed())
+
+        val objs = when (principal) {
+            null -> {
+                val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
+                cookie.objects.reversed()
+            }
+            else -> objectsRepository.getUserObjects(principal.email)
         }
         call.respond(objs)
     }

@@ -1,6 +1,7 @@
 package fakeDataSource
 
 import com.example.database.user.UserDataSource
+import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
 import com.example.model.User
 import data.TestConstants.TEST_CREATED_OBJECT
@@ -27,7 +28,13 @@ class FakeUserDataSourceImpl(
         return true
     }
 
-    override suspend fun createObject(id: String, name: String, fileUrl: String, imageUrl: String, fileExtension: String): Object {
-        return Object(id = TEST_CREATED_OBJECT, name = name, fileUrl = fileUrl, fileExtension = fileExtension, imageUrl = imageUrl)
+    override suspend fun createObject(body: ObjectCreateRequest): Object {
+        return Object(
+            id = TEST_CREATED_OBJECT,
+            name = body.name,
+            fileUrl = body.fileUrl,
+            fileExtension = body.fileExtension,
+            imageUrl = body.imageUrl
+        )
     }
 }

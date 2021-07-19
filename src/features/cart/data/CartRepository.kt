@@ -13,13 +13,12 @@ class CartRepository(
         return ArrayList(user.objects.filter { it.status == CART })
     }
 
-    suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
-        if (quantity < 1) return false
+    suspend fun addToCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == CART }
-            .find { it.id == objectId }
-            ?.let { it.quantity = quantity } ?: return false
+            .filter { it.status == NONE }
+            .find { it.id == objectId && it.slicingDetails.uptoDate }
+            ?.let { it.status = CART } ?: return false
         return userDataSource.updateUser(user)
     }
 
