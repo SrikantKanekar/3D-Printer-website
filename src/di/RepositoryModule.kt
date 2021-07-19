@@ -7,7 +7,6 @@ import com.example.features.auth.data.AuthRepository
 import com.example.features.cart.data.CartRepository
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.notification.data.NotificationRepository
-import com.example.features.objects.data.ObjectsRepository
 import com.example.features.order.data.OrderRepository
 import com.example.features.orders.data.OrdersRepository
 import org.koin.dsl.module
@@ -21,7 +20,6 @@ val repositoryModule = module {
     single { CheckoutRepository(get(), get()) }
     single { NotificationRepository(get()) }
     single { ObjectRepository(get()) }
-    single { ObjectsRepository(get()) }
     single { OrderRepository(get(), get()) }
     single { OrdersRepository(get()) }
 }

@@ -1,6 +1,7 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
+import com.example.features.objects.routes.getObjects
 import com.example.model.ObjectsCookie
 import com.example.model.UserPrincipal
 import com.example.util.enums.ObjectStatus.*
@@ -26,6 +27,7 @@ fun Application.registerObjectRoute() {
         getCreateObjectRoute()
         postCreateObjectRoute(objectRepository)
 
+        getObjects(objectRepository)
         getUpdateObjectRoute(objectRepository)
         slice(objectRepository)
         addToCart(objectRepository)

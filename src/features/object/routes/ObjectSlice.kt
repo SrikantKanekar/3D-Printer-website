@@ -1,10 +1,8 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.features.`object`.domain.*
 import com.example.util.enums.ObjectStatus.*
 import com.example.model.UserPrincipal
-import com.example.features.objects.data.ObjectsRepository
 import com.example.model.ObjectsCookie
 import com.example.model.SlicingDetails
 import io.ktor.application.*

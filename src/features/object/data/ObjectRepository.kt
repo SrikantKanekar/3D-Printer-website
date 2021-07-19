@@ -15,15 +15,20 @@ class ObjectRepository(
         return userDataSource.createObject(id, name, fileUrl, imageUrl, fileExtension)
     }
 
-    suspend fun addUserObject(email: String, obj: Object): Boolean {
+    suspend fun getUserObjects(email: String): List<Object> {
         val user = userDataSource.getUser(email)
-        user.objects.add(obj)
-        return userDataSource.updateUser(user)
+        return user.objects.reversed()
     }
 
     suspend fun getUserObject(email: String, id: String): Object? {
         val user = userDataSource.getUser(email)
         return user.objects.find { it.id == id }
+    }
+
+    suspend fun addUserObject(email: String, obj: Object): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects.add(obj)
+        return userDataSource.updateUser(user)
     }
 
     /**
