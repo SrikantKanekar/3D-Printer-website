@@ -24,7 +24,7 @@ class UpdateAccount : KoinTest {
     fun `should return unauthorised if user is not logged`() {
         runServer {
             handlePostRequest(
-                uri = "/account/update",
+                uri = "/account",
                 body = UpdateAccountRequest(UPDATED_USERNAME)
             ) {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
@@ -46,7 +46,7 @@ class UpdateAccount : KoinTest {
     fun `should return updated username`() {
         runServer {
             handlePostRequest(
-                uri = "/account/update",
+                uri = "/account",
                 body = UpdateAccountRequest(UPDATED_USERNAME),
                 logged = true
             ) {

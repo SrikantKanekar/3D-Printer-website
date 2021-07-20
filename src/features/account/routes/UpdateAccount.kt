@@ -9,8 +9,8 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.updateAccountRoute(accountRepository: AccountRepository) {
-    post("/account/update") {
+fun Route.updateAccount(accountRepository: AccountRepository) {
+    post {
         val body = call.receive<UpdateAccountRequest>()
         val principal = call.principal<UserPrincipal>()!!
         accountRepository.updateUsername(principal.email, body.username)

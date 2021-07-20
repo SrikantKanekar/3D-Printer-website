@@ -1,6 +1,6 @@
 package tests.accountRouteTests
 
-import com.example.model.UserPrincipal
+import com.example.model.User
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_USERNAME
 import io.ktor.http.*
@@ -25,13 +25,14 @@ class GetAccount : KoinTest {
     }
 
     @Test
-    fun `should return principal if user is logged`() {
+    fun `should return user if user is logged`() {
         runServer {
             handleGetRequest(uri = "/account", logged = true) {
                 runBlocking {
-                    val principal = Json.decodeFromString<UserPrincipal>(response.content!!)
-                    assertEquals(TEST_USER_EMAIL, principal.email)
-                    assertEquals(TEST_USER_USERNAME, principal.username)
+                    val user = Json.decodeFromString<User>(response.content!!)
+                    assertEquals(TEST_USER_EMAIL, user.email)
+                    assertEquals(TEST_USER_USERNAME, user.username)
+                    assertEquals("", user.password)
                     assertEquals(HttpStatusCode.OK, response.status())
                 }
             }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.handlePostRequest
+import tests.handlePutRequest
 import tests.runServer
 import tests.userLogin
 import kotlin.test.assertEquals
@@ -28,7 +28,7 @@ class ResetPassword : KoinTest {
     @Test
     fun `should return Unauthorised if not logged`() {
         runServer {
-            handlePostRequest(
+            handlePutRequest(
                 "/account/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,
@@ -55,7 +55,7 @@ class ResetPassword : KoinTest {
     @Test
     fun `should return error if passwords don't match`() {
         runServer {
-            handlePostRequest(
+            handlePutRequest(
                 "/account/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,
@@ -72,7 +72,7 @@ class ResetPassword : KoinTest {
     @Test
     fun `should return error if old password is incorrect`() {
         runServer {
-            handlePostRequest(
+            handlePutRequest(
                 "/account/reset-password",
                 ResetPasswordRequest(
                     TEST_INVALID_ID,
@@ -89,7 +89,7 @@ class ResetPassword : KoinTest {
     @Test
     fun `should update password if reset is successful`() {
         runServer {
-            handlePostRequest(
+            handlePutRequest(
                 "/account/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,

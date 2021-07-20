@@ -1,6 +1,7 @@
 package com.example.database.order
 
 import com.example.model.Order
+import com.example.util.DatabaseException
 import com.example.util.enums.OrderStatus
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
@@ -16,7 +17,9 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun insertOrder(order: Order): Boolean {
-        return orders.insertOne(order).wasAcknowledged()
+        val inserted = orders.insertOne(order).wasAcknowledged()
+        if (!inserted) throw DatabaseException("error inserting order")
+        return true
     }
 
     override suspend fun getOrderById(orderId: String): Order? {
@@ -28,15 +31,19 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {
-        return orders
+        val updated = orders
             .updateOne(Order::id eq orderId, setValue(Order::status, status))
             .wasAcknowledged()
+        if (!updated) throw DatabaseException("error updating order status")
+        return true
     }
 
     override suspend fun updateOrderDelivery(orderId: String, date: String): Boolean {
-        return orders
+        val updated = orders
             .updateOne(Order::id eq orderId, setValue(Order::deliveredOn, date))
             .wasAcknowledged()
+        if (!updated) throw DatabaseException("error updating order delivery date")
+        return true
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {

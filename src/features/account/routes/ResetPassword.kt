@@ -14,8 +14,8 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.resetPasswordRoute(accountRepository: AccountRepository) {
-    post("/account/reset-password") {
+fun Route.resetPassword(accountRepository: AccountRepository) {
+    put("/reset-password") {
         val (oldPassword, newPassword, confirmPassword) = call.receive<ResetPasswordRequest>()
 
         if (newPassword == confirmPassword) {

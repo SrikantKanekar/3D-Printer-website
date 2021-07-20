@@ -77,6 +77,27 @@ inline fun <reified T> TestApplicationEngine.handlePostRequest(
     }
 }
 
+inline fun <reified T> TestApplicationEngine.handlePutRequest(
+    uri: String,
+    body: T,
+    logged: Boolean = false,
+    admin: Boolean = false,
+    assert: TestApplicationCall.() -> Unit
+) {
+    handleRequest(HttpMethod.Put, uri) {
+        addHeader(
+            HttpHeaders.ContentType,
+            ContentType.Application.Json.toString()
+        )
+        val jsonBody = Json.encodeToString(body)
+        setBody(jsonBody)
+        if (logged) addHeader(HttpHeaders.Authorization, "Bearer $TEST_USER_TOKEN")
+        if (admin) addHeader(HttpHeaders.Authorization, "Bearer $TEST_ADMIN_TOKEN")
+    }.apply {
+        assert()
+    }
+}
+
 inline fun <reified T> TestApplicationEngine.handlePatchRequest(
     uri: String,
     body: T,
