@@ -8,9 +8,9 @@ import com.example.util.enums.ObjectStatus.NONE
 class CartRepository(
     private val userDataSource: UserDataSource
 ) {
-    suspend fun getCartObjects(email: String): ArrayList<Object> {
+    suspend fun getCartObjects(email: String): List<Object> {
         val user = userDataSource.getUser(email)
-        return ArrayList(user.objects.filter { it.status == CART })
+        return user.objects.filter { it.status == CART }
     }
 
     suspend fun addToCart(email: String, objectId: String): Boolean {
@@ -22,7 +22,7 @@ class CartRepository(
         return userDataSource.updateUser(user)
     }
 
-    suspend fun removeCartObject(email: String, objectId: String): Boolean {
+    suspend fun removeFromCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == CART }
