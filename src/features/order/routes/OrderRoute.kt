@@ -2,8 +2,10 @@ package com.example.features.order.presentation
 
 import com.example.features.admin.data.AdminPrincipal
 import com.example.features.order.data.OrderRepository
+import com.example.features.order.routes.getOrders
 import com.example.model.UserPrincipal
 import com.example.util.constants.Auth.ADMIN_AUTH
+import com.example.util.constants.Auth.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.freemarker.*
@@ -18,7 +20,11 @@ fun Application.registerOrderRoute() {
     val orderRepository by inject<OrderRepository>()
 
     routing {
-        getOrderRoute(orderRepository)
+        authenticate(USER_AUTH){
+            getOrders(orderRepository)
+            getOrderRoute(orderRepository)
+        }
+
         authenticate(ADMIN_AUTH) {
             updatePrintingStatus(orderRepository)
             sendCustomMessage(orderRepository)

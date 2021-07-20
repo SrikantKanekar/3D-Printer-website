@@ -2,10 +2,10 @@ package com.example.features.order.data
 
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.model.Object
 import com.example.features.notification.data.NotificationManager.sendNotification
 import com.example.features.notification.data.generateNotification
 import com.example.model.Notification
+import com.example.model.Object
 import com.example.model.Order
 import com.example.util.enums.NotificationType
 import com.example.util.enums.ObjectStatus.TRACKING
@@ -17,6 +17,9 @@ class OrderRepository(
     private val userDataSource: UserDataSource,
     private val orderDataSource: OrderDataSource,
 ) {
+    suspend fun getUserOrders(email: String): List<Order> {
+        return orderDataSource.getOrdersOfUser(email)
+    }
 
     suspend fun getOrderForAdmin(orderId: String): Order? {
         return orderDataSource.getOrderById(orderId)
