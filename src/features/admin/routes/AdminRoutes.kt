@@ -15,7 +15,7 @@ fun Application.registerAdminRoutes() {
     val adminRepository by inject<AdminRepository>()
 
     routing {
-        route("/admin"){
+        route("/admin") {
             authenticate(ADMIN_AUTH) {
                 getAllActiveOrders(adminRepository)
                 sendNotification(adminRepository)

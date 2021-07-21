@@ -14,7 +14,7 @@ fun Application.registerOrderRoute() {
     val orderRepository by inject<OrderRepository>()
 
     routing {
-        route("/orders"){
+        route("/orders") {
             authenticate(USER_AUTH) {
                 getOrders(orderRepository)
                 getOrder(orderRepository)

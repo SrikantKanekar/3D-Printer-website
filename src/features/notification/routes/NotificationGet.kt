@@ -17,7 +17,7 @@ fun Route.getNotification(notificationRepository: NotificationRepository) {
         val principal = call.principal<UserPrincipal>()!!
         val notification = notificationRepository.getNotificationById(principal.email, id)
 
-        when(notification) {
+        when (notification) {
             null -> call.respond(HttpStatusCode.NotFound)
             else -> call.respond(notification)
         }

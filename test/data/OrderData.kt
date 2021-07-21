@@ -36,12 +36,14 @@ val testOrderData = listOf(
     Order(
         userEmail = TEST_USER_EMAIL,
         status = PROCESSING,
-        objectIds = ArrayList(listOf(
-            TEST_TRACKING_OBJECT,
-            TEST_PENDING_OBJECT,
-            TEST_PRINTING_OBJECT,
-            TEST_PRINTED_OBJECT
-        )),
+        objectIds = ArrayList(
+            listOf(
+                TEST_TRACKING_OBJECT,
+                TEST_PENDING_OBJECT,
+                TEST_PRINTING_OBJECT,
+                TEST_PRINTED_OBJECT
+            )
+        ),
         price = 100,
         deliveredOn = "10 May",
         id = TEST_PROCESSING_ORDER
@@ -49,9 +51,11 @@ val testOrderData = listOf(
     Order(
         userEmail = TEST_USER_EMAIL,
         status = PROCESSING,
-        objectIds = ArrayList(listOf(
-            TEST_PRINTED_OBJECT
-        )),
+        objectIds = ArrayList(
+            listOf(
+                TEST_PRINTED_OBJECT
+            )
+        ),
         price = 100,
         deliveredOn = "10 May",
         id = TEST_PROCESSED_ORDER

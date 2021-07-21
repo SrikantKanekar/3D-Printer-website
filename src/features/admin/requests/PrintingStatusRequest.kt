@@ -10,7 +10,7 @@ data class PrintingStatusRequest(
     val orderId: String,
     val objectId: String,
     val printingStatus: PrintingStatus,
-){
+) {
     init {
         Validation<PrintingStatusRequest> {
             PrintingStatusRequest::orderId required {}

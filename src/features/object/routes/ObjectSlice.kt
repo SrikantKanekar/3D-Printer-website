@@ -28,7 +28,7 @@ fun Route.objectSlice(objectRepository: ObjectRepository) {
                     .filter { it.status == NONE && !it.slicingDetails.uptoDate }
                     .find { it.id == id }
 
-                if (obj != null){
+                if (obj != null) {
                     result = objectRepository.slice(obj.fileUrl)
                     result?.let {
                         cookie.objects
@@ -49,7 +49,7 @@ fun Route.objectSlice(objectRepository: ObjectRepository) {
                 result = objectRepository.sliceUserObject(principal.email, id)
             }
         }
-        if (result != null){
+        if (result != null) {
             call.respond(result)
         } else {
             call.respond(HttpStatusCode.InternalServerError, "Slicing error")

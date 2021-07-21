@@ -14,7 +14,7 @@ fun Application.registerNotificationRoutes() {
     val notificationRepository by inject<NotificationRepository>()
 
     routing {
-        route("/notifications"){
+        route("/notifications") {
             authenticate(USER_AUTH) {
                 getAllNotifications(notificationRepository)
                 getNotification(notificationRepository)

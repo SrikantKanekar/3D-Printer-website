@@ -13,7 +13,7 @@ fun generateHash(password: String, saltLength: Int = 32): String {
 
 fun checkPassword(password: String, hashWithSalt: String): Boolean {
     val hashAndSalt = hashWithSalt.split(":")
-    if(hashAndSalt.size != 2) {
+    if (hashAndSalt.size != 2) {
         return false
     }
     val salt = hashAndSalt[0]

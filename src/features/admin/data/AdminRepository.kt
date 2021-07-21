@@ -69,7 +69,8 @@ class AdminRepository(
                 NotificationManager.sendNotification(notification, user.email)
                 user.notification.add(notification)
             }
-            else -> { }
+            else -> {
+            }
         }
         userDataSource.updateUser(user)
         return true

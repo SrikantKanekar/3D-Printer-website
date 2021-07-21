@@ -9,8 +9,8 @@ import kotlinx.serialization.json.Json
 @Serializable
 data class ObjectsCookie(
     val objects: ArrayList<Object> = ArrayList()
-){
-    class ObjectCookieSerializer: SessionSerializer<ObjectsCookie> {
+) {
+    class ObjectCookieSerializer : SessionSerializer<ObjectsCookie> {
         override fun deserialize(text: String): ObjectsCookie {
             return Json.decodeFromString(text)
         }

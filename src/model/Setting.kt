@@ -1,10 +1,10 @@
 package com.example.model
 
-import com.example.model.PrintSequence.*
-import com.example.model.Quality.*
-import com.example.model.SupportPattern.*
-import com.example.model.SupportPlacement.*
-import com.example.model.SupportStructure.*
+import com.example.model.PrintSequence.ALL_AT_ONCE
+import com.example.model.Quality.STANDARD
+import com.example.model.SupportPattern.GRID
+import com.example.model.SupportPlacement.TOUCHING_BUILD_PLATE
+import com.example.model.SupportStructure.NORMAL
 import kotlinx.serialization.Serializable
 
 @Serializable

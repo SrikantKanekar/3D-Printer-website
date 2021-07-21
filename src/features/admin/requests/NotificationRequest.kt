@@ -9,7 +9,7 @@ data class NotificationRequest(
     val email: String,
     val subject: String,
     val body: String
-){
+) {
     init {
         Validation<NotificationRequest> {
             NotificationRequest::email required {}

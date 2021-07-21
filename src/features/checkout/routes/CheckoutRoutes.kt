@@ -13,7 +13,7 @@ fun Application.registerCheckoutRoute() {
     val checkoutRepository by inject<CheckoutRepository>()
 
     routing {
-        route("/checkout"){
+        route("/checkout") {
             authenticate(USER_AUTH) {
                 checkoutGet(checkoutRepository)
                 checkoutProceed(checkoutRepository)

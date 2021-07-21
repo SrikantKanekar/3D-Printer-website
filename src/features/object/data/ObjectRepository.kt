@@ -45,7 +45,7 @@ class ObjectRepository(
             .filter { it.status == NONE && !it.slicingDetails.uptoDate }
             .find { it.id == objectId }
 
-        if (obj != null){
+        if (obj != null) {
             val result = slice(obj.fileUrl)
             result?.let {
                 user.objects
@@ -87,7 +87,7 @@ class ObjectRepository(
     suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == CART || it.status == NONE}
+            .filter { it.status == CART || it.status == NONE }
             .find { it.id == objectId }
             ?.let { it.quantity = quantity } ?: return false
         userDataSource.updateUser(user)

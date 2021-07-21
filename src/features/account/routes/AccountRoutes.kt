@@ -14,7 +14,7 @@ fun Application.registerAccountRoute() {
     val accountRepository by inject<AccountRepository>()
 
     routing {
-        route("/account"){
+        route("/account") {
             authenticate(USER_AUTH) {
                 accountGet(accountRepository)
                 resetPassword(accountRepository)

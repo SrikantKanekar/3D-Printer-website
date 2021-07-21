@@ -6,12 +6,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ObjectCreateRequest(
-    val id : String,
-    val name : String,
-    val fileUrl : String,
-    val imageUrl : String,
-    val fileExtension : String
-){
+    val id: String,
+    val name: String,
+    val fileUrl: String,
+    val imageUrl: String,
+    val fileExtension: String
+) {
     init {
         Validation<ObjectCreateRequest> {
             ObjectCreateRequest::id required {}

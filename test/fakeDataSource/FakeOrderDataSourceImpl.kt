@@ -7,7 +7,7 @@ import data.TestConstants.TEST_CREATED_ORDER
 
 class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
-): OrderDataSource {
+) : OrderDataSource {
 
     override suspend fun generateNewOrder(userEmail: String): Order {
         return Order(

@@ -21,12 +21,12 @@ class OrderRepository(
         principal: UserPrincipal,
         orderId: String
     ): Order? {
-        return when(principal.isAdmin){
+        return when (principal.isAdmin) {
             true -> orderDataSource.getOrderById(orderId)
-            false-> {
+            false -> {
                 val user = userDataSource.getUser(principal.email)
                 val hasOrder = user.orderIds.contains(orderId)
-                when(hasOrder) {
+                when (hasOrder) {
                     true -> orderDataSource.getOrderById(orderId)
                     false -> null
                 }

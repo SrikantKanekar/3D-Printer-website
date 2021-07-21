@@ -58,7 +58,8 @@ class ObjectQuantity : KoinTest {
                     val obj = user.objects.find { it.id == TEST_TRACKING_OBJECT }
                     assertNotEquals(obj?.quantity, 2)
 
-                    assertEquals(HttpStatusCode.MethodNotAllowed, response.status())                }
+                    assertEquals(HttpStatusCode.MethodNotAllowed, response.status())
+                }
             }
         }
     }
@@ -79,7 +80,8 @@ class ObjectQuantity : KoinTest {
                         .find { it.id == TEST_CART_OBJECT }
                     assertEquals(response.content?.toInt(), obj?.quantity)
 
-                    assertEquals(HttpStatusCode.OK, response.status())                }
+                    assertEquals(HttpStatusCode.OK, response.status())
+                }
             }
         }
     }
