@@ -19,7 +19,6 @@ fun Application.module(
     configSetup(testing)
     contentNegotiationSetup()
     corsSetup()
-    freemarkerSetup()
     authSetup()
     sessionSetup()
     staticFilesSetup()

@@ -29,17 +29,13 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    maven { url 'https://kotlin.bintray.com/ktor' }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "ch.qos.logback:logback-classic:$logback_version"
 
     // Ktor
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
-    implementation "io.ktor:ktor-client-apache:$ktor_version"
 
     // Auth
     implementation "io.ktor:ktor-auth:$ktor_version"
@@ -52,22 +48,9 @@ dependencies {
     implementation 'org.litote.kmongo:kmongo:4.2.8'
     implementation 'org.litote.kmongo:kmongo-coroutine:4.2.8'
 
-    // Freemarker
-    implementation "io.ktor:ktor-freemarker:$ktor_version"
-
     // Serialization
     implementation "io.ktor:ktor-serialization:$ktor_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0"
-    implementation "io.ktor:ktor-gson:$ktor_version"
-
-    // Password hash
-    implementation 'commons-codec:commons-codec:1.14'
-
-    // konform data validation
-    implementation "io.konform:konform:0.3.0"
-
-    // Kotlin date time
-    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.0'
 
     // Koin Dependency injection
     implementation "io.insert-koin:koin-ktor:$koin_version"
@@ -75,6 +58,19 @@ dependencies {
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit5:$koin_version"
 
+    // Logging
+    implementation "ch.qos.logback:logback-classic:$logback_version"
+
+    // Password hash
+    implementation 'commons-codec:commons-codec:1.14'
+
+    // Konform input validation
+    implementation "io.konform:konform:0.3.0"
+
+    // Date time
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.2.0'
+
     // Testing
-    testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+    testImplementation "io.ktor:ktor-server-test-host:$ktor_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 }
