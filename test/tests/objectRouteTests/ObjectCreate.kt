@@ -50,7 +50,8 @@ class ObjectCreate : KoinTest {
 
                     val responseObj = Json.decodeFromString<Object>(response.content!!)
                     assertEquals(TEST_CREATED_OBJECT, obj.id)
-                    assertEquals("name", responseObj.name)                }
+                    assertEquals("name", responseObj.name)
+                }
             }
         }
     }

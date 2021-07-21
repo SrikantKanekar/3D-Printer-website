@@ -138,9 +138,9 @@ val testUser = User(
     notification = ArrayList(
         listOf(
             Notification(
+                id = TEST_NOTIFICATION_ID,
                 subject = TEST_NOTIFICATION_TITLE,
-                body = TEST_NOTIFICATION_MESSAGE,
-                id = TEST_NOTIFICATION_ID
+                body = TEST_NOTIFICATION_MESSAGE
             )
         )
     )
