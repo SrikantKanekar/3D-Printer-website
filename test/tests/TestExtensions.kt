@@ -4,7 +4,6 @@ import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.features.auth.domain.LoginRequest
 import com.example.model.Object
 import com.example.model.ObjectsCookie
-import com.example.model.UserPrincipal
 import com.example.module
 import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_ADMIN_TOKEN
@@ -134,40 +133,10 @@ fun TestApplicationEngine.handleDeleteRequest(
 
 fun TestApplicationEngine.userLogin() {
     handlePostRequest(
-        "/auth/login",
-        LoginRequest(TEST_USER_EMAIL, TEST_USER_PASSWORD)
+        uri = "/auth/login",
+        body = LoginRequest(TEST_USER_EMAIL, TEST_USER_PASSWORD)
     ) {
-        val userPrincipal = response.call.sessions.get<UserPrincipal>()!!
-        assertEquals(TEST_USER_EMAIL, userPrincipal.email)
         assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
-    }
-}
-
-fun TestApplicationEngine.adminLogin() {
-    handlePostRequest(
-        "/admin/login",
-        mapOf(
-            "name" to "admin",
-            "Password" to "password"
-        )
-    ) {
-        //val adminPrincipal = response.call.sessions.get<AdminPrincipal>()!!
-        //assertEquals("admin", adminPrincipal.name)
-        assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
-    }
-}
-
-fun TestApplicationEngine.runWithLoggedUser(test: TestApplicationEngine.() -> Unit) {
-    cookiesSession {
-        userLogin()
-        test()
-    }
-}
-
-fun TestApplicationEngine.runWithAdminUser(test: TestApplicationEngine.() -> Unit) {
-    cookiesSession {
-        adminLogin()
-        test()
     }
 }
 
