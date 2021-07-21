@@ -8,9 +8,9 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.getOrders(orderRepository: OrderRepository) {
-    get("/orders") {
+    get {
         val principal = call.principal<UserPrincipal>()!!
-        val orders = orderRepository.getUserOrders(principal.email)
+        val orders = orderRepository.getOrdersByUser(principal.email)
         call.respond(orders)
     }
 }

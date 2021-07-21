@@ -1,10 +1,6 @@
 package data
 
-import com.example.model.Object
-import com.example.model.Address
-import com.example.model.Notification
-import com.example.model.SlicingDetails
-import com.example.model.User
+import com.example.model.*
 import com.example.util.enums.ObjectStatus.*
 import com.example.util.enums.PrintingStatus
 import data.TestConstants.TEST_CART_OBJECT
@@ -142,8 +138,8 @@ val testUser = User(
     notification = ArrayList(
         listOf(
             Notification(
-                title = TEST_NOTIFICATION_TITLE,
-                message = TEST_NOTIFICATION_MESSAGE,
+                subject = TEST_NOTIFICATION_TITLE,
+                body = TEST_NOTIFICATION_MESSAGE,
                 id = TEST_NOTIFICATION_ID
             )
         )

@@ -72,7 +72,7 @@ class ObjectDelete : KoinTest {
             ) {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
+                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
                     assertNull(obj)
 
                     assertEquals(HttpStatusCode.OK, response.status())
@@ -90,7 +90,7 @@ class ObjectDelete : KoinTest {
             ) {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_CART_OBJECT)
+                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_CART_OBJECT)
                     assertNotNull(obj)
 
                     assertEquals(HttpStatusCode.NotFound, response.status())

@@ -12,7 +12,7 @@ class OrderDataSourceImpl(
     private val orders: CoroutineCollection<Order>
 ) : OrderDataSource {
 
-    override suspend fun creteNewOrder(userEmail: String): Order {
+    override suspend fun generateNewOrder(userEmail: String): Order {
         return Order(userEmail = userEmail)
     }
 
@@ -26,7 +26,7 @@ class OrderDataSourceImpl(
         return orders.findOne(Order::id eq orderId)
     }
 
-    override suspend fun getOrdersOfUser(userEmail: String): List<Order> {
+    override suspend fun getOrdersByUser(userEmail: String): List<Order> {
         return orders.find(Order::userEmail eq userEmail).toList().reversed()
     }
 
@@ -47,6 +47,10 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {
-        return orders.find().filter(Order::status ne OrderStatus.DELIVERED).toList().reversed()
+        return orders
+            .find()
+            .filter(Order::status ne OrderStatus.DELIVERED)
+            .toList()
+            .reversed()
     }
 }

@@ -15,27 +15,27 @@ fun generateNotification(
 ): Notification {
     return when (type) {
         PLACED -> Notification(
-            title = "Order Placed",
-            message = placedMessage(order)
+            subject = "Order Placed",
+            body = placedMessage(order)
         )
         CONFIRMED -> Notification(
-            title = "Order Confirmed",
-            message = confirmedMessage(order)
+            subject = "Order Confirmed",
+            body = confirmedMessage(order)
         )
         PRINTING -> {
             val obj = user.objects.find { it.id == objectId }!!
             Notification(
-                title = "Object printing Started",
-                message = printingMessage(order, obj)
+                subject = "Object printing Started",
+                body = printingMessage(order, obj)
             )
         }
         DELIVERING -> Notification(
-            title = "Out for delivery",
-            message = deliveringMessage(order)
+            subject = "Out for delivery",
+            body = deliveringMessage(order)
         )
         DELIVERED -> Notification(
-            title = "successfully delivered",
-            message = deliveredMessage(order)
+            subject = "successfully delivered",
+            body = deliveredMessage(order)
         )
     }
 }

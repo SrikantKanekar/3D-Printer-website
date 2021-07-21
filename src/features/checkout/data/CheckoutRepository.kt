@@ -30,7 +30,7 @@ class CheckoutRepository(
 
     suspend fun placeOrder(email: String): Order {
         val user = userDataSource.getUser(email)
-        val order = orderDataSource.creteNewOrder(userEmail = email)
+        val order = orderDataSource.generateNewOrder(userEmail = email)
 
         var price = 0
         user.objects

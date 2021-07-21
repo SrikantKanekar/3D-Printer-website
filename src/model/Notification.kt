@@ -7,8 +7,8 @@ import org.bson.types.ObjectId
 
 @Serializable
 data class Notification(
-    val title: String,
-    val message: String,
+    val subject: String,
+    val body: String,
     val posted_at: String = now(),
     @BsonId
     val id: String = ObjectId().toString()

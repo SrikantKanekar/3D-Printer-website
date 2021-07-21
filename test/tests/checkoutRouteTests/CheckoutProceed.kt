@@ -58,7 +58,7 @@ class CheckoutProceed : KoinTest {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
 
-                    val order = testRepository.getActiveOrder(TEST_CREATED_ORDER)!!
+                    val order = testRepository.getActiveOrderById(TEST_CREATED_ORDER)!!
                     assertEquals(PLACED, order.status)
                     assertEquals(TEST_USER_EMAIL, order.userEmail)
                     assertEquals(TEST_CART_OBJECT, order.objectIds[0])

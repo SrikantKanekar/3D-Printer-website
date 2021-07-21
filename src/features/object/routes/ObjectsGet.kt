@@ -19,7 +19,7 @@ fun Route.objectsGet(objectsRepository: ObjectRepository) {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
                 cookie.objects.reversed()
             }
-            else -> objectsRepository.getUserObjects(principal.email)
+            else -> objectsRepository.getObjectsByUser(principal.email)
         }
         call.respond(objs)
     }

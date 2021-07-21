@@ -16,12 +16,12 @@ class ObjectRepository(
         return userDataSource.createObject(body)
     }
 
-    suspend fun getUserObjects(email: String): List<Object> {
+    suspend fun getObjectsByUser(email: String): List<Object> {
         val user = userDataSource.getUser(email)
         return user.objects.reversed()
     }
 
-    suspend fun getUserObject(email: String, id: String): Object? {
+    suspend fun getUserObjectById(email: String, id: String): Object? {
         val user = userDataSource.getUser(email)
         return user.objects.find { it.id == id }
     }

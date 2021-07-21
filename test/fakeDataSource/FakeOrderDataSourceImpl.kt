@@ -9,7 +9,7 @@ class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
 ): OrderDataSource {
 
-    override suspend fun creteNewOrder(userEmail: String): Order {
+    override suspend fun generateNewOrder(userEmail: String): Order {
         return Order(
             id = TEST_CREATED_ORDER,
             userEmail = userEmail
@@ -25,7 +25,7 @@ class FakeOrderDataSourceImpl(
         return orders[orderId]
     }
 
-    override suspend fun getOrdersOfUser(userEmail: String): List<Order> {
+    override suspend fun getOrdersByUser(userEmail: String): List<Order> {
         return orders.values.filter { it.userEmail == userEmail }
     }
 

@@ -25,7 +25,7 @@ fun Route.objectGet(objectRepository: ObjectRepository) {
                 val cookieObjects = call.sessions.get<ObjectsCookie>()?.objects
                 cookieObjects?.find { it.id == id }
             }
-            else -> objectRepository.getUserObject(principal.email, id)
+            else -> objectRepository.getUserObjectById(principal.email, id)
         }
 
         when (obj) {

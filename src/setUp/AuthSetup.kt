@@ -72,8 +72,9 @@ suspend fun checkUser(
 ): UserPrincipal? {
     val username = credential.payload.getClaim(USERNAME_CLAIM).asString()
     val email = credential.payload.getClaim(EMAIL_CLAIM).asString()
+    val isAdmin = credential.payload.getClaim(ADMIN_CLAIM).asBoolean()
     val exists = authRepository.doesUserExist(email)
-    return if (exists) UserPrincipal(email, username) else null
+    return if (exists) UserPrincipal(email, username, isAdmin) else null
 }
 
 fun checkAdmin(credential: JWTCredential) {

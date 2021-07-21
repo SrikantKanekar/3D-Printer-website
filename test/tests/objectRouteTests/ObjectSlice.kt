@@ -122,7 +122,7 @@ class ObjectSlice : KoinTest {
             ) {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUserObject(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
+                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
                     assertEquals(true, obj?.slicingDetails?.uptoDate)
                 }
             }

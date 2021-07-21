@@ -3,8 +3,8 @@ package fakeDataSource
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.model.Object
-import com.example.model.User
 import com.example.model.Order
+import com.example.model.User
 import com.example.util.enums.OrderStatus
 
 class TestRepository(
@@ -20,12 +20,16 @@ class TestRepository(
         return user != null
     }
 
-    suspend fun getUserObject(email: String, id: String): Object? {
+    suspend fun getUserObjectById(email: String, id: String): Object? {
         val user = userDataSource.getUser(email)
         return user.objects.find { it.id == id }
     }
 
-    suspend fun getActiveOrder(orderId: String): Order? {
+    suspend fun getAllActiveOrders(): List<Order> {
+        return orderDataSource.getAllActiveOrders()
+    }
+
+    suspend fun getActiveOrderById(orderId: String): Order? {
         return orderDataSource
             .getOrderById(orderId)
             ?.takeUnless {
@@ -33,7 +37,7 @@ class TestRepository(
             }
     }
 
-    suspend fun getCompletedOrder(orderId: String): Order? {
+    suspend fun getCompletedOrderById(orderId: String): Order? {
         return orderDataSource.getOrderById(orderId)
             ?.takeIf {
                 it.status == OrderStatus.DELIVERED
