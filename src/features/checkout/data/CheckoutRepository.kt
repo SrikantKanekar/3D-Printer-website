@@ -1,9 +1,10 @@
 package com.example.features.checkout.data
 
+import com.example.config.AppConfig
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
-import com.example.features.notification.data.NotificationManager.sendNotification
 import com.example.features.notification.data.generateNotification
+import com.example.features.notification.data.sendEmailNotification
 import com.example.model.Address
 import com.example.model.Object
 import com.example.model.Order
@@ -28,7 +29,10 @@ class CheckoutRepository(
         return objects.isNotEmpty()
     }
 
-    suspend fun placeOrder(email: String): Order {
+    suspend fun placeOrder(
+        email: String,
+        appConfig: AppConfig
+    ): Order {
         val user = userDataSource.getUser(email)
         val order = orderDataSource.generateNewOrder(userEmail = email)
 
@@ -46,7 +50,7 @@ class CheckoutRepository(
         user.orderIds.add(order.id)
 
         val notification = generateNotification(PLACED, user, order)
-        sendNotification(notification, user.email)
+        sendEmailNotification(notification, user.email, appConfig)
         user.notification.add(notification)
 
         userDataSource.updateUser(user)

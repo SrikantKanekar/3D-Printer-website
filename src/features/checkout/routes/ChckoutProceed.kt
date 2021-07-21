@@ -1,5 +1,6 @@
 package com.example.features.checkout.presentation
 
+import com.example.config.AppConfig
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.checkout.requests.CheckoutProceedRequest
 import com.example.model.UserPrincipal
@@ -10,7 +11,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.checkoutProceed(checkoutRepository: CheckoutRepository) {
+fun Route.checkoutProceed(checkoutRepository: CheckoutRepository, appConfig: AppConfig) {
     post("/proceed") {
 
         val body = call.receive<CheckoutProceedRequest>()
@@ -21,7 +22,7 @@ fun Route.checkoutProceed(checkoutRepository: CheckoutRepository) {
         if (isEmpty) {
             when (body.success) {
                 true -> {
-                    val order = checkoutRepository.placeOrder(email)
+                    val order = checkoutRepository.placeOrder(email, appConfig)
                     call.respond(HttpStatusCode.Created, order)
                 }
                 false -> {

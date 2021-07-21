@@ -1,11 +1,12 @@
 package com.example.features.admin.data
 
+import com.example.config.AppConfig
 import com.example.database.order.OrderDataSource
 import com.example.database.user.UserDataSource
 import com.example.features.admin.requests.NotificationRequest
 import com.example.features.admin.requests.PrintingStatusRequest
-import com.example.features.notification.data.NotificationManager
 import com.example.features.notification.data.generateNotification
+import com.example.features.notification.data.sendEmailNotification
 import com.example.model.Notification
 import com.example.model.Order
 import com.example.util.enums.NotificationType
@@ -27,7 +28,8 @@ class AdminRepository(
 
     suspend fun updateOrderStatus(
         orderId: String,
-        status: OrderStatus
+        status: OrderStatus,
+        appConfig: AppConfig
     ): Boolean {
         val order = orderDataSource.getOrderById(orderId) ?: return false
         val user = userDataSource.getUser(order.userEmail)
@@ -50,12 +52,12 @@ class AdminRepository(
         when (status) {
             CONFIRMED -> {
                 val notification = generateNotification(NotificationType.CONFIRMED, user, order)
-                NotificationManager.sendNotification(notification, user.email)
+                sendEmailNotification(notification, user.email, appConfig)
                 user.notification.add(notification)
             }
             DELIVERING -> {
                 val notification = generateNotification(NotificationType.DELIVERING, user, order)
-                NotificationManager.sendNotification(notification, user.email)
+                sendEmailNotification(notification, user.email, appConfig)
                 user.notification.add(notification)
             }
             DELIVERED -> {
@@ -66,7 +68,7 @@ class AdminRepository(
                 orderDataSource.updateOrderDelivery(orderId, now())
 
                 val notification = generateNotification(NotificationType.DELIVERED, user, order)
-                NotificationManager.sendNotification(notification, user.email)
+                sendEmailNotification(notification, user.email, appConfig)
                 user.notification.add(notification)
             }
             else -> {
@@ -82,7 +84,10 @@ class AdminRepository(
      * 2) Update Object's printing status and tracking details
      * 3) Send notification to user if Object printing is just started.
      */
-    suspend fun updatePrintingStatus(request: PrintingStatusRequest): Boolean {
+    suspend fun updatePrintingStatus(
+        request: PrintingStatusRequest,
+        appConfig: AppConfig
+    ): Boolean {
         val (orderId, objectId, printingStatus) = request
 
         val order = orderDataSource.getOrderById(orderId) ?: return false
@@ -113,7 +118,7 @@ class AdminRepository(
             // sends notification when printing starts
             if (printingStatus == PRINTING) {
                 val notification = generateNotification(NotificationType.PRINTING, user, order, objectId)
-                NotificationManager.sendNotification(notification, user.email)
+                sendEmailNotification(notification, user.email, appConfig)
                 user.notification.add(notification)
             }
             userDataSource.updateUser(user)
@@ -124,17 +129,18 @@ class AdminRepository(
     /**
      * Custom Notification can be sent by admin to the user
      */
-    suspend fun sendNotification(request: NotificationRequest): Boolean {
+    suspend fun sendNotification(
+        request: NotificationRequest,
+        appConfig: AppConfig
+    ) {
         val notification = Notification(
             subject = request.subject,
             body = request.body
         )
-        val result = NotificationManager.sendNotification(notification, request.email)
-        if (result) {
-            val user = userDataSource.getUser(request.email)
-            user.notification.add(notification)
-            userDataSource.updateUser(user)
-        }
-        return result
+        sendEmailNotification(notification, request.email, appConfig)
+
+        val user = userDataSource.getUser(request.email)
+        user.notification.add(notification)
+        userDataSource.updateUser(user)
     }
 }
