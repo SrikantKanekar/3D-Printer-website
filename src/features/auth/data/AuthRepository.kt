@@ -26,6 +26,10 @@ class AuthRepository(
         return userDataSource.getUser(email)
     }
 
+    suspend fun updateUser(user: User) {
+        userDataSource.updateUser(user)
+    }
+
     suspend fun syncCookieObjects(
         email: String,
         objectsCookie: ObjectsCookie?

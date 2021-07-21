@@ -17,7 +17,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.registerRoute(authRepository: AuthRepository, jwt: JWTConfig) {
-    post("auth/register") {
+    post("/register") {
         val (username, email, password1, password2) = call.receive<RegisterRequest>()
 
         if (password1 == password2) {

@@ -17,7 +17,6 @@ fun Application.registerAccountRoute() {
         route("/account") {
             authenticate(USER_AUTH) {
                 accountGet(accountRepository)
-                resetPassword(accountRepository)
                 updateAccount(accountRepository)
                 updateAddress(accountRepository)
             }

@@ -14,7 +14,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.loginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
-    post("/auth/login") {
+    post("/login") {
         val (email, password) = call.receive<LoginRequest>()
 
         val isPasswordCorrect = authRepository.login(email, password)

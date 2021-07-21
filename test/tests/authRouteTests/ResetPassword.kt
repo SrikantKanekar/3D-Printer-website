@@ -1,10 +1,10 @@
-package tests.accountRouteTests
+package tests.authRouteTests
 
-import com.example.features.account.domain.requests.ResetPasswordRequest
+import com.example.features.auth.requests.ResetPasswordRequest
 import com.example.util.ValidationException
 import com.example.util.checkPassword
-import com.example.util.constants.Account.INCORRECT_PASSWORD
-import com.example.util.constants.Account.PASSWORD_DO_NOT_MATCH
+import com.example.util.constants.Auth.INCORRECT_PASSWORD
+import com.example.util.constants.Auth.PASSWORD_DO_NOT_MATCH
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
@@ -28,7 +28,7 @@ class ResetPassword : KoinTest {
     fun `should return Unauthorised if not logged`() {
         runServer {
             handlePutRequest(
-                "/account/reset-password",
+                "/auth/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,
                     "1111",
@@ -55,7 +55,7 @@ class ResetPassword : KoinTest {
     fun `should return error if passwords don't match`() {
         runServer {
             handlePutRequest(
-                "/account/reset-password",
+                "/auth/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,
                     "1111",
@@ -73,7 +73,7 @@ class ResetPassword : KoinTest {
     fun `should return error if old password is incorrect`() {
         runServer {
             handlePutRequest(
-                "/account/reset-password",
+                "/auth/reset-password",
                 ResetPasswordRequest(
                     TEST_INVALID_ID,
                     "1111",
@@ -91,7 +91,7 @@ class ResetPassword : KoinTest {
     fun `should update password if reset is successful`() {
         runServer {
             handlePutRequest(
-                "/account/reset-password",
+                "/auth/reset-password",
                 ResetPasswordRequest(
                     TEST_USER_PASSWORD,
                     "1111",
