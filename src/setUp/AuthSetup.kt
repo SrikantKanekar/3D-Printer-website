@@ -8,7 +8,6 @@ import com.example.config.JWTConfig
 import com.example.features.auth.data.AuthRepository
 import com.example.model.User
 import com.example.model.UserPrincipal
-import com.example.util.AuthorizationException
 import com.example.util.constants.Auth.ADMIN_AUTH
 import com.example.util.constants.Auth.ADMIN_CLAIM
 import com.example.util.constants.Auth.EMAIL_CLAIM
@@ -79,7 +78,7 @@ suspend fun checkUser(
 
 fun checkAdmin(credential: JWTCredential) {
     val isAdmin = credential.payload.getClaim(ADMIN_CLAIM).asBoolean()
-    if (!isAdmin) throw AuthorizationException()
+    if (!isAdmin) throw Exception()
 }
 
 fun generateJwtToken(jwt: JWTConfig, user: User): String {
