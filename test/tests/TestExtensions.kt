@@ -96,27 +96,6 @@ inline fun <reified T> TestApplicationEngine.handlePutRequest(
     }
 }
 
-inline fun <reified T> TestApplicationEngine.handlePatchRequest(
-    uri: String,
-    body: T,
-    logged: Boolean = false,
-    admin: Boolean = false,
-    assert: TestApplicationCall.() -> Unit
-) {
-    handleRequest(HttpMethod.Patch, uri) {
-        addHeader(
-            HttpHeaders.ContentType,
-            ContentType.Application.Json.toString()
-        )
-        val jsonBody = Json.encodeToString(body)
-        setBody(jsonBody)
-        if (logged) addHeader(HttpHeaders.Authorization, "Bearer $TEST_USER_TOKEN")
-        if (admin) addHeader(HttpHeaders.Authorization, "Bearer $TEST_ADMIN_TOKEN")
-    }.apply {
-        assert()
-    }
-}
-
 fun TestApplicationEngine.handleDeleteRequest(
     uri: String,
     logged: Boolean = false,
@@ -158,5 +137,7 @@ fun TestApplicationEngine.`create object before user login`() {
         val obj = Json.decodeFromString<Object>(response.content!!)
         assertEquals(TEST_CREATED_OBJECT, obj.id)
         assertEquals("name", obj.name)
+
+        assertEquals(HttpStatusCode.Created, response.status())
     }
 }

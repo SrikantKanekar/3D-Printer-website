@@ -11,10 +11,11 @@ class UserDataSourceImpl(
     private val users: CoroutineCollection<User>
 ) : UserDataSource {
 
-    override suspend fun insertUser(user: User): Boolean {
+    override suspend fun insertUser(user: User) {
         val inserted = users.insertOne(user).wasAcknowledged()
-        if (!inserted) throw DatabaseException("error inserting user")
-        return true
+        if (!inserted) throw DatabaseException(
+            "error inserting user with email ${user.email}"
+        )
     }
 
     override suspend fun getUserOrNull(email: String): User? {
@@ -25,10 +26,13 @@ class UserDataSourceImpl(
         return users.findOne(User::email eq email)!!
     }
 
-    override suspend fun updateUser(user: User): Boolean {
-        val updated = users.updateOne(User::email eq user.email, user).wasAcknowledged()
-        if (!updated) throw DatabaseException("error updating user")
-        return true
+    override suspend fun updateUser(user: User) {
+        val updated = users
+            .updateOne(User::email eq user.email, user)
+            .wasAcknowledged()
+        if (!updated) throw DatabaseException(
+            "error updating user of email ${user.email}"
+        )
     }
 
     override suspend fun createObject(body: ObjectCreateRequest): Object {

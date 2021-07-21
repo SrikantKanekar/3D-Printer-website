@@ -11,7 +11,6 @@ import io.ktor.sessions.*
 
 fun Route.objectsGet(objectsRepository: ObjectRepository) {
     get {
-
         val principal = call.principal<UserPrincipal>()
 
         val objs = when (principal) {

@@ -19,7 +19,8 @@ class CartRepository(
             .filter { it.status == NONE }
             .find { it.id == objectId && it.slicingDetails.uptoDate }
             ?.let { it.status = CART } ?: return false
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
+        return true
     }
 
     suspend fun removeFromCart(email: String, objectId: String): Boolean {
@@ -28,6 +29,7 @@ class CartRepository(
             .filter { it.status == CART }
             .find { it.id == objectId }
             ?.let { it.status = NONE } ?: return false
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
+        return true
     }
 }

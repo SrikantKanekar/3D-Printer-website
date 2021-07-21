@@ -13,15 +13,12 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.objectSlice(objectRepository: ObjectRepository) {
-    patch("/slice/{id}") {
-
-        val id = call.parameters["id"] ?: return@patch call.respond(
+    put("/slice/{id}") {
+        val id = call.parameters["id"] ?: return@put call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-
         val principal = call.principal<UserPrincipal>()
-
         var result: SlicingDetails? = null
 
         when (principal) {

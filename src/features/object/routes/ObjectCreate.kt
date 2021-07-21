@@ -6,6 +6,7 @@ import com.example.model.ObjectsCookie
 import com.example.model.UserPrincipal
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -47,6 +48,6 @@ fun Route.objectCreate(objectRepository: ObjectRepository) {
             }
             else -> objectRepository.addUserObject(principal.email, obj)
         }
-        call.respond(obj)
+        call.respond(HttpStatusCode.Created, obj)
     }
 }

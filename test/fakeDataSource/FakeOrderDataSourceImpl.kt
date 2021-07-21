@@ -16,9 +16,8 @@ class FakeOrderDataSourceImpl(
         )
     }
 
-    override suspend fun insertOrder(order: Order): Boolean {
+    override suspend fun insertOrder(order: Order) {
         orders[order.id] = order
-        return true
     }
 
     override suspend fun getOrderById(orderId: String): Order? {
@@ -29,16 +28,14 @@ class FakeOrderDataSourceImpl(
         return orders.values.filter { it.userEmail == userEmail }
     }
 
-    override suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {
-        val order = orders[orderId]?.copy(status = status) ?: return false
+    override suspend fun updateOrderStatus(orderId: String, status: OrderStatus) {
+        val order = orders[orderId]!!.copy(status = status)
         orders[orderId] = order
-        return true
     }
 
-    override suspend fun updateOrderDelivery(orderId: String, date: String): Boolean {
-        val order = orders[orderId]?.copy(deliveredOn = date) ?: return false
+    override suspend fun updateOrderDelivery(orderId: String, date: String) {
+        val order = orders[orderId]!!.copy(deliveredOn = date)
         orders[orderId] = order
-        return true
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {

@@ -13,6 +13,7 @@ import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import data.TestConstants.TEST_USER_USERNAME
 import fakeDataSource.TestRepository
+import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -59,6 +60,7 @@ class Register : KoinTest {
                 )
             ) {
                 assertEquals(PASSWORDS_DO_NOT_MATCH, response.content)
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }
@@ -76,6 +78,7 @@ class Register : KoinTest {
                 )
             ) {
                 assertEquals(EMAIL_ALREADY_TAKEN, response.content)
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }

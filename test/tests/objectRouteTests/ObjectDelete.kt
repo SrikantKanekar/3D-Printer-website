@@ -24,7 +24,7 @@ import kotlin.test.assertNull
 class ObjectDelete : KoinTest {
 
     @Test
-    fun `should return not found if invalid Id before login`() {
+    fun `should return NotFound if invalid Id before login`() {
         runServer {
             handleDeleteRequest(
                 uri = "/objects/$TEST_INVALID_ID"
@@ -35,7 +35,7 @@ class ObjectDelete : KoinTest {
     }
 
     @Test
-    fun `should return not found if invalid Id after login`() {
+    fun `should return NotFound if invalid Id after login`() {
         runServer {
             handleDeleteRequest(
                 uri = "/objects/$TEST_INVALID_ID",
@@ -47,42 +47,7 @@ class ObjectDelete : KoinTest {
     }
 
     @Test
-    fun `should return ok if object deleted before login`() {
-        runServer {
-            cookiesSession {
-                `create object before user login`()
-                handleDeleteRequest(
-                    "/objects/$TEST_CREATED_OBJECT"
-                ) {
-                    val cookie = response.call.sessions.get<ObjectsCookie>()!!
-                    assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
-
-                    assertEquals(HttpStatusCode.OK, response.status())
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `should return ok if object deleted after login`() {
-        runServer {
-            handleDeleteRequest(
-                "/objects/$TEST_SLICED_OBJECT",
-                logged = true
-            ) {
-                runBlocking {
-                    val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
-                    assertNull(obj)
-
-                    assertEquals(HttpStatusCode.OK, response.status())
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `should return not found if cart object is deleted`() {
+    fun `should return NotFound if cart object is deleted`() {
         runServer {
             handleDeleteRequest(
                 "/objects/$TEST_CART_OBJECT",
@@ -94,6 +59,41 @@ class ObjectDelete : KoinTest {
                     assertNotNull(obj)
 
                     assertEquals(HttpStatusCode.NotFound, response.status())
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `should return NoContent if object deleted before login`() {
+        runServer {
+            cookiesSession {
+                `create object before user login`()
+                handleDeleteRequest(
+                    "/objects/$TEST_CREATED_OBJECT"
+                ) {
+                    val cookie = response.call.sessions.get<ObjectsCookie>()!!
+                    assertNull(cookie.objects.find { it.id == TEST_CREATED_OBJECT })
+
+                    assertEquals(HttpStatusCode.NoContent, response.status())
+                }
+            }
+        }
+    }
+
+    @Test
+    fun `should return NoContent if object deleted after login`() {
+        runServer {
+            handleDeleteRequest(
+                "/objects/$TEST_SLICED_OBJECT",
+                logged = true
+            ) {
+                runBlocking {
+                    val testRepository by inject<TestRepository>()
+                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
+                    assertNull(obj)
+
+                    assertEquals(HttpStatusCode.NoContent, response.status())
                 }
             }
         }

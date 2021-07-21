@@ -10,9 +10,8 @@ class FakeUserDataSourceImpl(
     private val users: HashMap<String, User>
 ) : UserDataSource {
 
-    override suspend fun insertUser(user: User): Boolean {
+    override suspend fun insertUser(user: User) {
         users[user.email] = user
-        return true
     }
 
     override suspend fun getUserOrNull(email: String): User? {
@@ -23,9 +22,8 @@ class FakeUserDataSourceImpl(
         return users[email]!!
     }
 
-    override suspend fun updateUser(user: User): Boolean {
+    override suspend fun updateUser(user: User) {
         users[user.email] = user
-        return true
     }
 
     override suspend fun createObject(body: ObjectCreateRequest): Object {

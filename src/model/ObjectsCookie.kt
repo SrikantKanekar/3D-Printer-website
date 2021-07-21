@@ -9,14 +9,14 @@ import kotlinx.serialization.json.Json
 @Serializable
 data class ObjectsCookie(
     val objects: ArrayList<Object> = ArrayList()
-)
+){
+    class ObjectCookieSerializer: SessionSerializer<ObjectsCookie> {
+        override fun deserialize(text: String): ObjectsCookie {
+            return Json.decodeFromString(text)
+        }
 
-class ObjectCookieSerializer: SessionSerializer<ObjectsCookie> {
-    override fun deserialize(text: String): ObjectsCookie {
-        return Json.decodeFromString(text)
-    }
-
-    override fun serialize(session: ObjectsCookie): String {
-        return Json.encodeToString(session)
+        override fun serialize(session: ObjectsCookie): String {
+            return Json.encodeToString(session)
+        }
     }
 }

@@ -16,7 +16,7 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import tests.`create object before user login`
-import tests.handlePatchRequest
+import tests.handlePutRequest
 import tests.runServer
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -26,7 +26,7 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return error for invalid Id if not logged`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/slice/$TEST_INVALID_ID",
                 body = Unit
             ) {
@@ -38,7 +38,7 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return error for invalid Id if logged`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/slice/$TEST_INVALID_ID",
                 body = Unit,
                 logged = true
@@ -53,7 +53,7 @@ class ObjectSlice : KoinTest {
         runServer {
             cookiesSession {
                 `create object before user login`()
-                handlePatchRequest(
+                handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
                     body = Unit,
                 ) {
@@ -70,13 +70,13 @@ class ObjectSlice : KoinTest {
         runServer {
             cookiesSession {
                 `create object before user login`()
-                handlePatchRequest(
+                handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
                     body = Unit
                 ) {
                     assertNotEquals(HttpStatusCode.InternalServerError, response.status())
                 }
-                handlePatchRequest(
+                handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
                     body = Unit
                 ) {
@@ -89,7 +89,7 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return error for sliced object if logged`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/slice/$TEST_SLICED_OBJECT",
                 body = Unit,
                 logged = true
@@ -102,7 +102,7 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return error for cart object if logged`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/slice/$TEST_CART_OBJECT",
                 body = Unit,
                 logged = true
@@ -115,7 +115,7 @@ class ObjectSlice : KoinTest {
     @Test
     fun `should return slicing details if logged`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/slice/$TEST_UNSLICED_OBJECT",
                 body = Unit,
                 logged = true

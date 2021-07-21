@@ -5,6 +5,7 @@ import com.example.model.Object
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import fakeDataSource.TestRepository
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -51,6 +52,8 @@ class ObjectCreate : KoinTest {
                     val responseObj = Json.decodeFromString<Object>(response.content!!)
                     assertEquals(TEST_CREATED_OBJECT, obj.id)
                     assertEquals("name", responseObj.name)
+
+                    assertEquals(HttpStatusCode.Created, response.status())
                 }
             }
         }

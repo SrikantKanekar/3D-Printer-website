@@ -16,10 +16,11 @@ class OrderDataSourceImpl(
         return Order(userEmail = userEmail)
     }
 
-    override suspend fun insertOrder(order: Order): Boolean {
+    override suspend fun insertOrder(order: Order) {
         val inserted = orders.insertOne(order).wasAcknowledged()
-        if (!inserted) throw DatabaseException("error inserting order")
-        return true
+        if (!inserted) throw DatabaseException(
+            "error inserting order of ${order.userEmail}"
+        )
     }
 
     override suspend fun getOrderById(orderId: String): Order? {
@@ -30,20 +31,22 @@ class OrderDataSourceImpl(
         return orders.find(Order::userEmail eq userEmail).toList().reversed()
     }
 
-    override suspend fun updateOrderStatus(orderId: String, status: OrderStatus): Boolean {
+    override suspend fun updateOrderStatus(orderId: String, status: OrderStatus) {
         val updated = orders
             .updateOne(Order::id eq orderId, setValue(Order::status, status))
             .wasAcknowledged()
-        if (!updated) throw DatabaseException("error updating order status")
-        return true
+        if (!updated) throw DatabaseException(
+            "error updating order status $status of order $orderId"
+        )
     }
 
-    override suspend fun updateOrderDelivery(orderId: String, date: String): Boolean {
+    override suspend fun updateOrderDelivery(orderId: String, date: String) {
         val updated = orders
             .updateOne(Order::id eq orderId, setValue(Order::deliveredOn, date))
             .wasAcknowledged()
-        if (!updated) throw DatabaseException("error updating order delivery date")
-        return true
+        if (!updated) throw DatabaseException(
+            "error updating order delivery date $date of order $orderId"
+        )
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {

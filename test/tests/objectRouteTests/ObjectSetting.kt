@@ -8,10 +8,12 @@ import data.TestConstants.TEST_USER_EMAIL
 import fakeDataSource.TestRepository
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.handlePatchRequest
+import tests.handlePutRequest
 import tests.runServer
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -19,35 +21,35 @@ import kotlin.test.assertFalse
 class ObjectSetting : KoinTest {
 
     @Test
-    fun `should return not found for invalid object Id`() {
+    fun `should return MethodNotAllowed for invalid object Id`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/setting/$TEST_INVALID_ID",
                 body = Setting(),
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.NotFound, response.status())
+                assertEquals(HttpStatusCode.MethodNotAllowed, response.status())
             }
         }
     }
 
     @Test
-    fun `should return not found for cart object`() {
+    fun `should return MethodNotAllowed for cart object`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/setting/$TEST_CART_OBJECT",
                 body = Setting(),
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.NotFound, response.status())
+                assertEquals(HttpStatusCode.MethodNotAllowed, response.status())
             }
         }
     }
 
     @Test
-    fun `should return ok if success`() {
+    fun `should return setting if success`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/setting/$TEST_SLICED_OBJECT",
                 body = Setting(),
                 logged = true
@@ -56,9 +58,11 @@ class ObjectSetting : KoinTest {
                     val testRepository by inject<TestRepository>()
                     val user = testRepository.getUser(TEST_USER_EMAIL)
                     val obj = user.objects.find { it.id == TEST_SLICED_OBJECT }!!
+
                     assertFalse(obj.slicingDetails.uptoDate)
 
-                    assertEquals(HttpStatusCode.OK, response.status())
+                    val res = Json.decodeFromString<Setting>(response.content!!)
+                    assertEquals(res, obj.setting)
                 }
             }
         }

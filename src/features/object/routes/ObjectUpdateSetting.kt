@@ -14,9 +14,8 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.objectUpdateSetting(objectRepository: ObjectRepository) {
-    patch("/setting/{id}") {
-
-        val id = call.parameters["id"] ?: return@patch call.respond(
+    put("/setting/{id}") {
+        val id = call.parameters["id"] ?: return@put call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
@@ -42,9 +41,9 @@ fun Route.objectUpdateSetting(objectRepository: ObjectRepository) {
                 objectRepository.updateSetting(principal.email, id, body)
         }
         when (updated) {
-            true -> call.respond("updated")
+            true -> call.respond(body)
             false -> call.respond(
-                HttpStatusCode.NotFound,
+                HttpStatusCode.MethodNotAllowed,
                 "Object setting of the given id is not changed"
             )
         }

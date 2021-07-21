@@ -12,12 +12,10 @@ import io.ktor.sessions.*
 
 fun Route.objectGet(objectRepository: ObjectRepository) {
     get("{id}") {
-
         val id = call.parameters["id"] ?: return@get call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-
         val principal = call.principal<UserPrincipal>()
 
         val obj = when (principal) {

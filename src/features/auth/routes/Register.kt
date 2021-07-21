@@ -10,6 +10,7 @@ import com.example.util.constants.Auth.EMAIL_ALREADY_TAKEN
 import com.example.util.constants.Auth.PASSWORDS_DO_NOT_MATCH
 import com.example.util.generateHash
 import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -33,10 +34,10 @@ fun Route.registerRoute(authRepository: AuthRepository, jwt: JWTConfig) {
                 val token = generateJwtToken(jwt, newUser)
                 call.respond(token)
             } else {
-                call.respondText(EMAIL_ALREADY_TAKEN)
+                call.respond(HttpStatusCode.BadRequest, EMAIL_ALREADY_TAKEN)
             }
         } else {
-            call.respondText(PASSWORDS_DO_NOT_MATCH)
+            call.respond(HttpStatusCode.BadRequest, PASSWORDS_DO_NOT_MATCH)
         }
     }
 }

@@ -15,13 +15,12 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.objectUpdateQuantity(objectRepository: ObjectRepository) {
-    patch("/quantity/{id}") {
+    put("/quantity/{id}") {
 
-        val id = call.parameters["id"] ?: return@patch call.respond(
+        val id = call.parameters["id"] ?: return@put call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-
         val (quantity) = call.receive<ObjectQuantityRequest>()
         val principal = call.principal<UserPrincipal>()
         var updated = false
@@ -42,9 +41,9 @@ fun Route.objectUpdateQuantity(objectRepository: ObjectRepository) {
         }
 
         when (updated) {
-            true -> call.respond("updated")
+            true -> call.respond(quantity)
             false -> call.respond(
-                HttpStatusCode.NotFound,
+                HttpStatusCode.MethodNotAllowed,
                 "Object quantity of the given id is not changed"
             )
         }

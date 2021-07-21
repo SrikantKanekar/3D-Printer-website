@@ -35,8 +35,8 @@ class ObjectRepository(
     suspend fun deleteUserObject(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
-        if (deleted) return userDataSource.updateUser(user)
-        return false
+        if (deleted) userDataSource.updateUser(user)
+        return deleted
     }
 
     suspend fun sliceUserObject(email: String, objectId: String): SlicingDetails? {
@@ -90,7 +90,8 @@ class ObjectRepository(
             .filter { it.status == CART || it.status == NONE}
             .find { it.id == objectId }
             ?.let { it.quantity = quantity } ?: return false
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
+        return true
     }
 
     suspend fun updateSetting(email: String, id: String, setting: Setting): Boolean {
@@ -102,7 +103,8 @@ class ObjectRepository(
                 it.setting = setting
                 it.slicingDetails.uptoDate = false
             } ?: return false
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
+        return true
     }
 
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {
@@ -110,6 +112,7 @@ class ObjectRepository(
         user.objects
             .find { it.id == id }
             ?.let { it.name = fileName } ?: return false
-        return userDataSource.updateUser(user)
+        userDataSource.updateUser(user)
+        return true
     }
 }

@@ -13,6 +13,7 @@ import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import data.TestConstants.TEST_USER_USERNAME
 import fakeDataSource.TestRepository
+import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -44,6 +45,7 @@ class Login : KoinTest {
                 LoginRequest(TEST_INVALID_ID, TEST_INVALID_ID)
             ) {
                 assertEquals(EMAIL_PASSWORD_INCORRECT, response.content)
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }

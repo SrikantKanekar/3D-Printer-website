@@ -5,7 +5,6 @@ import com.example.util.ValidationException
 import com.example.util.checkPassword
 import com.example.util.constants.Account.INCORRECT_PASSWORD
 import com.example.util.constants.Account.PASSWORD_DO_NOT_MATCH
-import com.example.util.constants.Account.RESET_SUCCESSFUL
 import data.TestConstants.TEST_INVALID_ID
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
@@ -65,6 +64,7 @@ class ResetPassword : KoinTest {
                 logged = true
             ) {
                 assertEquals(PASSWORD_DO_NOT_MATCH, response.content)
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }
@@ -82,6 +82,7 @@ class ResetPassword : KoinTest {
                 logged = true
             ) {
                 assertEquals(INCORRECT_PASSWORD, response.content)
+                assertEquals(HttpStatusCode.BadRequest, response.status())
             }
         }
     }
@@ -103,7 +104,7 @@ class ResetPassword : KoinTest {
                     val user = testRepository.getUser(TEST_USER_EMAIL)
                     assertTrue(checkPassword("1111", user.password))
 
-                    assertEquals(RESET_SUCCESSFUL, response.content)
+                    assertEquals(HttpStatusCode.NoContent, response.status())
                 }
             }
             assertFails { userLogin() }

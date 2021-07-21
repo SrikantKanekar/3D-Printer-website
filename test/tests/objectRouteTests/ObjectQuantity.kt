@@ -13,7 +13,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.handlePatchRequest
+import tests.handlePutRequest
 import tests.runServer
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -32,22 +32,22 @@ class ObjectQuantity : KoinTest {
     }
 
     @Test
-    fun `should return not found for invalid object Id`() {
+    fun `should return MethodNotAllowed for invalid object Id`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/quantity/$TEST_INVALID_ID",
                 body = ObjectQuantityRequest(2),
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.NotFound, response.status())
+                assertEquals(HttpStatusCode.MethodNotAllowed, response.status())
             }
         }
     }
 
     @Test
-    fun `should return not found for tracking object`() {
+    fun `should return MethodNotAllowed for tracking object`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/quantity/$TEST_TRACKING_OBJECT",
                 body = ObjectQuantityRequest(2),
                 logged = true
@@ -58,15 +58,15 @@ class ObjectQuantity : KoinTest {
                     val obj = user.objects.find { it.id == TEST_TRACKING_OBJECT }
                     assertNotEquals(obj?.quantity, 2)
 
-                    assertEquals(HttpStatusCode.NotFound, response.status())                }
+                    assertEquals(HttpStatusCode.MethodNotAllowed, response.status())                }
             }
         }
     }
 
     @Test
-    fun `should return ok if success`() {
+    fun `should return quantity if success`() {
         runServer {
-            handlePatchRequest(
+            handlePutRequest(
                 uri = "objects/quantity/$TEST_CART_OBJECT",
                 body = ObjectQuantityRequest(2),
                 logged = true
@@ -77,7 +77,7 @@ class ObjectQuantity : KoinTest {
                     val obj = user.objects
                         .filter { it.status == CART }
                         .find { it.id == TEST_CART_OBJECT }
-                    assertEquals(2, obj?.quantity)
+                    assertEquals(response.content?.toInt(), obj?.quantity)
 
                     assertEquals(HttpStatusCode.OK, response.status())                }
             }

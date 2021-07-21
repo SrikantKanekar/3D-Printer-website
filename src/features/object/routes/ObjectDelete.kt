@@ -17,9 +17,8 @@ fun Route.objectDelete(objectRepository: ObjectRepository) {
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-
-        val deleted: Boolean
         val principal = call.principal<UserPrincipal>()
+        val deleted: Boolean
 
         when (principal) {
             null -> {
@@ -33,7 +32,7 @@ fun Route.objectDelete(objectRepository: ObjectRepository) {
         }
 
         when (deleted) {
-            true -> call.respond(deleted)
+            true -> call.respond(HttpStatusCode.NoContent)
             false -> call.respond(
                 HttpStatusCode.NotFound,
                 "Object with the given id does not exist"

@@ -7,6 +7,7 @@ import com.example.model.ObjectsCookie
 import com.example.setUp.generateJwtToken
 import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import io.ktor.application.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -27,7 +28,7 @@ fun Route.loginRoute(authRepository: AuthRepository, jwt: JWTConfig) {
             val token = generateJwtToken(jwt, user)
             call.respond(token)
         } else {
-            call.respondText(EMAIL_PASSWORD_INCORRECT)
+            call.respond(HttpStatusCode.BadRequest, EMAIL_PASSWORD_INCORRECT)
         }
     }
 }
