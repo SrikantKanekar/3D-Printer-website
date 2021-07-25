@@ -21,11 +21,11 @@ window.addEventListener('load', function () {
         const check = checkValidation(inputs);
         if (check) {
             $.post(url, $(form).serialize(), function (data) {
-                // if (data.startsWith("/")) {
-                //     window.location.href = data;
-                // } else {
-                //     message.textContent = data;
-                // }
+                if (data.startsWith("/")) {
+                    window.location.href = data;
+                } else {
+                    message.textContent = data;
+                }
             });
         }
     }

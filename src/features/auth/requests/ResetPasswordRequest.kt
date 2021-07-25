@@ -16,6 +16,9 @@ data class ResetPasswordRequest(
             ResetPasswordRequest::newPassword{
                 minLength(4)
             }
+            ResetPasswordRequest::confirmPassword{
+                minLength(4)
+            }
         }.validateAndThrowOnFailure(this)
     }
 }

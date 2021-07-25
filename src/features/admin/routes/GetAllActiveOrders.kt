@@ -5,9 +5,9 @@ import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.getAllActiveOrders(orderRepository: AdminRepository) {
+fun Route.getAllActiveOrders(adminRepository: AdminRepository) {
     get {
-        val activeOrders = orderRepository.getAllActiveOrders()
+        val activeOrders = adminRepository.getAllActiveOrders()
         call.respond(activeOrders)
     }
 }

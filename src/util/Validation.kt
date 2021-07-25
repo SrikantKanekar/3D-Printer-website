@@ -8,6 +8,6 @@ class ValidationException(message: String) : Exception(message)
 fun <T> Validation<T>.validateAndThrowOnFailure(value: T) {
     val result = validate(value)
     if (result is Invalid<T>) {
-        throw ValidationException(result.errors.toString())
+        throw ValidationException(result.errors[0].message)
     }
 }
