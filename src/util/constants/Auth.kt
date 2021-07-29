@@ -8,7 +8,7 @@ object Auth {
 
     const val USERNAME_CLAIM = "username"
     const val EMAIL_CLAIM = "email"
-    const val ADMIN_CLAIM = "is_admin"
+    const val ADMIN_CLAIM = "isAdmin"
 
     const val EMAIL_PASSWORD_INCORRECT = "The email or password is incorrect"
     const val EMAIL_ALREADY_TAKEN = "A user with that email already exists"

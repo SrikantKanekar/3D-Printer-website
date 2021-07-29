@@ -75,6 +75,7 @@ class ObjectRepository(
         val electricityCost = Random.nextInt(100, 300)
         val totalPrice = Random.nextInt(2000, 4000)
         return SlicingDetails(
+            uptoDate = true,
             time = time,
             materialWeight = materialWeight,
             materialCost = materialCost,
