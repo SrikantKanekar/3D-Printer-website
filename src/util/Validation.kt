@@ -8,6 +8,9 @@ class ValidationException(message: String) : Exception(message)
 fun <T> Validation<T>.validateAndThrowOnFailure(value: T) {
     val result = validate(value)
     if (result is Invalid<T>) {
-        throw ValidationException(result.errors[0].message)
+        val dataPath = result.errors[0].dataPath
+        val message = result.errors[0].message
+        val exceptionMessage = "${dataPath.removePrefix(".")} $message"
+        throw ValidationException(exceptionMessage)
     }
 }

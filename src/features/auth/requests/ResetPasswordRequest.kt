@@ -13,6 +13,9 @@ data class ResetPasswordRequest(
 ) {
     init {
         Validation<ResetPasswordRequest> {
+            ResetPasswordRequest::oldPassword{
+                minLength(4)
+            }
             ResetPasswordRequest::newPassword{
                 minLength(4)
             }

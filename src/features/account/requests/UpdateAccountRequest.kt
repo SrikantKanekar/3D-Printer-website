@@ -13,7 +13,7 @@ data class UpdateAccountRequest(
     init {
         Validation<UpdateAccountRequest> {
             UpdateAccountRequest::username{
-                minLength(3)
+                minLength(2)
                 maxLength(50)
             }
         }.validateAndThrowOnFailure(this)
