@@ -2,41 +2,43 @@ package com.example.features.checkout.presentation
 
 import com.example.config.AppConfig
 import com.example.features.checkout.data.CheckoutRepository
-import com.example.features.checkout.requests.CheckoutProceedRequest
 import com.example.model.UserPrincipal
+import com.example.util.enums.ObjectStatus.CART
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
-import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.checkoutProceed(checkoutRepository: CheckoutRepository, appConfig: AppConfig) {
+fun Route.checkoutProceed(
+    repository: CheckoutRepository,
+    appConfig: AppConfig
+) {
     post("/proceed") {
 
-        val body = call.receive<CheckoutProceedRequest>()
         val (email) = call.principal<UserPrincipal>()!!
+        val isNotEmpty = repository.isCartEmpty(email)
 
-        val isEmpty = checkoutRepository.isCartEmpty(email)
+        if (isNotEmpty) {
+            val user = repository.getUser(email)
 
-        if (isEmpty) {
-            when (body.success) {
-                true -> {
-                    val order = checkoutRepository.placeOrder(email, appConfig)
-                    call.respond(HttpStatusCode.Created, order)
-                }
-                false -> {
-                    println("payment verification of $email is not successful")
-                    call.respond(
-                        HttpStatusCode.BadRequest,
-                        "Payment is not successful"
-                    )
-                }
-            }
+            val price = repository.getOrderPrice(user)
+
+            val orderId = repository.createRazorpayOrder(price, appConfig)
+            val order = repository.generateNewOrder(id = orderId, email = email)
+            order.price = price
+
+            val orderIds = user.objects
+                .filter { it.status == CART }
+                .map { it.id }
+            order.objectIds.addAll(orderIds)
+
+            repository.insertOrder(order)
+            call.respond(order)
         } else {
             call.respond(
                 HttpStatusCode.MethodNotAllowed,
-                "no checkout items"
+                "checkout is empty"
             )
         }
     }

@@ -25,7 +25,7 @@ fun orderDataFactory(): HashMap<String, Order> {
     val orders = Json.decodeFromString<List<Order>>(stringData)
 
     for (order in orders) {
-        map[order.id] = order
+        map[order._id] = order
     }
     return map
 }

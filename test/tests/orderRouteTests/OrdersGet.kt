@@ -38,7 +38,7 @@ class OrdersGet : KoinTest {
                     val user = testRepository.getUser(TEST_USER_EMAIL)
 
                     val responseOrders = Json.decodeFromString<List<Order>>(response.content!!)
-                    val responseOrderIds = responseOrders.map { it.id }
+                    val responseOrderIds = responseOrders.map { it._id }
 
                     assertTrue { responseOrderIds.containsAll(user.orderIds) }
 

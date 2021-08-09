@@ -3,6 +3,7 @@ package com.example.features.checkout.presentation
 import com.example.config.AppConfig
 import com.example.features.checkout.data.CheckoutRepository
 import com.example.features.checkout.routes.checkoutGet
+import com.example.features.checkout.routes.checkoutVerify
 import com.example.util.constants.Auth.USER_AUTH
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -19,6 +20,7 @@ fun Application.registerCheckoutRoute() {
             authenticate(USER_AUTH) {
                 checkoutGet(checkoutRepository)
                 checkoutProceed(checkoutRepository, appConfig)
+                checkoutVerify(checkoutRepository, appConfig)
             }
         }
     }

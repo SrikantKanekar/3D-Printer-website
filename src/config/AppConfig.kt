@@ -4,4 +4,5 @@ class AppConfig {
     var testing: Boolean = false
     lateinit var jwtConfig: JWTConfig
     lateinit var notificationConfig: NotificationConfig
+    lateinit var razorpayConfig: RazorpayConfig
 }

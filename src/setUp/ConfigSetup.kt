@@ -3,6 +3,8 @@ package com.example.config
 import com.example.util.constants.Auth.JWT_AUTH_SECRET
 import com.example.util.constants.Notification.NOTIFICATION_EMAIL
 import com.example.util.constants.Notification.NOTIFICATION_PASSWORD
+import com.example.util.constants.Razorpay.RAZORPAY_KEY
+import com.example.util.constants.Razorpay.RAZORPAY_SECRET
 import io.ktor.application.*
 import org.koin.ktor.ext.inject
 
@@ -24,4 +26,9 @@ fun Application.configSetup(testing: Boolean) {
     val email = if (testing) "test@test.com" else System.getenv(NOTIFICATION_EMAIL)
     val password = if (testing) "123456" else System.getenv(NOTIFICATION_PASSWORD)
     appConfig.notificationConfig = NotificationConfig(email, password)
+
+    // Razorpay
+    val razorpayKey = if (testing) "key" else System.getenv(RAZORPAY_KEY)
+    val razorpaySecret = if (testing) "secret" else System.getenv(RAZORPAY_SECRET)
+    appConfig.razorpayConfig = RazorpayConfig(razorpayKey, razorpaySecret)
 }

@@ -5,17 +5,19 @@ import com.example.util.enums.OrderStatus
 
 interface OrderDataSource {
 
-    suspend fun generateNewOrder(userEmail: String): Order
+    suspend fun generateNewOrder(id: String, userEmail: String): Order
 
     suspend fun insertOrder(order: Order)
 
-    suspend fun getOrderById(orderId: String): Order?
+    suspend fun updateOrder(order: Order)
+
+    suspend fun getOrderById(id: String): Order?
 
     suspend fun getOrdersByUser(userEmail: String): List<Order>
 
-    suspend fun updateOrderStatus(orderId: String, status: OrderStatus)
+    suspend fun updateOrderStatus(id: String, status: OrderStatus)
 
-    suspend fun updateOrderDelivery(orderId: String, date: String)
+    suspend fun updateOrderDelivery(id: String, date: String)
 
     suspend fun getAllActiveOrders(): List<Order>
 }

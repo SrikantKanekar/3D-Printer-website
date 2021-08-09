@@ -10,7 +10,7 @@ fun sendEmailNotification(
     userEmail: String,
     appConfig: AppConfig
 ) {
-    when (appConfig.testing) {
+    when (true) { // appConfig.testing
         true -> {
             println("---------------Email Notification-------------")
             println("To: $userEmail")

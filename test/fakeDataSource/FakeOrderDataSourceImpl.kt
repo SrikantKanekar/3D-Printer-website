@@ -9,33 +9,37 @@ class FakeOrderDataSourceImpl(
     private val orders: HashMap<String, Order>
 ) : OrderDataSource {
 
-    override suspend fun generateNewOrder(userEmail: String): Order {
+    override suspend fun generateNewOrder(id: String, userEmail: String): Order {
         return Order(
-            id = TEST_CREATED_ORDER,
+            _id = TEST_CREATED_ORDER,
             userEmail = userEmail
         )
     }
 
     override suspend fun insertOrder(order: Order) {
-        orders[order.id] = order
+        orders[order._id] = order
     }
 
-    override suspend fun getOrderById(orderId: String): Order? {
-        return orders[orderId]
+    override suspend fun updateOrder(order: Order) {
+        orders[order._id] = order
+    }
+
+    override suspend fun getOrderById(id: String): Order? {
+        return orders[id]
     }
 
     override suspend fun getOrdersByUser(userEmail: String): List<Order> {
         return orders.values.filter { it.userEmail == userEmail }
     }
 
-    override suspend fun updateOrderStatus(orderId: String, status: OrderStatus) {
-        val order = orders[orderId]!!.copy(status = status)
-        orders[orderId] = order
+    override suspend fun updateOrderStatus(id: String, status: OrderStatus) {
+        val order = orders[id]!!.copy(status = status)
+        orders[id] = order
     }
 
-    override suspend fun updateOrderDelivery(orderId: String, date: String) {
-        val order = orders[orderId]!!.copy(deliveredOn = date)
-        orders[orderId] = order
+    override suspend fun updateOrderDelivery(id: String, date: String) {
+        val order = orders[id]!!.copy(deliveredOn = date)
+        orders[id] = order
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {
