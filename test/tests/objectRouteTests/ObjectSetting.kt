@@ -16,7 +16,7 @@ import org.koin.test.inject
 import tests.handlePutRequest
 import tests.runServer
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ObjectSetting : KoinTest {
 
@@ -59,7 +59,7 @@ class ObjectSetting : KoinTest {
                     val user = testRepository.getUser(TEST_USER_EMAIL)
                     val obj = user.objects.find { it.id == TEST_SLICED_OBJECT }!!
 
-                    assertFalse(obj.slicingDetails.uptoDate)
+                    assertTrue(obj.setting.updated)
 
                     val res = Json.decodeFromString<Setting>(response.content!!)
                     assertEquals(res, obj.setting)

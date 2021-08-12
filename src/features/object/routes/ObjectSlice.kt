@@ -8,51 +8,46 @@ import com.example.util.enums.ObjectStatus.NONE
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
+import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
 
 fun Route.objectSlice(objectRepository: ObjectRepository) {
     put("/slice/{id}") {
+
+        val body = call.receive<SlicingDetails>()
+        body.validate()
+
         val id = call.parameters["id"] ?: return@put call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
+
         val principal = call.principal<UserPrincipal>()
-        var result: SlicingDetails? = null
+        var result = false
 
         when (principal) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
-                val obj = cookie.objects
-                    .filter { it.status == NONE && !it.slicingDetails.uptoDate }
+                cookie.objects
+                    .filter { it.status == NONE && it.setting.updated }
                     .find { it.id == id }
-
-                if (obj != null) {
-                    result = objectRepository.slice(obj.fileUrl)
-                    result?.let {
-                        cookie.objects
-                            .find { it.id == id }
-                            ?.apply {
-                                slicingDetails.uptoDate = true
-                                slicingDetails.time = result!!.time
-                                slicingDetails.materialWeight = result!!.materialWeight
-                                slicingDetails.materialCost = result!!.materialCost
-                                slicingDetails.electricityCost = result!!.electricityCost
-                                slicingDetails.totalPrice = result!!.totalPrice
-                            }
-                        call.sessions.set(cookie)
+                    ?.apply {
+                        slicingDetails = body
+                        setting.updated = false
+                        result = true
                     }
-                }
+                call.sessions.set(cookie)
             }
             else -> {
-                result = objectRepository.sliceUserObject(principal.email, id)
+                result = objectRepository.sliceUserObject(principal.email, id, body)
             }
         }
-        if (result != null) {
-            call.respond(result)
+        if (result) {
+            call.respond(body)
         } else {
-            call.respond(HttpStatusCode.InternalServerError, "Slicing error")
+            call.respond(HttpStatusCode.NotFound)
         }
     }
 }

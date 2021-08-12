@@ -1,6 +1,7 @@
 package tests.objectRouteTests
 
 import com.example.model.ObjectsCookie
+import com.example.model.SlicingDetails
 import data.TestConstants.TEST_CART_OBJECT
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_INVALID_ID
@@ -12,6 +13,8 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import io.ktor.sessions.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -19,31 +22,40 @@ import tests.`create object before user login`
 import tests.handlePutRequest
 import tests.runServer
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
+import kotlin.test.assertFalse
 
 class ObjectSlice : KoinTest {
 
+    private val slicingDetails = SlicingDetails(
+        printTime = "1hr",
+        materialWeight = 1F,
+        materialCost = 1F,
+        powerCost = 1F,
+        labourCost = 1F,
+        price = 3
+    )
+
     @Test
-    fun `should return error for invalid Id if not logged`() {
+    fun `should return NotFound for invalid Id if not logged`() {
         runServer {
             handlePutRequest(
                 uri = "objects/slice/$TEST_INVALID_ID",
-                body = Unit
+                body = slicingDetails
             ) {
-                assertEquals(HttpStatusCode.InternalServerError, response.status())
+                assertEquals(HttpStatusCode.NotFound, response.status())
             }
         }
     }
 
     @Test
-    fun `should return error for invalid Id if logged`() {
+    fun `should return NotFound for invalid Id if logged`() {
         runServer {
             handlePutRequest(
                 uri = "objects/slice/$TEST_INVALID_ID",
-                body = Unit,
+                body = slicingDetails,
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.InternalServerError, response.status())
+                assertEquals(HttpStatusCode.NotFound, response.status())
             }
         }
     }
@@ -55,59 +67,60 @@ class ObjectSlice : KoinTest {
                 `create object before user login`()
                 handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
-                    body = Unit,
+                    body = slicingDetails,
                 ) {
                     val cookie = response.call.sessions.get<ObjectsCookie>()!!
                     val obj = cookie.objects.find { it.id == TEST_CREATED_OBJECT }
-                    assertEquals(true, obj?.slicingDetails?.uptoDate)
+                    assertEquals(obj?.slicingDetails, slicingDetails)
+                    assertFalse(obj!!.setting.updated)
                 }
             }
         }
     }
 
     @Test
-    fun `should return error for sliced object if not logged`() {
+    fun `should return NotFound if already sliced if not logged`() {
         runServer {
             cookiesSession {
                 `create object before user login`()
                 handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
-                    body = Unit
+                    body = slicingDetails
                 ) {
-                    assertNotEquals(HttpStatusCode.InternalServerError, response.status())
+                    assertEquals(HttpStatusCode.OK, response.status())
                 }
                 handlePutRequest(
                     uri = "objects/slice/$TEST_CREATED_OBJECT",
-                    body = Unit
+                    body = slicingDetails
                 ) {
-                    assertEquals(HttpStatusCode.InternalServerError, response.status())
+                    assertEquals(HttpStatusCode.NotFound, response.status())
                 }
             }
         }
     }
 
     @Test
-    fun `should return error for sliced object if logged`() {
+    fun `should return NotFound if already sliced if logged`() {
         runServer {
             handlePutRequest(
                 uri = "objects/slice/$TEST_SLICED_OBJECT",
-                body = Unit,
+                body = slicingDetails,
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.InternalServerError, response.status())
+                assertEquals(HttpStatusCode.NotFound, response.status())
             }
         }
     }
 
     @Test
-    fun `should return error for cart object if logged`() {
+    fun `should return NotFound for cart object if logged`() {
         runServer {
             handlePutRequest(
                 uri = "objects/slice/$TEST_CART_OBJECT",
-                body = Unit,
+                body = slicingDetails,
                 logged = true
             ) {
-                assertEquals(HttpStatusCode.InternalServerError, response.status())
+                assertEquals(HttpStatusCode.NotFound, response.status())
             }
         }
     }
@@ -117,13 +130,15 @@ class ObjectSlice : KoinTest {
         runServer {
             handlePutRequest(
                 uri = "objects/slice/$TEST_UNSLICED_OBJECT",
-                body = Unit,
+                body = slicingDetails,
                 logged = true
             ) {
                 runBlocking {
                     val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_SLICED_OBJECT)
-                    assertEquals(true, obj?.slicingDetails?.uptoDate)
+                    val obj = testRepository.getUserObjectById(TEST_USER_EMAIL, TEST_UNSLICED_OBJECT)!!
+                    val res = Json.decodeFromString<SlicingDetails>(response.content!!)
+                    assertEquals(res, obj.slicingDetails)
+                    assertFalse(obj.setting.updated)
                 }
             }
         }

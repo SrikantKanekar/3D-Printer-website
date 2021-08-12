@@ -45,7 +45,7 @@ class CheckoutRepository(
     fun getOrderPrice(user: User): Int {
         return user.objects
             .filter { it.status == CART }
-            .sumOf { it.slicingDetails.totalPrice!! * it.quantity }
+            .sumOf { it.slicingDetails.price!! * it.quantity }
     }
 
     suspend fun insertOrder(order: Order) {

@@ -60,7 +60,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
-                slicingDetails = SlicingDetails(uptoDate = true)
+                setting = Setting(updated = false)
             ),
             Object(
                 id = TEST_CART_OBJECT,
@@ -70,13 +70,14 @@ val testUser = User(
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = CART,
                 quantity = 2,
+                setting = Setting(updated = false),
                 slicingDetails = SlicingDetails(
-                    uptoDate = true,
-                    time = 1,
-                    materialWeight = 1,
-                    materialCost = 1,
-                    electricityCost = 1,
-                    totalPrice = 2
+                    printTime = "1hr",
+                    materialWeight = 1F,
+                    materialCost = 1F,
+                    powerCost = 1F,
+                    labourCost = 1F,
+                    price = 3
                 )
             ),
             Object(

@@ -32,7 +32,7 @@ fun Route.objectUpdateSetting(objectRepository: ObjectRepository) {
                     .find { it.id == id }
                     ?.let {
                         it.setting = body
-                        it.slicingDetails.uptoDate = false
+                        it.setting.updated = true
                         updated = true
                     }
                 call.sessions.set(cookie)

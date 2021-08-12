@@ -37,7 +37,7 @@ class Register : KoinTest {
     @Test
     fun `should fail if input is invalid`() {
         assertFailsWith<ValidationException> {
-            RegisterRequest("11", "valid", "valid", "valid")
+            RegisterRequest("1", "valid", "valid", "valid")
         }
         assertFailsWith<ValidationException> {
             RegisterRequest(LONG_USERNAME, "valid", "valid", "valid")

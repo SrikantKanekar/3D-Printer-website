@@ -7,7 +7,6 @@ import com.example.model.Setting
 import com.example.model.SlicingDetails
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
-import kotlin.random.Random
 
 class ObjectRepository(
     private val userDataSource: UserDataSource
@@ -39,51 +38,18 @@ class ObjectRepository(
         return deleted
     }
 
-    suspend fun sliceUserObject(email: String, objectId: String): SlicingDetails? {
+    suspend fun sliceUserObject(email: String, objectId: String, body: SlicingDetails): Boolean {
         val user = userDataSource.getUser(email)
-        val obj = user.objects
-            .filter { it.status == NONE && !it.slicingDetails.uptoDate }
+        user.objects
+            .filter { it.status == NONE && it.setting.updated }
             .find { it.id == objectId }
-
-        if (obj != null) {
-            val result = slice(obj.fileUrl)
-            result?.let {
-                user.objects
-                    .find { it.id == objectId }
-                    ?.apply {
-                        slicingDetails.uptoDate = true
-                        slicingDetails.time = result.time
-                        slicingDetails.materialWeight = result.materialWeight
-                        slicingDetails.materialCost = result.materialCost
-                        slicingDetails.electricityCost = result.electricityCost
-                        slicingDetails.totalPrice = result.totalPrice
-                    }
-                userDataSource.updateUser(user)
-            }
-            return result
-        }
-        return null
+            ?.apply {
+                slicingDetails = body
+                setting.updated = false
+            } ?: return false
+        userDataSource.updateUser(user)
+        return true
     }
-
-    /**
-     * use object ID value to get the object file, slice the file in OctoPrint
-     */
-    suspend fun slice(fileUrl: String): SlicingDetails? {
-        val time = Random.nextLong(2000000, 40000000)
-        val materialWeight = Random.nextInt(10, 100)
-        val materialCost = Random.nextInt(500, 1500)
-        val electricityCost = Random.nextInt(100, 300)
-        val totalPrice = Random.nextInt(2000, 4000)
-        return SlicingDetails(
-            uptoDate = true,
-            time = time,
-            materialWeight = materialWeight,
-            materialCost = materialCost,
-            electricityCost = electricityCost,
-            totalPrice = totalPrice
-        )
-    }
-
 
     suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
         val user = userDataSource.getUser(email)
@@ -102,7 +68,7 @@ class ObjectRepository(
             .find { it.id == id }
             ?.let {
                 it.setting = setting
-                it.slicingDetails.uptoDate = false
+                it.setting.updated = true
             } ?: return false
         userDataSource.updateUser(user)
         return true

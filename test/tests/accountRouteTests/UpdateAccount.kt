@@ -15,7 +15,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 const val UPDATED_USERNAME = "UPDATED_USERNAME"
-const val SHORT_USERNAME = "AB"
+const val SHORT_USERNAME = "A"
 const val LONG_USERNAME = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 class UpdateAccount : KoinTest {
