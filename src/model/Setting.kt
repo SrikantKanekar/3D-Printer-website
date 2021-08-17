@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Setting(
     var updated: Boolean = true,
-    val advanced: Boolean = false,
+    val level: Int = 0,
 
     //basic
     val quality: Quality = STANDARD,
