@@ -2,8 +2,8 @@ package com.example.model
 
 import com.example.model.PrintSequence.ALL_AT_ONCE
 import com.example.model.Quality.STANDARD
-import com.example.model.SupportPattern.GRID
-import com.example.model.SupportPlacement.TOUCHING_BUILD_PLATE
+import com.example.model.SupportPattern.ZIG_ZAG
+import com.example.model.SupportPlacement.EVERYWHERE
 import com.example.model.SupportStructure.NORMAL
 import kotlinx.serialization.Serializable
 
@@ -18,24 +18,24 @@ data class Setting(
     val gradualInfill: Boolean = false,
     val support: Boolean = true,
 
-    // intermediate
+    // advanced
     val layerHeight: Float = 0.2F,
     val infillDensity: Float = 20F,
-    val infillPattern: InfillPattern = InfillPattern.LINES,
+    val infillPattern: InfillPattern = InfillPattern.CUBIC,
     val generateSupport: Boolean = true,
     val supportStructure: SupportStructure = NORMAL,
-    val supportPlacement: SupportPlacement = TOUCHING_BUILD_PLATE,
+    val supportPlacement: SupportPlacement = EVERYWHERE,
     val supportOverhangAngle: Float = 45F,
-    val supportPattern: SupportPattern = GRID,
+    val supportPattern: SupportPattern = ZIG_ZAG,
     val supportDensity: Float = 20F,
 
     // advanced
     val wallLineWidth: Float = 0.4F,
     val topBottomLineWidth: Float = 0.4F,
-    val wallThickness: Float = 0.8F,
-    val wallLineCount: Int = 2,
-    val topThickness: Float = 1.12F,
-    val bottomThickness: Float = 1.12F,
+    val wallThickness: Float = 1.2F,
+    val wallLineCount: Int = 3,
+    val topThickness: Float = 0.8F,
+    val bottomThickness: Float = 0.8F,
     val infillSpeed: Float = 50F,
     val outerWallSpeed: Float = 25F,
     val innerWallSpeed: Float = 25F,
