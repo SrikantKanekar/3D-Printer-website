@@ -41,7 +41,8 @@ class UserDataSourceImpl(
             name = body.name,
             fileUrl = body.fileUrl,
             fileExtension = body.fileExtension,
-            imageUrl = body.imageUrl
+            imageUrl = body.imageUrl,
+            slicing = body.slicing
         )
     }
 }

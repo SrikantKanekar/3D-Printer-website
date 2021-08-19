@@ -52,6 +52,7 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_SLICED_OBJECT,
@@ -60,7 +61,8 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
-                setting = Setting(updated = false)
+                setting = Setting(updated = false),
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_CART_OBJECT,
@@ -71,14 +73,7 @@ val testUser = User(
                 status = CART,
                 quantity = 2,
                 setting = Setting(updated = false),
-                slicingDetails = SlicingDetails(
-                    printTime = "1hr",
-                    materialWeight = 1F,
-                    materialCost = 1F,
-                    powerCost = 1F,
-                    labourCost = 1F,
-                    price = 3
-                )
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_TRACKING_OBJECT,
@@ -86,7 +81,8 @@ val testUser = User(
                 fileUrl = TEST_OBJECT_FILE_URL,
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
-                status = TRACKING
+                status = TRACKING,
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_COMPLETED_OBJECT,
@@ -95,7 +91,8 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = COMPLETED,
-                printingStatus = PrintingStatus.PRINTED
+                printingStatus = PrintingStatus.PRINTED,
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_PENDING_OBJECT,
@@ -104,7 +101,8 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PrintingStatus.PENDING
+                printingStatus = PrintingStatus.PENDING,
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_PRINTING_OBJECT,
@@ -113,7 +111,8 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PrintingStatus.PRINTING
+                printingStatus = PrintingStatus.PRINTING,
+                slicing = Slicing()
             ),
             Object(
                 id = TEST_PRINTED_OBJECT,
@@ -122,7 +121,8 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = TRACKING,
-                printingStatus = PrintingStatus.PRINTED
+                printingStatus = PrintingStatus.PRINTED,
+                slicing = Slicing()
             )
         )
     ),
@@ -164,7 +164,8 @@ val testUsers = List(2) {
                     name = TEST_OBJECT_NAME,
                     fileUrl = TEST_OBJECT_FILE_URL,
                     fileExtension = TEST_OBJECT_EXTENSION,
-                    imageUrl = TEST_OBJECT_IMAGE_URL
+                    imageUrl = TEST_OBJECT_IMAGE_URL,
+                    slicing = Slicing()
                 )
             }
         )

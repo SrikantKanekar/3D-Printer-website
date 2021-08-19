@@ -4,7 +4,6 @@ import com.example.database.user.UserDataSource
 import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
 import com.example.model.Setting
-import com.example.model.SlicingDetails
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
 
@@ -36,19 +35,6 @@ class ObjectRepository(
         val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
         if (deleted) userDataSource.updateUser(user)
         return deleted
-    }
-
-    suspend fun sliceUserObject(email: String, objectId: String, body: SlicingDetails): Boolean {
-        val user = userDataSource.getUser(email)
-        user.objects
-            .filter { it.status == NONE && it.setting.updated }
-            .find { it.id == objectId }
-            ?.apply {
-                slicingDetails = body
-                setting.updated = false
-            } ?: return false
-        userDataSource.updateUser(user)
-        return true
     }
 
     suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {

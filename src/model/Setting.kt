@@ -12,15 +12,11 @@ data class Setting(
     var updated: Boolean = true,
     val level: Int = 0,
 
-    //basic
     val quality: Quality = STANDARD,
-    val infill: Float = 20F,
-    val gradualInfill: Boolean = false,
-    val support: Boolean = true,
 
-    // advanced
     val layerHeight: Float = 0.2F,
     val infillDensity: Float = 20F,
+    val gradualInfill: Boolean = false,
     val infillPattern: InfillPattern = InfillPattern.CUBIC,
     val generateSupport: Boolean = true,
     val supportStructure: SupportStructure = NORMAL,
@@ -29,7 +25,6 @@ data class Setting(
     val supportPattern: SupportPattern = ZIG_ZAG,
     val supportDensity: Float = 20F,
 
-    // advanced
     val wallLineWidth: Float = 0.4F,
     val topBottomLineWidth: Float = 0.4F,
     val wallThickness: Float = 1.2F,
@@ -45,7 +40,7 @@ data class Setting(
 )
 
 enum class Quality {
-    SUPER, DYNAMIC, STANDARD, LOW
+    SUPER, DYNAMIC, STANDARD, LOW, CUSTOM
 }
 
 enum class InfillPattern {

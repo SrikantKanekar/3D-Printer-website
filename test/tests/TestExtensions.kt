@@ -4,6 +4,7 @@ import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.features.auth.domain.LoginRequest
 import com.example.model.Object
 import com.example.model.ObjectsCookie
+import com.example.model.Slicing
 import com.example.module
 import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_ADMIN_TOKEN
@@ -127,7 +128,8 @@ fun TestApplicationEngine.`create object before user login`() {
             name = "name",
             fileUrl = "file_url",
             imageUrl = "image_url",
-            fileExtension = "stl"
+            fileExtension = "stl",
+            slicing = Slicing()
         )
     ) {
         val cookie = response.call.sessions.get<ObjectsCookie>()!!

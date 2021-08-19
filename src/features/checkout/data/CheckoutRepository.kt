@@ -7,6 +7,7 @@ import com.example.features.checkout.requests.RazorpayRequest
 import com.example.model.Address
 import com.example.model.Object
 import com.example.model.Order
+import com.example.model.Quality.*
 import com.example.model.User
 import com.example.util.enums.ObjectStatus.CART
 import com.razorpay.RazorpayClient
@@ -45,7 +46,18 @@ class CheckoutRepository(
     fun getOrderPrice(user: User): Int {
         return user.objects
             .filter { it.status == CART }
-            .sumOf { it.slicingDetails.price!! * it.quantity }
+            .sumOf { getObjectPrice(it)!! * it.quantity }
+    }
+
+    private fun getObjectPrice(obj: Object): Int? {
+        val quality = obj.setting.quality
+        return when(quality){
+            SUPER -> obj.slicing._super.price
+            DYNAMIC -> obj.slicing.dynamic.price
+            STANDARD -> obj.slicing.standard.price
+            LOW -> obj.slicing.low.price
+            CUSTOM -> obj.slicing.custom.price
+        }
     }
 
     suspend fun insertOrder(order: Order) {

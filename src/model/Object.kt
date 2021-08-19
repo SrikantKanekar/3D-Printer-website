@@ -1,7 +1,9 @@
 package com.example.model
 
 import com.example.util.enums.ObjectStatus
+import com.example.util.enums.ObjectStatus.NONE
 import com.example.util.enums.PrintingStatus
+import com.example.util.enums.PrintingStatus.PENDING
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,9 +14,9 @@ data class Object(
     val fileExtension: String,
     val imageUrl: String,
     var quantity: Int = 1,
-    var status: ObjectStatus = ObjectStatus.NONE,
-    var printingStatus: PrintingStatus = PrintingStatus.PENDING,
+    var status: ObjectStatus = NONE,
+    var printingStatus: PrintingStatus = PENDING,
     var setting: Setting = Setting(),
-    var slicingDetails: SlicingDetails = SlicingDetails(),
+    var slicing: Slicing,
     val trackingDetails: TrackingDetails = TrackingDetails()
 )
