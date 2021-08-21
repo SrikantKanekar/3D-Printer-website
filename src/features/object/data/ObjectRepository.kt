@@ -33,7 +33,8 @@ class ObjectRepository(
 
     suspend fun deleteUserObject(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
-        val deleted = user.objects.removeIf { it.id == objectId && it.status == NONE }
+        val deleted = user.objects
+            .removeIf { it.id == objectId && (it.status == NONE || it.status == CART) }
         if (deleted) userDataSource.updateUser(user)
         return deleted
     }
@@ -61,7 +62,7 @@ class ObjectRepository(
     suspend fun updateSetting(email: String, id: String, setting: Setting): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == NONE }
+            .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
             ?.let {
                 it.setting = setting

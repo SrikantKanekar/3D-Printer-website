@@ -4,6 +4,7 @@ import com.example.features.`object`.data.ObjectRepository
 import com.example.model.ObjectsCookie
 import com.example.model.Setting
 import com.example.model.UserPrincipal
+import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -28,7 +29,7 @@ fun Route.objectUpdateSetting(objectRepository: ObjectRepository) {
             null -> {
                 val cookie = call.sessions.get<ObjectsCookie>() ?: ObjectsCookie()
                 cookie.objects
-                    .filter { it.status == NONE }
+                    .filter { it.status == NONE || it.status == CART }
                     .find { it.id == id }
                     ?.let {
                         it.setting = body
