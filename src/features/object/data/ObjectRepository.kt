@@ -1,15 +1,18 @@
 package com.example.features.`object`.data
 
+import com.example.database.request.RequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
+import com.example.model.Request
 import com.example.model.Setting
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
 import com.example.util.enums.Quality
 
 class ObjectRepository(
-    private val userDataSource: UserDataSource
+    private val userDataSource: UserDataSource,
+    private val requestDatasource: RequestDatasource
 ) {
     suspend fun createObject(body: ObjectCreateRequest): Object {
         return userDataSource.createObject(body)
@@ -69,6 +72,10 @@ class ObjectRepository(
             } ?: return false
         userDataSource.updateUser(user)
         return true
+    }
+
+    suspend fun sendRequest(request: Request) {
+        requestDatasource.add(request)
     }
 
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {

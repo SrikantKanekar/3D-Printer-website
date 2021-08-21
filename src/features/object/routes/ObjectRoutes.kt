@@ -28,7 +28,7 @@ fun Application.registerObjectRoute() {
                 objectsGet(objectRepository)
                 objectGet(objectRepository)
                 objectCreate(objectRepository)
-                objectUpdateSetting(objectRepository)
+                objectSendRequest(objectRepository)
                 objectUpdateQuality(objectRepository)
                 objectUpdateQuantity(objectRepository)
                 objectDelete(objectRepository)

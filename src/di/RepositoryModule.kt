@@ -18,6 +18,6 @@ val repositoryModule = module {
     single { CartRepository(get()) }
     single { CheckoutRepository(get(), get()) }
     single { NotificationRepository(get()) }
-    single { ObjectRepository(get()) }
+    single { ObjectRepository(get(), get()) }
     single { OrderRepository(get(), get()) }
 }
