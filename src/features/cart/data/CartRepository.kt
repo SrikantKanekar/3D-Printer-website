@@ -17,7 +17,7 @@ class CartRepository(
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE }
-            .find { it.id == objectId && !it.setting.updated }
+            .find { it.id == objectId }
             ?.let { it.status = CART } ?: return false
         userDataSource.updateUser(user)
         return true

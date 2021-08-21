@@ -7,9 +7,9 @@ import com.example.features.checkout.requests.RazorpayRequest
 import com.example.model.Address
 import com.example.model.Object
 import com.example.model.Order
-import com.example.model.Quality.*
 import com.example.model.User
 import com.example.util.enums.ObjectStatus.CART
+import com.example.util.enums.Quality.*
 import com.razorpay.RazorpayClient
 import com.razorpay.Utils
 import org.json.JSONObject

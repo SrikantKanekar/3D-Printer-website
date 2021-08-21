@@ -2,6 +2,7 @@ package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
 import com.example.features.`object`.routes.objectGet
+import com.example.features.cart.presentation.objectUpdateQuality
 import com.example.features.cart.presentation.objectUpdateQuantity
 import com.example.features.objects.routes.objectsGet
 import com.example.util.constants.Auth.USER_AUTH
@@ -28,6 +29,7 @@ fun Application.registerObjectRoute() {
                 objectGet(objectRepository)
                 objectCreate(objectRepository)
                 objectUpdateSetting(objectRepository)
+                objectUpdateQuality(objectRepository)
                 objectUpdateQuantity(objectRepository)
                 objectDelete(objectRepository)
             }

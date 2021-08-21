@@ -6,6 +6,7 @@ import com.example.model.Object
 import com.example.model.Setting
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
+import com.example.util.enums.Quality
 
 class ObjectRepository(
     private val userDataSource: UserDataSource
@@ -37,6 +38,16 @@ class ObjectRepository(
         return deleted
     }
 
+    suspend fun updateQuality(email: String, objectId: String, quality: Quality): Boolean {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .filter { it.status == CART || it.status == NONE }
+            .find { it.id == objectId }
+            ?.let { it.quality = quality } ?: return false
+        userDataSource.updateUser(user)
+        return true
+    }
+
     suspend fun updateQuantity(email: String, objectId: String, quantity: Int): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
@@ -54,7 +65,6 @@ class ObjectRepository(
             .find { it.id == id }
             ?.let {
                 it.setting = setting
-                it.setting.updated = true
             } ?: return false
         userDataSource.updateUser(user)
         return true

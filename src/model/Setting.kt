@@ -1,17 +1,15 @@
 package com.example.model
 
 import com.example.model.PrintSequence.ALL_AT_ONCE
-import com.example.model.Quality.STANDARD
 import com.example.model.SupportPattern.ZIG_ZAG
 import com.example.model.SupportPlacement.EVERYWHERE
 import com.example.model.SupportStructure.NORMAL
+import com.example.util.enums.Quality
+import com.example.util.enums.Quality.STANDARD
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Setting(
-    var updated: Boolean = true,
-    val level: Int = 0,
-
     val quality: Quality = STANDARD,
 
     val layerHeight: Float = 0.2F,
@@ -38,10 +36,6 @@ data class Setting(
     val supportSpeed: Float = 25F,
     val printSequence: PrintSequence = ALL_AT_ONCE
 )
-
-enum class Quality {
-    SUPER, DYNAMIC, STANDARD, LOW, CUSTOM
-}
 
 enum class InfillPattern {
     LINES, GRID, TRIANGLES, TRI_HEXAGON, CUBIC, CUBIC_SUBDIVISION,
