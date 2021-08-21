@@ -13,7 +13,6 @@ import kotlinx.serialization.json.Json
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.`create object before user login`
 import tests.handlePostRequest
 import tests.runServer
 import kotlin.test.assertEquals
@@ -22,9 +21,21 @@ import kotlin.test.assertNotNull
 class ObjectCreate : KoinTest {
 
     @Test
-    fun `should return object if user is not logged`() {
+    fun `should return unauthorised if not logged`() {
         runServer {
-            `create object before user login`()
+            handlePostRequest(
+                "/objects",
+                ObjectCreateRequest(
+                    id = TEST_CREATED_OBJECT,
+                    name = "name",
+                    fileUrl = "file_url",
+                    imageUrl = "image_url",
+                    fileExtension = "stl",
+                    slicing = Slicing()
+                )
+            ) {
+                assertEquals(HttpStatusCode.Unauthorized, response.status())
+            }
         }
     }
 

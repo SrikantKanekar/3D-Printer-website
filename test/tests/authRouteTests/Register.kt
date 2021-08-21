@@ -8,25 +8,20 @@ import com.example.util.constants.Auth.EMAIL_ALREADY_TAKEN
 import com.example.util.constants.Auth.EMAIL_CLAIM
 import com.example.util.constants.Auth.PASSWORDS_DO_NOT_MATCH
 import com.example.util.constants.Auth.USERNAME_CLAIM
-import data.TestConstants
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import data.TestConstants.TEST_USER_USERNAME
 import fakeDataSource.TestRepository
 import io.ktor.http.*
-import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import tests.`create object before user login`
 import tests.accountRouteTests.LONG_USERNAME
 import tests.handlePostRequest
 import tests.runServer
-import tests.userLogin
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 const val NEW_EMAIL = "NEW_EMAIL"
@@ -104,23 +99,6 @@ class Register : KoinTest {
                     assertEquals(NEW_EMAIL, decodedJWT.getClaim(EMAIL_CLAIM).asString())
                     assertEquals(NEW_USERNAME, decodedJWT.getClaim(USERNAME_CLAIM).asString())
                     assertEquals(false, decodedJWT.getClaim(ADMIN_CLAIM).asBoolean())
-                }
-            }
-        }
-    }
-
-    @Test
-    fun `should sync cookie objects after login`() {
-        runServer {
-            cookiesSession {
-                `create object before user login`()
-                userLogin()
-                runBlocking {
-                    val testRepository by inject<TestRepository>()
-                    val obj = testRepository.getUser(TEST_USER_EMAIL)
-                        .objects
-                        .find { it.id == TestConstants.TEST_CREATED_OBJECT }
-                    assertNotNull(obj)
                 }
             }
         }

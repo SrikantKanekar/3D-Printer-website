@@ -1,14 +1,9 @@
 package tests
 
-import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.features.auth.domain.LoginRequest
-import com.example.model.Object
-import com.example.model.ObjectsCookie
-import com.example.model.Slicing
 import com.example.module
 import com.example.util.constants.Auth.EMAIL_PASSWORD_INCORRECT
 import data.TestConstants.TEST_ADMIN_TOKEN
-import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import data.TestConstants.TEST_USER_PASSWORD
 import data.TestConstants.TEST_USER_TOKEN
@@ -16,13 +11,9 @@ import di.testModules
 import io.ktor.config.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import io.ktor.sessions.*
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
 
 fun MapApplicationConfig.configForTesting() {
     put("ktor.jwt.issuer", "3D printing api")
@@ -117,29 +108,5 @@ fun TestApplicationEngine.userLogin() {
         body = LoginRequest(TEST_USER_EMAIL, TEST_USER_PASSWORD)
     ) {
         assertNotEquals(EMAIL_PASSWORD_INCORRECT, response.content)
-    }
-}
-
-fun TestApplicationEngine.`create object before user login`() {
-    handlePostRequest(
-        "/objects",
-        ObjectCreateRequest(
-            id = TEST_CREATED_OBJECT,
-            name = "name",
-            fileUrl = "file_url",
-            imageUrl = "image_url",
-            fileExtension = "stl",
-            slicing = Slicing()
-        )
-    ) {
-        val cookie = response.call.sessions.get<ObjectsCookie>()!!
-        val cookieObject = cookie.objects.find { it.id == TEST_CREATED_OBJECT }
-        assertNotNull(cookieObject)
-
-        val obj = Json.decodeFromString<Object>(response.content!!)
-        assertEquals(TEST_CREATED_OBJECT, obj.id)
-        assertEquals("name", obj.name)
-
-        assertEquals(HttpStatusCode.Created, response.status())
     }
 }

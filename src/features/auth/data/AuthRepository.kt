@@ -1,7 +1,6 @@
 package com.example.features.auth.data
 
 import com.example.database.user.UserDataSource
-import com.example.model.ObjectsCookie
 import com.example.model.User
 import com.example.util.checkPassword
 
@@ -28,18 +27,5 @@ class AuthRepository(
 
     suspend fun updateUser(user: User) {
         userDataSource.updateUser(user)
-    }
-
-    suspend fun syncCookieObjects(
-        email: String,
-        objectsCookie: ObjectsCookie?
-    ) {
-        if (objectsCookie != null) {
-            val user = userDataSource.getUser(email)
-            objectsCookie.objects.forEach { obj ->
-                if (!user.objects.contains(obj)) user.objects.add(obj)
-            }
-            userDataSource.updateUser(user)
-        }
     }
 }

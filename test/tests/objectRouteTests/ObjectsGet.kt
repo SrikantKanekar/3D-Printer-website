@@ -9,7 +9,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.junit.Test
 import org.koin.test.KoinTest
-import tests.`create object before user login`
 import tests.handleGetRequest
 import tests.runServer
 import kotlin.test.assertEquals
@@ -21,7 +20,7 @@ class ObjectsGet : KoinTest {
     fun `should return object list before login`() {
         runServer {
             cookiesSession {
-                `create object before user login`()
+                //`create object before user login`()
                 handleGetRequest("/objects") {
                     val objects = Json.decodeFromString<List<Object>>(response.content!!)
                     assertNotNull(objects.find { it.id == TEST_CREATED_OBJECT })
