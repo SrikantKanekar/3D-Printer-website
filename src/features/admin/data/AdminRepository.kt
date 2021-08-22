@@ -2,13 +2,14 @@ package com.example.features.admin.data
 
 import com.example.config.AppConfig
 import com.example.database.order.OrderDataSource
+import com.example.database.request.DirectRequestDatasource
+import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.admin.requests.NotificationRequest
 import com.example.features.admin.requests.PrintingStatusRequest
 import com.example.features.notification.data.generateNotification
 import com.example.features.notification.data.sendEmailNotification
-import com.example.model.Notification
-import com.example.model.Order
+import com.example.model.*
 import com.example.util.enums.NotificationType
 import com.example.util.enums.ObjectStatus.COMPLETED
 import com.example.util.enums.ObjectStatus.TRACKING
@@ -21,6 +22,8 @@ import com.example.util.now
 class AdminRepository(
     private val userDataSource: UserDataSource,
     private val orderDataSource: OrderDataSource,
+    private val directRequestDatasource: DirectRequestDatasource,
+    private val specialRequestDatasource: SpecialRequestDatasource
 ) {
     suspend fun getAllActiveOrders(): List<Order> {
         return orderDataSource.getAllActiveOrders()
@@ -142,5 +145,37 @@ class AdminRepository(
         val user = userDataSource.getUser(request.email)
         user.notification.add(notification)
         userDataSource.updateUser(user)
+    }
+
+    suspend fun getUser(email: String): User {
+        return userDataSource.getUser(email)
+    }
+
+    suspend fun updateUser(user: User) {
+        userDataSource.updateUser(user)
+    }
+
+    suspend fun getActiveDirectRequests(): List<DirectRequest> {
+        return directRequestDatasource.getAllActive()
+    }
+
+    suspend fun getDirectRequestById(id: String): DirectRequest? {
+        return directRequestDatasource.get(id)
+    }
+
+    suspend fun updateDirectRequest(request: DirectRequest) {
+        directRequestDatasource.update(request)
+    }
+
+    suspend fun getActiveSpecialRequests(): List<SpecialRequest> {
+        return specialRequestDatasource.getAllActive()
+    }
+
+    suspend fun getSpecialRequestById(id: String): SpecialRequest? {
+        return specialRequestDatasource.get(id)
+    }
+
+    suspend fun updateSpecialRequest(request: SpecialRequest) {
+        specialRequestDatasource.update(request)
     }
 }

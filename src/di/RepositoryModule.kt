@@ -13,11 +13,11 @@ import org.koin.dsl.module
 val repositoryModule = module {
 
     single { AccountRepository(get()) }
-    single { AdminRepository(get(), get()) }
+    single { AdminRepository(get(), get(), get(), get()) }
     single { AuthRepository(get()) }
     single { CartRepository(get()) }
     single { CheckoutRepository(get(), get()) }
     single { NotificationRepository(get()) }
-    single { ObjectRepository(get(), get()) }
+    single { ObjectRepository(get(), get(), get()) }
     single { OrderRepository(get(), get()) }
 }

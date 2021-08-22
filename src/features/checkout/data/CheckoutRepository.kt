@@ -50,7 +50,7 @@ class CheckoutRepository(
     }
 
     private fun getObjectPrice(obj: Object): Int? {
-        val quality = obj.setting.quality
+        val quality = obj.quality
         return when(quality){
             SUPER -> obj.slicing._super.price
             DYNAMIC -> obj.slicing.dynamic.price

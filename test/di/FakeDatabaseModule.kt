@@ -1,7 +1,7 @@
 package di
 
 import com.example.database.order.OrderDataSource
-import com.example.database.request.RequestDatasource
+import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import data.orderDataFactory
 import data.userDataFactory
@@ -15,7 +15,7 @@ val fakeDatabaseModule = module {
 
     single<UserDataSource> { FakeUserDataSourceImpl(userDataFactory()) }
     single<OrderDataSource> { FakeOrderDataSourceImpl(orderDataFactory()) }
-    single<RequestDatasource> { FakeRequestDatasourceImpl(HashMap()) }
+    single<SpecialRequestDatasource> { FakeRequestDatasourceImpl(HashMap()) }
 
     single { TestRepository(get(), get()) }
 }

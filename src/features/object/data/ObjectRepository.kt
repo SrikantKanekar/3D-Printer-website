@@ -1,18 +1,21 @@
 package com.example.features.`object`.data
 
-import com.example.database.request.RequestDatasource
+import com.example.database.request.DirectRequestDatasource
+import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.requests.ObjectCreateRequest
+import com.example.model.DirectRequest
 import com.example.model.Object
-import com.example.model.Request
 import com.example.model.Setting
+import com.example.model.SpecialRequest
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
 import com.example.util.enums.Quality
 
 class ObjectRepository(
     private val userDataSource: UserDataSource,
-    private val requestDatasource: RequestDatasource
+    private val specialRequestDatasource: SpecialRequestDatasource,
+    private val directRequestDatasource: DirectRequestDatasource
 ) {
     suspend fun createObject(body: ObjectCreateRequest): Object {
         return userDataSource.createObject(body)
@@ -74,8 +77,12 @@ class ObjectRepository(
         return true
     }
 
-    suspend fun sendRequest(request: Request) {
-        requestDatasource.add(request)
+    suspend fun sendSpecialRequest(request: SpecialRequest) {
+        specialRequestDatasource.add(request)
+    }
+
+    suspend fun sendDirectRequest(request: DirectRequest) {
+        directRequestDatasource.add(request)
     }
 
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {

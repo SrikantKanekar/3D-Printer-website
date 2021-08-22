@@ -37,7 +37,11 @@ class OrderDataSourceImpl(
     }
 
     override suspend fun getOrdersByUser(userEmail: String): List<Order> {
-        return orders.find(Order::userEmail eq userEmail).toList().reversed()
+        return orders
+            .find(Order::userEmail eq userEmail)
+            .toList()
+            .filter { it.razorpay.payment_id != null }
+            .reversed()
     }
 
     override suspend fun updateOrderStatus(id: String, status: OrderStatus) {
@@ -63,6 +67,7 @@ class OrderDataSourceImpl(
             .find()
             .filter(Order::status ne OrderStatus.DELIVERED)
             .toList()
+            .filter { it.razorpay.payment_id != null }
             .reversed()
     }
 }

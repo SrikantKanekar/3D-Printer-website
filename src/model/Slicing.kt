@@ -8,7 +8,7 @@ data class Slicing(
     val dynamic: SlicingDetails = SlicingDetails(),
     val standard: SlicingDetails = SlicingDetails(),
     val low: SlicingDetails = SlicingDetails(),
-    val custom: SlicingDetails = SlicingDetails(),
+    var custom: SlicingDetails = SlicingDetails(),
 )
 
 @Serializable

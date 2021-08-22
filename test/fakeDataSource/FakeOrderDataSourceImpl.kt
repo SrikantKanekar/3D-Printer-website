@@ -29,7 +29,9 @@ class FakeOrderDataSourceImpl(
     }
 
     override suspend fun getOrdersByUser(userEmail: String): List<Order> {
-        return orders.values.filter { it.userEmail == userEmail }
+        return orders.values
+            .filter { it.userEmail == userEmail }
+            .filter { it.razorpay.payment_id != null }
     }
 
     override suspend fun updateOrderStatus(id: String, status: OrderStatus) {
@@ -43,6 +45,8 @@ class FakeOrderDataSourceImpl(
     }
 
     override suspend fun getAllActiveOrders(): List<Order> {
-        return orders.values.filter { it.status != OrderStatus.DELIVERED }
+        return orders.values
+            .filter { it.razorpay.payment_id != null }
+            .filter { it.status != OrderStatus.DELIVERED }
     }
 }

@@ -1,8 +1,8 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.model.Request
 import com.example.model.Setting
+import com.example.model.SpecialRequest
 import com.example.model.UserPrincipal
 import com.example.util.now
 import io.ktor.application.*
@@ -12,8 +12,8 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.objectSendRequest(objectRepository: ObjectRepository) {
-    post("/request/{id}") {
+fun Route.objectSpecialRequest(objectRepository: ObjectRepository) {
+    post("/request/special/{id}") {
         val id = call.parameters["id"] ?: return@post call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
@@ -26,17 +26,17 @@ fun Route.objectSendRequest(objectRepository: ObjectRepository) {
         if (updated) {
             val obj = objectRepository.getUserObjectById(principal.email, id)
             if (obj != null) {
-                val request = Request(
+                val request = SpecialRequest(
                     _id = obj.id,
                     userEmail = principal.email,
                     fileUrl = obj.fileUrl,
                     setting = obj.setting,
                     requestedAt = now()
                 )
-                objectRepository.sendRequest(request)
+                objectRepository.sendSpecialRequest(request)
             } else return@post call.respond(HttpStatusCode.NotFound)
         } else return@post call.respond(HttpStatusCode.MethodNotAllowed)
 
-        call.respond(body)
+        call.respond(HttpStatusCode.Created)
     }
 }

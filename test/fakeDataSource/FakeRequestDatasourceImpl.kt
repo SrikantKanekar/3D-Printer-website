@@ -1,25 +1,25 @@
 package fakeDataSource
 
-import com.example.database.request.RequestDatasource
-import com.example.model.Request
+import com.example.database.request.SpecialRequestDatasource
+import com.example.model.SpecialRequest
 
 class FakeRequestDatasourceImpl(
-    private val requests: HashMap<String, Request>
-) : RequestDatasource {
+    private val requests: HashMap<String, SpecialRequest>
+) : SpecialRequestDatasource {
 
-    override suspend fun add(request: Request) {
+    override suspend fun add(request: SpecialRequest) {
         requests[request._id] = request
     }
 
-    override suspend fun update(request: Request) {
+    override suspend fun update(request: SpecialRequest) {
         requests[request._id] = request
     }
 
-    override suspend fun getAllPending(): List<Request> {
+    override suspend fun getAllActive(): List<SpecialRequest> {
         return requests.values.toList().reversed()
     }
 
-    override suspend fun get(id: String): Request? {
+    override suspend fun get(id: String): SpecialRequest? {
         return requests[id]
     }
 }
