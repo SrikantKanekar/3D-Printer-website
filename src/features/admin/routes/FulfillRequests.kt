@@ -1,9 +1,11 @@
 package com.example.features.admin.routes
 
 import com.example.features.admin.data.AdminRepository
+import com.example.features.admin.requests.DirectFulfillRequest
+import com.example.features.admin.requests.SpecialFulfillRequest
 import com.example.model.Object
 import com.example.model.Slicing
-import com.example.model.SlicingDetails
+import com.example.util.calculateSlicingDetails
 import com.example.util.now
 import io.ktor.application.*
 import io.ktor.http.*
@@ -17,7 +19,13 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-        val body = call.receive<Slicing>()
+        val body = call.receive<DirectFulfillRequest>()
+        var slicing = Slicing(
+            calculateSlicingDetails(body._super),
+            calculateSlicingDetails(body.dynamic),
+            calculateSlicingDetails(body.standard),
+            calculateSlicingDetails(body.low)
+        )
 
         val request = adminRepository.getDirectRequestById(id)
         when (request) {
@@ -26,7 +34,7 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
                 // update Request
                 request.apply {
                     fulfilled = true
-                    slicing = body
+                    slicing = slicing
                     fulfilledAt = now()
                 }
                 adminRepository.updateDirectRequest(request)
@@ -38,7 +46,7 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
                     fileUrl = request.fileUrl,
                     fileExtension = request.fileExtension,
                     imageUrl = request.imageUrl,
-                    slicing = body
+                    slicing = slicing
                 )
                 val user = adminRepository.getUser(request.userEmail)
                 user.objects.add(newObject)
@@ -54,7 +62,8 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-        val body = call.receive<SlicingDetails>()
+        val body = call.receive<SpecialFulfillRequest>()
+        var slicingDetails = calculateSlicingDetails(body)
 
         val request = adminRepository.getSpecialRequestById(id)
         when (request) {
@@ -64,7 +73,7 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
                 // Update Request
                 request.apply {
                     fulfilled = true
-                    slicingDetails = body
+                    slicingDetails = slicingDetails
                     fulfilledAt = now()
                 }
                 adminRepository.updateSpecialRequest(request)
@@ -73,7 +82,7 @@ fun Route.fulfillRequests(adminRepository: AdminRepository) {
                 val user = adminRepository.getUser(request.userEmail)
                 user.objects
                     .find { it.id == request._id }
-                    ?.apply { slicing.custom = body }
+                    ?.apply { slicing.custom = slicingDetails }
                     ?: call.respond(HttpStatusCode.NotFound, "User Object not found")
                 adminRepository.updateUser(user)
 
