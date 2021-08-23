@@ -1,5 +1,6 @@
 package com.example.database
 
+import com.example.model.DirectRequest
 import com.example.model.Order
 import com.example.model.SpecialRequest
 import com.example.model.User
@@ -18,5 +19,5 @@ private val database = client.getDatabase(DATABASE_NAME)
 
 val users = database.getCollection<User>(COLLECTION_USER)
 val orders = database.getCollection<Order>(COLLECTION_ORDER)
-val directRequests = database.getCollection<SpecialRequest>(COLLECTION_DIRECT_REQUEST)
+val directRequests = database.getCollection<DirectRequest>(COLLECTION_DIRECT_REQUEST)
 val specialRequests = database.getCollection<SpecialRequest>(COLLECTION_SPECIAL_REQUEST)
