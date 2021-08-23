@@ -1,10 +1,15 @@
 package com.example.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SpecialRequest(
     val _id: String,
     var fulfilled: Boolean = false,
     val userEmail: String,
     val fileUrl: String,
+    val fileExtension: String,
+    val imageUrl: String,
     val setting: Setting,
     var slicingDetails: SlicingDetails = SlicingDetails(),
     val requestedAt: String,

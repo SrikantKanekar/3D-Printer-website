@@ -1,5 +1,8 @@
 package com.example.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class DirectRequest(
     val _id: String,
     var name: String,

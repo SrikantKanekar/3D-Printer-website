@@ -13,7 +13,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.objectDirectRequest(objectRepository: ObjectRepository) {
-    post("/request/direct/{id}") {
+    post("/requests/direct/{id}") {
         val id = call.parameters["id"] ?: return@post call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"

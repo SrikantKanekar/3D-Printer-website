@@ -13,7 +13,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.objectSpecialRequest(objectRepository: ObjectRepository) {
-    post("/request/special/{id}") {
+    post("/requests/special/{id}") {
         val id = call.parameters["id"] ?: return@post call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
@@ -30,6 +30,8 @@ fun Route.objectSpecialRequest(objectRepository: ObjectRepository) {
                     _id = obj.id,
                     userEmail = principal.email,
                     fileUrl = obj.fileUrl,
+                    fileExtension = obj.fileExtension,
+                    imageUrl = obj.imageUrl,
                     setting = obj.setting,
                     requestedAt = now()
                 )
