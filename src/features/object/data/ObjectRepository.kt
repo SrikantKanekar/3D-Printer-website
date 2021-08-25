@@ -1,10 +1,8 @@
 package com.example.features.`object`.data
 
-import com.example.database.request.DirectRequestDatasource
 import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.requests.ObjectCreateRequest
-import com.example.model.DirectRequest
 import com.example.model.Object
 import com.example.model.Setting
 import com.example.model.SpecialRequest
@@ -14,11 +12,10 @@ import com.example.util.enums.Quality
 
 class ObjectRepository(
     private val userDataSource: UserDataSource,
-    private val specialRequestDatasource: SpecialRequestDatasource,
-    private val directRequestDatasource: DirectRequestDatasource
+    private val specialRequestDatasource: SpecialRequestDatasource
 ) {
-    suspend fun createObject(body: ObjectCreateRequest): Object {
-        return userDataSource.createObject(body)
+    suspend fun createObject(body: ObjectCreateRequest, email: String): Object {
+        return userDataSource.createObject(body, email)
     }
 
     suspend fun getObjects(email: String): List<Object> {
@@ -79,10 +76,6 @@ class ObjectRepository(
 
     suspend fun sendSpecialRequest(request: SpecialRequest) {
         specialRequestDatasource.add(request)
-    }
-
-    suspend fun sendDirectRequest(request: DirectRequest) {
-        directRequestDatasource.add(request)
     }
 
     suspend fun updateFilename(email: String, id: String, fileName: String): Boolean {

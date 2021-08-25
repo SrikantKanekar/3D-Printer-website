@@ -16,7 +16,7 @@ class CartRepository(
     suspend fun addToCart(email: String, objectId: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
-            .filter { it.status == NONE }
+            .filter { it.status == NONE && it.slicing.sliced }
             .find { it.id == objectId }
             ?.let { it.status = CART } ?: return false
         userDataSource.updateUser(user)

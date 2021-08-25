@@ -26,6 +26,10 @@ class UserDataSourceImpl(
         return users.findOne(User::email eq email)!!
     }
 
+    override suspend fun getAll(): List<User> {
+        return users.find().toList()
+    }
+
     override suspend fun updateUser(user: User) {
         val updated = users
             .updateOne(User::email eq user.email, user)
@@ -35,14 +39,14 @@ class UserDataSourceImpl(
         )
     }
 
-    override suspend fun createObject(body: ObjectCreateRequest): Object {
+    override suspend fun createObject(body: ObjectCreateRequest, email: String): Object {
         return Object(
             id = body.id,
             name = body.name,
             fileUrl = body.fileUrl,
             fileExtension = body.fileExtension,
             imageUrl = body.imageUrl,
-            slicing = body.slicing
+            userEmail = email
         )
     }
 }

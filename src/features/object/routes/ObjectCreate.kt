@@ -28,9 +28,8 @@ User clicks Create button
 fun Route.objectCreate(objectRepository: ObjectRepository) {
     post {
         val body = call.receive<ObjectCreateRequest>()
-        val obj = objectRepository.createObject(body)
-
         val principal = call.principal<UserPrincipal>()!!
+        val obj = objectRepository.createObject(body, principal.email)
 
         objectRepository.addUserObject(principal.email, obj)
 

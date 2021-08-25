@@ -6,19 +6,25 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.getActiveRequests(adminRepository: AdminRepository) {
+fun Route.getActiveObjects(adminRepository: AdminRepository) {
 
-    get("/requests/special") {
-        val requests = adminRepository.getActiveSpecialRequests()
+    get("/objects") {
+        val requests = adminRepository.getActiveObjectRequests()
         call.respond(requests)
     }
 
-    get("/requests/special/{id}") {
+    get("/objects/{email}/{id}") {
         val id = call.parameters["id"] ?: return@get call.respond(
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-        val requests = adminRepository.getSpecialRequestById(id)
+
+        val email = call.parameters["email"] ?: return@get call.respond(
+            status = HttpStatusCode.BadRequest,
+            message = "Missing or malformed email"
+        )
+
+        val requests = adminRepository.getObjectById(email, id)
 
         when (requests) {
             null -> call.respond(HttpStatusCode.NotFound)

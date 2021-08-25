@@ -2,7 +2,6 @@ package com.example.features.admin.data
 
 import com.example.config.AppConfig
 import com.example.database.order.OrderDataSource
-import com.example.database.request.DirectRequestDatasource
 import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.admin.requests.NotificationRequest
@@ -22,7 +21,6 @@ import com.example.util.now
 class AdminRepository(
     private val userDataSource: UserDataSource,
     private val orderDataSource: OrderDataSource,
-    private val directRequestDatasource: DirectRequestDatasource,
     private val specialRequestDatasource: SpecialRequestDatasource
 ) {
     suspend fun getAllActiveOrders(): List<Order> {
@@ -155,16 +153,25 @@ class AdminRepository(
         userDataSource.updateUser(user)
     }
 
-    suspend fun getActiveDirectRequests(): List<DirectRequest> {
-        return directRequestDatasource.getAllActive()
+    suspend fun getActiveObjectRequests(): List<Object> {
+        val objects = ArrayList<Object>()
+        val users = userDataSource.getAll()
+        users.forEach { user ->
+            objects.addAll(user.objects.filter { !it.slicing.sliced })
+        }
+        return objects
     }
 
-    suspend fun getDirectRequestById(id: String): DirectRequest? {
-        return directRequestDatasource.get(id)
+    suspend fun getObjectById(email: String, id: String): Object? {
+        return userDataSource.getUser(email).objects.find { it.id == id }
     }
 
-    suspend fun updateDirectRequest(request: DirectRequest) {
-        directRequestDatasource.update(request)
+    suspend fun updateObjectRequest(email: String, id: String, slicing: Slicing) {
+        val user = userDataSource.getUser(email)
+        user.objects
+            .find { it.id == id }
+            ?.let { it.slicing = slicing }
+        userDataSource.updateUser(user)
     }
 
     suspend fun getActiveSpecialRequests(): List<SpecialRequest> {

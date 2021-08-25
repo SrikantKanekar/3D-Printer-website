@@ -2,7 +2,6 @@ package tests.objectRouteTests
 
 import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
-import com.example.model.Slicing
 import data.TestConstants.TEST_CREATED_OBJECT
 import data.TestConstants.TEST_USER_EMAIL
 import fakeDataSource.TestRepository
@@ -31,7 +30,6 @@ class ObjectCreate : KoinTest {
                     fileUrl = "file_url",
                     imageUrl = "image_url",
                     fileExtension = "stl",
-                    slicing = Slicing()
                 )
             ) {
                 assertEquals(HttpStatusCode.Unauthorized, response.status())
@@ -50,7 +48,6 @@ class ObjectCreate : KoinTest {
                     fileUrl = "file_url",
                     imageUrl = "image_url",
                     fileExtension = "stl",
-                    slicing = Slicing()
                 ),
                 logged = true
             ) {

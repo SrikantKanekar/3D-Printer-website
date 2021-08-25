@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Slicing(
+    var sliced: Boolean = false,
     val _super: SlicingDetails = SlicingDetails(),
     val dynamic: SlicingDetails = SlicingDetails(),
     val standard: SlicingDetails = SlicingDetails(),

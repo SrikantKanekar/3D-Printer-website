@@ -12,7 +12,9 @@ interface UserDataSource {
 
     suspend fun getUser(email: String): User
 
+    suspend fun getAll(): List<User>
+
     suspend fun updateUser(user: User)
 
-    suspend fun createObject(body: ObjectCreateRequest): Object
+    suspend fun createObject(body: ObjectCreateRequest, email: String): Object
 }
