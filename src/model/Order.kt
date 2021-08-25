@@ -1,18 +1,20 @@
 package com.example.model
 
 import com.example.util.enums.OrderStatus
+import com.example.util.enums.OrderStatus.PLACED
+import com.example.util.now
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Order(
     val _id: String,
     val userEmail: String,
-    var status: OrderStatus = OrderStatus.PLACED,
     val objectIds: ArrayList<String> = ArrayList(),
-    val image: String = "/static/images/3d-order-image.jpeg",
+    var status: OrderStatus = PLACED,
     var price: Int = 0,
-    val deliveredOn: String? = null,
-    var razorpay: Razorpay = Razorpay()
+    var razorpay: Razorpay = Razorpay(),
+    val created_at: String = now(),
+    val deliveredOn: String? = null
 )
 
 @Serializable
