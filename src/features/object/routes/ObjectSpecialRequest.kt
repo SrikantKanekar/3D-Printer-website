@@ -1,7 +1,6 @@
 package com.example.features.`object`.presentation
 
 import com.example.features.`object`.data.ObjectRepository
-import com.example.model.Setting
 import com.example.model.SpecialRequest
 import com.example.model.UserPrincipal
 import com.example.util.now
@@ -18,10 +17,10 @@ fun Route.objectSpecialRequest(objectRepository: ObjectRepository) {
             status = HttpStatusCode.BadRequest,
             message = "Missing or malformed id"
         )
-        val body = call.receive<Setting>()
+        val body = call.receive<String>()
         val principal = call.principal<UserPrincipal>()!!
 
-        val updated = objectRepository.updateSetting(principal.email, id, body)
+        val updated = objectRepository.updateMessage(principal.email, id, body)
 
         if (updated) {
             val obj = objectRepository.getUserObjectById(principal.email, id)
@@ -32,7 +31,7 @@ fun Route.objectSpecialRequest(objectRepository: ObjectRepository) {
                     fileUrl = obj.fileUrl,
                     fileExtension = obj.fileExtension,
                     imageUrl = obj.imageUrl,
-                    setting = obj.setting,
+                    message = obj.message,
                     requestedAt = now()
                 )
                 objectRepository.sendSpecialRequest(request)

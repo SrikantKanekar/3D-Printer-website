@@ -4,7 +4,6 @@ import com.example.database.request.SpecialRequestDatasource
 import com.example.database.user.UserDataSource
 import com.example.features.`object`.requests.ObjectCreateRequest
 import com.example.model.Object
-import com.example.model.Setting
 import com.example.model.SpecialRequest
 import com.example.util.enums.ObjectStatus.CART
 import com.example.util.enums.ObjectStatus.NONE
@@ -62,13 +61,13 @@ class ObjectRepository(
         return true
     }
 
-    suspend fun updateSetting(email: String, id: String, setting: Setting): Boolean {
+    suspend fun updateMessage(email: String, id: String, message: String): Boolean {
         val user = userDataSource.getUser(email)
         user.objects
             .filter { it.status == NONE || it.status == CART }
             .find { it.id == id }
             ?.let {
-                it.setting = setting
+                it.message = message
             } ?: return false
         userDataSource.updateUser(user)
         return true

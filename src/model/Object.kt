@@ -21,7 +21,7 @@ data class Object(
     var printingStatus: PrintingStatus = PENDING,
     var quality: Quality = STANDARD,
     var quantity: Int = 1,
-    var setting: Setting = Setting(),
+    var message: String = "",
     var slicing: Slicing = Slicing(),
     val trackingDetails: TrackingDetails = TrackingDetails(),
     val created_at: String = now()

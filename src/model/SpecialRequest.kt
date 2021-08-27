@@ -10,7 +10,7 @@ data class SpecialRequest(
     val fileUrl: String,
     val fileExtension: String,
     val imageUrl: String,
-    val setting: Setting,
+    val message: String,
     var slicingDetails: SlicingDetails = SlicingDetails(),
     val requestedAt: String,
     var fulfilledAt: String? = null

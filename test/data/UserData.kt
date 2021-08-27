@@ -62,7 +62,6 @@ val testUser = User(
                 fileExtension = TEST_OBJECT_EXTENSION,
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = NONE,
-                setting = Setting(),
                 slicing = Slicing(),
                 userEmail = ""
             ),
@@ -74,7 +73,6 @@ val testUser = User(
                 imageUrl = TEST_OBJECT_IMAGE_URL,
                 status = CART,
                 quantity = 2,
-                setting = Setting(),
                 slicing = Slicing(),
                 userEmail = ""
             ),
