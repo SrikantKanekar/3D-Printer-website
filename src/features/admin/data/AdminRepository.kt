@@ -159,7 +159,7 @@ class AdminRepository(
         users.forEach { user ->
             objects.addAll(user.objects.filter { !it.slicing.sliced })
         }
-        return objects.sortedBy { it.created_at }
+        return objects.sortedByDescending { it.created_at }
     }
 
     suspend fun getObjectById(email: String, id: String): Object? {
