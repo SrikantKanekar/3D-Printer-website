@@ -22,17 +22,23 @@ fun Route.fulfillObjects(adminRepository: AdminRepository) {
             message = "Missing or malformed email"
         )
 
-        val body = call.receive<DirectFulfillRequest>()
-        val slicing = Slicing(
-            sliced = true,
-            calculateSlicingDetails(body._super),
-            calculateSlicingDetails(body.dynamic),
-            calculateSlicingDetails(body.standard),
-            calculateSlicingDetails(body.low)
-        )
+        val obj = adminRepository.getObjectById(email, id)
 
-        adminRepository.updateObjectRequest(email, id, slicing)
-
-        call.respond(HttpStatusCode.OK)
+        when (obj) {
+            null -> call.respond(HttpStatusCode.NotFound)
+            else -> {
+                val body = call.receive<DirectFulfillRequest>()
+                val slicing = Slicing(
+                    sliced = true,
+                    calculateSlicingDetails(body._super),
+                    calculateSlicingDetails(body.dynamic),
+                    calculateSlicingDetails(body.standard),
+                    calculateSlicingDetails(body.low),
+                    obj.slicing.custom
+                )
+                adminRepository.updateObjectRequest(email, id, slicing)
+                call.respond(HttpStatusCode.OK)
+            }
+        }
     }
 }

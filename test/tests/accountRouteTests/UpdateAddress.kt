@@ -22,7 +22,7 @@ class UpdateAddress : KoinTest {
     private val validAddress = Address(
         firstname = "firstname1",
         lastname = "lastname1",
-        phoneNumber = 1111111111,
+        phoneNumber = "1111111111",
         address = "address1",
         city = "city1",
         state = "state1",
@@ -62,7 +62,7 @@ class UpdateAddress : KoinTest {
                     val address = testRepository.getUser(TEST_USER_EMAIL).address
                     assertTrue { address.firstname == "firstname1" }
                     assertTrue { address.lastname == "lastname1" }
-                    assertTrue { address.phoneNumber == 1111111111L }
+                    assertTrue { address.phoneNumber == "1111111111L" }
                     assertTrue { address.address == "address1" }
                     assertTrue { address.city == "city1" }
                     assertTrue { address.state == "state1" }

@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class Address(
     val firstname: String = "",
     val lastname: String = "",
-    val phoneNumber: Long? = null,
+    val phoneNumber: String = "",
     val address: String = "",
     val city: String = "",
     val state: String = "",
