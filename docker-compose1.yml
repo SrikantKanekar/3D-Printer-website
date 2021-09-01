@@ -1,0 +1,30 @@
+# File structure 
+# printer
+#  - printer-frontend
+#  - printer-backend
+#  - docker-compose.yml
+
+version: "3.8"
+
+services:
+  frontend:
+    build: ./printer-frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./printer-frontend:/app
+  backend:
+    build: ./printer-backend
+    ports:
+      - 8080:8080
+    environment:
+      MONGODB_URI: mongodb://db/printer
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - printer:/data/db
+
+volumes:
+  printer:
