@@ -86,7 +86,25 @@ Rest Api for 3D Printer react application
 
 </br></br>
 
-### cart
+### Cart
+
+#### Get all cart items
+
+```http
+  GET /cart
+```
+
+#### Add cart item by id
+
+```http
+  POST /cart/{id}
+```
+
+#### Delete cart item by id
+
+```http
+  DELETE /cart/{id}
+```
 
 </br></br>
 
