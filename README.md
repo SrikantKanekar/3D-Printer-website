@@ -68,6 +68,8 @@ Rest Api for 3D Printer react application
 | :-------- | :------- | :------------------------- |
 |  | `string` | **Required**. Special request message |
 
+</br></br>
+
 ### Orders
 
 #### Get all Orders
@@ -82,9 +84,28 @@ Rest Api for 3D Printer react application
   GET /orders/{id}
 ```
 
+</br></br>
+
 ### cart
+
+</br></br>
+
 ### checkout
+
+</br></br>
+
 ### notifications
+
+</br></br>
+
 ### admin
+
+</br></br>
+
 ### account
+
+</br></br>
+
 ### auth
+
+</br></br>
