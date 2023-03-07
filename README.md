@@ -108,7 +108,7 @@ Rest Api for 3D Printer react application
 
 </br></br>
 
-### checkout
+### Checkout
 
 #### Get checkout items and address
 
@@ -137,7 +137,7 @@ Rest Api for 3D Printer react application
 
 </br></br>
 
-### notifications
+### Notifications
 
 #### Get all active user notifications
 
@@ -153,11 +153,90 @@ Rest Api for 3D Printer react application
 
 </br></br>
 
-### admin
+### Admin
+
+#### Get all active Orders
+
+```http
+  GET /admin
+```
+
+#### Send Notification to user
+
+```http
+  POST /admin/notification
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Required**. user's email |
+| `subject` | `string` | **Required**. email subject |
+| `body` | `string` | **Required**. email body |
+
+#### Update Order status
+
+```http
+  PUT /admin/order-status/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Order id |
+| NA | `enum` | **Required**. PLACED, CONFIRMED, PROCESSING, DELIVERING, DELIVERED |
+
+#### Update Object's printing status
+
+```http
+  PUT /admin/printing-status
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `orderId` | `string` | **Required**. Order id |
+| `objectId` | `string` | **Required**. Object id |
+| `printingStatus` | `enum` | **Required**. PENDING, PRINTING, PRINTED |
+
+#### Get all unsliced Objects
+
+```http
+  GET /admin/objects
+  GET /admin/objects/{email}/{id}
+```
+
+#### Get all unsliced Special requests
+
+```http
+  GET /admin/requests/special
+  GET /admin/requests/special/{id}
+```
+
+#### Post Object's slicing details
+
+```http
+  PUT /admin/objects/{email}/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `_super` | `time and material in float` | **Required**. Details for super quality |
+| `dynamic` | `time and material in float` | **Required**. Details for dynamic quality |
+| `standard` | `time and material in float` | **Required**. Details for standard quality |
+| `low` | `time and material in float` | **Required**. Details for low quality |
+
+#### Post Special request's slicing details
+
+```http
+  PUT /admin/requests/special/{id}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `time` | `float` | **Required**. Time to complete printing in minutes |
+| `material` | `float` | **Required**. Material weight in grams |
 
 </br></br>
 
-### account
+### Account
 
 #### Get user details
 
