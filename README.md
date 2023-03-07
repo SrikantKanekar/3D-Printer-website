@@ -40,7 +40,7 @@ Rest Api for 3D Printer react application
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-|  | `enum` | **Required**. SUPER, DYNAMIC, STANDARD, LOW, CUSTOM |
+| NA | `enum` | **Required**. SUPER, DYNAMIC, STANDARD, LOW, CUSTOM |
 
 #### Update Object quantity
 
@@ -66,7 +66,7 @@ Rest Api for 3D Printer react application
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-|  | `string` | **Required**. Special request message |
+| NA | `string` | **Required**. Special request message |
 
 </br></br>
 
@@ -109,6 +109,31 @@ Rest Api for 3D Printer react application
 </br></br>
 
 ### checkout
+
+#### Get checkout items and address
+
+```http
+  GET /checkout
+```
+
+#### Proceed and create order
+
+```http
+  POST /checkout/proceed
+```
+
+#### Verify order payment
+
+```http
+  POST /checkout/verify
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` | `string` | **Required**. Order id |
+| `order_id` | `string` | **Required**. Razorpay order id |
+| `payment_id` | `string` | **Required**. Razorpay payment id |
+| `signature` | `string` | **Required**. Razorpay signature |
 
 </br></br>
 
