@@ -139,6 +139,18 @@ Rest Api for 3D Printer react application
 
 ### notifications
 
+#### Get all active user notifications
+
+```http
+  GET /notifications
+```
+
+#### Get notifications by id
+
+```http
+  GET /notifications/{id}
+```
+
 </br></br>
 
 ### admin
@@ -147,8 +159,77 @@ Rest Api for 3D Printer react application
 
 ### account
 
+#### Get user details
+
+```http
+  GET /account
+```
+
+#### Update user's username
+
+```http
+  POST /account
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `username` | `string` | **Required**. Your username |
+
+#### Update user's address
+
+```http
+  POST /account/address
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `firstname` | `string` | **Required**. user's firstname |
+| `lastname` | `string` | **Required**. user's lastname |
+| `phoneNumber` | `string` | **Required**. user's phone number |
+| `address` | `string` | **Required**. user's address |
+| `city` | `string` | **Required**. user's city |
+| `state` | `string` | **Required**. user's state |
+| `country` | `string` | **Required**. user's country |
+| `pinCode` | `int` | **Required**. user's pin code |
+
 </br></br>
 
-### auth
+### Authentication
+
+#### Login
+
+```http
+  POST /auth/login
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `email` | `string` | **Required**. Your email |
+| `password` | `string` | **Required**. Your password |
+
+#### Register
+
+```http
+  POST /auth/register
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `username` | `string` | **Required**. Your username |
+| `email` | `string` | **Required**. Your email |
+| `password1` | `string` | **Required**. Your password |
+| `password2` | `string` | **Required**. Your confirmed password |
+
+#### Change password
+
+```http
+  PUT /auth/reset-password
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `oldPassword` | `string` | **Required**. Your old password |
+| `newPassword` | `string` | **Required**. Your new password |
+| `confirmPassword` | `string` | **Required**. Your confirmed new password |
 
 </br></br>
