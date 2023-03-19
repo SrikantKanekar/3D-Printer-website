@@ -1,6 +1,6 @@
 # 3D Printer Api
 
-Rest Api for 3D Printing react application 
+APIs for 3D Printing website
 
 Frontend - https://github.com/SrikantKanekar/3DPrinter-React
 
