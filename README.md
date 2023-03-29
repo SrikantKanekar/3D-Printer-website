@@ -1,8 +1,8 @@
 # 3D Printer Api
 
-APIs for 3D Printing website
+Backend for 3D Printing website.
 
-Frontend - https://github.com/SrikantKanekar/3DPrinter-React
+Frontend client - https://github.com/SrikantKanekar/3DPrinter-React
 
 ## API Reference
 
